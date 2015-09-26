@@ -1,0 +1,72 @@
+<Workspace Version="0.8.2.2392" X="722.102693156674" Y="221.224371241389" zoom="1.66537098414077" Name="FamilyType.Duplicate" Description="Create duplicate family types with the specified name. If the type exists, it is called." ID="9666b149-66b9-4a56-97b4-6f82a69fdf00" Category="SpringNodes.Revit.ElementTypes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="eb7c5417-fd41-4069-981a-287af49c1af9" type="Dynamo.Nodes.Symbol" nickname="Input" x="-207.292379435103" y="53.6373404382477" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="family type" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="3d0a9b06-5d64-435b-94e8-6c30b3426792" type="Dynamo.Nodes.Symbol" nickname="Input" x="-171.758556223744" y="112.174576939836" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="name(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="de419cd2-69b1-4dd2-8110-0639eb6de3dc" type="Dynamo.Nodes.Output" nickname="Output" x="138.825710485789" y="67.2369147166639" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="new type(s)" />
+    </Dynamo.Nodes.Output>
+    <DSIronPythonNode.PythonNode guid="9e7831b2-8cf2-467f-a682-ea2331c59c27" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="-17.8649313053645" y="66.8160682217288" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitAPI")
+import Autodesk
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+fs = UnwrapElement(IN[0])
+names = tolist(IN[1])
+nfs = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+for n in names:
+	try:
+		try:
+			x = fs.Duplicate(str(n))
+			nfs.append(x.ToDSType(False))
+		except:
+			nfs.append(Revit.Elements.FamilySymbol.ByName(n))
+	except:
+		nfs.append(None)
+TransactionManager.Instance.TransactionTaskDone()
+
+if len(nfs) == 1 :
+	OUT = nfs[0]
+else:
+	OUT = nfs</Script>
+    </DSIronPythonNode.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="eb7c5417-fd41-4069-981a-287af49c1af9" start_index="0" end="9e7831b2-8cf2-467f-a682-ea2331c59c27" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="3d0a9b06-5d64-435b-94e8-6c30b3426792" start_index="0" end="9e7831b2-8cf2-467f-a682-ea2331c59c27" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9e7831b2-8cf2-467f-a682-ea2331c59c27" start_index="0" end="de419cd2-69b1-4dd2-8110-0639eb6de3dc" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

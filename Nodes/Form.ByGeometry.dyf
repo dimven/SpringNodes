@@ -1,0 +1,69 @@
+<Workspace Version="0.8.2.2392" X="-466.641956085214" Y="179.495201605139" zoom="2.27823604156199" Name="Form.ByGeometry" Description="Attempts to convert the input geometry to a Revit Form object. Warning - use method this only in the family environment. Can convert complicated solids or surfaces directly into forms." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="251.041117258081" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+import Autodesk
+
+clr.AddReference("System")
+from System.Collections.Generic import *
+
+_solid_ = IN[0]
+if doc.IsFamilyDocument:
+	el1 = UnwrapElement(Revit.Elements.ImportInstance.ByGeometry(_solid_))
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	trans = Autodesk.Revit.DB.SubTransaction(doc)
+	trans.Start()
+	opt1 = Autodesk.Revit.DB.Options()
+	opt1.ComputeReferences = True
+	geom1 = el1.get_Geometry(opt1)
+	enum = geom1.GetEnumerator()
+	enum.MoveNext()
+	geom2 = enum.Current.GetInstanceGeometry()
+	enum2 = geom2.GetEnumerator()
+	enum2.MoveNext()
+	s1 = enum2.Current
+	try:
+		s2 = Autodesk.Revit.DB.FreeFormElement.Create(doc,s1)
+		OUT = s2.ToDSType(False)
+	except:
+		OUT = None
+	trans.Commit()
+	trans.Start()
+	doc.Delete(el1.Id)
+	trans.Commit()
+	TransactionManager.Instance.TransactionTaskDone()
+else:
+	OUT = "Forms can only exist in family documents"</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="eae70b5f-0692-4372-ab80-d18a7b1f5adb" type="Dynamo.Nodes.Symbol" nickname="Input" x="127.34323536274" y="0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="geometry" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="6b741902-d5d8-4efe-b621-e8d7fb813375" type="Dynamo.Nodes.Output" nickname="Output" x="419.171854779899" y="-0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="Form" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" start_index="0" end="6b741902-d5d8-4efe-b621-e8d7fb813375" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="eae70b5f-0692-4372-ab80-d18a7b1f5adb" start_index="0" end="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

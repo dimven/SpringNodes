@@ -1,0 +1,46 @@
+<Workspace Version="0.8.2.2392" X="-27.8731475649585" Y="196.351097592762" zoom="1.03605787560061" Name="Object.Class" Description="Gets the input object's class name. Can process lists." ID="e4e8406d-3b77-4822-897b-3f9c08e1cd45" Category="SpringNodes.Core">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Star" resolvedName="Geometry.Star" assemblyName="SpringNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="62a9d6f7-af2b-4ed4-8582-b52ecae976fc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="201.198671473321" y="-4.19966786833009" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+item = IN[0]
+if hasattr(item, "__iter__"):
+	out1 = [i.GetType().ToString() for i in item if i != None]
+	OUT = out1, item.GetType().ToString()
+else:
+	if item != None:
+		OUT = item.GetType().ToString(), "N/A"
+	else:
+		OUT = []</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="d12cabc8-4a61-49dd-b3cf-f6497cf27a35" type="Dynamo.Nodes.Output" nickname="Output" x="481.272759701492" y="-26.0558558276386" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="class(str)" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="67bd4039-ee20-4b59-b4af-41d973802190" type="Dynamo.Nodes.Symbol" nickname="Input" x="111.6" y="-4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="obj" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="1b6eb9b4-a3ac-437e-b6fe-463f3cb209b4" type="Dynamo.Nodes.Output" nickname="Output" x="483.213597849889" y="38.3767215500941" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="container" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="625885b6-6933-478c-90d4-ecb5b23e3fb2" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="342.414826986423" y="-5.73383665598394" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="c[0];&#xA;c[1];" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="62a9d6f7-af2b-4ed4-8582-b52ecae976fc" start_index="0" end="625885b6-6933-478c-90d4-ecb5b23e3fb2" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="67bd4039-ee20-4b59-b4af-41d973802190" start_index="0" end="62a9d6f7-af2b-4ed4-8582-b52ecae976fc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="625885b6-6933-478c-90d4-ecb5b23e3fb2" start_index="0" end="d12cabc8-4a61-49dd-b3cf-f6497cf27a35" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="625885b6-6933-478c-90d4-ecb5b23e3fb2" start_index="1" end="1b6eb9b4-a3ac-437e-b6fe-463f3cb209b4" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

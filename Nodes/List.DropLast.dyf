@@ -1,0 +1,17 @@
+<Workspace Version="0.7.6.4045" X="171.6187875" Y="168.35375" zoom="1.33823125" Name="List.DropLast" ID="81a5935d-f8af-456c-abb5-ebf83ec379c6" Description="Removes the last value of the list." Category="SpringNodes.Lists">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="a6c16ea0-22bd-45e0-8d1d-72fb4eb051dc" type="Dynamo.Nodes.Symbol" nickname="Input" x="-2.98902002176385" y="-4.48353003264569" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="list" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="6841ccb0-9a1e-4c7c-826f-ee7e5cfa41a2" type="Dynamo.Nodes.Output" nickname="Output" x="410.911543688731" y="-2.24176501632286" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="list" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="beac170c-ef62-4551-b2d8-5e9a89caa2e5" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="139.516058977101" y="0.669778672408086" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="List.DropItems(l1,-1);" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="a6c16ea0-22bd-45e0-8d1d-72fb4eb051dc" start_index="0" end="beac170c-ef62-4551-b2d8-5e9a89caa2e5" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="beac170c-ef62-4551-b2d8-5e9a89caa2e5" start_index="0" end="6841ccb0-9a1e-4c7c-826f-ee7e5cfa41a2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+</Workspace>

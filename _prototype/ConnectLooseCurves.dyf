@@ -1,0 +1,46 @@
+<Workspace Version="0.8.3.2256" X="384.111606246319" Y="483.650212261591" zoom="0.681271706515601" Name="ConnectLooseCurves" Description="Orders and connects a list of disconnected curves lying on the XY plane into a PolyCurve" ID="180aa434-85d4-4226-8855-8eb2c93b5ec2" Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="7d3e821d-dedf-4f59-8df0-f16a2d06a1ed" type="Dynamo.Nodes.Symbol" nickname="Input" x="411.278494547439" y="177.715197695118" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="curve list" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="c0be0f43-62da-499c-93ea-02d9e1d26497" type="Dynamo.Nodes.Symbol" nickname="Input" x="417.905580078042" y="237.139347567663" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="threshold" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="d3a07ec4-7921-4c20-93d1-a0c1ba4b6481" type="Dynamo.Nodes.Output" nickname="Output" x="965.916098917391" y="179.618645884131" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="ordered curves" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="cb353a3d-2e5f-47c1-bd66-df86319545d5" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="271.394895737049" y="-554.205248897467" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def FarEnd(l1,p1)&#xA;{&#xA;lpts = {l1.StartPoint,l1.EndPoint};&#xA;dist = p1.DistanceTo(lpts);&#xA;ind1 = IndexOf(dist,List.MaximumItem(dist));&#xA;return = lpts[ind1];&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="cf9bc162-b574-4edf-ae93-1e934dad98ac" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="271.394895737049" y="-355.666584363393" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def ClosedCase(cr1:var[])&#xA;{&#xA;sortedc = OrderCurves(cr1);&#xA;cl1 = List.AddItemToEnd(sortedc[0],sortedc);&#xA;cl2 = List.Sublists(cl1,0..1,1);&#xA;cl3 = List.DropItems(cl2,-1);&#xA;cl4 = List.Transpose(cl3);&#xA;ptl1 = Flatten(cl4[0].Intersect(cl4[1]));&#xA;pc1 = PolyCurve.ByPoints(ptl1,true);&#xA;return = pc1.Curves();&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="cb30ecdc-79d7-4579-87f9-aa61465a5453" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-99.113834306791" y="-354.23354699691" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def OrderCurves(s1:var[])&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;list1 = {s1[0]};&#xA;s1 = List.RestOfItems(s1);&#xA;i = 0;&#xA;while (Count(s1) &gt; 1)&#xA;{&#xA;mask = list1[i].DoesIntersect(s1);&#xA;i = i + 1;&#xA;x1 = List.FilterByBoolMask(s1,mask)[&quot;in&quot;];&#xA;if (List.IsEmpty(x1))&#xA;{&#xA;break;&#xA;}&#xA;list1[i] = x1[0];&#xA;s1 = List.FilterByBoolMask(s1,mask)[&quot;out&quot;];&#xA;if (x1[1] != null)&#xA;{&#xA;s1 = List.AddItemToEnd(x1[1],s1);&#xA;}&#xA;}&#xA;return = List.AddItemToEnd(s1[0],list1);&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="dce81e44-7245-4613-800f-a9bc0deff89e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-99.113834306791" y="-554.205248897467" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def Reorder1(l1:var[],l2:var[])&#xA;{&#xA;m1 = l1.PointAtParameter(0.5);&#xA;m2 = l2.PointAtParameter(0.5);&#xA;dist1 = m2&lt;1&gt;.DistanceTo(m1&lt;2&gt;);&#xA;minval = List.MinimumItem(dist1&lt;1&gt;);&#xA;newind = IndexOf(dist1&lt;1&gt;,minval&lt;1&gt;);&#xA;return = Reorder(l1,newind);&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="fe752f43-9ff9-40b1-b00d-2182770dfe35" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="271.394895737049" y="-125.23354699691" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def OpenCase(cl1:var[],th1)&#xA;{&#xA;sortedc = OrderCurves(cl1);&#xA;pts1 = Flatten(sortedc&lt;1&gt;.Intersect(sortedc&lt;2&gt;));&#xA;pts2 = RemoveIfNot(pts1,&quot;Point&quot;);&#xA;pts3 = Point.PruneDuplicates(pts2,0.0001);&#xA;origcr = sortedc.ExtendStart(-th1).ExtendEnd(-th1);&#xA;fpt = FarEnd(origcr[0],pts3[0]);&#xA;lpt = FarEnd(origcr[-1], pts3[-1]);&#xA;pts4 = Flatten({fpt,pts3,lpt});&#xA;pc1 = PolyCurve.ByPoints(pts4);&#xA;return = pc1.Curves();&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="68c86244-380c-47e2-852a-a1b775ad579e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-290.090965755911" y="-178.23354699691" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def oldif(test,&#xA;iftrue:var[]..[],&#xA;iffalse:var[]..[])&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;if (test)&#xA;{&#xA;return = iftrue;&#xA;}&#xA;else&#xA;{&#xA;return = iffalse;&#xA;}&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="76fbd8ef-0ea6-4129-b28f-5b01c50ca045" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="598.408030838822" y="190.791428082799" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="result = process(cr1,th1);&#xA;List.GetItemAtIndex(result&lt;1&gt;,0);&#xA;List.GetItemAtIndex(result&lt;1&gt;,1);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="07a7bb79-62ad-4cd0-811a-14e0f4e86407" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="717.315601505358" y="-196.713838585245" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def process(cr1:var[],th1)&#xA;{&#xA;cr2 = cr1.ExtendStart(th1).ExtendEnd(th1);&#xA;int1 = cr2&lt;1&gt;.DoesIntersect(cr2&lt;2&gt;);&#xA;check1 = CountTrue(int1&lt;1&gt;);&#xA;startind0 = IndexOf(check1,2);&#xA;isclosed = startind0 == -1 ? true : false;&#xA;startind = isclosed ? 0 : startind0;&#xA;cr3 = List.ShiftIndices(cr2,-startind);&#xA;result = oldif(isclosed, ClosedCase(cr3),&#xA;OpenCase(cr3,th1));&#xA;outtest = Count(cr1) &gt; 1 &amp;&amp; Count(cr1) ==&#xA;Count(result) &amp;&amp; AllTrue(result != null);&#xA;out1 = oldif(outtest, result, cr1);&#xA;out2 = Reorder1(out1,cr1);&#xA;return = {out1,out2};&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="1cc51e62-ad7b-4857-affd-14959a9b6c88" type="Dynamo.Nodes.Output" nickname="Output" x="968.112470836548" y="240.615848443818" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="preserved order" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="7d3e821d-dedf-4f59-8df0-f16a2d06a1ed" start_index="0" end="76fbd8ef-0ea6-4129-b28f-5b01c50ca045" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c0be0f43-62da-499c-93ea-02d9e1d26497" start_index="0" end="76fbd8ef-0ea6-4129-b28f-5b01c50ca045" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="76fbd8ef-0ea6-4129-b28f-5b01c50ca045" start_index="1" end="d3a07ec4-7921-4c20-93d1-a0c1ba4b6481" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="76fbd8ef-0ea6-4129-b28f-5b01c50ca045" start_index="2" end="1cc51e62-ad7b-4857-affd-14959a9b6c88" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="45069.2412211112" eyeY="36112.4841738377" eyeZ="35145.7997877082" lookX="-59961.2568461112" lookY="-28656.2244082127" lookZ="-46009.8908521614" />
+  </Cameras>
+</Workspace>

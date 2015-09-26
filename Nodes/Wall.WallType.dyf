@@ -1,0 +1,46 @@
+<Workspace Version="0.8.2.2392" X="485.184014259549" Y="186.813298532813" zoom="3.16029073236314" Name="Wall.WallType" Description="Queries the wall type of the input wall. Works for types from linked documents as well." ID="37af5c09-7c57-4adc-8222-e65ab3da9850" Category="SpringNodes.Revit.ElementTypes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="e5b53eaa-e132-441f-bdb3-37d29c6f0500" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="-18.1144909556155" y="-6.68892700928771" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+walls = UnwrapElement(tolist(IN[0]))
+wt = []
+for w in walls:
+	try:
+		wt.append(w.WallType)
+	except:
+		wt.append([])
+
+if len(wt) == 1:
+	OUT = wt[0] 
+else:
+	OUT = wt</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="0e81e3d7-3985-460a-abe0-53b11169a115" type="Dynamo.Nodes.Symbol" nickname="Input" x="-148.041330508244" y="-3.92139474251397" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="wall(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="3fc95775-7c1c-4b1f-a0b1-3e7b25591a12" type="Dynamo.Nodes.Output" nickname="Output" x="135.370533734094" y="-6.23627150930543" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="WallType" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="e5b53eaa-e132-441f-bdb3-37d29c6f0500" start_index="0" end="3fc95775-7c1c-4b1f-a0b1-3e7b25591a12" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0e81e3d7-3985-460a-abe0-53b11169a115" start_index="0" end="e5b53eaa-e132-441f-bdb3-37d29c6f0500" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

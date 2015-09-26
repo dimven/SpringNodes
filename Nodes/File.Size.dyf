@@ -1,0 +1,49 @@
+<Workspace Version="0.8.2.2392" X="20.3781196340582" Y="141.5537016591" zoom="1.37758335255867" Name="File.Size" Description="Checks the file size. Provide a file path as a string." ID="0672c281-9887-40f9-886e-248abb55564b" Category="SpringNodes.Misc">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="NurbsCurve" resolvedName="Autodesk.DesignScript.Geometry.NurbsCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="b97ce17c-f4be-4def-b9db-89a6c4358238" type="DSIronPythonNode.PythonNode" nickname="file size" x="173.344021395248" y="0.580727110642044" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+import sys
+sys.path.append('C:\Program Files (x86)\IronPython 2.7\Lib')
+import os
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+paths = tolist(IN[0])
+size = [os.stat(p).st_size for p in paths]
+size_f = [str(int(s)/1024) + " KB" for s in size]
+if len(size) == 1:
+	OUT = size_f[0]
+else:
+	OUT = size_f</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="23fff3c9-5676-49e4-91a3-d9218997d553" type="Dynamo.Nodes.Symbol" nickname="Input" x="51.1039857365015" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="path(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="fea3370b-82db-4bdf-8296-b835f3c624af" type="Dynamo.Nodes.Output" nickname="Output" x="329.370215207735" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="size" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="b97ce17c-f4be-4def-b9db-89a6c4358238" start_index="0" end="fea3370b-82db-4bdf-8296-b835f3c624af" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="23fff3c9-5676-49e4-91a3-d9218997d553" start_index="0" end="b97ce17c-f4be-4def-b9db-89a6c4358238" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

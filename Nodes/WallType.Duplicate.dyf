@@ -1,0 +1,78 @@
+<Workspace Version="0.8.2.2392" X="-47.563867422826" Y="-20.499674901289" zoom="1.40972876398001" Name="WallType.Duplicate" Description="Attemts to create duplicate wall types. If the wall type exists, it is appended to the end. Sets only the structural width of the wall. The width must be in feet." ID="a7067ca5-dcce-4d99-aad5-3e206c4d0f1a" Category="SpringNodes.Revit.ElementTypes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="0c3c80ea-5c66-4aa4-ba77-2d413bd0a6e1" type="Dynamo.Nodes.Symbol" nickname="Input" x="211.679139800173" y="200.555709055137" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="wall type" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="05bee25b-1da4-4bb2-bcbd-079c98279982" type="Dynamo.Nodes.Symbol" nickname="Input" x="218.645375591432" y="265.042263445818" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="name(s)" />
+    </Dynamo.Nodes.Symbol>
+    <DSIronPythonNode.PythonNode guid="8fba83b6-e5e5-4a48-b724-5b6d21ac2fcb" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="395.326720137106" y="242.177015311027" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+fs = UnwrapElement(IN[0])
+names = tolist(IN[1])
+width = tolist(IN[2])
+nfs = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in xrange(len(names)):
+	try:
+		try:
+			x = fs.Duplicate(str(names[i]))
+			cs = x.GetCompoundStructure()
+			ind = cs.StructuralMaterialIndex
+			cs.SetLayerWidth(ind,width[i])
+			x.SetCompoundStructure(cs)
+			nfs.append(x.ToDSType(False))
+		except:
+			nfs.append(Revit.Elements.WallType.ByName(names[i]))
+	except:
+		nfs.append(None)
+TransactionManager.Instance.TransactionTaskDone()
+if len(nfs) == 1:
+	OUT = nfs[0]
+else:
+	OUT = nfs</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="9111e30c-b98a-4c3d-b893-f3c576be80fe" type="Dynamo.Nodes.Symbol" nickname="Input" x="187.947088298463" y="325.062787451696" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="width(s)InFeet" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="a7e45478-f36f-4f0e-80b6-69de68c1b7f1" type="Dynamo.Nodes.Output" nickname="Output" x="550.708308742188" y="240.025329325077" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="WallType" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="0c3c80ea-5c66-4aa4-ba77-2d413bd0a6e1" start_index="0" end="8fba83b6-e5e5-4a48-b724-5b6d21ac2fcb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="05bee25b-1da4-4bb2-bcbd-079c98279982" start_index="0" end="8fba83b6-e5e5-4a48-b724-5b6d21ac2fcb" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8fba83b6-e5e5-4a48-b724-5b6d21ac2fcb" start_index="0" end="a7e45478-f36f-4f0e-80b6-69de68c1b7f1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9111e30c-b98a-4c3d-b893-f3c576be80fe" start_index="0" end="8fba83b6-e5e5-4a48-b724-5b6d21ac2fcb" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

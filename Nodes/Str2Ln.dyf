@@ -1,0 +1,30 @@
+<Workspace Version="0.8.1.1942" X="-42.0312799356378" Y="132.486771968391" zoom="1.545620359375" Name="Str2Ln" ID="95425f93-d15f-4887-b341-c0e64bd3efce" Description="De-serilize a Revit parameter string into a geometric line." Category="SpringNodes.Geometry.Serialization">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Wall" resolvedName="Revit.Elements.Wall" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Transaction" resolvedName="Revit.Transaction.Transaction" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="def Rvt2Ln(par)&#xA;{&#xA;par1 = String.ToNumber(String.Split(par,&quot;,&quot;));&#xA;p1 = Point.ByCoordinates(par1[0],par1[1],par1[2]);&#xA;p2 = Point.ByCoordinates(par1[3],par1[4],par1[5]);&#xA;return = Line.ByStartPointEndPoint(p1,p2);&#xA;};&#xA;Rvt2Ln(str);" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="3129cf66-2999-4314-9eee-82f8612c6121" type="Dynamo.Nodes.Symbol" nickname="Input" x="158.078517001815" y="1.95158892662668" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="str" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="44a7255b-39c3-4fec-91cf-c129f12cbefb" type="Dynamo.Nodes.Output" nickname="Output" x="767.309538079394" y="121.602430347197" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="line(s)" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" start_index="0" end="44a7255b-39c3-4fec-91cf-c129f12cbefb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="3129cf66-2999-4314-9eee-82f8612c6121" start_index="0" end="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+</Workspace>

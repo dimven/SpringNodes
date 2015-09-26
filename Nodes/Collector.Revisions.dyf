@@ -1,0 +1,58 @@
+<Workspace Version="0.8.2.2392" X="-625.539657286292" Y="146.172711901659" zoom="4" Name="Collector.Revisions" Description="Collects all revisions from a specific date." ID="db9982b0-99c8-41b0-942d-70c2e355c330" Category="SpringNodes.Revit.Collectors">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="cf70f36c-7e14-423a-ae1d-3985068be490" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="233.741822738413" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import FilteredElementCollector, BuiltInCategory
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+dataEnteringNode = IN
+rdat = IN[0]
+
+rev = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Revisions).ToElements()
+rev = [r.ToDSType(True) for r in rev]
+match = []
+[match.append(r) for r in rev if r.GetParameterValueByName("Revision Date") in rdat]
+if len(match) != 0:
+	OUT = match, rev
+else:
+	OUT = "No revision found from date %s" %rdat, rev</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="f8030bca-7064-4b84-9f4d-aebbd1fa628d" type="Dynamo.Nodes.Symbol" nickname="Input" x="55.5438661836349" y="-0.0763346309020676" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="rev. date(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="46effa28-479e-4a66-a94a-2e886b897c10" type="Dynamo.Nodes.Output" nickname="Output" x="522.777857416747" y="-8.38632268787521" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="matched" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a31b42ea-9130-4fb6-b5ab-9336373d3554" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="371.839221729708" y="2.83849358195789" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="rev[0];&#xA;rev[1];" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="6acc495a-2b1b-471b-a375-4d6e368e50b0" type="Dynamo.Nodes.Output" nickname="Output" x="520.168037948881" y="49.9299846717673" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="all revisions" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="cf70f36c-7e14-423a-ae1d-3985068be490" start_index="0" end="a31b42ea-9130-4fb6-b5ab-9336373d3554" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f8030bca-7064-4b84-9f4d-aebbd1fa628d" start_index="0" end="cf70f36c-7e14-423a-ae1d-3985068be490" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a31b42ea-9130-4fb6-b5ab-9336373d3554" start_index="0" end="46effa28-479e-4a66-a94a-2e886b897c10" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a31b42ea-9130-4fb6-b5ab-9336373d3554" start_index="1" end="6acc495a-2b1b-471b-a375-4d6e368e50b0" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,25 @@
+<Workspace Version="0.7.6.4190" X="436.082120953125" Y="286.445259875" zoom="1.545620359375" Name="Wall.IsFlipped" ID="2c94274b-480e-4aa8-b4ac-19c964269384" Description="Checks if the wall was flipped." Category="SpringNodes.Revit.Walls">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="8b720f22-9eaf-421a-8bf4-b67a882f8f51" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="211.827624977807" y="4.52892585009079" isVisible="true" isUpstreamVisible="true" lacing="Disabled" inputcount="1">
+      <Script>walls = UnwrapElement(IN[0])
+res = []
+for w in walls:
+	res.append(w.Flipped)
+OUT = res</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="f9429db5-376f-426d-bed0-2cba37fd442e" type="Dynamo.Nodes.Symbol" nickname="Input" x="-97.0484110733734" y="4.52892585009079" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="Walls" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="d27fc4a6-2e5a-451c-844d-55b89621b547" type="Dynamo.Nodes.Output" nickname="Output" x="368.773313512678" y="5.1759152572466" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="Bool" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="2f948241-cd26-430d-ae37-a900951f37d3" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="20.6316483885925" y="6.47225422826034" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="Flatten({w});" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="8b720f22-9eaf-421a-8bf4-b67a882f8f51" start_index="0" end="d27fc4a6-2e5a-451c-844d-55b89621b547" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f9429db5-376f-426d-bed0-2cba37fd442e" start_index="0" end="2f948241-cd26-430d-ae37-a900951f37d3" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="2f948241-cd26-430d-ae37-a900951f37d3" start_index="0" end="8b720f22-9eaf-421a-8bf4-b67a882f8f51" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+</Workspace>

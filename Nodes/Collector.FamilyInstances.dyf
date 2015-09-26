@@ -1,0 +1,72 @@
+<Workspace Version="0.8.2.2392" X="-543.932621335288" Y="110.799993705053" zoom="2.9050245931751" Name="Collector.FamilyInstances" Description="Collects placed family instance elements from the document that match the name. Partially mathing elements are collected as well. If no matches are found, a list of all isntance names will be output." ID="c0a4257d-0aec-4263-b59b-25b310cea858" Category="SpringNodes.Revit.Collectors">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="7556c07d-ba07-4658-9378-f218ee2d39bc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="246.636015841593" y="-6.1673042904122" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+fn = tolist(IN[0])
+
+fec = FilteredElementCollector(doc).OfClass(FamilyInstance).GetElementIterator()
+fec.Reset()
+
+result = []
+similar = []
+names = []
+
+for i in fec:
+	n1 = i.Name
+	names.append(n1)
+	if any(fn1 == n1 for fn1 in fn):
+		result.append(i.ToDSType(True))
+	elif any(fn1.lower() in n1.lower() for fn1 in fn):
+		similar.append(i.ToDSType(True))
+
+if len(result) &gt; 0:
+	OUT = result,similar
+if len(result) == 0 and len(similar) &gt; 0:
+	OUT = "No exact match found. Check partial below:",similar
+if len(result) == 0 and len(similar) == 0:
+	OUT = "No match found! Check names below:", names</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="76564f55-2c2f-4530-ae85-9f2018526009" type="Dynamo.Nodes.Output" nickname="Output" x="527.435536536242" y="-18.2226419284095" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="exact match" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="7c251184-fba9-4452-aeec-f7c8bc909a07" type="Dynamo.Nodes.Symbol" nickname="Input" x="60.5198112213991" y="-8.46488580870783" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="instnace name(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="ed267bfb-784d-4e88-8528-45cc78a90b3e" type="Dynamo.Nodes.Output" nickname="Output" x="527.628339742958" y="43.1093908381283" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="partial match" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="b9bf4e46-b184-4689-997c-b692738bce1f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="393.309058745715" y="-1.38441056090767" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="o[0];&#xA;o[1];" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="7556c07d-ba07-4658-9378-f218ee2d39bc" start_index="0" end="b9bf4e46-b184-4689-997c-b692738bce1f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="7c251184-fba9-4452-aeec-f7c8bc909a07" start_index="0" end="7556c07d-ba07-4658-9378-f218ee2d39bc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b9bf4e46-b184-4689-997c-b692738bce1f" start_index="0" end="76564f55-2c2f-4530-ae85-9f2018526009" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b9bf4e46-b184-4689-997c-b692738bce1f" start_index="1" end="ed267bfb-784d-4e88-8528-45cc78a90b3e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

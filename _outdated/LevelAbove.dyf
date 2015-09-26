@@ -1,0 +1,23 @@
+<Workspace Version="0.7.6.4256" X="170.261950081486" Y="301.356712089455" zoom="0.803321593462598" Name="LevelAbove" ID="28aad5ee-3ee6-40d3-bf39-5a2bf02b8d4b" Description="Selects the level lying directly above the input level" Category="SpringNodes.Revit.Levels">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSRevitNodesUI.ElementsOfCategory guid="8ddc66d4-b2fd-495a-bf8c-98ea4ba17fc6" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="469.559390900518" y="11.897306896087" isVisible="true" isUpstreamVisible="true" lacing="Disabled" />
+    <DSRevitNodesUI.Categories guid="089c0c0e-9bae-4669-bddb-87d4c6a39f1e" type="DSRevitNodesUI.Categories" nickname="Categories" x="269.870410367171" y="9.50323974082073" isVisible="true" isUpstreamVisible="true" lacing="Disabled" index="470:Levels" />
+    <Dynamo.Nodes.DSFunction guid="6fd757dc-0352-4c7b-aa02-22f74d43bedb" type="Dynamo.Nodes.DSFunction" nickname="Level.Elevation" x="497.401623730698" y="-83.2315177120769" isVisible="true" isUpstreamVisible="true" lacing="Shortest" assembly="RevitNodes.dll" function="Revit.Elements.Level.Elevation" />
+    <Dynamo.Nodes.Symbol guid="4545cf86-48af-44a5-ae6c-fc27d438fb08" type="Dynamo.Nodes.Symbol" nickname="Input" x="148.875915110665" y="112.45462435165" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="level" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="9e2c0f0a-2e66-4a91-8502-c2a19df17090" type="Dynamo.Nodes.Output" nickname="Output" x="1113.85153625815" y="77.8181116874223" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="level above" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="9bfa7f25-c682-41db-bbe7-3f258ea68cdb" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="707.907722709606" y="11.3211633087429" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="levels1 = SortByKey(ll,key1);&#xA;le1 = levels1.Elevation;&#xA;ind = ilevel.Elevation;&#xA;ind2 = IndexOf(le1,ind) + 1;&#xA;List.GetItemAtIndex(levels1,ind2);" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="8ddc66d4-b2fd-495a-bf8c-98ea4ba17fc6" start_index="0" end="9bfa7f25-c682-41db-bbe7-3f258ea68cdb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="089c0c0e-9bae-4669-bddb-87d4c6a39f1e" start_index="0" end="8ddc66d4-b2fd-495a-bf8c-98ea4ba17fc6" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6fd757dc-0352-4c7b-aa02-22f74d43bedb" start_index="0" end="9bfa7f25-c682-41db-bbe7-3f258ea68cdb" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4545cf86-48af-44a5-ae6c-fc27d438fb08" start_index="0" end="9bfa7f25-c682-41db-bbe7-3f258ea68cdb" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9bfa7f25-c682-41db-bbe7-3f258ea68cdb" start_index="4" end="9e2c0f0a-2e66-4a91-8502-c2a19df17090" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+</Workspace>

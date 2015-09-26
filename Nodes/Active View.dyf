@@ -1,0 +1,34 @@
+<Workspace Version="0.8.2.2392" X="-557.414294692797" Y="201.736739701314" zoom="2.72962159758084" Name="Active View" Description="Selects the current document's active view. Supports more view types" ID="58849545-7510-4baf-99da-98c0b1e184fd" Category="SpringNodes.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="a53761c8-e321-405b-b99c-72dce1dba17d" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" inputcount="0">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+OUT = doc.ActiveView.ToDSType(True)</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="5fdfee2a-7d04-4c16-bea1-b5f7c52b5d74" type="Dynamo.Nodes.Output" nickname="Output" x="419" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="View" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="a53761c8-e321-405b-b99c-72dce1dba17d" start_index="0" end="5fdfee2a-7d04-4c16-bea1-b5f7c52b5d74" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="7.67264249841033" eyeY="8.35031929600561" eyeZ="6.25394079767599" lookX="-2.5382298917474" lookY="-5.44599642574303" lookZ="-10.9942815394907" />
+  </Cameras>
+</Workspace>

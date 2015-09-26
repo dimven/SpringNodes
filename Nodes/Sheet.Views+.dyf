@@ -1,0 +1,52 @@
+<Workspace Version="0.8.2.2392" X="-52.8051274898445" Y="112.858365688297" zoom="3.14224078322401" Name="Sheet.Views+" Description="Extracts all views placed on the input sheet(s).  Will be depreciated once the bult in node works with all plan types." ID="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" Category="SpringNodes.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="69385820-2399-4ede-bdb2-8234cad8914e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="123.6" y="0.799999999999983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+sheets = UnwrapElement(tolist(IN[0]))
+sheetviews = []
+for s in sheets:
+	viewsid = s.GetAllPlacedViews()
+	views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
+	sheetviews.append(views)
+if len(sheetviews) == 1:
+	OUT = views
+else:
+	OUT = sheetviews</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="sheet(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" type="Dynamo.Nodes.Output" nickname="Output" x="277.8" y="3.19999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="view(s)" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="69385820-2399-4ede-bdb2-8234cad8914e" start_index="0" end="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" start_index="0" end="69385820-2399-4ede-bdb2-8234cad8914e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

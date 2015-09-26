@@ -1,0 +1,41 @@
+<Workspace Version="0.8.2.2392" X="22.3188654458399" Y="118.315492748419" zoom="2.01045961824633" Name="Collector.CurrentSelection" Description="Gets the currently selected elements. Connect a boolean switch to refresh the selection." ID="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" Category="SpringNodes.Revit.Collectors">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="0439f9ad-caff-4969-b97e-a7bd82a5d352" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>import clr
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+uiapp = DocumentManager.Instance.CurrentUIApplication
+uidoc=uiapp.ActiveUIDocument
+
+bool = IN[0]
+not1 = not bool
+sel=uidoc.Selection.Elements
+OUT =[s.ToDSType(True) for s in sel]</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="c9c8a6cc-93a7-47c4-8fbe-3f4d835ac76c" type="Dynamo.Nodes.Symbol" nickname="Input" x="26.7809029428663" y="1.24928152849356" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="2bb9c4d2-214e-4749-a59c-3e5975214f5d" type="Dynamo.Nodes.Output" nickname="Output" x="449" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="0439f9ad-caff-4969-b97e-a7bd82a5d352" start_index="0" end="2bb9c4d2-214e-4749-a59c-3e5975214f5d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c9c8a6cc-93a7-47c4-8fbe-3f4d835ac76c" start_index="0" end="0439f9ad-caff-4969-b97e-a7bd82a5d352" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,29 @@
+<Workspace Version="0.7.6.4064" X="186.264682801555" Y="-106.356573861312" zoom="2.2153498536598" Name="SawCurve" ID="95d2c223-549e-4814-8122-3a8cd5474871" Description="Divides a curve into horizontal and vertical segments." Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="a41326f6-a6f4-4616-9c97-0279b54ad6ec" type="Dynamo.Nodes.Symbol" nickname="Input" x="87.4469587891333" y="111.561006506979" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="curve" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="c8092167-7d24-4e21-a9f7-2acee7105836" type="Dynamo.Nodes.Output" nickname="Output" x="1651.4185451876" y="276.089765686308" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="Curves" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="2f4ad6f2-84c4-4be6-8b95-860fa8a4b034" type="Dynamo.Nodes.Symbol" nickname="Input" x="58.7294147709949" y="176.342205350498" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="tooth size" />
+    </Dynamo.Nodes.Symbol>
+    <DSCore.LaceShortest guid="f8ee80cc-368a-4ae6-81f4-26e81c84c1bb" type="DSCore.LaceShortest" nickname="List.LaceShortest" x="1019.24220665004" y="91.3921872787664" isVisible="false" isUpstreamVisible="true" lacing="Disabled" inputcount="3" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="e1b2f2c9-0513-4995-a9ac-7ceb571ae9bd" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1211.31964969023" y="246.581648041023" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="l1 = Flatten(pts4);&#xA;l2 = List.AddItemToEnd(last,l1);&#xA;curves = PolyCurve.ByPoints(l2).Curves();" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="260.14877073265" y="112.942059279113" isVisible="false" isUpstreamVisible="true" lacing="Disabled" CodeText="n = cr1.Length/d1;&#xA;pts = Flatten(cr1.PointAtParameter((0..1..#n)&lt;1&gt;&lt;2&gt;));&#xA;lines = Line.ByStartPointDirectionLength(pts,Vector.YAxis(),2*d1);&#xA;pts2 = List.ShiftIndices(pts,-1);&#xA;v1 ={Vector.XAxis(),Vector.XAxis().Reverse()};&#xA;pts3 = Flatten(pts2.Project(lines,v1&lt;1&gt;&lt;2&gt;));&#xA;lines2 = Line.ByStartPointDirectionLength(pts,Vector.YAxis().Reverse(),2*d1);&#xA;pts3a = Flatten(pts2.Project(lines2,v1&lt;1&gt;&lt;2&gt;));&#xA;( List.IsEmpty(pts3) ? pts3a : pts3);&#xA;lastpt = List.LastItem(pts);" ShouldFocus="false" />
+    <DSCoreNodesUI.CreateList guid="ea57c7a5-858d-4069-a55e-81aa384cef31" type="DSCoreNodesUI.CreateList" nickname="List.Create" x="822.056650254289" y="3.3134776418205" isVisible="true" isUpstreamVisible="true" lacing="Disabled" inputcount="2" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="a41326f6-a6f4-4616-9c97-0279b54ad6ec" start_index="0" end="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="2f4ad6f2-84c4-4be6-8b95-860fa8a4b034" start_index="0" end="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f8ee80cc-368a-4ae6-81f4-26e81c84c1bb" start_index="0" end="e1b2f2c9-0513-4995-a9ac-7ceb571ae9bd" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e1b2f2c9-0513-4995-a9ac-7ceb571ae9bd" start_index="2" end="c8092167-7d24-4e21-a9f7-2acee7105836" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" start_index="1" end="f8ee80cc-368a-4ae6-81f4-26e81c84c1bb" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" start_index="8" end="f8ee80cc-368a-4ae6-81f4-26e81c84c1bb" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4f007bcf-9d7c-4c8d-a794-b37f8abb0c3a" start_index="9" end="e1b2f2c9-0513-4995-a9ac-7ceb571ae9bd" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ea57c7a5-858d-4069-a55e-81aa384cef31" start_index="0" end="f8ee80cc-368a-4ae6-81f4-26e81c84c1bb" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+</Workspace>

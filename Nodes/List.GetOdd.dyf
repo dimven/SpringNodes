@@ -1,0 +1,24 @@
+<Workspace Version="0.8.2.2392" X="-74.1017040976911" Y="254.590113117721" zoom="0.70823125" Name="List.GetOdd" Description="Gets the odd indices from the list." ID="bc2af492-c052-4c7d-b690-af327478a833" Category="SpringNodes.Lists">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="136b9022-637e-4d77-b76c-a920f1836450" type="Dynamo.Nodes.Symbol" nickname="Input" x="85.107559395248" y="-5.18358531317494" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="list:var[]..[]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="4abdc9a2-e27c-437a-b148-6fac8a01c719" type="Dynamo.Nodes.Output" nickname="Output" x="647.936157420512" y="-2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="list" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="6e3c05a9-c289-40f5-89a2-9a5e4200871a" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="281" y="-1" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="List.DropEveryNthItem(l1,2,0);" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="136b9022-637e-4d77-b76c-a920f1836450" start_index="0" end="6e3c05a9-c289-40f5-89a2-9a5e4200871a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6e3c05a9-c289-40f5-89a2-9a5e4200871a" start_index="0" end="4abdc9a2-e27c-437a-b148-6fac8a01c719" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

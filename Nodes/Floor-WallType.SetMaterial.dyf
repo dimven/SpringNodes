@@ -1,0 +1,74 @@
+<Workspace Version="0.8.2.2392" X="271.204774630898" Y="373.726215875534" zoom="1.78359936238281" Name="Floor-WallType.SetMaterial" Description="Sets a new material to the structural core of the provided floor and wall types." ID="a0f33711-c70a-4787-9145-38edbeb15d58" Category="SpringNodes.Revit.ElementTypes">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="b803659f-36d6-47d8-a0ef-9120a8aa00e4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="232.619415181566" y="8.4099603960166" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+wt = UnwrapElement(tolist(IN[0]))
+nmat = UnwrapElement(tolist(IN[1]))
+count = 0
+TransactionManager.Instance.EnsureInTransaction(doc)
+for w in wt:
+	try:
+			cs = w.GetCompoundStructure()
+			ind = cs.StructuralMaterialIndex
+			cs.SetMaterialId(ind,nmat[0].Id)
+			w.SetCompoundStructure(cs)
+			count += 1
+	except:
+		pass
+TransactionManager.Instance.TransactionTaskDone()
+if count &gt; 0:
+	OUT = "Succesfuly changed %s materials." %count
+else:
+	OUT = "Failed to change any materials."</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="b3fd4cd1-ea93-4aea-8529-a0d9c78aaf0e" type="Dynamo.Nodes.Symbol" nickname="Input" x="22.1232483471658" y="4.10429938602061" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="floor/wall type(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="dbee08b9-6898-474e-b0b5-92ec1f5f0b2b" type="Dynamo.Nodes.Symbol" nickname="Input" x="30.4234952047217" y="63.0119183158565" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="material:Material" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="dc12631f-a5d0-40b5-82f4-ebf8773e287d" type="Dynamo.Nodes.Output" nickname="Output" x="383.40230891107" y="7.28863234321449" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="success?" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="b803659f-36d6-47d8-a0ef-9120a8aa00e4" start_index="0" end="dc12631f-a5d0-40b5-82f4-ebf8773e287d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b3fd4cd1-ea93-4aea-8529-a0d9c78aaf0e" start_index="0" end="b803659f-36d6-47d8-a0ef-9120a8aa00e4" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="dbee08b9-6898-474e-b0b5-92ec1f5f0b2b" start_index="0" end="b803659f-36d6-47d8-a0ef-9120a8aa00e4" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

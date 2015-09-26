@@ -1,0 +1,23 @@
+<Workspace Version="0.7.6.4256" X="188.530587513393" Y="411.781599833901" zoom="0.910063803931436" Name="Excel.ImportFirstWorksheet" ID="7894c016-76e0-438d-af7f-f49e96b2a995" Description="" Category="SpringNodes.Excel">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.DSFunction guid="6950cefb-6c0f-460a-9460-0802e87beb6f" type="Dynamo.Nodes.DSFunction" nickname="Excel.GetDataFromExcelWorksheet" x="886.171354237801" y="2.97137282270301" isVisible="true" isUpstreamVisible="true" lacing="Disabled" assembly="DSOffice.dll" function="DSOffice.Excel.GetDataFromExcelWorksheet@DSOffice.WorkSheet" />
+    <Dynamo.Nodes.DSFunction guid="dd6590db-b9ee-4007-82d9-a71d2415697a" type="Dynamo.Nodes.DSFunction" nickname="Excel.GetWorksheetsFromExcelWorkbook" x="418.206572348186" y="0.484493429414314" isVisible="true" isUpstreamVisible="true" lacing="Disabled" assembly="DSOffice.dll" function="DSOffice.Excel.GetWorksheetsFromExcelWorkbook@DSOffice.WorkBook" />
+    <Dynamo.Nodes.DSFunction guid="7bc8b27f-cbf9-43ed-8a58-42a197f86cc0" type="Dynamo.Nodes.DSFunction" nickname="List.FirstItem" x="712.988436429623" y="0.391522856456575" isVisible="true" isUpstreamVisible="true" lacing="Disabled" assembly="DSCoreNodes.dll" function="DSCore.List.FirstItem@var[]..[]" />
+    <Dynamo.Nodes.DSFunction guid="96d1c2f7-2c95-447d-beae-4ae0554ed8fb" type="Dynamo.Nodes.DSFunction" nickname="Excel.ReadExcelFile" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" assembly="DSOffice.dll" function="DSOffice.Excel.ReadExcelFile@string" />
+    <Dynamo.Nodes.Symbol guid="841f23db-f33f-439a-94b6-428fa1971535" type="Dynamo.Nodes.Symbol" nickname="Input" x="130.163632857554" y="-3.14663009051685" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="file" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="eb6f1071-75b6-4606-8e16-90e9f6d49fdd" type="Dynamo.Nodes.Output" nickname="Output" x="1191.1713542378" y="1.85313235094623" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+      <Symbol value="data" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="6950cefb-6c0f-460a-9460-0802e87beb6f" start_index="0" end="eb6f1071-75b6-4606-8e16-90e9f6d49fdd" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="dd6590db-b9ee-4007-82d9-a71d2415697a" start_index="0" end="7bc8b27f-cbf9-43ed-8a58-42a197f86cc0" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="7bc8b27f-cbf9-43ed-8a58-42a197f86cc0" start_index="0" end="6950cefb-6c0f-460a-9460-0802e87beb6f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="96d1c2f7-2c95-447d-beae-4ae0554ed8fb" start_index="0" end="dd6590db-b9ee-4007-82d9-a71d2415697a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="841f23db-f33f-439a-94b6-428fa1971535" start_index="0" end="96d1c2f7-2c95-447d-beae-4ae0554ed8fb" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+</Workspace>

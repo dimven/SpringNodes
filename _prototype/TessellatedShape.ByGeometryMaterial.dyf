@@ -1,0 +1,111 @@
+<Workspace Version="0.8.3.2564" X="44.8000000000001" Y="55.2" zoom="1" Name="TessellatedDirectShape.ByGeometryMaterial" Description="Creates a tessellated DirectShape element inside the Revit document." ID="7be48768-e1ab-4876-b705-3e8f0bc26b41" Category="SpringNodes.Revit.DirectShape">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cylinder" resolvedName="Autodesk.DesignScript.Geometry.Cylinder" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="0a511126-af16-41b2-9e2c-1b90e893257b" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="4">
+      <Script>import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+import Autodesk
+from Autodesk.Revit.DB import DirectShape, PlanarFace, TessellatedFace, TessellatedShapeBuilder, XYZ, ElementId
+
+clr.AddReference("System")
+import System
+from System.Collections.Generic import *
+
+_solid_ = UnwrapElement(IN[0])
+cat = UnwrapElement(IN[1])
+name1 = IN[2]
+mat = UnwrapElement(IN[3])
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+el1 = UnwrapElement(Revit.Elements.ImportInstance.ByGeometry(_solid_))
+trans = Autodesk.Revit.DB.SubTransaction(doc)
+trans.Start()
+opt1 = Autodesk.Revit.DB.Options()
+opt1.ComputeReferences = True
+geom1 = el1.get_Geometry(opt1)
+enum = geom1.GetEnumerator()
+enum.MoveNext()
+geom2 = enum.Current.GetInstanceGeometry()
+enum2 = geom2.GetEnumerator()
+enum2.MoveNext()
+s1 = enum2.Current
+sf1 = s1.Faces
+sf2 = []
+for s in sf1:
+	m1 = s.Triangulate(1)
+	n = m1.NumTriangles
+	for i in range(n):
+		t1 = m1.Triangle[i]
+		t2 = List[XYZ]()
+		t2.Add(t1.Vertex[0])
+		t2.Add(t1.Vertex[1])
+		t2.Add(t1.Vertex[2])
+		sf2.append(t2)
+ts1 = TessellatedShapeBuilder()
+ts1.OpenConnectedFaceSet(True)
+for i in range(len(sf2)):
+	t3 = TessellatedFace(sf2[i], mat.Id)
+	if t3.IsValidObject:
+		ts1.AddFace(t3)
+ts1.CloseConnectedFaceSet()
+target = Autodesk.Revit.DB.TessellatedShapeBuilderTarget.Solid
+fall = Autodesk.Revit.DB.TessellatedShapeBuilderFallback.Abort
+result = ts1.Build(target, fall, ElementId.InvalidElementId)
+ts1.Clear()
+s2 = result.GetGeometricalObjects()
+ds1 = DirectShape.CreateElement(doc,cat.Id,"Dynamo","")
+if ds1.IsValidGeometry(s2[0]):
+	ds1.SetShape(s2)
+	ds1.SetName(name1)
+	OUT = ds1.ToDSType(False)
+trans.Commit()
+trans.Start()
+doc.Delete(el1.Id)
+trans.Commit()
+TransactionManager.Instance.TransactionTaskDone()
+</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="db536abd-20c1-4aef-8722-f4608f3c282d" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Solid" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="fa20270b-c064-4c5c-98bb-ecb56e5563e9" type="Dynamo.Nodes.Symbol" nickname="Input" x="-8.80000000000007" y="94" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Category" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="f9293bcc-2fc7-49e1-987c-bc174502f5a8" type="Dynamo.Nodes.Symbol" nickname="Input" x="0.799999999999955" y="179.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Name" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="1dbac3e8-32f1-4d4a-bfed-6d2f8e902a9f" type="Dynamo.Nodes.Symbol" nickname="Input" x="-12.8" y="260.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Material" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="de354628-3dee-47a7-91c5-f2be2b56df26" type="Dynamo.Nodes.Output" nickname="Output" x="449.8" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="DirectShape" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="0a511126-af16-41b2-9e2c-1b90e893257b" start_index="0" end="de354628-3dee-47a7-91c5-f2be2b56df26" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="db536abd-20c1-4aef-8722-f4608f3c282d" start_index="0" end="0a511126-af16-41b2-9e2c-1b90e893257b" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="fa20270b-c064-4c5c-98bb-ecb56e5563e9" start_index="0" end="0a511126-af16-41b2-9e2c-1b90e893257b" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f9293bcc-2fc7-49e1-987c-bc174502f5a8" start_index="0" end="0a511126-af16-41b2-9e2c-1b90e893257b" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1dbac3e8-32f1-4d4a-bfed-6d2f8e902a9f" start_index="0" end="0a511126-af16-41b2-9e2c-1b90e893257b" end_index="3" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

@@ -1,0 +1,19 @@
+<Workspace Version="0.8.2.2392" X="87.8755" Y="124.239" zoom="1.1575" Name="Fn.ElementsOfCategory" Description="Same as the built in &quot;All Elements of Category&quot; but can act as a function object." ID="178cbf10-efa4-4b29-aba7-2f4b046d99d4" Category="SpringNodes.SmartCopyMon">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSRevitNodesUI.ElementsOfCategory guid="b025bda2-3425-4501-92c3-ec31ad6b3c02" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Output guid="21815596-dfc3-45e6-b959-d807a2d70891" type="Dynamo.Nodes.Output" nickname="Output" x="499.4" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="elements" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="39247597-7478-4fe5-a4f7-e86edc62f172" type="Dynamo.Nodes.Symbol" nickname="Input" x="123.6" y="-2.80000000000004" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="category" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="b025bda2-3425-4501-92c3-ec31ad6b3c02" start_index="0" end="21815596-dfc3-45e6-b959-d807a2d70891" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="39247597-7478-4fe5-a4f7-e86edc62f172" start_index="0" end="b025bda2-3425-4501-92c3-ec31ad6b3c02" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

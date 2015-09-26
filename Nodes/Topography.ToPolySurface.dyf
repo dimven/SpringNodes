@@ -1,0 +1,28 @@
+<Workspace Version="0.8.2.2392" X="-29.2604000674989" Y="26.1404693597227" zoom="0.712594832628488" Name="Topography.ToPolySurface" Description="Optimized algorithm for converting topographies into polysurfaces. Tested with topographies containing up to 40 000 points. &#xD;&#xA;Warning conversions of such mangitudes consume a lot of resources and are sub-optimal. Ensure that you have plenty at least 8GB of ram and patience before attempting such a conversion, otherwise your Dynamo and Revit instances may crash." ID="b34e0607-e2ef-4e43-8d24-3f79407b545e" Category="SpringNodes.Revit.Topography">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Topography" resolvedName="Revit.Elements.Topography" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a0be8209-4e9f-480d-b08d-f61623fe5b18" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="463.732819147441" y="456.843491750683" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="Mesh2PS(t1.Mesh,f1,10);" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="8d62b4d1-d05c-419a-8d57-86342142a9b6" type="Dynamo.Nodes.DSFunction" nickname="PolySurface.ByJoinedSurfaces" x="250" y="538.599416943318" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.PolySurface.ByJoinedSurfaces@Autodesk.DesignScript.Geometry.Surface[]" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d18e4573-132e-4c0d-84c5-48030241f512" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="416.596592471192" y="33.6797278075582" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def transpose1(l1,l2,l3)&#xA;{&#xA;return = {l1,l2,l3};&#xA;};&#xA;&#xA;def Mesh2PS(m1,fn1,n)&#xA;{&#xA;vp = m1.VertexPositions;&#xA;fi = m1.FaceIndices;&#xA;ptslist = transpose1(vp[fi.A],vp[fi.B],vp[fi.C]);&#xA;sflist = Surface.ByPerimeterPoints(ptslist&lt;1&gt;);&#xA;return = [Imperative]&#xA;{&#xA;while (Count(sflist) &gt; n)&#xA;{&#xA;sflist = List.Chop(sflist,n);&#xA;sflist = __Map(fn1,sflist);&#xA;}&#xA;return = PolySurface.ByJoinedSurfaces(sflist);&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="15844f37-4697-43cf-b7f3-06e600945092" type="Dynamo.Nodes.Symbol" nickname="Input" x="225.40402037482" y="455.907679219658" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="topography:Topography" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="b5115612-ece4-4b77-a5ce-e80606a0e267" type="Dynamo.Nodes.Output" nickname="Output" x="745.781854844999" y="452.567194374118" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="polysurface" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="a0be8209-4e9f-480d-b08d-f61623fe5b18" start_index="0" end="b5115612-ece4-4b77-a5ce-e80606a0e267" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8d62b4d1-d05c-419a-8d57-86342142a9b6" start_index="0" end="a0be8209-4e9f-480d-b08d-f61623fe5b18" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="15844f37-4697-43cf-b7f3-06e600945092" start_index="0" end="a0be8209-4e9f-480d-b08d-f61623fe5b18" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="47309.21875" eyeY="21807.443359375" eyeZ="15891.6376953125" lookX="-21261.064453125" lookY="-27833.408203125" lookZ="-31759.3984375" />
+  </Cameras>
+</Workspace>

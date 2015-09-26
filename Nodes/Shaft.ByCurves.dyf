@@ -1,0 +1,89 @@
+<Workspace Version="0.8.2.2392" X="293.72162012959" Y="130.663663552916" zoom="1.33823125" Name="Shaft.ByCurves" Description="Creates a shaft opening. The top level MUST be higher than the base level for a successful execution. You can either provide one base and top level for all shafts or have unique levels for each shaft instance." ID="e0685795-e041-44d2-a4e1-5c95d986647f" Category="SpringNodes.Revit.Openings">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="4f2f7a80-037e-44bf-8df9-fab208c59b01" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc =  DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+hole = UnwrapElement(IN[0])
+base_lvl = UnwrapElement(tolist(IN[1]))
+top_lvl = UnwrapElement(tolist(IN[2]))
+
+openings = []
+newhl = []
+
+if not any(hasattr(h,"__iter__") for h in hole):
+	hole = [hole]
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in xrange(len(hole)):
+	z = CurveArray()
+	[z.Append(j.ToRevitType()) for j in hole[i] ]
+	newhl.append(z)
+if len(base_lvl) == 1 and len(top_lvl) == 1 :
+	for h in newhl:
+		try:
+			x = doc.Create.NewOpening(base_lvl[0], top_lvl[0], h)
+			openings.append(x.ToDSType(False))
+		except:
+			openings.append([])
+else:
+	for h, b, t in zip(newhl, base_lvl, top_lvl):
+		try:
+			x = doc.Create.NewOpening(b, t, h)
+			openings.append(x.ToDSType(False))
+		except:
+			openings.append([])
+TransactionManager.Instance.TransactionTaskDone()
+if len(openings) == 1:
+	OUT = openings[0]
+else:
+	OUT = openings</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="9c00de93-062c-4451-97bf-d2d2d8528c53" type="Dynamo.Nodes.Symbol" nickname="Input" x="7.77145205658587" y="-25.7055721871687" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="CurveSublists [][]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="cd875643-4c26-498c-9607-5e0cb85160c1" type="Dynamo.Nodes.Symbol" nickname="Input" x="30.4880042219908" y="34.6238271599172" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="base level(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="37b1228e-53d6-47ee-b6f8-79815f8098fb" type="Dynamo.Nodes.Symbol" nickname="Input" x="40.0528682916349" y="102.724678563589" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="top level(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="580b5e86-996c-46b6-91b5-1c03a1cd2e46" type="Dynamo.Nodes.Output" nickname="Output" x="408.55152369966" y="0.597804004352724" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="Opening" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="4f2f7a80-037e-44bf-8df9-fab208c59b01" start_index="0" end="580b5e86-996c-46b6-91b5-1c03a1cd2e46" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9c00de93-062c-4451-97bf-d2d2d8528c53" start_index="0" end="4f2f7a80-037e-44bf-8df9-fab208c59b01" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="cd875643-4c26-498c-9607-5e0cb85160c1" start_index="0" end="4f2f7a80-037e-44bf-8df9-fab208c59b01" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="37b1228e-53d6-47ee-b6f8-79815f8098fb" start_index="0" end="4f2f7a80-037e-44bf-8df9-fab208c59b01" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

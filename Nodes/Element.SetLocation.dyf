@@ -1,0 +1,83 @@
+<Workspace Version="0.8.2.2392" X="76.081820176055" Y="86.1048432902765" zoom="1.78359936238281" Name="Element.SetLocation" Description="Attempts to modify the location of the input element. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="SpringNodes.Revit.Utility">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="61e46993-03f6-4a2e-9726-c414ed48bb4e" type="Dynamo.Nodes.Symbol" nickname="Input" x="85.6" y="-0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="ae6130ca-5464-4075-8f5d-f9240228246a" type="Dynamo.Nodes.Symbol" nickname="Input" x="76" y="62" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="location(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="75586c6e-832e-4bda-97b9-da911b3c771e" type="Dynamo.Nodes.Output" nickname="Output" x="378.498087128763" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Output>
+    <DSIronPythonNode.PythonNode guid="c2d8deac-6440-4913-95bd-5d08d2a6f123" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="222.445792376673" y="-0.150734336487744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc =  DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import LocationCurve, LocationPoint, Wall, WallUtils
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+elements = UnwrapElement(tolist(IN[0]))
+newloc = UnwrapElement(tolist(IN[1]))
+out1 = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+for e,l in zip(elements, newloc):
+	try:
+		iswall = False
+		if e.GetType() == Wall:
+			WallUtils.DisallowWallJoinAtEnd(e,0)
+			WallUtils.DisallowWallJoinAtEnd(e,1)
+			iswall = True
+		newloc = l.ToRevitType()
+		oldloc = e.Location
+		if oldloc.GetType() == LocationCurve:
+			oldloc.Curve = newloc
+		if oldloc.GetType() == LocationPoint:
+			oldloc.Point = newloc
+		if iswall:
+			WallUtils.AllowWallJoinAtEnd(e,0)
+			WallUtils.AllowWallJoinAtEnd(e,1)
+		out1.append(e.ToDSType(True))
+	except:
+		out1.append([])
+TransactionManager.Instance.TransactionTaskDone()
+
+if len(out1) == 1 :
+	OUT = out1[0]
+else:
+	OUT = out1</Script>
+    </DSIronPythonNode.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="61e46993-03f6-4a2e-9726-c414ed48bb4e" start_index="0" end="c2d8deac-6440-4913-95bd-5d08d2a6f123" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ae6130ca-5464-4075-8f5d-f9240228246a" start_index="0" end="c2d8deac-6440-4913-95bd-5d08d2a6f123" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c2d8deac-6440-4913-95bd-5d08d2a6f123" start_index="0" end="75586c6e-832e-4bda-97b9-da911b3c771e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

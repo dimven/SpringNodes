@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="158.654079502411" Y="206.856653304711" zoom="1.130842140625" Name="DirectShape.ByGeometry" Description="Attempts to create a DirectShape element inside the Revit document. It is based on an alternative process that uses a SAT inport and can produce smooth surfaces." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="0.8.2.2392" X="164.234187798271" Y="122.721604847266" zoom="1.31537540500821" Name="DirectShape.ByGeometry" Description="Attempts to create a DirectShape element inside the Revit document. It is based on an alternative process that uses a SAT inport and can produce smooth surfaces." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -26,8 +26,8 @@ clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 clr.AddReference("RevitAPI")
-import Autodesk
-from Autodesk.Revit.DB import DirectShape, PlanarFace, TessellatedFace, TessellatedShapeBuilder, XYZ, ElementId
+#import Autodesk
+from Autodesk.Revit.DB import *
 
 clr.AddReference("System")
 import System
@@ -38,9 +38,9 @@ cat = UnwrapElement(IN[1])
 name1 = IN[2]
 el1 = UnwrapElement(Revit.Elements.ImportInstance.ByGeometry(_solid_))
 TransactionManager.Instance.EnsureInTransaction(doc)
-trans = Autodesk.Revit.DB.SubTransaction(doc)
+trans = SubTransaction(doc)
 trans.Start()
-opt1 = Autodesk.Revit.DB.Options()
+opt1 = Options()
 opt1.ComputeReferences = True
 geom1 = el1.get_Geometry(opt1)
 enum = geom1.GetEnumerator()
@@ -51,15 +51,16 @@ enum2.MoveNext()
 s1 = enum2.Current
 ds1 = DirectShape.CreateElement(doc,cat.Id,"Dynamo","")
 if ds1.IsValidGeometry(s1):
+	dsType1 = DirectShapeType.Create(doc, "Type %s" %name1, cat.Id)
 	ds1.SetShape([s1])
 	ds1.SetName(name1)
+	ds1.SetTypeId(dsType1.Id)
 	OUT = ds1.ToDSType(False)
 trans.Commit()
 trans.Start()
 doc.Delete(el1.Id)
 trans.Commit()
-TransactionManager.Instance.TransactionTaskDone()
-</Script>
+TransactionManager.Instance.TransactionTaskDone()</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="bba51f7d-0a2b-42b5-93e3-3dd8e91b8084" type="Dynamo.Nodes.Symbol" nickname="Input" x="-19.1575547499304" y="36.1275391905094" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="category:Category" />
@@ -84,6 +85,6 @@ TransactionManager.Instance.TransactionTaskDone()
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
   </Cameras>
 </Workspace>

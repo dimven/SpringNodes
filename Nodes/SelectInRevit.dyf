@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-137.430081242077" Y="188.060823172994" zoom="1.66537098414077" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="-518.561480514739" Y="144.78939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -16,6 +16,7 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
 uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
 clr.AddReference("RevitNodes")
@@ -24,6 +25,8 @@ clr.ImportExtensions(Revit.Elements)
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import ElementId
+clr.AddReference("RevitAPIUI")
+from Autodesk.Revit.UI.Selection import SelElementSet
 
 clr.AddReference("System")
 from System.Collections.Generic import List as cList
@@ -35,13 +38,23 @@ def tolist(obj1):
 		return [obj1]
 
 elements = UnwrapElement(tolist(IN[0]))
-try:
-	ids1 = [e.Id for e in elements]
+
+if app.VersionName == "Autodesk Revit 2014":
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	sel1  = uidoc.Selection.Elements
+	for e in elements: 
+		try:(sel1.Add(e))
+		except: pass
+	OUT = "%s elements selected in Revit." %sel1.Size
+	TransactionManager.Instance.TransactionTaskDone()
+else:
+	ids1 = []
+	for e in elements:
+		try:(ids1.append(e.Id))
+		except: pass
 	ids2 = cList[ElementId](ids1)
 	uidoc.Selection.SetElementIds(ids2)
-	OUT = "%s elements selected in Revit." %ids2.Count
-except:
-	OUT = "list contains non-elements"</Script>
+	OUT = "%s elements selected in Revit." %ids2.Count</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="86d0140e-e8ac-414a-a132-476259f6293c" type="Dynamo.Nodes.Symbol" nickname="Input" x="101.626680739969" y="0.597804004352781" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="element(s)" />

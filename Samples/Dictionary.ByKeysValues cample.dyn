@@ -1,0 +1,43 @@
+<Workspace Version="0.8.2.2392" X="25.7266161359523" Y="-29.4744417872374" zoom="0.827702570441191" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Function guid="7fb6f03d-b2a6-4ad4-a072-c40894601dea" type="Dynamo.Nodes.Function" nickname="Dictionary.ByKeysValues" x="941.546239869445" y="120.95966494987" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f73b43c1-353a-4b03-a337-7e2fb6c7250c" />
+      <Name value="Dictionary.ByKeysValues" />
+      <Description value="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The fitst list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the coresponding value to the input key." />
+      <Inputs>
+        <Input value="keys" />
+        <Input value="values" />
+        <Input value="search keys" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="26ec2756-db6c-4f3c-b15a-e70ea6f9cb07" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="139.4" y="103.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="{&quot;my cats&quot;, &quot;my dogs&quot;, &quot;my fish&quot;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d60ead79-40c7-4065-9d8f-fddb94ea4f0f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-9.84766628131695" y="185.222552662001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="{{&quot;Alma&quot;, &quot;Maca&quot;, &quot;Besi&quot;}, {&quot;Lucky&quot;, &quot;Leo&quot;, &quot;Terra&quot;},&#xA;{&quot;Smokey&quot;, &quot;Dori&quot;, &quot;Skippy&quot;}};" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="c1ce8782-e330-4177-9e28-743f5e02d4fc" type="Dynamo.Nodes.DSFunction" nickname="List.Cycle" x="517.977648889127" y="272.633614610561" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Cycle@var[]..[],int" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="1eb20cc0-8abe-4055-ab62-27b13504b78d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="351.847666281317" y="303.185956211336" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="1000;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="fd8b0514-6678-4131-84c2-18d0f4b185c1" type="Dynamo.Nodes.DSFunction" nickname="Flatten" x="678.377235888429" y="274.892763723227" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="BuiltIn" function="Flatten@var[]..[]" />
+    <Dynamo.Nodes.DSFunction guid="e6d879a7-11c2-44b9-b2cd-f516ae3acc11" type="Dynamo.Nodes.DSFunction" nickname="List.Shuffle" x="818.444480873736" y="271.504040054228" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Shuffle@var[]..[]" />
+    <Dynamo.Nodes.Watch guid="d877d363-f9e5-41cd-b6dd-e7549174b1b8" type="Dynamo.Nodes.Watch" nickname="Watch" x="799.63998079637" y="359.323797912815" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Watch guid="212c5bfd-979d-4799-839d-e2b0bf09e62e" type="Dynamo.Nodes.Watch" nickname="Watch" x="1131.94393527324" y="116.650159664344" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="7fb6f03d-b2a6-4ad4-a072-c40894601dea" start_index="0" end="212c5bfd-979d-4799-839d-e2b0bf09e62e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="26ec2756-db6c-4f3c-b15a-e70ea6f9cb07" start_index="0" end="7fb6f03d-b2a6-4ad4-a072-c40894601dea" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="26ec2756-db6c-4f3c-b15a-e70ea6f9cb07" start_index="0" end="c1ce8782-e330-4177-9e28-743f5e02d4fc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="d60ead79-40c7-4065-9d8f-fddb94ea4f0f" start_index="0" end="7fb6f03d-b2a6-4ad4-a072-c40894601dea" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c1ce8782-e330-4177-9e28-743f5e02d4fc" start_index="0" end="fd8b0514-6678-4131-84c2-18d0f4b185c1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1eb20cc0-8abe-4055-ab62-27b13504b78d" start_index="0" end="c1ce8782-e330-4177-9e28-743f5e02d4fc" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="fd8b0514-6678-4131-84c2-18d0f4b185c1" start_index="0" end="e6d879a7-11c2-44b9-b2cd-f516ae3acc11" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e6d879a7-11c2-44b9-b2cd-f516ae3acc11" start_index="0" end="7fb6f03d-b2a6-4ad4-a072-c40894601dea" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e6d879a7-11c2-44b9-b2cd-f516ae3acc11" start_index="0" end="d877d363-f9e5-41cd-b6dd-e7549174b1b8" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

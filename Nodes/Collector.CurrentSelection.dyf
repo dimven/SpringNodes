@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="22.3188654458399" Y="118.315492748419" zoom="2.01045961824633" Name="Collector.CurrentSelection" Description="Gets the currently selected elements. Connect a boolean switch to refresh the selection." ID="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="22.3188654458399" Y="118.315492748419" zoom="2.01045961824633" Name="Collector.CurrentSelection" Description="Gets the currently selected elements. Connect a boolean switch to refresh the selection. Compatible with Revit 2016" ID="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -13,13 +13,20 @@ clr.ImportExtensions(Revit.Elements)
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
 uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
 uidoc=uiapp.ActiveUIDocument
 
 bool = IN[0]
-not1 = not bool
-sel=uidoc.Selection.Elements
-OUT =[s.ToDSType(True) for s in sel]</Script>
+
+if app.VersionName == "Autodesk Revit 2016":
+	selid = uidoc.Selection.GetElementIds()
+	elements = [doc.GetElement(id).ToDSType(True) for id in selid]
+	OUT = elements
+else:
+	sel = uidoc.Selection.Elements
+	OUT = [s.ToDSType(True) for s in sel]</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="c9c8a6cc-93a7-47c4-8fbe-3f4d835ac76c" type="Dynamo.Nodes.Symbol" nickname="Input" x="26.7809029428663" y="1.24928152849356" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="refresh:bool = true" />

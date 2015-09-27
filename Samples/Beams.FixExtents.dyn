@@ -1,0 +1,31 @@
+<Workspace Version="0.8.2.2392" X="-58.7306219183259" Y="-168.289217574451" zoom="0.954042924882812" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSRevitNodesUI.ElementsOfCategory guid="0a5aab49-1f2b-4c3c-a69b-bc7b2950699d" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="391.595886253342" y="316.0724485059" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <DSRevitNodesUI.Categories guid="ae9779a5-a5b8-40f6-ac7e-f55d7874443e" type="DSRevitNodesUI.Categories" nickname="Categories" x="168.166080637791" y="310.353226043697" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="835:StructuralFraming" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a4826962-34dc-436a-8996-31c25ab0e40e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="486.082935506137" y="383.770733876534" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="600;" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="2b5c2259-61c8-488a-92d8-a87084ebfc8b" type="Dynamo.Nodes.Function" nickname="Beams.FixExtents" x="609.226240210512" y="338.17313106598" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7ae83d0d-faed-43ba-ae85-fdd942b47e2d" />
+      <Name value="Beams.FixExtents" />
+      <Description value="Detects all beams from the input list with broken extents(actual length - cut length &lt;  margin) and attemts to correct them." />
+      <Inputs>
+        <Input value="beams" />
+        <Input value="margin" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="0a5aab49-1f2b-4c3c-a69b-bc7b2950699d" start_index="0" end="2b5c2259-61c8-488a-92d8-a87084ebfc8b" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ae9779a5-a5b8-40f6-ac7e-f55d7874443e" start_index="0" end="0a5aab49-1f2b-4c3c-a69b-bc7b2950699d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a4826962-34dc-436a-8996-31c25ab0e40e" start_index="0" end="2b5c2259-61c8-488a-92d8-a87084ebfc8b" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

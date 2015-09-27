@@ -1,0 +1,47 @@
+<Workspace Version="0.8.2.2392" X="624.017862850272" Y="197.643621662916" zoom="0.8131456821731" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane.XY" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Function guid="aa64c975-83d3-47b8-b5de-c7d8b3b4714c" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="73.6108113136287" y="-37.0870715022199" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="1" default="True" />
+      <ID value="2416ec21-d9a2-4c67-a742-20d5cf82446e" />
+      <Name value="DirectShape.ByGeometry" />
+      <Description value="Attempts to create a DirectShape element inside the Revit document. It is based on an alternative process that uses a SAT inport and can produce smooth surfaces." />
+      <Inputs>
+        <Input value="category" />
+        <Input value="name" />
+        <Input value="geometry" />
+      </Inputs>
+      <Outputs>
+        <Output value="DirectShape" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSRevitNodesUI.Categories guid="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" type="DSRevitNodesUI.Categories" nickname="Categories" x="-158.888797678265" y="-109.043163193133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="371:GenericModel" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-142.959819253361" y="-17.9438349253207" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;My car&quot;;" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="372635db-d34e-42a7-9932-c8b426f0833d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-584.189640692951" y="-69.3254497454216" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="r1 = Rectangle.ByWidthLength(3000,4000);&#xA;pts1 = r1.Points;&#xA;cpt = r1.Center();&#xA;s1 = Sphere.ByCenterPointRadius(pts1,800);&#xA;s2 = Sphere.ByCenterPointRadius(cpt,1700).&#xA;Translate(Vector.ByCoordinates(0,0,500));&#xA;s3 = s2.Scale(Plane.XY(),1,2,0.8);&#xA;c1 = Cuboid.ByLengths(2500,2000,1500).&#xA;Translate(Vector.ByCoordinates(0,1000,1500));&#xA;solid = s3.UnionAll(Flatten({s1,c1}));" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="1e932680-c19b-445b-a6c7-6dcda1ca32bc" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="-154.879856613629" y="84.2315014638224" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
+    <Dynamo.Nodes.DSFunction guid="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" type="Dynamo.Nodes.DSFunction" nickname="Element.SetParameterByName" x="519.200811146948" y="-36.533339299426" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.SetParameterByName@string,var" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="805a1a18-4c65-4052-bad7-628da9d888ef" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="283.112330149359" y="22.4870746787072" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Comments&quot;;&#xA;&quot;This is my car!&quot;;" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="aa64c975-83d3-47b8-b5de-c7d8b3b4714c" start_index="0" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" start_index="0" end="aa64c975-83d3-47b8-b5de-c7d8b3b4714c" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" start_index="0" end="aa64c975-83d3-47b8-b5de-c7d8b3b4714c" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="372635db-d34e-42a7-9932-c8b426f0833d" start_index="7" end="1e932680-c19b-445b-a6c7-6dcda1ca32bc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1e932680-c19b-445b-a6c7-6dcda1ca32bc" start_index="0" end="aa64c975-83d3-47b8-b5de-c7d8b3b4714c" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="805a1a18-4c65-4052-bad7-628da9d888ef" start_index="0" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="805a1a18-4c65-4052-bad7-628da9d888ef" start_index="1" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="-12642.2653632166" eyeY="6014.3198477769" eyeZ="7649.96765235729" lookX="12656.1633891512" lookY="-3189.59482865791" lookZ="-8861.94100989748" />
+  </Cameras>
+</Workspace>

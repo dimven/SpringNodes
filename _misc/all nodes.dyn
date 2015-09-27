@@ -1,0 +1,687 @@
+<Workspace Version="0.8.2.2392" X="8.40282611186046" Y="72.8186202546843" zoom="0.329035879883409" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Function guid="7fb713df-d3ca-4dc6-8537-f8b6e4fdc49d" type="Dynamo.Nodes.Function" nickname="Dictionary.ByKeysValues" x="331.2" y="186.4" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f73b43c1-353a-4b03-a337-7e2fb6c7250c" />
+      <Name value="Dictionary.ByKeysValues" />
+      <Description value="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The fitst list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the coresponding value to the input key." />
+      <Inputs>
+        <Input value="keys" />
+        <Input value="values" />
+        <Input value="search keys" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="130b62d6-6867-4dcd-b883-9852c8cb980b" type="Dynamo.Nodes.Function" nickname="Filter.ByClassName" x="331.6" y="315.2" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="3760b286-a8de-438d-9238-c6755dc9c862" />
+      <Name value="Filter.ByClassName" />
+      <Description value="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." />
+      <Inputs>
+        <Input value="object(s)" />
+        <Input value="Class name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="in" />
+        <Output value="out" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="d8695876-7770-496c-a9b4-4fc52f95cb59" type="Dynamo.Nodes.Function" nickname="Number.ToString" x="356.8" y="418.4" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7138be89-af7b-4232-b938-e63a5fe78240" />
+      <Name value="Number.ToString" />
+      <Description value="Converts the input number(s) to string. Can process lists." />
+      <Inputs>
+        <Input value="num" />
+      </Inputs>
+      <Outputs>
+        <Output value="str" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="4ae7dd52-ac54-4edd-93f7-91262dda9411" type="Dynamo.Nodes.Function" nickname="Object.Class" x="345.2" y="496" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="e4e8406d-3b77-4822-897b-3f9c08e1cd45" />
+      <Name value="Object.Class" />
+      <Description value="Gets the input object's class name. Can process lists." />
+      <Inputs>
+        <Input value="obj" />
+      </Inputs>
+      <Outputs>
+        <Output value="class(str)" />
+        <Output value="container" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="63182edb-bc11-4fad-9820-6de8050a5ec9" type="Dynamo.Nodes.Function" nickname="List.DropFirstLast" x="585.254492456565" y="420.733882072054" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="2ff558d0-5868-45f0-bb84-67ad6f0526bd" />
+      <Name value="List.DropFirstLast" />
+      <Description value="Removes the first and last items from the list" />
+      <Inputs>
+        <Input value="list" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="af8c5dce-7489-4f76-a25f-d1e3917ec009" type="Dynamo.Nodes.Function" nickname="List.DropLast" x="596.054492456565" y="187.715746770038" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="81a5935d-f8af-456c-abb5-ebf83ec379c6" />
+      <Name value="List.DropLast" />
+      <Description value="Removes the last value of the list." />
+      <Inputs>
+        <Input value="list" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="763be77a-8071-436d-9ddf-b53c88216be4" type="Dynamo.Nodes.Function" nickname="List.GetEven" x="596.054492456565" y="265.388458537377" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="74394382-ef3e-4fb8-9f0d-906b49958dae" />
+      <Name value="List.GetEven" />
+      <Description value="Gets even indices from the list." />
+      <Inputs>
+        <Input value="list" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="35ee488f-fc2f-4eb1-9b26-cac4a7b697ee" type="Dynamo.Nodes.Function" nickname="List.GetOdd" x="596.054492456565" y="343.061170304715" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="bc2af492-c052-4c7d-b690-af327478a833" />
+      <Name value="List.GetOdd" />
+      <Description value="Gets the odd indices from the list." />
+      <Inputs>
+        <Input value="list" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="bd0ed63f-19a0-4e90-b572-5a86f3e10343" type="Dynamo.Nodes.Function" nickname="List.ShiftIndices+" x="574.854492456565" y="498.406593839393" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="781add30-6975-417e-8655-20ea02cc2eb5" />
+      <Name value="List.ShiftIndices+" />
+      <Description value="The built in node fails if the shift number is greater than the lenght of the list. This node acts as a work-around." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="ammount" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="d0db5ad6-f364-4fd7-aa28-5f4f6840bc25" type="Dynamo.Nodes.Function" nickname="File.Size" x="788.060991532161" y="424.895537728617" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="0672c281-9887-40f9-886e-248abb55564b" />
+      <Name value="File.Size" />
+      <Description value="Checks the file size. Provide a file path as a string." />
+      <Inputs>
+        <Input value="path(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="size" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="90c01be8-3df3-451e-a583-5f477ad7bd2b" type="Dynamo.Nodes.Function" nickname="Math.AlmostEqual" x="779.960871665321" y="294.009494896759" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="2" default="True" />
+      <ID value="cc115a30-0b40-4ebe-806a-3e9ee42e8a09" />
+      <Name value="Math.AlmostEqual" />
+      <Description value="Checks if a number is almost equal to a value with a specified tollerance." />
+      <Inputs>
+        <Input value="a" />
+        <Input value="b" />
+        <Input value="tolerance" />
+      </Inputs>
+      <Outputs>
+        <Output value="bool" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="b383c64f-6361-4071-8636-772e35817fd4" type="Dynamo.Nodes.Function" nickname="Fn.ElementsOfCategory" x="1010.50014770858" y="373.121896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="178cbf10-efa4-4b29-aba7-2f4b046d99d4" />
+      <Name value="Fn.ElementsOfCategory" />
+      <Description value="Same as the built in &quot;All Elements of Category&quot; but can act as a function object." />
+      <Inputs>
+        <Input value="category" />
+      </Inputs>
+      <Outputs>
+        <Output value="elements" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="ffe6fd2c-55ee-4cce-af1c-d321fb75eb76" type="Dynamo.Nodes.Function" nickname="Input.Wait" x="1009.70014770858" y="553.921896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="10e44f91-a8da-4f5e-82ca-3e3489fd906f" />
+      <Name value="Input.Wait" />
+      <Description value="Waits for all inputs to be completed before continuing the execution process.Part of the SmartCopyMon workflow." />
+      <Inputs>
+        <Input value="WaitForMe" />
+        <Input value="Output" />
+      </Inputs>
+      <Outputs>
+        <Output value="Output" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="3305f982-2c8e-454f-8326-ddd3743e74d9" type="Dynamo.Nodes.Function" nickname="NullAllIndicesOf" x="1027.30014770858" y="657.121896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="858e6bd7-c0fa-4568-a225-ef815e68f8e3" />
+      <Name value="NullAllIndicesOf" />
+      <Description value="list all of the indices of a list that match the specified value. Capable of handling null values, part of the SmartCopyMonitor workflow." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="value" />
+      </Inputs>
+      <Outputs>
+        <Output value="indices" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="480b8038-5228-4ff1-ab15-7906c1d9b279" type="Dynamo.Nodes.Function" nickname="NullGetParameter" x="1016.50014770858" y="889.121896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="988751e9-88e3-435e-bde7-6a060f655b27" />
+      <Name value="NullGetParameter" />
+      <Description value="Similar to the built in node.Capable of handling null values, part of the SmartCopyMonitor workflow." />
+      <Inputs>
+        <Input value="element" />
+        <Input value="parameter" />
+      </Inputs>
+      <Outputs>
+        <Output value="value" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="1aa05508-57da-4a62-9e94-e3f740a7e6be" type="Dynamo.Nodes.Function" nickname="NullIndexOf" x="1022.90014770858" y="166.721896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f2608b6c-4c8e-427d-aae4-14d8bde6e8d9" />
+      <Name value="NullIndexOf" />
+      <Description value="Similar to the bult-in node but provides a null value instead of -1 of failure. Part of the SmartCopyMonitor workflow." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="element" />
+      </Inputs>
+      <Outputs>
+        <Output value="index" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="8858f097-f480-4bb0-b655-afcfc903d7a6" type="Dynamo.Nodes.Function" nickname="NullReorder" x="1034.50014770858" y="269.921896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="c0f559dc-e1b2-4b5e-93b2-90e8b9c33397" />
+      <Name value="NullReorder" />
+      <Description value="Simiar to the built-in function with the difference that it can handle null indices. Part of the SmartCopyMonitor workflow." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="indices" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="7963b505-1ca7-409e-ab85-aa37e10b7498" type="Dynamo.Nodes.Function" nickname="NullSetDifference" x="1036.10014770858" y="450.721896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7fe51ad1-1d2f-4b67-b0ff-c69bcc927785" />
+      <Name value="NullSetDifference" />
+      <Description value="Similar to the built in node, with a built-in safety for null values. Part of the SmartCopyMonitor workflow." />
+      <Inputs>
+        <Input value="list1" />
+        <Input value="list2" />
+      </Inputs>
+      <Outputs>
+        <Output value="list" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="81f0b6ae-897c-42f5-833c-3e32cac826a7" type="Dynamo.Nodes.Function" nickname="NullSetParameter" x="1007.70014770858" y="760.321896989265" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f45a0154-7a64-426c-8f02-b4225616197a" />
+      <Name value="NullSetParameter" />
+      <Description value="Similar to the built-in function but with the ability to handle null values. Part of the SmartCopyMon workflow." />
+      <Inputs>
+        <Input value="element" />
+        <Input value="parameter" />
+        <Input value="value" />
+      </Inputs>
+      <Outputs>
+        <Output value="element" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="03627edf-e1ed-4415-b18d-9a62b3c1d679" type="Dynamo.Nodes.Function" nickname="Ln2Str" x="1312.78469484207" y="399.104911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6c712c67-329c-4499-a399-d1cedd2b45bf" />
+      <Name value="Ln2Str" />
+      <Description value="Serilize a geometry line to a string for use in Revit parameters" />
+      <Inputs>
+        <Input value="line(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="string" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="170b0452-f49e-4149-9e04-733d5f6e218e" type="Dynamo.Nodes.Function" nickname="Pt2Str" x="1307.98469484207" y="166.304911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="0183b651-93d4-4495-93ad-a87b119c7f91" />
+      <Name value="Pt2Str" />
+      <Description value="Serilize a geometry point to a string for use in Revit parameters" />
+      <Inputs>
+        <Input value="point(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="string" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="c0fd3123-498f-4548-8343-73e021bda22a" type="Dynamo.Nodes.Function" nickname="Str2Ln" x="1321.98469484207" y="243.904911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="95425f93-d15f-4887-b341-c0e64bd3efce" />
+      <Name value="Str2Ln" />
+      <Description value="De-serilize a Revit parameter string into a geometric line." />
+      <Inputs>
+        <Input value="str" />
+      </Inputs>
+      <Outputs>
+        <Output value="line(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="d77678a8-2cf4-4b35-942b-fdf9740e319b" type="Dynamo.Nodes.Function" nickname="Str2Pt" x="1317.18469484207" y="321.504911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5" />
+      <Name value="Str2Pt" />
+      <Description value="De-serilize a Revit parameter string into a geometric point." />
+      <Inputs>
+        <Input value="str" />
+      </Inputs>
+      <Outputs>
+        <Output value="point(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="c6e120ea-2d1f-4966-a1a3-cbadbd37d954" type="Dynamo.Nodes.Function" nickname="Star.ByCenterRadiusRays" x="1271.18469484207" y="476.704911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="274bb472-d985-49b8-ad53-307495a00169" />
+      <Name value="Star.ByCenterRadiusRays" />
+      <Description value="Fun little node to create star shapes." />
+      <Inputs>
+        <Input value="NumberOfRays" />
+        <Input value="StarOrigin" />
+        <Input value="StarRadius" />
+        <Input value="RayPercentage" />
+      </Inputs>
+      <Outputs>
+        <Output value="PolyCurve" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="e0d94f5f-b077-4595-be4a-de86bf5a02f4" type="Dynamo.Nodes.Function" nickname="Collector.CurrentSelection" x="1630.3984275061" y="956.639306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="0" default="True" />
+      <ID value="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" />
+      <Name value="Collector.CurrentSelection" />
+      <Description value="Gets the currently selected elements. Connect a boolean switch to refresh the selection." />
+      <Inputs>
+        <Input value="refresh" />
+      </Inputs>
+      <Outputs>
+        <Output value="element(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="7d0f719f-e124-4ed7-9cac-7fee61977734" type="Dynamo.Nodes.Function" nickname="Collector.ElementsInView" x="1633.1984275061" y="156.639306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="b5bdff96-365e-44a7-af60-1cf3936c4b36" />
+      <Name value="Collector.ElementsInView" />
+      <Description value="Selects all elements visible in the input view." />
+      <Inputs>
+        <Input value="view(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="element(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="657ad6e3-1264-4da7-a9f4-febffcfcdf8a" type="Dynamo.Nodes.Function" nickname="Collector.FamilyInstances" x="1594.7984275061" y="337.439306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="c0a4257d-0aec-4263-b59b-25b310cea858" />
+      <Name value="Collector.FamilyInstances" />
+      <Description value="Collects placed family instance elements from the document that match the name. Partially mathing elements are collected as well. If no matches are found, a list of all isntance names will be output." />
+      <Inputs>
+        <Input value="instnace name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="exact match" />
+        <Output value="partial match" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="38baa091-86be-4bb4-9e74-fff3df597629" type="Dynamo.Nodes.Function" nickname="Collector.FamilyTypes" x="1606.7984275061" y="543.839306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="69ea0174-9cf5-4900-9ec3-d6937f55e25f" />
+      <Name value="Collector.FamilyTypes" />
+      <Description value="Collects non-system family types that fully match or partially match the provided names. If no matches are found, a list of all type names will be output." />
+      <Inputs>
+        <Input value="type name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="exact match" />
+        <Output value="partial match" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="50214381-a29b-4d15-853e-3fceed851728" type="Dynamo.Nodes.Function" nickname="Collector.FloorTypes" x="1606.7984275061" y="750.239306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="0d1dabc5-8fe9-4a07-a8d0-f1facf02e876" />
+      <Name value="Collector.FloorTypes" />
+      <Description value="Collects Floor types by name." />
+      <Inputs>
+        <Input value="type name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="exact match" />
+        <Output value="partial match" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="89fa7885-4b24-40eb-9b36-72250227d207" type="Dynamo.Nodes.Function" nickname="Collector.LinkedInstanceElements" x="1603.5984275061" y="1034.23930640657" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f9c65be3-fdc3-4f02-bbec-effc6056df12" />
+      <Name value="Collector.LinkedInstanceElements" />
+      <Description value="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" />
+      <Inputs>
+        <Input value="link instance(s)" />
+        <Input value="category" />
+      </Inputs>
+      <Outputs>
+        <Output value="elements" />
+        <Output value="transform(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="dd8a5265-d9be-42a8-92a0-b45f99f8564c" type="Dynamo.Nodes.Function" nickname="Collector.Revisions" x="1616.7984275061" y="234.239306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="db9982b0-99c8-41b0-942d-70c2e355c330" />
+      <Name value="Collector.Revisions" />
+      <Description value="Collects all revisions from a specific date." />
+      <Inputs>
+        <Input value="rev. date(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="matched" />
+        <Output value="all revisions" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="932c6874-ba85-466e-9fe2-caaf953556ef" type="Dynamo.Nodes.Function" nickname="Collector.Sheets" x="1589.5984275061" y="440.639306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="1" default="True" />
+      <ID value="a652302d-7105-4008-bcad-1ad0c483e40d" />
+      <Name value="Collector.Sheets" />
+      <Description value="Search for sheets by either their name or their number. Use a false boolean switch to search by number." />
+      <Inputs>
+        <Input value="name(s)/number(s)" />
+        <Input value="NameOrNumber" />
+      </Inputs>
+      <Outputs>
+        <Output value="ExactMatch" />
+        <Output value="PartialMatch" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="9fec968c-9e0a-4bf5-a91e-61a263639767" type="Dynamo.Nodes.Function" nickname="Collector.Views" x="1603.5984275061" y="647.039306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="1" default="True" />
+      <ID value="a1d3c661-73ae-4309-8fa5-dd483cd6df6e" />
+      <Name value="Collector.Views" />
+      <Description value="Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets." />
+      <Inputs>
+        <Input value="name(s)" />
+        <Input value="IncludeSheets" />
+      </Inputs>
+      <Outputs>
+        <Output value="exact match" />
+        <Output value="partial match" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="8973c606-28ae-4a3f-8e81-212c0f00261d" type="Dynamo.Nodes.Function" nickname="Collector.WallTypes" x="1606.7984275061" y="853.439306406568" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="96a8e72d-7f8c-4544-ab1f-234dc3f3167f" />
+      <Name value="Collector.WallTypes" />
+      <Description value="Collects wall types by name." />
+      <Inputs>
+        <Input value="type name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="exact match" />
+        <Output value="partial match" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="ca092807-cffb-4b0f-acdf-4b32e525ed63" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="1938.91594309847" y="149.518476346511" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="1" default="True" />
+      <ID value="2416ec21-d9a2-4c67-a742-20d5cf82446e" />
+      <Name value="DirectShape.ByGeometry" />
+      <Description value="Attempts to create a DirectShape element inside the Revit document. It is based on an alternative process that uses a SAT inport and can produce smooth surfaces." />
+      <Inputs>
+        <Input value="category" />
+        <Input value="name" />
+        <Input value="geometry" />
+      </Inputs>
+      <Outputs>
+        <Output value="DirectShape" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="e1511b73-d5f9-47f3-9a03-96ee421e2b6a" type="Dynamo.Nodes.Function" nickname="Doc.DeleteElements" x="1946.16862249549" y="383.054752930591" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" />
+      <Name value="Doc.DeleteElements" />
+      <Description value="Attempts to delete the input revit elements and returns the number of successfully deleted elements. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well." />
+      <Inputs>
+        <Input value="element(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="count" />
+        <Output value="ids(str)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="24d4bdaf-ad77-427f-a81b-6087d281c22a" type="Dynamo.Nodes.Function" nickname="FamilyType.Duplicate" x="2261.50544420561" y="292.823835140553" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="9666b149-66b9-4a56-97b4-6f82a69fdf00" />
+      <Name value="FamilyType.Duplicate" />
+      <Description value="Create duplicate family types with the specified name. If the type exists, it is called." />
+      <Inputs>
+        <Input value="family type" />
+        <Input value="name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="new type(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="e4cb9454-7a59-4d4b-a668-e99abccd9d31" type="Dynamo.Nodes.Function" nickname="FloorType.Duplicate" x="2256.30544420561" y="396.023835140553" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="f77cd172-4e26-4528-905a-8e99299befd5" />
+      <Name value="FloorType.Duplicate" />
+      <Description value="Attemts to create duplicate floor types. If the floor type exists, it is appended to the end. Sets only the structural width of the floor. The width must be in feet." />
+      <Inputs>
+        <Input value="floor type" />
+        <Input value="name(s)" />
+        <Input value="width(s)InFeet" />
+      </Inputs>
+      <Outputs>
+        <Output value="FloorType" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="10ce153c-8dc9-4883-97d9-73b7fb7506ff" type="Dynamo.Nodes.Function" nickname="Floor-WallType.SetMaterial" x="2252.70544420561" y="524.823835140553" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="a0f33711-c70a-4787-9145-38edbeb15d58" />
+      <Name value="Floor-WallType.SetMaterial" />
+      <Description value="Sets a new material to the structural core of the provided floor and wall types." />
+      <Inputs>
+        <Input value="floor/wall type(s)" />
+        <Input value="material" />
+      </Inputs>
+      <Outputs>
+        <Output value="success?" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="f367d5b1-fb7d-4d7b-b044-c843e3e683ae" type="Dynamo.Nodes.Function" nickname="Wall.WallType" x="2282.70544420561" y="628.023835140553" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="37af5c09-7c57-4adc-8222-e65ab3da9850" />
+      <Name value="Wall.WallType" />
+      <Description value="Queries the wall type of the input wall. Works for types from linked documents as well." />
+      <Inputs>
+        <Input value="wall(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="WallType" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="1c905160-accd-4853-8fc6-5d047fe86491" type="Dynamo.Nodes.Function" nickname="WallType.Duplicate" x="2258.70544420561" y="164.023835140553" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="a7067ca5-dcce-4d99-aad5-3e206c4d0f1a" />
+      <Name value="WallType.Duplicate" />
+      <Description value="Attemts to create duplicate wall types. If the wall type exists, it is appended to the end. Sets only the structural width of the wall. The width must be in feet." />
+      <Inputs>
+        <Input value="wall type" />
+        <Input value="name(s)" />
+        <Input value="width(s)InFeet" />
+      </Inputs>
+      <Outputs>
+        <Output value="WallType" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="e8880d10-8a0f-420a-bcfb-d8ab705bd783" type="Dynamo.Nodes.Function" nickname="HostedInstanceByPoints" x="1950.5202301337" y="561.470666097311" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6fc26c0c-4219-4c6a-8f6a-547ef3a2e1fa" />
+      <Name value="HostedInstanceByPoints" />
+      <Description value="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." />
+      <Inputs>
+        <Input value="host(s)" />
+        <Input value="type(s)" />
+        <Input value="point(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="FamilyInstance" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="b03a7ce8-a414-4e82-9b2c-9b91958e3d84" type="Dynamo.Nodes.Function" nickname="Form.ByGeometry" x="1970.82773244536" y="767.446760972711" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="268c3e45-41fa-4d94-a91c-1a45a41b45aa" />
+      <Name value="Form.ByGeometry" />
+      <Description value="Attempts to convert the input geometry to a Revit Form object. Warning - use method this only in the family environment. Can convert complicated solids or surfaces directly into forms." />
+      <Inputs>
+        <Input value="geometry" />
+      </Inputs>
+      <Outputs>
+        <Output value="Form" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="694e4df8-bc4c-4609-806a-3831bceb0bfb" type="Dynamo.Nodes.Function" nickname="FloorOpening.ByCurves" x="2542.33886893063" y="155.320619864128" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7032b3a2-159c-479f-8139-ff559e155ecc" />
+      <Name value="FloorOpening.ByCurves" />
+      <Description value="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." />
+      <Inputs>
+        <Input value="host floor(s)" />
+        <Input value="CurveSublists [][]" />
+      </Inputs>
+      <Outputs>
+        <Output value="Opening" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="9e1f2637-7e5c-4d05-a68d-17a3d68a9559" type="Dynamo.Nodes.Function" nickname="Shaft.ByCurves" x="2542.33886893063" y="264.110810819445" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="e0685795-e041-44d2-a4e1-5c95d986647f" />
+      <Name value="Shaft.ByCurves" />
+      <Description value="Creates a shaft opening. The top level MUST be higher than the base level for a successful execution. You can either provide one base and top level for all shafts or have unique levels for each shaft instance." />
+      <Inputs>
+        <Input value="CurveSublists [][]" />
+        <Input value="base level(s)" />
+        <Input value="top level(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="Opening" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="86fa8cea-aead-4705-88aa-07e8f4563158" type="Dynamo.Nodes.Function" nickname="Topography.ToPolySurface" x="1949.0696942543" y="924.104635948368" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="b34e0607-e2ef-4e43-8d24-3f79407b545e" />
+      <Name value="Topography.ToPolySurface" />
+      <Description value="Optimized algorithm for converting topographies into polysurfaces. Tested with topographies containing up to 40 000 points. &#xD;&#xA;Warning conversions of such mangitudes consume a lot of resources and are sub-optimal. Ensure that you have plenty at least 8GB of ram and patience before attempting such a conversion, otherwise your Dynamo and Revit instances may crash." />
+      <Inputs>
+        <Input value="topography" />
+      </Inputs>
+      <Outputs>
+        <Output value="polysurface" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="6e0d45a5-d71a-444b-bd1d-5c7f725332b5" type="Dynamo.Nodes.Function" nickname="Beams.FixExtents" x="2853.44049058479" y="348.937049939068" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7ae83d0d-faed-43ba-ae85-fdd942b47e2d" />
+      <Name value="Beams.FixExtents" />
+      <Description value="Detects all beams from the input list with broken extents(actual length - cut length &lt;  margin) and attemts to correct them." />
+      <Inputs>
+        <Input value="beams" />
+        <Input value="margin" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="c3afe6a6-43d7-4cae-ad87-7bfc0090a069" type="Dynamo.Nodes.Function" nickname="Element.SetLocation" x="2828.24049058479" y="452.137049939068" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" />
+      <Name value="Element.SetLocation" />
+      <Description value="Attempts to modify the location of the input element. Works for both line based and point based elements." />
+      <Inputs>
+        <Input value="element(s)" />
+        <Input value="location(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="element(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="3c9d551d-92f9-4b2b-9f1a-8adf0bd35258" type="Dynamo.Nodes.Function" nickname="Filter.ByCategoryName" x="2829.84049058479" y="555.337049939068" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="716c02a6-0e71-4f0b-be6f-741da177180a" />
+      <Name value="Filter.ByCategoryName" />
+      <Description value="Filters the input elements by their category name. You can input multiple category names." />
+      <Inputs>
+        <Input value="element(s)" />
+        <Input value="category name(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="in" />
+        <Output value="out" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="f56e3fe5-1111-4b60-9c63-897be0c078a7" type="Dynamo.Nodes.Function" nickname="Lines.Group&amp;FixCorners" x="2843.04049058479" y="168.137049939068" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="26b8a3c9-b4e6-4da4-a27c-6162f91a43b3" />
+      <Name value="Lines.Group&amp;FixCorners" />
+      <Description value="Groups unconnected lines into sub-lists by margin(the maximum distance between endpoints) and attempts to create clean corner connections between them. Built on top of the Group curves node found in archi-lab.net." />
+      <Inputs>
+        <Input value="lines" />
+        <Input value="margin" />
+      </Inputs>
+      <Outputs>
+        <Output value="lines" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="d225c8a2-d400-4c96-97a2-10c363f32c80" type="Dynamo.Nodes.Function" nickname="SelectInRevit" x="2834.24049058479" y="271.337049939068" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="8fe565e9-1f46-4933-b75c-2ee2947e342e" />
+      <Name value="SelectInRevit" />
+      <Description value="Selects the input elements in Revit. Works with Revit 2016." />
+      <Inputs>
+        <Input value="element(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="success?" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="61e23f43-6ef6-40e1-b971-7465d577af64" type="Dynamo.Nodes.Function" nickname="Active View" x="3147.19316861209" y="182.436511197238" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="True">
+      <ID value="58849545-7510-4baf-99da-98c0b1e184fd" />
+      <Name value="Active View" />
+      <Description value="Selects the current document's active view. Supports more view types" />
+      <Inputs />
+      <Outputs>
+        <Output value="View" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="48e23c76-82ae-4023-bb65-ff5cbe145573" type="Dynamo.Nodes.Function" nickname="Sheet.Views+" x="3111.99316861209" y="260.036511197239" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" />
+      <Name value="Sheet.Views+" />
+      <Description value="Extracts all views placed on the input sheet(s).  Will be depreciated once the bult in node works with all plan types." />
+      <Inputs>
+        <Input value="sheet(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="view(s)" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="8855228e-198f-4ecf-9a7c-eecfc800fec7" type="Dynamo.Nodes.Function" nickname="ViewSet.ByViewsName" x="3108.79316861209" y="337.636511197239" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="2" default="True" />
+      <ID value="e4edfc7e-fba0-4a8b-ab28-ff16692710b2" />
+      <Name value="ViewSet.ByViewsName" />
+      <Description value="Creates a set of views(or sheets) for printing. If the set exists, set Overwrite to true to replace it." />
+      <Inputs>
+        <Input value="views" />
+        <Input value="set name" />
+        <Input value="Overwrite" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="d5115f8b-b1f5-4873-acf6-ede99602df5f" type="Dynamo.Nodes.Function" nickname="Geometry.SplitRecursively" x="1289.58469484207" y="631.104911102958" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" />
+      <Name value="Geometry.SplitRecursively" />
+      <Description value="Splits a surface or a solid recursively, using the resulting reduced geometry for every next split." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="tools" />
+      </Inputs>
+      <Outputs>
+        <Output value="geometry" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="f8123977-d873-4ec4-9f72-73719a3994b7" type="Dynamo.Nodes.Function" nickname="List.Randomise&amp;Divide" x="568.454492456565" y="601.679305606731" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="2" default="True" />
+      <ID value="ad795fc1-a530-482f-94a0-95882af53b62" />
+      <Name value="List.Randomise&amp;Divide" />
+      <Description value="Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="ratios" />
+        <Input value="seed" />
+      </Inputs>
+      <Outputs>
+        <Output value="lists" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+  </Elements>
+  <Connectors />
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

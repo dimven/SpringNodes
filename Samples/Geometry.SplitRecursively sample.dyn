@@ -1,0 +1,62 @@
+<Workspace Version="0.8.2.2392" X="-1009.05426771859" Y="-749.265890687981" zoom="0.67933048377427" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="NurbsSurface" resolvedName="Autodesk.DesignScript.Geometry.NurbsSurface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Geometry" resolvedName="Autodesk.DesignScript.Geometry.Geometry" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="9ac2a843-829d-421b-a03d-29f18d77cbd6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1940.93089911843" y="1178.64658077848" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="a = 0..90..10;&#xA;pts = Point.ByCoordinates(a&lt;1&gt;,a&lt;2&gt;);&#xA;z1 = List.Chop(Math.RandomList(100)*6,10);&#xA;v1 = Vector.ByCoordinates(0,0,z1);&#xA;pts1 = pts.Add(v1);&#xA;NurbsSurface.ByPoints(pts1);&#xA;Plane.XZ().Translate(Vector.ByCoordinates(0,a));" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="03d1a6c4-1cb8-4917-8d61-a7b406a2476f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1982.28690380417" y="1531.09307787121" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="c1 = Cuboid.ByLengths(100,100,10);&#xA;c1.Translate(Vector.ByCoordinates(150,50));" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="b7c3abe2-7401-4e55-a328-d05a1cbd54c8" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="2738.87023940594" y="1342.6659324959" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="s[x];" ShouldFocus="false" />
+    <DSCoreNodesUI.Input.DoubleSlider guid="833f0dd0-b93e-4b84-9c88-bb40d1161a93" type="DSCoreNodesUI.Input.DoubleSlider" nickname="Number Slider" x="2246.13360879428" y="1427.04274179501" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.Double>5</System.Double>
+      <Range min="0" max="8" step="1" />
+    </DSCoreNodesUI.Input.DoubleSlider>
+    <Dynamo.Nodes.Function guid="8ef571b0-9510-46d7-a854-8db43988284d" type="Dynamo.Nodes.Function" nickname="Geometry.SplitRecursively" x="2452.29269980958" y="1255.50051475396" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" />
+      <Name value="Geometry.SplitRecursively" />
+      <Description value="Splits a surface or a solid recursively, using the resulting reduced geometry for every next split." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="tools" />
+      </Inputs>
+      <Outputs>
+        <Output value="geometry" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="8085d729-e728-4d83-8a3e-33889d73948c" type="Dynamo.Nodes.Function" nickname="Geometry.SplitRecursively" x="2461.78092366347" y="1543.27771305025" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" />
+      <Name value="Geometry.SplitRecursively" />
+      <Description value="Splits a surface or a solid recursively, using the resulting reduced geometry for every next split." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="tools" />
+      </Inputs>
+      <Outputs>
+        <Output value="geometry" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="15ff1fa8-29c7-4887-83a5-830a3729f6cf" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="2743.59008553176" y="1471.3180701503" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="s[x];" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="9ac2a843-829d-421b-a03d-29f18d77cbd6" start_index="5" end="8ef571b0-9510-46d7-a854-8db43988284d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9ac2a843-829d-421b-a03d-29f18d77cbd6" start_index="6" end="8ef571b0-9510-46d7-a854-8db43988284d" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9ac2a843-829d-421b-a03d-29f18d77cbd6" start_index="6" end="8085d729-e728-4d83-8a3e-33889d73948c" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="03d1a6c4-1cb8-4917-8d61-a7b406a2476f" start_index="1" end="8085d729-e728-4d83-8a3e-33889d73948c" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="833f0dd0-b93e-4b84-9c88-bb40d1161a93" start_index="0" end="b7c3abe2-7401-4e55-a328-d05a1cbd54c8" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="833f0dd0-b93e-4b84-9c88-bb40d1161a93" start_index="0" end="15ff1fa8-29c7-4887-83a5-830a3729f6cf" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8ef571b0-9510-46d7-a854-8db43988284d" start_index="0" end="b7c3abe2-7401-4e55-a328-d05a1cbd54c8" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8085d729-e728-4d83-8a3e-33889d73948c" start_index="0" end="15ff1fa8-29c7-4887-83a5-830a3729f6cf" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="184.633547406473" eyeY="183.369248029755" eyeZ="93.2501028581101" lookX="-54.1071757493493" lookY="-104.537154589838" lookZ="-109.960300624697" />
+  </Cameras>
+</Workspace>

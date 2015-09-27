@@ -1,0 +1,82 @@
+<Workspace Version="0.8.2.2392" X="1442.09587174626" Y="1179.53676433125" zoom="0.621143499776779" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Watch guid="5c87a07b-c607-4697-88d1-acbfe1b7d9cf" type="Dynamo.Nodes.Watch" nickname="Watch" x="368.329862946248" y="152.540132274767" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" type="Dynamo.Nodes.Function" nickname="LunchBox Random Split List" x="128.259833272657" y="267.875443847468" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="e67c1160-7948-48cb-a843-bfd4b20c4c3c" />
+      <Name value="LunchBox Random Split List" />
+      <Description value="Randomly splits a list of objects into two separate lists." />
+      <Inputs>
+        <Input value="List" />
+        <Input value="Ratio" />
+        <Input value="Seed" />
+      </Inputs>
+      <Outputs>
+        <Output value="ListA" />
+        <Output value="ListB" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="a7dbb340-798d-4a79-b309-db5d6abd8975" type="Dynamo.Nodes.Watch" nickname="Watch" x="375.459833272657" y="375.513426043313" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="ca45476b-8eae-440f-aa05-316e0a31eeb6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-176.763905599746" y="285.174553639753" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="1..10;&#xA;3/10;&#xA;5;" ShouldFocus="false" />
+    <DSCoreNodesUI.Input.DoubleSlider guid="6042ab27-d38f-40c4-a94e-47bc790b9c9a" type="DSCoreNodesUI.Input.DoubleSlider" nickname="Number Slider" x="-2258.84585326994" y="-1530.74347556332" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.Double>17.8</System.Double>
+      <Range min="0" max="100" step="0.1" />
+    </DSCoreNodesUI.Input.DoubleSlider>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a0d855dc-c74b-4c26-b685-68af57f899df" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-2047.20903916376" y="-1630.61397660922" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="1..20;&#xA;0.3;" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="efacddef-490d-40ce-9ad4-9a1bc6820aff" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-2034.41313702972" y="-1821.55567083148" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* the number of out lists will depend on&#xA;the number of provided ratios. If your&#xA;ratios do not add up to 1, the last ratio&#xA;will be calculated automatically. If your&#xA;ratios are greater than 1, everything&#xA;greater than 1 will be ignored */;" ShouldFocus="false" />
+    <Dynamo.Nodes.Watch guid="4d7f5934-82e2-48a3-879f-300b481b7a57" type="Dynamo.Nodes.Watch" nickname="Watch" x="-1652.19202935981" y="-1636.79547112438" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="393b9bd2-07d4-4fd5-8fa2-4fd50492375a" type="Dynamo.Nodes.Function" nickname="List.Randomise&amp;Divide" x="-1842.99559101415" y="-1637.16556110912" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="2" default="True" />
+      <ID value="ad795fc1-a530-482f-94a0-95882af53b62" />
+      <Name value="List.Randomise&amp;Divide" />
+      <Description value="Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="ratios" />
+        <Input value="seed" />
+      </Inputs>
+      <Outputs>
+        <Output value="lists" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="470ef8e1-a322-41da-937b-25644bc688ad" type="Dynamo.Nodes.Function" nickname="List.Randomise&amp;Divide" x="-1836.82953251201" y="-1484.57875937168" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="2" default="True" />
+      <ID value="ad795fc1-a530-482f-94a0-95882af53b62" />
+      <Name value="List.Randomise&amp;Divide" />
+      <Description value="Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further." />
+      <Inputs>
+        <Input value="list" />
+        <Input value="ratios" />
+        <Input value="seed" />
+      </Inputs>
+      <Outputs>
+        <Output value="lists" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="7e2bce31-e72a-4930-8a26-e3eebced6604" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-2111.11516583473" y="-1453.31262609715" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="{1/6,1/6,7/8,5};" ShouldFocus="false" />
+    <Dynamo.Nodes.Watch guid="2513fe37-7def-43a8-b395-fb9a0569597e" type="Dynamo.Nodes.Watch" nickname="Watch" x="-1497.19415644122" y="-1488.77364861261" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" start_index="0" end="5c87a07b-c607-4697-88d1-acbfe1b7d9cf" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" start_index="1" end="a7dbb340-798d-4a79-b309-db5d6abd8975" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca45476b-8eae-440f-aa05-316e0a31eeb6" start_index="0" end="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca45476b-8eae-440f-aa05-316e0a31eeb6" start_index="1" end="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca45476b-8eae-440f-aa05-316e0a31eeb6" start_index="2" end="1b4813aa-4fbd-4b76-b5bf-f5779a391f7a" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6042ab27-d38f-40c4-a94e-47bc790b9c9a" start_index="0" end="393b9bd2-07d4-4fd5-8fa2-4fd50492375a" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6042ab27-d38f-40c4-a94e-47bc790b9c9a" start_index="0" end="470ef8e1-a322-41da-937b-25644bc688ad" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a0d855dc-c74b-4c26-b685-68af57f899df" start_index="0" end="393b9bd2-07d4-4fd5-8fa2-4fd50492375a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a0d855dc-c74b-4c26-b685-68af57f899df" start_index="0" end="470ef8e1-a322-41da-937b-25644bc688ad" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a0d855dc-c74b-4c26-b685-68af57f899df" start_index="1" end="393b9bd2-07d4-4fd5-8fa2-4fd50492375a" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="393b9bd2-07d4-4fd5-8fa2-4fd50492375a" start_index="0" end="4d7f5934-82e2-48a3-879f-300b481b7a57" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="470ef8e1-a322-41da-937b-25644bc688ad" start_index="0" end="2513fe37-7def-43a8-b395-fb9a0569597e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="7e2bce31-e72a-4930-8a26-e3eebced6604" start_index="0" end="470ef8e1-a322-41da-937b-25644bc688ad" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="22.2668933868408" eyeY="43.5514678955078" eyeZ="14.5720806121826" lookX="-49.6114921569824" lookY="-0.0627991035580635" lookZ="-25.7161540985107" />
+  </Cameras>
+</Workspace>

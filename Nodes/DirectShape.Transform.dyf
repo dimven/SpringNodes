@@ -1,0 +1,89 @@
+<Workspace Version="0.8.2.2392" X="50.6400000000001" Y="164.362" zoom="0.8425" Name="DirectShape.Transform" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove much faster than Element.Copy" ID="12780047-c2ae-4b94-bb43-6408c7dbd8ef" Category="SpringNodes.Revit.DirectShape">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane.XY" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="187.6" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return out1[0]
+	else: return l1
+
+dsTyped = UnwrapElement(IN[0])
+vecs = tolist(IN[1])
+
+cat = dsTyped.Category
+TypeId = dsTyped.GetTypeId()
+Lib_TypeId = TypeId.ToString()
+transforms = []
+for v in vecs:
+	try: transforms.append(Transform.CreateTranslation(v.ToXyz(True)))
+	except: pass
+	
+def CopyDS(cat, TypeId, Lib_TypeId, transforms):
+	out1 = []
+	dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
+	if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)
+	for t in transforms:
+		try:
+			ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, t, "Dynamo","")
+			ds1.SetTypeId(TypeId)
+			out1.append(ds1.ToDSType(False))
+		except: out1.append([])
+	return out1
+	
+TransactionManager.Instance.EnsureInTransaction(doc)
+OUT = output1(CopyDS(cat, TypeId, Lib_TypeId, transforms))
+TransactionManager.Instance.TransactionTaskDone()</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="b3522dbf-d73c-43aa-ba7a-e47a5cc15bfe" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="direct shape " />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="5a074050-f54e-47c0-9942-5d7ed48c3283" type="Dynamo.Nodes.Symbol" nickname="Input" x="24.8" y="63.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="vector(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="6e27f05e-f107-40dc-97aa-1feeca987a8f" type="Dynamo.Nodes.Output" nickname="Output" x="346.6" y="0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="direct shape(s)" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" start_index="0" end="6e27f05e-f107-40dc-97aa-1feeca987a8f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b3522dbf-d73c-43aa-ba7a-e47a5cc15bfe" start_index="0" end="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5a074050-f54e-47c0-9942-5d7ed48c3283" start_index="0" end="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="12128.1162109375" eyeY="129059.2109375" eyeZ="-13137.69140625" lookX="-882.235534667969" lookY="-88887.96875" lookZ="-28073.16015625" />
+  </Cameras>
+</Workspace>

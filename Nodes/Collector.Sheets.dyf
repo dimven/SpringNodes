@@ -5,11 +5,11 @@
       <Symbol value="name(s)/number(s)" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="30959af0-c8ee-43fe-ac2c-23606ae3daf7" type="Dynamo.Nodes.Output" nickname="Output" x="535.7241419483" y="-4.46584342604746" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="ExactMatch" />
+      <Symbol value="exact match" />
     </Dynamo.Nodes.Output>
     <Dynamo.Nodes.CodeBlockNodeModel guid="52aafd85-7ca2-4f2d-9808-cf7912e349f2" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="398.983145297668" y="11.1733151832838" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="v[0];&#xA;v[1];" ShouldFocus="false" />
     <Dynamo.Nodes.Output guid="3d8be64b-21e7-4074-8b2c-e5c61a7ccc34" type="Dynamo.Nodes.Output" nickname="Output" x="537.92111989381" y="56.569856379955" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="PartialMatch" />
+      <Symbol value="partial match" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="07ccd681-b902-44b8-9560-0bae3b68a314" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="254.517772229413" y="7.71995079450434" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2015, Dimitar Venkov

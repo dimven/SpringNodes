@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="432.024365789832" Y="109.971029577209" zoom="0.683206694052568" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+<Workspace Version="0.8.2.2392" X="695.711502227548" Y="101.568835593074" zoom="0.848014556389333" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
@@ -9,29 +9,37 @@
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="372635db-d34e-42a7-9932-c8b426f0833d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-584.189640692951" y="-69.3254497454216" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="r1 = Rectangle.ByWidthLength(3000,4000);&#xA;pts1 = r1.Points;&#xA;cpt = r1.Center();&#xA;s1 = Sphere.ByCenterPointRadius(pts1,800);&#xA;s2 = Sphere.ByCenterPointRadius(cpt,1700).&#xA;Translate(Vector.ByCoordinates(0,0,500));&#xA;s3 = s2.Scale(Plane.XY(),1,2,0.8);&#xA;c1 = Cuboid.ByLengths(2500,2000,1500).&#xA;Translate(Vector.ByCoordinates(0,1000,1500));&#xA;solid = s3.UnionAll(Flatten({s1,c1}));" ShouldFocus="false" />
-    <Dynamo.Nodes.DSFunction guid="1e932680-c19b-445b-a6c7-6dcda1ca32bc" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="-154.879856613629" y="84.2315014638224" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
-    <Dynamo.Nodes.DSFunction guid="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" type="Dynamo.Nodes.DSFunction" nickname="Element.SetParameterByName" x="281.498222144645" y="85.2453269874684" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.SetParameterByName@string,var" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="805a1a18-4c65-4052-bad7-628da9d888ef" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="2.08463871806424" y="166.513766537246" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Material&quot;;&#xA;Material.ByName(&quot;Glass&quot;);" ShouldFocus="false" />
-    <Dynamo.Nodes.Function guid="d5ab2529-0641-4a8a-8479-e5c2d421102a" type="Dynamo.Nodes.Function" nickname="Form.ByGeometry" x="23.4491424482026" y="78.7686869503003" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+    <Dynamo.Nodes.CodeBlockNodeModel guid="372635db-d34e-42a7-9932-c8b426f0833d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-583.135643163203" y="-67.2174546859247" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="r1 = Rectangle.ByWidthLength(3000,4000);&#xA;pts1 = r1.Points;&#xA;cpt = r1.Center();&#xA;s1 = Sphere.ByCenterPointRadius(pts1,800);&#xA;s2 = Sphere.ByCenterPointRadius(cpt,1700).&#xA;Translate(Vector.ByCoordinates(0,0,500));&#xA;s3 = s2.Scale(Plane.XY(),1,2,0.8);&#xA;c1 = Cuboid.ByLengths(2500,2000,1500).&#xA;Translate(Vector.ByCoordinates(0,1000,1500));&#xA;solid1 = s3.UnionAll(Flatten({s1,c1}));&#xA;//let's make a copy of the car&#xA;solid2 = solid1.Translate(Vector.&#xA;ByCoordinates(-1600,-900,-1200));&#xA;{solid1, solid2};&#xA;{false,true};" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="1e932680-c19b-445b-a6c7-6dcda1ca32bc" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="-134.979340598323" y="84.2315014638224" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="7ef11667-481e-40b4-bc5c-bddc7d3f8564" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="291.990200935757" y="123.383115386912" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* make sure you're inside a family document for&#xA;example, try the Conceptual Mass environment. Unlike&#xA;a DirectShape, it's easy to change a form's material */;" ShouldFocus="false" />
+    <Dynamo.Nodes.Watch guid="764b30c3-b365-46b2-935b-8c82f850ccba" type="Dynamo.Nodes.Watch" nickname="Watch" x="-131.538079078059" y="316.386626410553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="0708ba38-b0b1-4d3e-b5af-d095938fb226" type="Dynamo.Nodes.Function" nickname="Form.ByGeometry" x="-116.936617442438" y="206.050940371097" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="1" default="True" />
       <ID value="268c3e45-41fa-4d94-a91c-1a45a41b45aa" />
       <Name value="Form.ByGeometry" />
-      <Description value="Attempts to convert the input geometry to a Revit Form object. Warning - use method this only in the family environment. Can convert complicated solids or surfaces directly into forms." />
+      <Description value="Attempts to convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. Solids can be converted into voids. Provide either one true boolean to convert everything into voids or a unique boolean for each geometry object." />
       <Inputs>
         <Input value="geometry" />
+        <Input value="isVoid" />
       </Inputs>
       <Outputs>
         <Output value="Form" />
       </Outputs>
     </Dynamo.Nodes.Function>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="7ef11667-481e-40b4-bc5c-bddc7d3f8564" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-118.90612814305" y="-54.5385384286735" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//make sure you're inside a family document&#xA;//foe example, try the Conceptual Mass environment&#xA;//unlike a DirectShape, it's easy to change a form's material" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="9f7b11f7-9e92-4ed0-94a5-e3e52c2d4ce2" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-557.342261296998" y="258.226120081733" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* The second form was defined as a void&#xA;try to cut it out from the solid form&#xA;inside the Revit intefrace */;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="a772fe82-15df-42ac-ba5d-c912523d27b2" type="Dynamo.Nodes.DSFunction" nickname="Element.SetParameterByName" x="442.768546394338" y="238.641662225256" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.SetParameterByName@string,var" />
+    <Dynamo.Nodes.DSFunction guid="a0053de5-8410-46d6-9050-8e748995af26" type="Dynamo.Nodes.DSFunction" nickname="List.FirstItem" x="134.508722884097" y="210.592253193541" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.FirstItem@var[]..[]" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="dbfaa09c-3abd-411e-b755-45e712483ab4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="148.272050052465" y="313.635502302115" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Material&quot;;&#xA;Material.ByName(&quot;Glass&quot;);" ShouldFocus="false" />
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="372635db-d34e-42a7-9932-c8b426f0833d" start_index="7" end="1e932680-c19b-445b-a6c7-6dcda1ca32bc" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="1e932680-c19b-445b-a6c7-6dcda1ca32bc" start_index="0" end="d5ab2529-0641-4a8a-8479-e5c2d421102a" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="805a1a18-4c65-4052-bad7-628da9d888ef" start_index="0" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="805a1a18-4c65-4052-bad7-628da9d888ef" start_index="1" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="2" portType="0" />
-    <Dynamo.Models.ConnectorModel start="d5ab2529-0641-4a8a-8479-e5c2d421102a" start_index="0" end="c86c7a9a-c89d-47e6-b8e5-41b958121dd1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="372635db-d34e-42a7-9932-c8b426f0833d" start_index="9" end="0708ba38-b0b1-4d3e-b5af-d095938fb226" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="372635db-d34e-42a7-9932-c8b426f0833d" start_index="10" end="0708ba38-b0b1-4d3e-b5af-d095938fb226" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0708ba38-b0b1-4d3e-b5af-d095938fb226" start_index="0" end="764b30c3-b365-46b2-935b-8c82f850ccba" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0708ba38-b0b1-4d3e-b5af-d095938fb226" start_index="0" end="a0053de5-8410-46d6-9050-8e748995af26" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a0053de5-8410-46d6-9050-8e748995af26" start_index="0" end="a772fe82-15df-42ac-ba5d-c912523d27b2" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="dbfaa09c-3abd-411e-b755-45e712483ab4" start_index="0" end="a772fe82-15df-42ac-ba5d-c912523d27b2" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="dbfaa09c-3abd-411e-b755-45e712483ab4" start_index="1" end="a772fe82-15df-42ac-ba5d-c912523d27b2" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

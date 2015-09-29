@@ -35,30 +35,27 @@ for f in fec:
 	if f.Name == name1:
 		vs_exists = f
 		break
-if vs_exists != None and not overwrite:
+if vs_exists != None and overwrite:
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	doc.Delete(vs_exists.Id)
+	TransactionManager.Instance.TransactionTaskDone()
+	vs_exists = None
+elif vs_exists != None and not overwrite:
 	OUT = "There's a ViewSet with the same name.\nSet Overwrite to true to continue."
-elif vs_exists != None and overwrite:
+if vs_exists == None:
+	vs1 = ViewSet()
+	for v in views: (vs1.Insert(v))
+	printMan = doc.PrintManager
+	printMan.PrintRange = PrintRange.Select
+	viewSS = printMan.ViewSheetSetting
 	try:
 		TransactionManager.Instance.EnsureInTransaction(doc)
-		doc.Delete(vs_exists.Id)
+		viewSS.CurrentViewSheetSet.Views = vs1
+		viewSS.SaveAs(name1)
 		TransactionManager.Instance.TransactionTaskDone()
-		vs_exists = None
+		OUT = "ViewSet created with %s views inside." %len(views)
 	except:
-		pass
-	if vs_exists == None:
-		vs1 = ViewSet()
-		for v in views: (vs1.Insert(v))
-		printMan = doc.PrintManager
-		printMan.PrintRange = PrintRange.Select
-		viewSS = printMan.ViewSheetSetting
-		try:
-			TransactionManager.Instance.EnsureInTransaction(doc)
-			viewSS.CurrentViewSheetSet.Views = vs1
-			viewSS.SaveAs(name1)
-			TransactionManager.Instance.TransactionTaskDone()
-			OUT = "ViewSet created with %s views inside." %len(views)
-		except:
-			OUT = "The ViewSet could not be created"</Script>
+		OUT = "The ViewSet could not be created"</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="dea39b45-c1e8-4169-b637-16def36587d8" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="views" />

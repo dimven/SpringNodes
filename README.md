@@ -10,6 +10,9 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.2.1 290915
+- Form.ByGeometry improvements
+- small bug fixes
 82.2.0 280915
 - new Element.Copy and DirectShape.Translate nodes
 - more robust DirectShape.ByGeometry node (had to downgrade back to 0.82 due to regression https://github.com/DynamoDS/Dynamo/issues/5371)

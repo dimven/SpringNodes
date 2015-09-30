@@ -1,0 +1,68 @@
+<Workspace Version="0.8.2.2392" X="102.99" Y="172.025" zoom="0.8425" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Color.Geometry" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.DSFunction guid="34e9b243-880f-48df-b99a-2a9164d2a9da" type="Dynamo.Nodes.DSFunction" nickname="Geometry.Intersect" x="862" y="-49" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Geometry.Intersect@Autodesk.DesignScript.Geometry.Geometry" />
+    <DSRevitNodesUI.ElementsOfCategory guid="a998b0b6-d4c1-4024-894f-a088d861c886" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="195" y="-6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <DSRevitNodesUI.Categories guid="4e7b1fde-78b5-4de3-9263-5c3279bd14fe" type="DSRevitNodesUI.Categories" nickname="Categories" x="-12" y="-8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="830:StructuralColumns" />
+    <Dynamo.Nodes.DSFunction guid="55cf5405-ac3c-46d1-9095-6e54720b9e89" type="Dynamo.Nodes.DSFunction" nickname="Surface.PerimeterCurves" x="1226.5" y="-49" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Surface.PerimeterCurves" />
+    <Dynamo.Nodes.DSFunction guid="b12022b3-a7bd-4c10-b611-972f5446228f" type="Dynamo.Nodes.DSFunction" nickname="Flatten" x="1089.5" y="-51" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="BuiltIn" function="Flatten@var[]..[]" />
+    <Dynamo.Nodes.DSFunction guid="24c6ab12-844a-4316-bc44-95cb7ae3bbd0" type="Dynamo.Nodes.DSFunction" nickname="Element.Geometry" x="427.5" y="-48" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.Geometry" />
+    <Dynamo.Nodes.DSFunction guid="a875ea05-8e9c-4f55-867e-64d9c9ef9a36" type="Dynamo.Nodes.DSFunction" nickname="Flatten" x="587" y="-48" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="BuiltIn" function="Flatten@var[]..[]" />
+    <Dynamo.Nodes.DSFunction guid="1874bee7-9bcd-4681-8e5b-93f425145a40" type="Dynamo.Nodes.DSFunction" nickname="Point.ByCoordinates" x="124.5" y="89" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double">
+      <PortInfo index="0" default="True" />
+      <PortInfo index="1" default="True" />
+      <PortInfo index="2" default="True" />
+    </Dynamo.Nodes.DSFunction>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="fdc6a8b7-39dd-4db1-9a0b-21fc9bd21ce9" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="19" y="141" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="600;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="a5747081-f514-443a-9bee-8c62bec93dcf" type="Dynamo.Nodes.DSFunction" nickname="Plane.ByOriginNormal" x="278.5" y="84" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Plane.ByOriginNormal@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Vector">
+      <PortInfo index="0" default="True" />
+      <PortInfo index="1" default="True" />
+    </Dynamo.Nodes.DSFunction>
+    <Dynamo.Nodes.DSFunction guid="12f6b40d-cdbd-4614-bc35-ed4ced399bbe" type="Dynamo.Nodes.DSFunction" nickname="Element.GetParameterValueByName" x="838.304154302671" y="67.2611275964392" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.GetParameterValueByName@string" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a131ae84-ebd9-4885-9956-08737f36a6c7" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="486.118694362018" y="205.186943620178" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Base Level&quot;;&#xA;&quot;Top Level&quot;;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="e67ef16e-931e-4d6a-acb8-e3b878d27acd" type="Dynamo.Nodes.DSFunction" nickname="Element.GetParameterValueByName" x="838.804154302671" y="179.261127596439" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.GetParameterValueByName@string" />
+    <Dynamo.Nodes.Function guid="5a7f2a45-c1ee-49cd-9dfb-e6e099365fbc" type="Dynamo.Nodes.Function" nickname="Shaft.ByCurves" x="1440.37833827893" y="53.0741839762611" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="e0685795-e041-44d2-a4e1-5c95d986647f" />
+      <Name value="Shaft.ByCurves" />
+      <Description value="Creates a shaft opening. The top level MUST be higher than the base level for a successful execution. You can either provide one base and top level for all shafts or have unique levels for each shaft instance." />
+      <Inputs>
+        <Input value="CurveSublists [][]" />
+        <Input value="base level(s)" />
+        <Input value="top level(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="Opening" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="1122cebc-66f5-4af7-9b06-519881fe5093" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="241.792284866469" y="-179.878338278932" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* This work-flow creates shafts through every column.&#xA;This is not the reccomended use, but is a good&#xA;demonstration of the Shaft.ByCurves node */;" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="34e9b243-880f-48df-b99a-2a9164d2a9da" start_index="0" end="b12022b3-a7bd-4c10-b611-972f5446228f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a998b0b6-d4c1-4024-894f-a088d861c886" start_index="0" end="24c6ab12-844a-4316-bc44-95cb7ae3bbd0" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a998b0b6-d4c1-4024-894f-a088d861c886" start_index="0" end="12f6b40d-cdbd-4614-bc35-ed4ced399bbe" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a998b0b6-d4c1-4024-894f-a088d861c886" start_index="0" end="e67ef16e-931e-4d6a-acb8-e3b878d27acd" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4e7b1fde-78b5-4de3-9263-5c3279bd14fe" start_index="0" end="a998b0b6-d4c1-4024-894f-a088d861c886" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="55cf5405-ac3c-46d1-9095-6e54720b9e89" start_index="0" end="5a7f2a45-c1ee-49cd-9dfb-e6e099365fbc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b12022b3-a7bd-4c10-b611-972f5446228f" start_index="0" end="55cf5405-ac3c-46d1-9095-6e54720b9e89" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="24c6ab12-844a-4316-bc44-95cb7ae3bbd0" start_index="0" end="a875ea05-8e9c-4f55-867e-64d9c9ef9a36" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a875ea05-8e9c-4f55-867e-64d9c9ef9a36" start_index="0" end="34e9b243-880f-48df-b99a-2a9164d2a9da" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1874bee7-9bcd-4681-8e5b-93f425145a40" start_index="0" end="a5747081-f514-443a-9bee-8c62bec93dcf" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="fdc6a8b7-39dd-4db1-9a0b-21fc9bd21ce9" start_index="0" end="1874bee7-9bcd-4681-8e5b-93f425145a40" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a5747081-f514-443a-9bee-8c62bec93dcf" start_index="0" end="34e9b243-880f-48df-b99a-2a9164d2a9da" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="12f6b40d-cdbd-4614-bc35-ed4ced399bbe" start_index="0" end="5a7f2a45-c1ee-49cd-9dfb-e6e099365fbc" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a131ae84-ebd9-4885-9956-08737f36a6c7" start_index="0" end="12f6b40d-cdbd-4614-bc35-ed4ced399bbe" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a131ae84-ebd9-4885-9956-08737f36a6c7" start_index="1" end="e67ef16e-931e-4d6a-acb8-e3b878d27acd" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e67ef16e-931e-4d6a-acb8-e3b878d27acd" start_index="0" end="5a7f2a45-c1ee-49cd-9dfb-e6e099365fbc" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="16382.9526620849" eyeY="8918.22370556236" eyeZ="25948.9923902679" lookX="-24449.583575084" lookY="151.733338863789" lookZ="-27635.2270638" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,65 @@
+<Workspace Version="0.8.2.2392" X="1111.67836533665" Y="2074.13828844563" zoom="0.77998371164148" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Autodesk.Geometry.Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSRevitNodesUI.Categories guid="94450684-72bc-4c3b-bcf0-f0652b83f799" type="DSRevitNodesUI.Categories" nickname="Categories" x="-1385.05073816858" y="-2283.88955396071" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="489:Lines" />
+    <DSRevitNodesUI.ElementsOfCategory guid="c6ff58c3-c631-4d56-a34c-ef60fe1d7794" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="-1202.4284481708" y="-2283.60054371581" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="6a5aa6bf-222f-4ff4-a260-bc8a42b1b0f2" type="Dynamo.Nodes.Function" nickname="Group Curves" x="-1223.13897270509" y="-2180.13935617784" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="c84855d4-eb7e-4574-86a5-04867486df63" />
+      <Name value="Group Curves" />
+      <Description value="This node will take any input of flat list of curves and group them into sublists containing &quot;joinable&quot; curves that is continous curves. They might form closed curves or open curves. Use PolyCurve.ByJoinedCurves to convert output groups of curves into single PolyCurves" />
+      <Inputs>
+        <Input value="Curves" />
+      </Inputs>
+      <Outputs>
+        <Output value="Grouped Curves" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSRevitNodesUI.Levels guid="2593ce16-65c6-4fac-81ba-8f20badeabde" type="DSRevitNodesUI.Levels" nickname="Levels" x="-394.860172355035" y="-2209.8616875952" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="1:Level 2" />
+    <DSRevitNodesUI.FloorTypes guid="728c879a-0341-4327-a0d5-bd35e6d6717e" type="DSRevitNodesUI.FloorTypes" nickname="Floor Types" x="-399.517180301066" y="-2292.55552571469" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="1:Generic 300mm" />
+    <Dynamo.Nodes.DSFunction guid="db3d017e-20a6-4f2e-ac41-b80255f9951d" type="Dynamo.Nodes.DSFunction" nickname="Floor.ByOutlineTypeAndLevel" x="-198.777090368804" y="-2279.23170258435" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Floor.ByOutlineTypeAndLevel@Autodesk.DesignScript.Geometry.PolyCurve,Revit.Elements.FloorType,Revit.Elements.Level" />
+    <DSCore.Map guid="d09270b8-6949-4773-82fa-2c409126a48d" type="DSCore.Map" nickname="List.Map" x="55.2469907366141" y="-2104.62379170658" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.DSFunction guid="4c8d5cf5-3af4-4d94-958c-5705d9447d1e" type="Dynamo.Nodes.DSFunction" nickname="Transaction.End" x="206.746243319564" y="-2104.17704365066" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Transaction.Transaction.End@var" />
+    <Dynamo.Nodes.Function guid="460eaef5-a639-444a-be39-e8109cd1e199" type="Dynamo.Nodes.Function" nickname="FloorOpening.ByCurves" x="127.779993135555" y="-2215.26753984051" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7032b3a2-159c-479f-8139-ff559e155ecc" />
+      <Name value="FloorOpening.ByCurves" />
+      <Description value="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." />
+      <Inputs>
+        <Input value="host floor(s)" />
+        <Input value="CurveSublists [][]" />
+      </Inputs>
+      <Outputs>
+        <Output value="Opening" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSCore.Combine guid="95ff9cfd-457e-4bc9-9127-40702647b6da" type="DSCore.Combine" nickname="List.Combine" x="415.698581434796" y="-2098.01343717898" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="c0d8fa28-92ff-4bba-a8b5-11555bf02e4f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-1219.92043457233" y="-2091.77355192859" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//group curves from the&#xA;//archi-lab.net package" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="97d1c1cb-1416-4d8b-b19d-84ea974491d1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="161.612535243897" y="-1961.85720733889" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* Have a look at the result inside Revit.&#xA;Try playing with the curves on the left side,&#xA;or adding new boundaries.Don't forget to&#xA;re-run the graph. In Dynamo 0.82, the built-in&#xA;&quot;Floor.ByOutlineTypeAndLevel&quot; node does not&#xA;support Automatic Run mode.&#xA;&#xA;Remember, each floor boundary needs at least one&#xA;opening, for it to be identified as a floor&#xA;*/;" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="0a4e593f-3ec2-4522-8efb-3cd8c7e32278" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-987.458445366585" y="-2255.7810426958" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="//this code block sorts the lines into floors and openings&#xA;//each &quot;floor&quot; boundary must have at least 1 &quot;opening&quot;&#xA;//boundary for it to be identified as a floor&#xA;//it has a lot of limitations, so bear with me&#xA;cl2 = Flatten(cl1.Curves);&#xA;cl3 = __Apply(f1,cl2);&#xA;pc1 = PolyCurve.ByJoinedCurves(cl3);&#xA;bb1 = pc1.BoundingBox;&#xA;centroids = pc1.Patch().PointAtParameter(0.5,0.5);&#xA;centroids1 = List.Flatten(List.RemoveItemAtIndex(centroids,&#xA;GetKeys(centroids)&lt;1&gt;&lt;2&gt;),1);&#xA;test1 = bb1&lt;1&gt;.Contains(centroids1&lt;1&gt;&lt;2&gt;);&#xA;test2 = AllFalse(test1&lt;1&gt;);&#xA;floors = List.FilterByBoolMask(pc1,test2)[&quot;out&quot;];&#xA;holes = List.FilterByBoolMask(pc1,test2)[&quot;in&quot;];&#xA;Fbb = floors.BoundingBox;&#xA;Hbb = holes.BoundingBox;&#xA;test3 = Fbb&lt;1&gt;.Intersects(Hbb&lt;2&gt;);&#xA;Hind = List.AllIndicesOf(test3&lt;1&gt;,true);&#xA;holes2 = List.GetItemAtIndex(holes,Hind&lt;1&gt;);&#xA;holes3 = holes2.Curves();" ShouldFocus="false" />
+    <Dynamo.Nodes.Watch guid="08d0bed3-33fa-4b05-b6eb-2121cc996fca" type="Dynamo.Nodes.Watch" nickname="Watch" x="390.973024073318" y="-2484.70543865344" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="94450684-72bc-4c3b-bcf0-f0652b83f799" start_index="0" end="c6ff58c3-c631-4d56-a34c-ef60fe1d7794" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c6ff58c3-c631-4d56-a34c-ef60fe1d7794" start_index="0" end="0a4e593f-3ec2-4522-8efb-3cd8c7e32278" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6a5aa6bf-222f-4ff4-a260-bc8a42b1b0f2" start_index="0" end="0a4e593f-3ec2-4522-8efb-3cd8c7e32278" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="2593ce16-65c6-4fac-81ba-8f20badeabde" start_index="0" end="db3d017e-20a6-4f2e-ac41-b80255f9951d" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="728c879a-0341-4327-a0d5-bd35e6d6717e" start_index="0" end="db3d017e-20a6-4f2e-ac41-b80255f9951d" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="db3d017e-20a6-4f2e-ac41-b80255f9951d" start_index="0" end="d09270b8-6949-4773-82fa-2c409126a48d" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="d09270b8-6949-4773-82fa-2c409126a48d" start_index="0" end="4c8d5cf5-3af4-4d94-958c-5705d9447d1e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4c8d5cf5-3af4-4d94-958c-5705d9447d1e" start_index="0" end="95ff9cfd-457e-4bc9-9127-40702647b6da" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="460eaef5-a639-444a-be39-e8109cd1e199" start_index="0" end="95ff9cfd-457e-4bc9-9127-40702647b6da" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="95ff9cfd-457e-4bc9-9127-40702647b6da" start_index="0" end="08d0bed3-33fa-4b05-b6eb-2121cc996fca" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0a4e593f-3ec2-4522-8efb-3cd8c7e32278" start_index="8" end="d09270b8-6949-4773-82fa-2c409126a48d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0a4e593f-3ec2-4522-8efb-3cd8c7e32278" start_index="15" end="95ff9cfd-457e-4bc9-9127-40702647b6da" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="18624.914004148" eyeY="59502.8900952698" eyeZ="3780.84586318287" lookX="-149.199465579961" lookY="-48259.9776715419" lookZ="-5697.70077812845" />
+  </Cameras>
+</Workspace>

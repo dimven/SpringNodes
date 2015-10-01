@@ -1,0 +1,106 @@
+<Workspace Version="0.8.2.2392" X="216.968992796875" Y="344.491329162358" zoom="1.545620359375" Name="Form.ByGeometry(SAT)" Description="Attempts to convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. Solids can be converted into voids. Provide either one true boolean to convert everything into voids or a unique boolean for each geometry object. This node works in millimeters." ID="991fb5ba-6c8f-4dc8-b57b-fb87f81ff525" Category="SpringNodes.Revit.Forms">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="199b8dfe-638b-4804-b67a-6c4e0148b3e9" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>import clr
+import System
+from System.Collections.Generic import *
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+def NewForm(s1):
+	message = None
+	temp_path = System.IO.Path.GetTempPath()
+	rand_name = System.Guid.NewGuid().ToString()
+	sat_path = temp_path + rand_name + ".sat"
+	try: sat1 = Geometry.ExportToSAT(s1, sat_path, 1000)
+	except: message = "No write access to temp folder"
+	satOpt = SATImportOptions()
+	satOpt.Placement = ImportPlacement.Origin
+	satOpt.Unit = ImportUnit.Millimeter
+	try: satId = doc.Import(sat1, satOpt, doc.ActiveView)
+	except: message = "Please switch to a model view"
+	opt1 = Options()
+	opt1.ComputeReferences = True
+	el1 = doc.GetElement(satId)
+	geom1 = el1.get_Geometry(opt1)
+	enum = geom1.GetEnumerator()
+	enum.MoveNext()
+	geom2 = enum.Current.GetInstanceGeometry()
+	enum2 = geom2.GetEnumerator()
+	enum2.MoveNext()
+	s1 = enum2.Current
+	doc.Delete(satId)
+	System.IO.File.Delete(sat_path)
+	if message == None:
+		try:
+			s2 = FreeFormElement.Create(doc,s1)
+			return s2.ToDSType(False)
+		except:
+			return None
+	else:
+		return message
+
+geom = tolist(IN[0])
+isVoid = tolist(IN[1])
+out1 = []
+
+if doc.IsFamilyDocument:
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	for g in geom:
+		try: out1.append(NewForm(g))
+		except: out1.append(None)
+	TransactionManager.Instance.TransactionTaskDone()
+	if len(isVoid) == 1 and len(out1) &gt;= 1:
+		[f.SetParameterByName("Solid/Void", isVoid[0]) for f in out1 if f != None]
+	elif len(isVoid) &gt; 1 and len(out1) &gt; 1:
+		[f.SetParameterByName("Solid/Void", val) for f, val in zip(out1,isVoid) if f != None]
+	OUT = output1(out1)
+else:
+	OUT = "Forms can only exist in family documents"</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="309fdbbe-e932-4bdb-a03e-4bd0f9f37714" type="Dynamo.Nodes.Symbol" nickname="Input" x="122.593910540092" y="-4.85276364538072" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="geometry" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="7909addc-1f8a-4f2c-baab-426a333086d7" type="Dynamo.Nodes.Symbol" nickname="Input" x="-3" y="57.3382620661139" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="isVoid:var[]..[] = false" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="42ced121-8c06-4205-9118-ad7902deb4cc" type="Dynamo.Nodes.Output" nickname="Output" x="407.305646478537" y="-3.41204237137674" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="Form" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="199b8dfe-638b-4804-b67a-6c4e0148b3e9" start_index="0" end="42ced121-8c06-4205-9118-ad7902deb4cc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="309fdbbe-e932-4bdb-a03e-4bd0f9f37714" start_index="0" end="199b8dfe-638b-4804-b67a-6c4e0148b3e9" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="7909addc-1f8a-4f2c-baab-426a333086d7" start_index="0" end="199b8dfe-638b-4804-b67a-6c4e0148b3e9" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

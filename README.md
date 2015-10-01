@@ -10,6 +10,13 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.2.3 011015
+- Form.ByGeometry(SAT) added.
+
+82.2.2 011015
+- New node BoundingBox.Scale added
+- DirectShape.ByGeometry(SAT) added. It uses a more robust SAT import method.
+
 82.2.1 290915
 - Form.ByGeometry improvements
 - small bug fixes

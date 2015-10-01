@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="120" Y="183" zoom="1" Name="DirectShape.ByGeometry(SAT)" Description="Attempts to create a DirectShape element inside the Revit document.  It is based on an alternative process that uses a SAT inport and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry." ID="899401ae-3533-4264-8c01-e59e97fa8a19" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="0.8.2.2392" X="11.96716884375" Y="120.253658671875" zoom="1.545620359375" Name="DirectShape.ByGeometry(SAT)" Description="Attempts to create a DirectShape element inside the Revit document.  It is based on an alternative process that uses a SAT inport and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry. This node works in millimeters." ID="899401ae-3533-4264-8c01-e59e97fa8a19" Category="SpringNodes.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Geometry" resolvedName="Autodesk.DesignScript.Geometry.Geometry" assemblyName="ProtoGeometry.dll" />
@@ -61,18 +61,18 @@ def NewDS(s1,cat,name1):
 	doc.Delete(satId)
 	System.IO.File.Delete(sat_path)
 	if message == None:
-		#try:
-		dsType1 = DirectShapeType.Create(doc, name1, cat.Id)
-		dsType1.SetShape([s1])
-		dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
-		dsType1_LibId = dsType1.Id.ToString()
-		dsLib.AddDefinitionType(dsType1_LibId, dsType1.Id)
-		tf1 = Transform.Identity
-		ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, dsType1_LibId, tf1, "Dynamo","")
-		ds1.SetTypeId(dsType1.Id)
-		return ds1.ToDSType(False)
-		#except:
-		#	return []
+		try:
+			dsType1 = DirectShapeType.Create(doc, name1, cat.Id)
+			dsType1.SetShape([s1])
+			dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
+			dsType1_LibId = dsType1.Id.ToString()
+			dsLib.AddDefinitionType(dsType1_LibId, dsType1.Id)
+			tf1 = Transform.Identity
+			ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, dsType1_LibId, tf1, "Dynamo","")
+			ds1.SetTypeId(dsType1.Id)
+			return ds1.ToDSType(False)
+		except:
+			return []
 	else:
 		return message
 
@@ -116,6 +116,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="5598.77089957033" eyeY="4534.56852825242" eyeZ="16209.8920483838" lookX="-6878.57868980442" lookY="-5058.34672665254" lookZ="-14751.1596035552" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

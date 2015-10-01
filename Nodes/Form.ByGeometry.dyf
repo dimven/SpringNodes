@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-451.071768538195" Y="158.579197752161" zoom="3.02135654670201" Name="Form.ByGeometry" Description="Attempts to convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. Solids can be converted into voids. Provide either one true boolean to convert everything into voids or a unique boolean for each geometry object." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
+<Workspace Version="0.8.2.2392" X="261.984440390741" Y="344.591959465705" zoom="1.84611820260947" Name="Form.ByGeometry" Description="Attempts to convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. Solids can be converted into voids. Provide either one true boolean to convert everything into voids or a unique boolean for each geometry object." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
@@ -45,7 +45,7 @@ def NewForm(_solid_):
 		s2 = Autodesk.Revit.DB.FreeFormElement.Create(doc,s1)
 		return s2.ToDSType(False)
 	except:
-		return []
+		return None
 
 geom = tolist(IN[0])
 isVoid = tolist(IN[1])
@@ -55,12 +55,12 @@ if doc.IsFamilyDocument:
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	for g in geom:
 		try: out1.append(NewForm(g))
-		except: out1.append([])
+		except: out1.append(None)
 	TransactionManager.Instance.TransactionTaskDone()
 	if len(isVoid) == 1 and len(out1) &gt;= 1:
-		[f.SetParameterByName("Solid/Void", isVoid[0]) for f in out1]
+		[f.SetParameterByName("Solid/Void", isVoid[0]) for f in out1 if f != None]
 	elif len(isVoid) &gt; 1 and len(out1) &gt; 1:
-		[f.SetParameterByName("Solid/Void", val) for f, val in zip(out1,isVoid)]
+		[f.SetParameterByName("Solid/Void", val) for f, val in zip(out1,isVoid) if f != None]
 	OUT = output1(out1)
 else:
 	OUT = "Forms can only exist in family documents"</Script>

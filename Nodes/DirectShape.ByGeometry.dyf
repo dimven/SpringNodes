@@ -106,7 +106,4 @@ else:
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="12128.1162109375" eyeY="129059.2109375" eyeZ="-13137.69140625" lookX="-882.235534667969" lookY="-88887.96875" lookZ="-28073.16015625" />
-  </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-52" Y="152.8" zoom="1" Name="Lines.Group&amp;FixCorners" Description="Groups unconnected lines into sub-lists by margin(the maximum distance between endpoints) and attempts to create clean corner connections between them. Built on top of the Group curves node found in archi-lab.net." ID="26b8a3c9-b4e6-4da4-a27c-6162f91a43b3" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="23.0383460781251" Y="123.04307113125" zoom="1.545620359375" Name="Lines.Group&amp;FixCorners" Description="Groups unconnected lines into sub-lists by margin(the maximum distance between endpoints) and attempts to create clean corner connections between them. Built on top of the Group curves node found in archi-lab.net." ID="26b8a3c9-b4e6-4da4-a27c-6162f91a43b3" Category="SpringNodes.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -116,7 +116,7 @@ for cl1 in Gcurves:
 		out1.append(joinCurves(cl1,margin))
 	except:
 		out1.append(cl1)
-OUT = ReorderCurves(original,Flatten(out1))</Script>
+OUT = ReorderCurves(original,Flatten(out1)), out1</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="52647745-ee6a-4aea-b503-8a776252625d" type="Dynamo.Nodes.Symbol" nickname="Input" x="78.4" y="-9.60000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="lines" />
@@ -124,19 +124,25 @@ OUT = ReorderCurves(original,Flatten(out1))</Script>
     <Dynamo.Nodes.Symbol guid="ab745be1-16a8-440f-b703-2bb8ac191d33" type="Dynamo.Nodes.Symbol" nickname="Input" x="77.6" y="58.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="margin" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="6f4ff00c-f3cf-4b1c-8951-c6035e6709af" type="Dynamo.Nodes.Output" nickname="Output" x="425.8" y="2.40000000000001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="lines" />
+    <Dynamo.Nodes.Output guid="6f4ff00c-f3cf-4b1c-8951-c6035e6709af" type="Dynamo.Nodes.Output" nickname="Output" x="531.259273366399" y="-23.4795762862329" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="lines(original order)" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="274c3fa4-72b0-480d-be44-36ce5e736c54" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="398.049591151724" y="5.65052964220894" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="l[0];&#xA;l[1];" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="8a6e9a10-129f-448d-97e9-035fffb1446a" type="Dynamo.Nodes.Output" nickname="Output" x="535.330589104175" y="37.1456885348716" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="lines(grouped)" />
     </Dynamo.Nodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="805021bd-c64b-486c-9dbb-8216ece7a1a5" start_index="0" end="6f4ff00c-f3cf-4b1c-8951-c6035e6709af" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="805021bd-c64b-486c-9dbb-8216ece7a1a5" start_index="0" end="274c3fa4-72b0-480d-be44-36ce5e736c54" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="52647745-ee6a-4aea-b503-8a776252625d" start_index="0" end="805021bd-c64b-486c-9dbb-8216ece7a1a5" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="ab745be1-16a8-440f-b703-2bb8ac191d33" start_index="0" end="805021bd-c64b-486c-9dbb-8216ece7a1a5" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="274c3fa4-72b0-480d-be44-36ce5e736c54" start_index="0" end="6f4ff00c-f3cf-4b1c-8951-c6035e6709af" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="274c3fa4-72b0-480d-be44-36ce5e736c54" start_index="1" end="8a6e9a10-129f-448d-97e9-035fffb1446a" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-35201.1108476053" eyeY="76971.0894353499" eyeZ="46614.9460170558" lookX="34605.6739421536" lookY="-83238.0140165067" lookZ="-49422.0242624542" />
+    <Camera Name="background_preview" eyeX="-14099.2476113872" eyeY="15498.9845510603" eyeZ="-7864.59131493439" lookX="4628.47491896976" lookY="-9018.94117543832" lookZ="-4548.3896352712" />
   </Cameras>
 </Workspace>

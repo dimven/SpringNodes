@@ -10,6 +10,10 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.3.1 021015
+- Two new nodes for Converting between fractional and decimal feet added.
+82.3.0 021015
+- Two new nodes for fetching elements from linked files added.
 82.2.3 011015
 - Form.ByGeometry(SAT) added.
 

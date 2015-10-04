@@ -1,0 +1,48 @@
+<Workspace Version="0.8.2.2392" X="364.312423422076" Y="174.961998965946" zoom="0.888789228297156" Name="Feet2Fraction" Description="Converts a decimal foot value to a fractional foot/inch string." ID="3784aae0-dd38-4cfd-ac57-a87ebe885a81" Category="SpringNodes.Misc">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List.Scan" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math.Round" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="50735672-61ee-4677-a565-9ec271d29642" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="256.070388727663" y="98.176149388978" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def ft2frac(x,frac:var[],f1){&#xA;ft1 = Math.Floor(x);&#xA;in1 = (x - ft1)*12;&#xA;in2 = Math.Floor(in1);&#xA;fr1 = (in1 - in2) * frac;&#xA;fr2 = Math.Round(fr1);&#xA;v1 = Math.Abs(fr1 - fr2);&#xA;ind1 = List.FirstIndexOf(v1,&#xA;List.MinimumItem(v1));&#xA;fr3 = __Apply(f1,fr2[ind1])&#xA;+ &quot;/&quot; + __Apply(f1,frac[ind1]);&#xA;ft1s = __Apply(f1,ft1) + &quot;'&quot;;&#xA;in2s = __Apply(f1,in2);&#xA;ft1s = ft1s == &quot;0'&quot; ? &quot;&quot; : ft1s;&#xA;t1 = in2 == 0;&#xA;t2 = fr3 == &quot;0/2&quot;;&#xA;in2s = t1 ? &quot;&quot; : in2s;&#xA;fr3s = t2 ? &quot;&quot; : fr3;&#xA;mid = t1 || t2 ? &quot;&quot; : &quot; &quot;;&#xA;end = t1 &amp;&amp; t2 ? &quot;&quot; : &quot;\&quot;&quot;;&#xA;return = ft1s+in2s+mid+fr3s+end;&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="c24410fb-6c38-4302-997e-19ac0937cfb5" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="273.707011635968" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="ft2frac(x,frac,f1);" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="2981bc68-6581-4f9a-ab0d-24cd9cde62a9" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="number" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" type="Dynamo.Nodes.Output" nickname="Output" x="555.344151022097" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="fraction(str)" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Function guid="5155fd01-4013-4980-9789-bb488b8ccc2e" type="Dynamo.Nodes.Function" nickname="Number.ToString" x="62.5348038655638" y="254.949022996156" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="7138be89-af7b-4232-b938-e63a5fe78240" />
+      <Name value="Number.ToString" />
+      <Description value="Converts the input number(s) to string. Can process lists." />
+      <Inputs>
+        <Input value="num" />
+      </Inputs>
+      <Outputs>
+        <Output value="str" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSCore.ScanList guid="b93cb668-9013-477d-856f-bfa72aa918ef" type="DSCore.ScanList" nickname="List.Scan" x="-20.7451982976339" y="141.372994802252" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="8727f4a3-85d8-4b1a-990f-bf3a99fd7015" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-216.408806847584" y="175.407727546172" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="2;&#xA;List.Cycle(2,7);" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="ebbaac47-09f5-4818-8f7a-7b49b6bc617c" type="Dynamo.Nodes.DSFunction" nickname="*" x="-168.433985483894" y="68.9229791005523" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="Operators" function="*@var[]..[],var[]..[]" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="c24410fb-6c38-4302-997e-19ac0937cfb5" start_index="0" end="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="2981bc68-6581-4f9a-ab0d-24cd9cde62a9" start_index="0" end="c24410fb-6c38-4302-997e-19ac0937cfb5" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5155fd01-4013-4980-9789-bb488b8ccc2e" start_index="0" end="c24410fb-6c38-4302-997e-19ac0937cfb5" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b93cb668-9013-477d-856f-bfa72aa918ef" start_index="0" end="c24410fb-6c38-4302-997e-19ac0937cfb5" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8727f4a3-85d8-4b1a-990f-bf3a99fd7015" start_index="0" end="b93cb668-9013-477d-856f-bfa72aa918ef" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8727f4a3-85d8-4b1a-990f-bf3a99fd7015" start_index="1" end="b93cb668-9013-477d-856f-bfa72aa918ef" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ebbaac47-09f5-4818-8f7a-7b49b6bc617c" start_index="0" end="b93cb668-9013-477d-856f-bfa72aa918ef" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

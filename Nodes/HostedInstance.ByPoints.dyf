@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="312.318649358621" Y="253.423876538153" zoom="1.47618023926361" Name="HostedInstanceByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="6fc26c0c-4219-4c6a-8f6a-547ef3a2e1fa" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="0.8.2.2392" X="312.318649358621" Y="253.423876538153" zoom="1.47618023926361" Name="HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="6fc26c0c-4219-4c6a-8f6a-547ef3a2e1fa" Category="SpringNodes.Revit.FamilyInstances">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Nodes.Symbol guid="01b001a1-0f4b-46c2-b40b-9a76321397df" type="Dynamo.Nodes.Symbol" nickname="Input" x="-40.645443153968" y="12.8710569987566" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">

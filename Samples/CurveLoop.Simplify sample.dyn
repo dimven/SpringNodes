@@ -1,0 +1,48 @@
+<Workspace Version="0.8.2.2392" X="912.65186158286" Y="585.867012576022" zoom="0.679988228889155" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="NurbsCurve" resolvedName="Autodesk.DesignScript.Geometry.NurbsCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Watch guid="901b2fba-99ce-4cdd-9c63-608c30c51900" type="Dynamo.Nodes.Watch" nickname="Watch" x="-433.169174661595" y="-269.586140019873" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="9600369c-48f3-4191-bdeb-7409605bcaef" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-91.6508771491009" y="-321.391701688447" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Line&quot;;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="2ca11594-748c-4ff5-a28e-122da0df6ff9" type="Dynamo.Nodes.DSFunction" nickname="RemoveIfNot" x="34.5720029060025" y="-365.94167956947" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="BuiltIn" function="RemoveIfNot@var[]..[],string" />
+    <Dynamo.Nodes.Watch guid="914120fd-a21e-4e1b-a434-a6ac7be29bd9" type="Dynamo.Nodes.Watch" nickname="Watch" x="-759.585946462795" y="-273.297667502093" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="03cc27c4-8bde-45a7-933e-a768f4faa3d6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-1149.27741368369" y="-361.346217181587" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="r2 = r1.Translate(Vector.ByCoordinates(7000,0,0)).DivideEqually(50);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d86527de-5395-4410-b44b-68758176d43f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-1041.32734147091" y="-442.492182902183" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="r1 = Rectangle.ByWidthLength(6000,3500).Fillet(500,false);" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="57148b9e-6e72-4278-8b33-3abe70280b92" type="Dynamo.Nodes.Function" nickname="CurveLoop.Simplify" x="-480.64406199705" y="-366.209020623102" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="b255f316-935c-41a1-abe7-386417b84b6f" />
+      <Name value="CurveLoop.Simplify" />
+      <Description value="Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line." />
+      <Inputs>
+        <Input value="curve loop" />
+      </Inputs>
+      <Outputs>
+        <Output value="curve loop" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="2e5b952c-947e-4741-9091-d1d7d3ad6b29" type="Dynamo.Nodes.Watch" nickname="Watch" x="-96.5485265680404" y="-227.74954917825" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="daca506a-75fa-4fac-aa33-ccfbf5c32210" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-132" y="-464.118410768682" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//we successfully reduced the continuous&#xA;//straight segmentcurves to just 4 lines" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="9600369c-48f3-4191-bdeb-7409605bcaef" start_index="0" end="2ca11594-748c-4ff5-a28e-122da0df6ff9" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="2ca11594-748c-4ff5-a28e-122da0df6ff9" start_index="0" end="2e5b952c-947e-4741-9091-d1d7d3ad6b29" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="03cc27c4-8bde-45a7-933e-a768f4faa3d6" start_index="0" end="914120fd-a21e-4e1b-a434-a6ac7be29bd9" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="03cc27c4-8bde-45a7-933e-a768f4faa3d6" start_index="0" end="57148b9e-6e72-4278-8b33-3abe70280b92" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="d86527de-5395-4410-b44b-68758176d43f" start_index="0" end="03cc27c4-8bde-45a7-933e-a768f4faa3d6" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="57148b9e-6e72-4278-8b33-3abe70280b92" start_index="0" end="901b2fba-99ce-4cdd-9c63-608c30c51900" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="57148b9e-6e72-4278-8b33-3abe70280b92" start_index="0" end="2ca11594-748c-4ff5-a28e-122da0df6ff9" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="2191.91028690031" eyeY="11221.3506258665" eyeZ="5404.10717419175" lookX="-1.17095132736722E-05" lookY="-12042.009903" lookZ="-1592.9753455" />
+  </Cameras>
+</Workspace>

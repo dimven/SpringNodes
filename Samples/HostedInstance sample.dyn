@@ -1,0 +1,70 @@
+<Workspace Version="0.8.2.2392" X="-23.5798057158391" Y="76.7232029767877" zoom="0.700241180395662" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.DSModelElementSelection guid="f64b98ae-e69d-4b8d-bf33-734059b7c28d" type="Dynamo.Nodes.DSModelElementSelection" nickname="Select Model Element" x="79.6637761881033" y="231.349136388908" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <instance id="1fb4c19d-877c-4a25-9ba7-a6e1fa370345-0004f091" />
+    </Dynamo.Nodes.DSModelElementSelection>
+    <Dynamo.Nodes.Watch guid="d87177e2-51eb-4b33-94cc-a78a0426a450" type="Dynamo.Nodes.Watch" nickname="Watch" x="96.3453202910094" y="317.285656383436" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="6ae3d14a-a821-472b-9071-9c75b9a18356" type="Dynamo.Nodes.Function" nickname="Element.Location" x="270.974268393333" y="288.985296224762" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="0b59c4d8-afe4-4063-bf7e-2195fa33e8a9" />
+      <Name value="Element.Location" />
+      <Description value="Returns the location of an element as an XYZ (or if it's line-based the start and end point of the line), along with some booleans to help filtering the results. Use this for some element types (e.g. walls or lines) that do not work with the built-in Get Family Instance Location node. " />
+      <Inputs>
+        <Input value="Element(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="Points" />
+        <Output value="Curve Endpoints" />
+        <Output value="Curves" />
+        <Output value="Is Point" />
+        <Output value="Is Curve" />
+        <Output value="Has Location" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.DSFunction guid="49fba5c3-d9c1-485f-959c-bea99e6a95a2" type="Dynamo.Nodes.DSFunction" nickname="Curve.PointAtParameter" x="691.912829379654" y="362.653658408279" isVisible="true" isUpstreamVisible="true" lacing="Longest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Curve.PointAtParameter@double">
+      <PortInfo index="1" default="True" />
+    </Dynamo.Nodes.DSFunction>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="5e06d293-e5d5-4a62-b8b8-a863febae740" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="516.59601445886" y="420.168375275331" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="0.3..0.9..0.2;" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="e67bb24b-5b00-46ee-beb5-f9bb2fe527a9" type="Dynamo.Nodes.Function" nickname="HostedInstance.ByPoints" x="1227.62976398545" y="310.754481915573" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="6fc26c0c-4219-4c6a-8f6a-547ef3a2e1fa" />
+      <Name value="HostedInstanceByPoints" />
+      <Description value="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." />
+      <Inputs>
+        <Input value="host(s)" />
+        <Input value="type(s)" />
+        <Input value="point(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="FamilyInstance" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSRevitNodesUI.FamilyTypes guid="cbe7c913-b1cb-4401-ad43-5447cc389fbc" type="DSRevitNodesUI.FamilyTypes" nickname="Family Types" x="882.744315597561" y="416.753040272748" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="185:M_Window-Square Opening:0900 x 1800mm" />
+    <Dynamo.Nodes.DSFunction guid="852411f2-7f48-44ff-bff7-53ec534aa426" type="Dynamo.Nodes.DSFunction" nickname="List.OfRepeatedItem" x="1032.06418877553" y="238.00491356319" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.OfRepeatedItem@var[]..[],int" />
+    <Dynamo.Nodes.DSFunction guid="881f0b9e-00f6-4111-ac99-c6d2f49aa611" type="Dynamo.Nodes.DSFunction" nickname="Count" x="902.14556887984" y="294.60414587628" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="BuiltIn" function="Count@var[]..[]" />
+    <Dynamo.Nodes.DSFunction guid="2ca235c1-70a4-4d2b-a74b-eecb7d10a58b" type="Dynamo.Nodes.DSFunction" nickname="Element.SetParameterByName" x="1465.23340905747" y="400.592819829759" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.SetParameterByName@string,var" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="1deb8c4e-4709-41e4-99c8-1ce443204971" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1274.62845381577" y="448.47294696008" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Sill Height&quot;;&#xA;800;" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="528de4ed-6103-4071-b031-2d877fb7fb3d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="312.159450763458" y="498.831890152692" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//from clockwork" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="752b0fa7-2e7a-449a-bede-eee2171e76fc" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="966" y="155.229191769297" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//I need a host for each window" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="f64b98ae-e69d-4b8d-bf33-734059b7c28d" start_index="0" end="d87177e2-51eb-4b33-94cc-a78a0426a450" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f64b98ae-e69d-4b8d-bf33-734059b7c28d" start_index="0" end="6ae3d14a-a821-472b-9071-9c75b9a18356" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f64b98ae-e69d-4b8d-bf33-734059b7c28d" start_index="0" end="852411f2-7f48-44ff-bff7-53ec534aa426" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6ae3d14a-a821-472b-9071-9c75b9a18356" start_index="2" end="49fba5c3-d9c1-485f-959c-bea99e6a95a2" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="49fba5c3-d9c1-485f-959c-bea99e6a95a2" start_index="0" end="e67bb24b-5b00-46ee-beb5-f9bb2fe527a9" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="49fba5c3-d9c1-485f-959c-bea99e6a95a2" start_index="0" end="881f0b9e-00f6-4111-ac99-c6d2f49aa611" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5e06d293-e5d5-4a62-b8b8-a863febae740" start_index="0" end="49fba5c3-d9c1-485f-959c-bea99e6a95a2" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e67bb24b-5b00-46ee-beb5-f9bb2fe527a9" start_index="0" end="2ca235c1-70a4-4d2b-a74b-eecb7d10a58b" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="cbe7c913-b1cb-4401-ad43-5447cc389fbc" start_index="0" end="e67bb24b-5b00-46ee-beb5-f9bb2fe527a9" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="852411f2-7f48-44ff-bff7-53ec534aa426" start_index="0" end="e67bb24b-5b00-46ee-beb5-f9bb2fe527a9" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="881f0b9e-00f6-4111-ac99-c6d2f49aa611" start_index="0" end="852411f2-7f48-44ff-bff7-53ec534aa426" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1deb8c4e-4709-41e4-99c8-1ce443204971" start_index="0" end="2ca235c1-70a4-4d2b-a74b-eecb7d10a58b" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1deb8c4e-4709-41e4-99c8-1ce443204971" start_index="1" end="2ca235c1-70a4-4d2b-a74b-eecb7d10a58b" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="86.9504623413086" eyeY="10692.9951171875" eyeZ="13701.263671875" lookX="-2.20268248085631E-12" lookY="-8255.125" lookZ="-15038.1494140625" />
+  </Cameras>
+</Workspace>

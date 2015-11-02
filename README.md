@@ -9,16 +9,21 @@ Some nodes provided in this package have been inspired by existing content, such
 Your recommendations and ideas on how to improve this package are always welcome. Please be sure to report any issues.
 
 CHANGE LOG
+
 82.3.3 021115
 - new List.EveryOther node added. As the name stipulates, it creates a new list for each list element and drops the coresponding element.
 - new FamilyInstance.Rotation node added. It fetches a point based element's rotation around its insertion point.
 - new CurveLoop.Simplify node added. Design script based. It attempts to merge continuous straight curves into a single line.
+
 82.3.2 021015
-- Two nodes for converting Revit decimal colors to revit colours added. ( Color2Decimal & Decimal2Color)
+- Two nodes for converting Revit decimal colours to Dynamo colours and back added. ( Color2Decimal & Decimal2Color)
+
 82.3.1 021015
 - Two new nodes for Converting between fractional and decimal feet added.
+
 82.3.0 021015
 - Two new nodes for fetching elements from linked files added.
+
 82.2.3 011015
 - Form.ByGeometry(SAT) added.
 

@@ -10,6 +10,8 @@ import clr
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+app = uiapp.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -21,16 +23,25 @@ def tolist(obj1):
 	else:
 		return [obj1]
 
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
 sheets = UnwrapElement(tolist(IN[0]))
 sheetviews = []
-for s in sheets:
-	viewsid = s.GetAllPlacedViews()
-	views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
-	sheetviews.append(views)
-if len(sheetviews) == 1:
-	OUT = views
+
+if app.VersionName == "Autodesk Revit 2014":
+	for s in sheets:
+		viewports = [doc.GetElement(v1) for v1 in s.GetAllViewports()]
+		views = [doc.GetElement(v1.ViewId) for v1 in viewports]
+		sheetviews.append(views)
+	OUT = output1(sheetviews)
 else:
-	OUT = sheetviews</Script>
+	for s in sheets:
+		viewsid = s.GetAllPlacedViews()
+		views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
+		sheetviews.append(views)
+	OUT = output1(sheetviews)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="sheet(s)" />

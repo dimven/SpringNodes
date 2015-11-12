@@ -1,8 +1,20 @@
-<Workspace Version="0.8.2.2392" X="261.984440390741" Y="344.591959465705" zoom="1.84611820260947" Name="Form.ByGeometry" Description="Attempts to convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. Solids can be converted into voids. Provide either one true boolean to convert everything into voids or a unique boolean for each geometry object." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
+<Workspace Version="0.8.2.2392" X="261.984440390741" Y="344.591959465705" zoom="1.84611820260947" Name="Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>import clr
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+import clr
+import System
+from System.Collections.Generic import *
+
+pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
+import sys
+sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
+import traceback
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
 
 clr.AddReference("RevitServices")
 import RevitServices
@@ -16,10 +28,7 @@ clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 clr.AddReference("RevitAPI")
-import Autodesk
-
-clr.AddReference("System")
-from System.Collections.Generic import *
+from Autodesk.Revit.DB import *
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
@@ -29,39 +38,82 @@ def output1(l1):
 	if len(l1) == 1: return l1[0]
 	else: return l1
 
-def NewForm(_solid_):
-	el1 = UnwrapElement(Revit.Elements.ImportInstance.ByGeometry(_solid_))
-	opt1 = Autodesk.Revit.DB.Options()
-	opt1.ComputeReferences = True
-	geom1 = el1.get_Geometry(opt1)
-	enum = geom1.GetEnumerator()
-	enum.MoveNext()
-	geom2 = enum.Current.GetInstanceGeometry()
-	enum2 = geom2.GetEnumerator()
-	enum2.MoveNext()
-	s1 = enum2.Current
-	doc.Delete(el1.Id)
+def PadLists(lists):
+	len1 = len(lists[0])
+	for i in xrange(len(lists)):
+		len2 = len(lists[i])
+		if len2 == len1:
+			continue
+		elif len2 &gt; len1:
+			lists[i] = lists[i][0:len1]
+		else:
+			lists[i].extend([lists[i][-1]] * (len1 - len2))
+	return lists
+
+def NewForm(s1, isVoid1):
+	message = None
+	temp_path = System.IO.Path.GetTempPath()
+	rand_name = System.Guid.NewGuid().ToString()
+	sat_path = "%s%s.sat" % (temp_path, rand_name)
 	try:
-		s2 = Autodesk.Revit.DB.FreeFormElement.Create(doc,s1)
-		return s2.ToDSType(False)
+		if factor != 1:
+			s1 = s1.Scale(factor)
+		sat1 = Geometry.ExportToSAT(s1, sat_path)
+		satOpt = SATImportOptions()
+		satOpt.Placement = ImportPlacement.Origin
+		satOpt.Unit = ImportUnit.Foot
+		satId = doc.Import(sat1, satOpt, view1)
+		opt1 = Options()
+		opt1.ComputeReferences = True
+		el1 = doc.GetElement(satId)
+		geom1 = el1.get_Geometry(opt1)
+		enum = geom1.GetEnumerator()
+		enum.MoveNext()
+		geom2 = enum.Current.GetInstanceGeometry()
+		enum2 = geom2.GetEnumerator()
+		enum2.MoveNext()
+		s1 = enum2.Current
+		doc.Delete(satId)
+		System.IO.File.Delete(sat_path)
 	except:
-		return None
+		message = traceback.format_exc()
+		pass
+	if message == None:
+		try:
+			s2 = FreeFormElement.Create(doc,s1)
+			if isVoid1:
+				void_par = s2.get_Parameter("Solid/Void")
+				void_par.Set(1)
+				#void_par2 = doc.OwnerFamily.get_Parameter("Cut with Voids When Loaded")
+				#void_par2.Set(1)
+			return s2.ToDSType(False)
+		except:
+			message = traceback.format_exc()
+			return message
+	else:
+		return message
 
 geom = tolist(IN[0])
 isVoid = tolist(IN[1])
-out1 = []
 
+acceptable_views = ["ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section"]
+view_fec = FilteredElementCollector(doc).OfClass(View)
+view1 = None
+for v in view_fec:
+	if str(v.ViewType) in acceptable_views:
+		view1 = v
+		break
+units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+factor = UnitUtils.ConvertToInternalUnits(1,units)
 if doc.IsFamilyDocument:
 	TransactionManager.Instance.EnsureInTransaction(doc)
-	for g in geom:
-		try: out1.append(NewForm(g))
-		except: out1.append(None)
+	if len(geom) == len(isVoid):
+		OUT = output1(map(NewForm, geom, isVoid))
+	else:
+		padded = PadLists([geom,isVoid])
+		p_isVoid = padded[1]
+		OUT = output1(map(NewForm, geom, p_isVoid))
 	TransactionManager.Instance.TransactionTaskDone()
-	if len(isVoid) == 1 and len(out1) &gt;= 1:
-		[f.SetParameterByName("Solid/Void", isVoid[0]) for f in out1 if f != None]
-	elif len(isVoid) &gt; 1 and len(out1) &gt; 1:
-		[f.SetParameterByName("Solid/Void", val) for f, val in zip(out1,isVoid) if f != None]
-	OUT = output1(out1)
 else:
 	OUT = "Forms can only exist in family documents"</Script>
     </DSIronPythonNode.PythonNode>
@@ -84,6 +136,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-41.1442778676917" eyeY="39.2624364181745" eyeZ="20.0286417754079" lookX="-4.38226677529689" lookY="-4.3822667752969" lookZ="-4.3822667752969" />
   </Cameras>
 </Workspace>

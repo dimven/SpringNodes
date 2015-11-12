@@ -10,6 +10,13 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.4.0 121115
+- DirectShape.ByGeometry and Form.ByGeometry have been completely revised
+	- the (SAT) versions have been depreciated and merged into the main node
+	- the node is now unitless
+	- better error handling and error messages
+- Sheet.Views+ now supports Revit 2014
+
 82.3.3 021115
 - new List.EveryOther node added. As the name stipulates, it creates a new list for each list element and drops the coresponding element.
 - new FamilyInstance.Rotation node added. It fetches a point based element's rotation around its insertion point.

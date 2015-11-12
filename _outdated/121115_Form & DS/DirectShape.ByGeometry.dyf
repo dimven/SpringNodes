@@ -1,0 +1,109 @@
+<Workspace Version="0.8.2.2392" X="206.613205590998" Y="187.270233699957" zoom="1.51939327724692" Name="DirectShape.ByGeometry" Description="Attempts to create a DirectShape element inside the Revit document.  It is based on an alternative process that uses a SAT inport and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cylinder" resolvedName="Autodesk.DesignScript.Geometry.Cylinder" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="bba51f7d-0a2b-42b5-93e3-3dd8e91b8084" type="Dynamo.Nodes.Symbol" nickname="Input" x="53.8979218420995" y="41.3927987647098" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="category" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="8ef172b1-09d0-4407-9d5d-dd9474c96ff4" type="Dynamo.Nodes.Symbol" nickname="Input" x="83.3526962884805" y="100.6447415964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="name" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="378d0694-3f14-43b9-9ae6-930a6781aae0" type="Dynamo.Nodes.Output" nickname="Output" x="359.821634187539" y="-21.9777851761107" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="DirectShape" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" type="Dynamo.Nodes.Symbol" nickname="Input" x="52.6783848184826" y="-22.4361403956349" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="geometry" />
+    </Dynamo.Nodes.Symbol>
+    <DSIronPythonNode.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="203.336075860563" y="-22.515277602541" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+clr.AddReference("System")
+import System
+from System.Collections.Generic import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return out1[0]
+	else: return l1
+
+def NewDS(_solid_,cat,name1):
+	el1 = UnwrapElement(Revit.Elements.ImportInstance.ByGeometry(_solid_))
+	opt1 = Options()
+	opt1.ComputeReferences = True
+	geom1 = el1.get_Geometry(opt1)
+	enum = geom1.GetEnumerator()
+	enum.MoveNext()
+	geom2 = enum.Current.GetInstanceGeometry()
+	enum2 = geom2.GetEnumerator()
+	enum2.MoveNext()
+	s1 = enum2.Current
+	doc.Delete(el1.Id)
+	try:
+		dsType1 = DirectShapeType.Create(doc, name1, cat.Id)
+		dsType1.SetShape([s1])
+		dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
+		dsType1_LibId = dsType1.Id.ToString()
+		dsLib.AddDefinitionType(dsType1_LibId, dsType1.Id)
+		tf1 = Transform.Identity#.CreateTranslation(XYZ(0,0,0))
+		ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, dsType1_LibId, tf1, "Dynamo","")
+		ds1.SetTypeId(dsType1.Id)
+		return ds1.ToDSType(False)
+	except:
+		return []
+
+solids = tolist(IN[0])
+cat = UnwrapElement(tolist(IN[1]))
+names = tolist(IN[2])
+
+if len(solids) == len(cat) == len(names):
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	out1 = map(NewDS,solids,cat,names)
+	OUT = output1(out1)
+	TransactionManager.Instance.TransactionTaskDone()
+elif len(cat) == 1 and len(solids) == len(names) &gt; 1:
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	out1 = [NewDS(s, cat[0], n) for s, n in zip(solids, names)]
+	OUT = output1(out1)
+	TransactionManager.Instance.TransactionTaskDone()
+else:
+	OUT = "Please provide a unique name\nfor each geometry object"</Script>
+    </DSIronPythonNode.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="bba51f7d-0a2b-42b5-93e3-3dd8e91b8084" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8ef172b1-09d0-4407-9d5d-dd9474c96ff4" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" start_index="0" end="378d0694-3f14-43b9-9ae6-930a6781aae0" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

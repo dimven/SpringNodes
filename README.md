@@ -10,6 +10,15 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.5.0 171115
+- Minor maintenance on "SelectInRevit" and "Collector.LinkedInstanceElements".
+	- The collector was outputting vectors because I was only using it for links that were moved and were not mirrored or rotated/
+	- The node now outputs coordinate systems that can be used to correctly relocate the geometry.
+- New geometry node, "N-hedron.ByOriginVector", used to generate multi - sided polyhedrons. (pyramids)
+- New _BETA_ features. These feateres may proove more unstable than usual:
+	- "FamilyInstance.ByGeometry" generates a new family in the background of the currently open document and places an instance of that family.
+	- "Filter.BySelection" and "List.DropDown" each provide a custom interface for object selection and management.
+
 82.4.0 121115
 - DirectShape.ByGeometry and Form.ByGeometry have been completely revised
 	- the (SAT) versions have been depreciated and merged into the main node
@@ -18,7 +27,7 @@ CHANGE LOG
 - Sheet.Views+ now supports Revit 2014
 
 82.3.3 021115
-- new List.EveryOther node added. As the name stipulates, it creates a new list for each list element and drops the coresponding element.
+- new List.EveryOther node added. As the name stipulates, it creates a new list for each list element and drops the corresponding element.
 - new FamilyInstance.Rotation node added. It fetches a point based element's rotation around its insertion point.
 - new CurveLoop.Simplify node added. Design script based. It attempts to merge continuous straight curves into a single line.
 

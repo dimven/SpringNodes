@@ -1,9 +1,9 @@
-<Workspace Version="0.8.2.2392" X="-518.561480514739" Y="144.78939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="72.4385194852611" Y="191.78939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <DSIronPythonNode.PythonNode guid="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2015, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 #inspired by Julien Benoit @jbenoit44 
@@ -62,10 +62,14 @@ else:
     <Dynamo.Nodes.Output guid="8bbb9a23-f1c9-4b37-8c0f-c17ab06bef42" type="Dynamo.Nodes.Output" nickname="Output" x="398.388855625663" y="-1.19560800870553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="success?" />
     </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="73406a5d-afb0-46e1-b125-e13964dc62e3" type="Dynamo.Nodes.Symbol" nickname="Input" x="35.6581311442392" y="67.0939820951629" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="reset:bool = true;" />
+    </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" start_index="0" end="8bbb9a23-f1c9-4b37-8c0f-c17ab06bef42" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="86d0140e-e8ac-414a-a132-476259f6293c" start_index="0" end="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="73406a5d-afb0-46e1-b125-e13964dc62e3" start_index="0" end="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

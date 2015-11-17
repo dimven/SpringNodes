@@ -1,0 +1,79 @@
+<Workspace Version="0.8.2.2392" X="305.227147497823" Y="175.181384257819" zoom="1.545620359375" Name="List.DropDown" Description="Select one item from the list from a drop-down combo box." ID="a4a2f0a2-ccd6-4307-921d-241ffb37010f" Category="SpringNodes.BETA">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="191.12396394882" y="-3.23494703577913" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+clr.AddReference('System.Windows.Forms')
+clr.AddReference('System.Drawing')
+
+from System.Drawing import Point
+from System.Windows.Forms import Application, Button, Form, ComboBox
+from System import Array, Object
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+class DropDownForm(Form):
+	def __init__(self):
+		self.Text = "SpringNodes: Drop-Down Selection"
+		self.Width = 360
+		self.Height = 120
+		
+		self.combo1 = ComboBox()
+		self.combo1.Location = Point(25, 15)
+		self.combo1.Width = 300
+		self.combo1.MouseClick += self.expand
+		self.Controls.Add(self.combo1)
+		
+		self.button1 = Button()
+		self.button1.Text = 'Select'
+		self.button1.AutoSize = True
+		self.button1.Location = Point(25, 50)
+		self.button1.Click += self.save
+		self.Controls.Add(self.button1)
+	
+	def expand(self, sender, event):
+		self.combo1.DroppedDown = True
+	def add_range(self,l1):
+		self.combo1.Items.AddRange(l1)	
+		if l1.Length &gt;= 1:
+			self.combo1.SelectedIndex = 0
+	def save(self, sender, event):
+		self.output1 = self.combo1.SelectedItem
+		self.Close()
+
+l1 = tolist(IN[0])
+
+l1_arr = Array[Object](l1)
+form = DropDownForm()
+form.add_range(l1_arr)
+Application.Run(form)
+OUT = form.output1
+Application.Exit()</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="87248bdf-1582-44a5-b04b-2bcefdbafada" type="Dynamo.Nodes.Symbol" nickname="Input" x="33.6434491721027" y="1.94096822146744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="list:var[]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="b66f9a1f-c545-4c73-8e68-085748976f56" type="Dynamo.Nodes.Symbol" nickname="Input" x="-25.2325868790771" y="61.3624512196524" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="reset:bool = true" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="96320da1-6aec-4a8e-b6c9-48ceba7828b7" type="Dynamo.Nodes.Output" nickname="Output" x="359.715461812497" y="-2.58795762862329" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="selection" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" start_index="0" end="96320da1-6aec-4a8e-b6c9-48ceba7828b7" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="87248bdf-1582-44a5-b04b-2bcefdbafada" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b66f9a1f-c545-4c73-8e68-085748976f56" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

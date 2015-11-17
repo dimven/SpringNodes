@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-5.28007213848423" Y="197.340108007546" zoom="1.703916824555" Name="Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="120.693991694612" Y="259.12112865643" zoom="1.2198072017255" Name="Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
@@ -10,6 +10,10 @@
 # http://aecuandme.wordpress.com/
 
 import clr
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -28,19 +32,19 @@ def tolist(obj1):
 
 Link1 = UnwrapElement(tolist(IN[0]))
 Cat1 = UnwrapElement(IN[1])
-elements = []
-transforms = []
+elements, transforms = [], []
+
 for l in Link1:
 	LinkDoc = l.GetLinkDocument()
 	fec = FilteredElementCollector(LinkDoc).OfCategoryId(Cat1.Id).WhereElementIsNotElementType().ToElements()
 	fec1 = [e.ToDSType(True) for e in fec]
 	elements.append(fec1)
 	tf1 = l.GetTransform()
-	v0 = XYZ(0,0,0)
-	v1 = tf1.OfPoint(v0).ToVector(True)
-	transforms.append(v1)
+	cs1 = CoordinateSystem.ByOriginVectors(tf1.Origin.ToPoint(True),
+	tf1.BasisX.ToVector(True), tf1.BasisY.ToVector(True), tf1.BasisZ.ToVector(True))
+	transforms.append(cs1)
 if len(elements) == 1:
-	OUT = fec1, v1
+	OUT = fec1, cs1
 else:
 	OUT = elements, transforms</Script>
     </DSIronPythonNode.PythonNode>
@@ -50,11 +54,11 @@ else:
     <Dynamo.Nodes.Symbol guid="5efc1764-2e33-4182-b564-c8454a714c31" type="Dynamo.Nodes.Symbol" nickname="Input" x="28.1841553837043" y="43.5316487553731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="category:Category" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="66772f0d-8f8d-4145-805e-d49dd692712b" type="Dynamo.Nodes.Output" nickname="Output" x="546.818506349812" y="-12.6330818016146" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Nodes.Output guid="66772f0d-8f8d-4145-805e-d49dd692712b" type="Dynamo.Nodes.Output" nickname="Output" x="537.428376638417" y="-41.9772371497245" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="elements" />
     </Dynamo.Nodes.Output>
     <Dynamo.Nodes.CodeBlockNodeModel guid="6fcb4bbe-ced2-4f00-9a08-d26207cc6f67" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="386.338434323298" y="3.63219009912015" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
-    <Dynamo.Nodes.Output guid="0ca5e986-503d-4761-87b4-83ab1ceb25c1" type="Dynamo.Nodes.Output" nickname="Output" x="541.39157002335" y="47.3449943025252" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Nodes.Output guid="0ca5e986-503d-4761-87b4-83ab1ceb25c1" type="Dynamo.Nodes.Output" nickname="Output" x="536.10962206069" y="16.8270727404909" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="transform(s)" />
     </Dynamo.Nodes.Output>
   </Elements>
@@ -69,6 +73,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-2588.72807535871" eyeY="14837.1774404616" eyeZ="7804.09162169149" lookX="1683.36097921079" lookY="-13362.3531590255" lookZ="-17482.3721983146" />
   </Cameras>
 </Workspace>

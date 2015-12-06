@@ -1,0 +1,218 @@
+<Workspace Version="0.8.2.2392" X="-2145.29900349479" Y="201.332412005748" zoom="0.948784094383323" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1071.60327485075" y="-83.7414629584852" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="2;" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" type="Dynamo.Nodes.Function" nickname="FamilyInstance.ByGeometry" x="803.478675255875" y="-142.066064224885" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <PortInfo index="3" default="True" />
+      <PortInfo index="4" default="True" />
+      <PortInfo index="5" default="True" />
+      <ID value="ecdb3729-0de2-4c50-bdca-28fe881027a2" />
+      <Name value="FamilyInstance.ByGeometry" />
+      <Description value="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The output is the resulting family and an instance aligned according to the project document's origin.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="family template path" />
+        <Input value="family name" />
+        <Input value="category" />
+        <Input value="material_name" />
+        <Input value="isVoid" />
+      </Inputs>
+      <Outputs>
+        <Output value="instance" />
+        <Output value="family" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <DSCore.File.Filename guid="533210a4-8637-4839-812e-a0251477010f" type="DSCore.File.Filename" nickname="2015" x="397.912442920851" y="-296.321989593672" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.String>C:\ProgramData\Autodesk\RVT 2015\Family Templates\English\Metric Generic Model.rft</System.String>
+    </DSCore.File.Filename>
+    <Dynamo.Nodes.DSVarArgFunction guid="eb1666a9-021b-460b-bb7b-b33b2cffa9da" type="Dynamo.Nodes.DSVarArgFunction" nickname="List.Join" x="244.518161713671" y="-145.7835473845" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Join@var[]..[]" inputcount="2" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="72eb0100-77ba-4d6e-9ebf-93ae9769c1ca" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-222.579792457138" y="-144.923378242182" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="Cuboid.ByLengths(11000,6000,200).&#xA;Translate(Vector.ByCoordinates(0,0,{2800,3200}));&#xA;Sphere.ByCenterPointRadius(Point.&#xA;ByCoordinates(-3000..3000..1000,0,3000),500);" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" type="Dynamo.Nodes.Function" nickname="List.Split" x="1171.19818311471" y="-140.655371271613" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="0cf437eb-a84c-4622-b102-32f01417eda7" />
+      <Name value="List.Split" />
+      <Description value="Splits a list after the specified amount of items" />
+      <Inputs>
+        <Input value="list" />
+        <Input value="amount" />
+      </Inputs>
+      <Outputs>
+        <Output value="list1" />
+        <Output value="list2" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="e04a54ba-6c9f-47d6-8767-50bc4dd03ae3" type="Dynamo.Nodes.Watch" nickname="Watch" x="2526.01288042878" y="-8.5702797149944" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="4a0a0b9f-6196-4be1-af45-b6c4ba7a4421" type="Dynamo.Nodes.Function" nickname="Input.Wait" x="1813.34753715831" y="-103.322984521861" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="10e44f91-a8da-4f5e-82ca-3e3489fd906f" />
+      <Name value="Input.Wait" />
+      <Description value="Waits for all inputs to be completed before continuing the execution process.Part of the SmartCopyMon workflow." />
+      <Inputs>
+        <Input value="WaitForMe" />
+        <Input value="Output" />
+      </Inputs>
+      <Outputs>
+        <Output value="Output" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="f21c1477-297e-4efb-92f8-f649413a9a3a" type="Dynamo.Nodes.Watch" nickname="Watch" x="1752.34718588992" y="-296.843836368417" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <DSCore.File.Filename guid="69d98bf9-ee04-4f39-9389-faf9c9f4e52c" type="DSCore.File.Filename" nickname="2016" x="397.672518376157" y="-207.509583979202" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.String>C:\ProgramData\Autodesk\RVT 2016\Family Templates\English\Metric Generic Model.rft</System.String>
+    </DSCore.File.Filename>
+    <DSCore.File.Filename guid="5632c689-7449-4e0e-b755-ceb68f316575" type="DSCore.File.Filename" nickname="2014" x="397.501655340925" y="-382.807193259721" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.String>C:\ProgramData\Autodesk\RVT 2014\Family Templates\English\Metric Generic Model.rft</System.String>
+    </DSCore.File.Filename>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="9a001baf-fed0-433f-b199-d1f0364405a4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="422.895436830402" y="-51.2079183794368" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="&quot;Family &quot; + (1..Count(l));&#xA;{false,false,true};" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="ca748929-67ed-4cd4-bb35-13b36eba1f0a" type="Dynamo.Nodes.Function" nickname="Element.AddVoidCut" x="1483.86868603865" y="-218.646601292095" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="d59aaf9f-51ca-49bb-b43d-d6a69c77c775" />
+      <Name value="Element.AddVoidCut" />
+      <Description value="Accepts single or list inputs. If an element that can be cut and a family that can act as a void cutting entity are provided, the element will be cut. Please make sure that the geometries of the elements actually cut. Otherwise an empty cut will be created that may impede the performance of your file. Add void cuts sparcely because they affect the size of your project." />
+      <Inputs>
+        <Input value="element(s)ToBeCut" />
+        <Input value="cuttingElement(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" type="Dynamo.Nodes.Function" nickname="Element.RemoveVoidCut" x="2199.42386024528" y="-10.2199075734983" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="8e939b52-ea4c-41ff-97bb-f54ba062c938" />
+      <Name value="Element.RemoveVoidCut" />
+      <Description value="Removes the void cut between the input elements, if such exists." />
+      <Inputs>
+        <Input value="element(s)BeingCut" />
+        <Input value="cuttingElement(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="2f7b306e-11d8-4289-bd9e-c983addb5548" type="Dynamo.Nodes.Watch" nickname="Watch" x="2950.35985653765" y="-169.373397142881" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="90cef895-50f9-4f68-b046-7de68265d9ed" type="Dynamo.Nodes.Function" nickname="Element.IsCut" x="2760.44416429545" y="-167.504424865528" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="a530754f-4351-4bdd-81aa-d47d7555fef1" />
+      <Name value="Element.IsCut" />
+      <Description value="Tests if the element is being cut by any void instances. If any cuts exist all cutting elements will be provided." />
+      <Inputs>
+        <Input value="element(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="bool" />
+        <Output value="cuts" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="67b97f65-2b28-4109-884d-9b4e42560932" type="Dynamo.Nodes.Watch" nickname="Watch" x="3066.04932413275" y="-277.52350279627" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Watch guid="cc2f7815-0fb6-4a7d-b0f5-20205b3b375a" type="Dynamo.Nodes.Watch" nickname="Watch" x="2884.88140805284" y="175.130487700504" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" type="Dynamo.Nodes.Function" nickname="Element.IsCutting" x="2650.4332842587" y="176.473771884899" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="88c455c9-dee7-4336-8e35-382e0b86018a" />
+      <Name value="Element.IsCutting" />
+      <Description value="Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided." />
+      <Inputs>
+        <Input value="element(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="bool" />
+        <Output value="cut elements" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Watch guid="b40974f4-47ec-4499-872c-f65a9372e9ac" type="Dynamo.Nodes.Watch" nickname="Watch" x="3007.55375644955" y="194.09519764188" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="01f9d56f-8cb2-4553-881e-e1c75ace1d7c" type="Dynamo.Nodes.Function" nickname="Input.Wait" x="2549.11724626686" y="-165.191938170251" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="10e44f91-a8da-4f5e-82ca-3e3489fd906f" />
+      <Name value="Input.Wait" />
+      <Description value="Waits for all inputs to be completed before continuing the execution process.Part of the SmartCopyMon workflow." />
+      <Inputs>
+        <Input value="WaitForMe" />
+        <Input value="Output" />
+      </Inputs>
+      <Outputs>
+        <Output value="Output" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.Function guid="e2109812-56eb-45e8-a7fa-db068fa1cfcb" type="Dynamo.Nodes.Function" nickname="Input.Wait" x="2450.86604200848" y="177.303001883759" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="10e44f91-a8da-4f5e-82ca-3e3489fd906f" />
+      <Name value="Input.Wait" />
+      <Description value="Waits for all inputs to be completed before continuing the execution process.Part of the SmartCopyMon workflow." />
+      <Inputs>
+        <Input value="WaitForMe" />
+        <Input value="Output" />
+      </Inputs>
+      <Outputs>
+        <Output value="Output" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="e4f1b9ed-aec1-4561-be1b-8bdc4d237050" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="2030.97310483643" y="-3.9220420850765" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="i[0];&#xA;c[0..5];" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" start_index="0" end="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" start_index="0" end="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="eb1666a9-021b-460b-bb7b-b33b2cffa9da" start_index="0" end="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="eb1666a9-021b-460b-bb7b-b33b2cffa9da" start_index="0" end="9a001baf-fed0-433f-b199-d1f0364405a4" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="72eb0100-77ba-4d6e-9ebf-93ae9769c1ca" start_index="0" end="eb1666a9-021b-460b-bb7b-b33b2cffa9da" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="72eb0100-77ba-4d6e-9ebf-93ae9769c1ca" start_index="1" end="eb1666a9-021b-460b-bb7b-b33b2cffa9da" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" start_index="0" end="4a0a0b9f-6196-4be1-af45-b6c4ba7a4421" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" start_index="0" end="ca748929-67ed-4cd4-bb35-13b36eba1f0a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" start_index="1" end="ca748929-67ed-4cd4-bb35-13b36eba1f0a" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" start_index="1" end="e2109812-56eb-45e8-a7fa-db068fa1cfcb" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" start_index="1" end="e4f1b9ed-aec1-4561-be1b-8bdc4d237050" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4a0a0b9f-6196-4be1-af45-b6c4ba7a4421" start_index="0" end="01f9d56f-8cb2-4553-881e-e1c75ace1d7c" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4a0a0b9f-6196-4be1-af45-b6c4ba7a4421" start_index="0" end="e4f1b9ed-aec1-4561-be1b-8bdc4d237050" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="69d98bf9-ee04-4f39-9389-faf9c9f4e52c" start_index="0" end="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9a001baf-fed0-433f-b199-d1f0364405a4" start_index="0" end="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9a001baf-fed0-433f-b199-d1f0364405a4" start_index="1" end="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" end_index="5" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca748929-67ed-4cd4-bb35-13b36eba1f0a" start_index="0" end="4a0a0b9f-6196-4be1-af45-b6c4ba7a4421" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca748929-67ed-4cd4-bb35-13b36eba1f0a" start_index="0" end="f21c1477-297e-4efb-92f8-f649413a9a3a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" start_index="0" end="e04a54ba-6c9f-47d6-8767-50bc4dd03ae3" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" start_index="0" end="01f9d56f-8cb2-4553-881e-e1c75ace1d7c" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" start_index="0" end="e2109812-56eb-45e8-a7fa-db068fa1cfcb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="90cef895-50f9-4f68-b046-7de68265d9ed" start_index="0" end="2f7b306e-11d8-4289-bd9e-c983addb5548" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="90cef895-50f9-4f68-b046-7de68265d9ed" start_index="1" end="67b97f65-2b28-4109-884d-9b4e42560932" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" start_index="0" end="cc2f7815-0fb6-4a7d-b0f5-20205b3b375a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" start_index="1" end="b40974f4-47ec-4499-872c-f65a9372e9ac" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="01f9d56f-8cb2-4553-881e-e1c75ace1d7c" start_index="0" end="90cef895-50f9-4f68-b046-7de68265d9ed" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e2109812-56eb-45e8-a7fa-db068fa1cfcb" start_index="0" end="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e4f1b9ed-aec1-4561-be1b-8bdc4d237050" start_index="0" end="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="e4f1b9ed-aec1-4561-be1b-8bdc4d237050" start_index="1" end="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" end_index="1" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Models.NoteModel guid="cd1deed5-fac2-4fe2-947f-1607320d1df5" text="Default template locations" x="218.575086521481" y="-274.467305087783" />
+    <Dynamo.Models.NoteModel guid="b1edc9a3-0772-4b11-ba76-e87d5901743a" text="separate the voids" x="1176.28709719289" y="-183.474784069631" />
+  </Notes>
+  <Annotations>
+    <Dynamo.Models.AnnotationModel guid="e4180246-6e57-4a0c-aab1-8137e2440180" annotationText="Let's generate some cutters and some elements to be cut" left="-232.579792457138" top="-421.607193259721" width="1286.05846771301" height="500.141129034836" fontSize="24" InitialTop="-382.807193259721" InitialHeight="529.302211080726" TextblockHeight="28.8" backgrouund="#FFFFAA45">
+      <Models ModelGuid="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" />
+      <Models ModelGuid="533210a4-8637-4839-812e-a0251477010f" />
+      <Models ModelGuid="eb1666a9-021b-460b-bb7b-b33b2cffa9da" />
+      <Models ModelGuid="72eb0100-77ba-4d6e-9ebf-93ae9769c1ca" />
+      <Models ModelGuid="69d98bf9-ee04-4f39-9389-faf9c9f4e52c" />
+      <Models ModelGuid="5632c689-7449-4e0e-b755-ceb68f316575" />
+      <Models ModelGuid="9a001baf-fed0-433f-b199-d1f0364405a4" />
+      <Models ModelGuid="cd1deed5-fac2-4fe2-947f-1607320d1df5" />
+    </Dynamo.Models.AnnotationModel>
+    <Dynamo.Models.AnnotationModel guid="97e6df71-80ba-4a9e-83f3-3c478baae8b8" annotationText="Tests if the elements are being cut" left="2750.44416429545" top="-316.32350279627" width="532.0051598373" height="346.6" fontSize="24" InitialTop="-277.52350279627" InitialHeight="313.8" TextblockHeight="28.8" backgrouund="#FFC1D676">
+      <Models ModelGuid="2f7b306e-11d8-4289-bd9e-c983addb5548" />
+      <Models ModelGuid="90cef895-50f9-4f68-b046-7de68265d9ed" />
+      <Models ModelGuid="67b97f65-2b28-4109-884d-9b4e42560932" />
+    </Dynamo.Models.AnnotationModel>
+    <Dynamo.Models.AnnotationModel guid="ef89a56c-77e9-4e02-8470-b5bace330c75" annotationText="cuts all the instances with all the voids" left="1473.86868603865" top="-335.643836368417" width="514.07849985127" height="235.197235076322" fontSize="24" InitialTop="-296.843836368417" InitialHeight="226.397235076321" TextblockHeight="28.8" backgrouund="#FFC1D676">
+      <Models ModelGuid="f21c1477-297e-4efb-92f8-f649413a9a3a" />
+      <Models ModelGuid="ca748929-67ed-4cd4-bb35-13b36eba1f0a" />
+    </Dynamo.Models.AnnotationModel>
+    <Dynamo.Models.AnnotationModel guid="cee9737b-794c-4fe2-aa34-4d75837fa7f9" annotationText="remove all but 1 of the cuts from the bottom slab" left="2189.42386024528" top="-49.0199075734983" width="535.3890201835" height="157" fontSize="24" InitialTop="-10.2199075734983" InitialHeight="148.2" TextblockHeight="28.8" backgrouund="#FFC1D676">
+      <Models ModelGuid="e04a54ba-6c9f-47d6-8767-50bc4dd03ae3" />
+      <Models ModelGuid="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" />
+    </Dynamo.Models.AnnotationModel>
+    <Dynamo.Models.AnnotationModel guid="968b2e59-3824-4b0f-9c61-5affdb8d567e" annotationText="Checks if the elements are cutting something." left="2640.4332842587" top="136.330487700504" width="583.52047219085" height="429.564709941376" fontSize="24" InitialTop="175.130487700504" InitialHeight="396.764709941377" TextblockHeight="28.8" backgrouund="#FFC1D676">
+      <Models ModelGuid="cc2f7815-0fb6-4a7d-b0f5-20205b3b375a" />
+      <Models ModelGuid="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" />
+      <Models ModelGuid="b40974f4-47ec-4499-872c-f65a9372e9ac" />
+    </Dynamo.Models.AnnotationModel>
+  </Annotations>
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="72.4385194852611" Y="191.78939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="-204.361480514739" Y="157.38939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Selection">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -26,7 +26,7 @@ clr.ImportExtensions(Revit.Elements)
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import ElementId
 clr.AddReference("RevitAPIUI")
-from Autodesk.Revit.UI.Selection import SelElementSet
+from Autodesk.Revit.UI.Selection import *
 
 clr.AddReference("System")
 from System.Collections.Generic import List as cList

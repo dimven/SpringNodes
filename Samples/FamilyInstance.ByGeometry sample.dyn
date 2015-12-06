@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="88.5403915754285" Y="-33.7316963874096" zoom="0.803890734115944" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+<Workspace Version="0.8.2.2392" X="-868.655489787964" Y="4.52304853008593" zoom="0.744364983359601" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -13,13 +13,13 @@
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSCore.File.Filename guid="49b74304-318a-4ea1-b21b-18f09b794558" type="DSCore.File.Filename" nickname="File Path" x="499.726452720381" y="161.119558311408" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <DSCore.File.Filename guid="49b74304-318a-4ea1-b21b-18f09b794558" type="DSCore.File.Filename" nickname="2015" x="501.287188773763" y="120.177888499467" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <System.String>C:\ProgramData\Autodesk\RVT 2015\Family Templates\English\Metric Generic Model.rft</System.String>
     </DSCore.File.Filename>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="fae7c356-0c13-4a96-a1ec-03b986ccfc61" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="548.839002897966" y="251.613284394176" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Super Family &quot; + (1..8);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="fae7c356-0c13-4a96-a1ec-03b986ccfc61" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="443.772002332834" y="298.131220322694" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Super Family &quot; + (1..8);" ShouldFocus="false" />
     <Dynamo.Nodes.CodeBlockNodeModel guid="9e0b8698-56c8-47f7-a369-d7c2a4492869" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1050.94861121652" y="-166.022335485455" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/*&#xA;You must provide a valid family template path that will be used for all input&#xA;geometry objects. The project units(and not the templates) will be used to&#xA;determine the size of the output geometry.&#xA;The provided category will be used only if the family template supports it.&#xA;If not, the default template category will be used instead.&#xA;Likewise, the family material(provided as a string) will be set only if a&#xA;material with that name exists in the template. If not, the default material&#xA;will be used instead (&quot;By Category&quot;).&#xA;For void cuts, the material settings will be ignored.&#xA;The output is the resulting family and an instance aligned according to the&#xA;project document's origin. The node expects a unique family name for each&#xA;geometry object. The rest of the input lists will be processed as if the node&#xA;lacing is set to longest.&#xA;*/;" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="6f725408-433c-4b06-9d4b-edfa05e453e7" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="518.537262082885" y="380.946037310118" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="Flatten({List.Cycle(&quot;Earth&quot;,4),&quot;Glass&quot;});&#xA;Flatten({List.Cycle(false,5),true});" ShouldFocus="false" />
-    <Dynamo.Nodes.Watch guid="19c2b8b6-db50-4a8f-9904-5b0e8d63478b" type="Dynamo.Nodes.Watch" nickname="Watch" x="1421.77531275713" y="209.469258902261" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="6f725408-433c-4b06-9d4b-edfa05e453e7" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="405.319241520029" y="501.244452302432" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="Flatten({List.Cycle(&quot;Default&quot;,4),&quot;Glass&quot;});&#xA;Flatten({List.Cycle(false,5),true});" ShouldFocus="false" />
+    <Dynamo.Nodes.Watch guid="19c2b8b6-db50-4a8f-9904-5b0e8d63478b" type="Dynamo.Nodes.Watch" nickname="Watch" x="1378.73076417978" y="208.514534944833" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
     <Dynamo.Nodes.Function guid="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" type="Dynamo.Nodes.Function" nickname="FamilyInstance.ByGeometry" x="1068.55573451716" y="213.135920374048" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
       <PortInfo index="3" default="True" />
       <PortInfo index="4" default="True" />
@@ -36,7 +36,8 @@
         <Input value="isVoid" />
       </Inputs>
       <Outputs>
-        <Output value="instance, family" />
+        <Output value="instance" />
+        <Output value="family" />
       </Outputs>
     </Dynamo.Nodes.Function>
     <Dynamo.Nodes.CodeBlockNodeModel guid="7a4b3065-a999-40c0-b5ff-57ddd70dba4a" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-50.0903874709132" y="-84.4967678339163" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="Rectangle.ByWidthLength(10000,6000).Points;&#xA;3..6;&#xA;1500..1000..#4;&#xA;3000;&#xA;Cuboid.ByLengths(11000,6500,500).Translate&#xA;(Vector.ByCoordinates(0,0,2500));&#xA;Sphere.ByCenterPointRadius(Point.ByCoordinates&#xA;({-1300,500,1200},{-900,700,-1800},2300..3000..#3),1000);" ShouldFocus="false" />
@@ -61,17 +62,31 @@
       </Outputs>
     </Dynamo.Nodes.Function>
     <Dynamo.Nodes.DSVarArgFunction guid="19023027-e13d-4cbc-a466-bc006d259262" type="Dynamo.Nodes.DSVarArgFunction" nickname="List.Join" x="800.11297728958" y="-34.6164540386337" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Join@var[]..[]" inputcount="3" />
-    <DSRevitNodesUI.Categories guid="75dfb2ba-4e2e-4696-9c07-9e0547b12221" type="DSRevitNodesUI.Categories" nickname="Categories" x="-41.0553590602935" y="534.055833060819" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="371:GenericModel" />
-    <Dynamo.Nodes.DSFunction guid="2f692d16-858f-4980-9f37-78a8fef67efb" type="Dynamo.Nodes.DSFunction" nickname="List.OfRepeatedItem" x="110.458083441232" y="291.522881601127" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.OfRepeatedItem@var[]..[],int" />
-    <DSRevitNodesUI.Categories guid="59b81cd7-a110-4e17-a177-4b426654b84e" type="DSRevitNodesUI.Categories" nickname="Categories" x="-56.5414606210032" y="445.648436269881" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="835:StructuralFraming" />
-    <DSRevitNodesUI.Categories guid="39bdc304-e77f-4737-b72b-9d2a73e3f0d5" type="DSRevitNodesUI.Categories" nickname="Categories" x="-98.4132842663935" y="274.658800265227" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="830:StructuralColumns" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="cf371f6e-497f-4a2d-81f8-7a1962b41a6a" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-31.0147056639513" y="356.903355539553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="4;" ShouldFocus="false" />
-    <Dynamo.Nodes.DSVarArgFunction guid="c96ece39-3069-49c7-9b08-f74593ea1dd6" type="Dynamo.Nodes.DSVarArgFunction" nickname="List.Join" x="321.120391539363" y="368.55562627491" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Join@var[]..[]" inputcount="3" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="e41ea662-6e0f-4429-9bb1-9ec63327ef56" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1017.92190324861" y="421.229204331477" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//now cut the cuboid with the three new voids" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="d4f2ae7f-187e-4142-873f-4734862b1b96" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="82.5314194916479" y="147.653650541435" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//be sure to pick a family template( like the&#xA;//generic model family) that's the same version&#xA;//as your Revit instance" ShouldFocus="false" />
+    <DSRevitNodesUI.Categories guid="75dfb2ba-4e2e-4696-9c07-9e0547b12221" type="DSRevitNodesUI.Categories" nickname="Categories" x="-120.555121665401" y="589.456938745828" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="380:GenericModel" />
+    <Dynamo.Nodes.DSFunction guid="2f692d16-858f-4980-9f37-78a8fef67efb" type="Dynamo.Nodes.DSFunction" nickname="List.OfRepeatedItem" x="30.9583208361244" y="346.923987286136" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.OfRepeatedItem@var[]..[],int" />
+    <DSRevitNodesUI.Categories guid="59b81cd7-a110-4e17-a177-4b426654b84e" type="DSRevitNodesUI.Categories" nickname="Categories" x="-136.041223226111" y="501.04954195489" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="842:StructuralFraming" />
+    <DSRevitNodesUI.Categories guid="39bdc304-e77f-4737-b72b-9d2a73e3f0d5" type="DSRevitNodesUI.Categories" nickname="Categories" x="-177.913046871501" y="330.059905950236" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="835:StructuralColumns" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="cf371f6e-497f-4a2d-81f8-7a1962b41a6a" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-110.514468269059" y="412.304461224562" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="4;" ShouldFocus="false" />
+    <Dynamo.Nodes.DSVarArgFunction guid="c96ece39-3069-49c7-9b08-f74593ea1dd6" type="Dynamo.Nodes.DSVarArgFunction" nickname="List.Join" x="241.620628934255" y="423.956731959919" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.Join@var[]..[]" inputcount="3" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d4f2ae7f-187e-4142-873f-4734862b1b96" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="70.5962369229608" y="140.526540117049" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//the default template locations&#xA;//be sure to pick a family template( like the&#xA;//generic model family) that's the same version&#xA;//as your Revit instance" ShouldFocus="false" />
+    <DSCore.File.Filename guid="c94fbaa0-5000-4bb1-97a4-8997cd89ecc1" type="DSCore.File.Filename" nickname="2016" x="500.720381566337" y="206.743197712722" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <System.String>C:\ProgramData\Autodesk\RVT 2016\Family Templates\English\Metric Generic Model.rft</System.String>
+    </DSCore.File.Filename>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="ac22d311-6ccd-41d4-a30b-9da5e7a5efa9" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1809.86200569923" y="212.024046970061" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="//let's make some holes in that table&#xA;table = inst[4];&#xA;voids = inst[-3..-1];" ShouldFocus="false" />
+    <Dynamo.Nodes.Function guid="3716afb7-690c-4b36-8304-6272da1cc88f" type="Dynamo.Nodes.Function" nickname="Element.AddVoidCut" x="2210.65041275217" y="223.683343933225" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+      <ID value="d59aaf9f-51ca-49bb-b43d-d6a69c77c775" />
+      <Name value="Element.AddVoidCut" />
+      <Description value="Accepts single or list inputs. If an element that can be cut and a family that can act as a void cutting entity are provided, the element will be cut. Please make sure that the geometries of the elements actually cut. Otherwise an empty cut will be created that may impede the performance of your file. Add void cuts sparcely because they affect the size of your project." />
+      <Inputs>
+        <Input value="element(s)ToBeCut" />
+        <Input value="cuttingElement(s)" />
+      </Inputs>
+      <Outputs>
+        <Output value="result" />
+      </Outputs>
+    </Dynamo.Nodes.Function>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="49b74304-318a-4ea1-b21b-18f09b794558" start_index="0" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="1" portType="0" />
     <Dynamo.Models.ConnectorModel start="fae7c356-0c13-4a96-a1ec-03b986ccfc61" start_index="0" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="2" portType="0" />
     <Dynamo.Models.ConnectorModel start="6f725408-433c-4b06-9d4b-edfa05e453e7" start_index="0" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="4" portType="0" />
     <Dynamo.Models.ConnectorModel start="6f725408-433c-4b06-9d4b-edfa05e453e7" start_index="1" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="5" portType="0" />
@@ -90,11 +105,19 @@
     <Dynamo.Models.ConnectorModel start="39bdc304-e77f-4737-b72b-9d2a73e3f0d5" start_index="0" end="2f692d16-858f-4980-9f37-78a8fef67efb" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="cf371f6e-497f-4a2d-81f8-7a1962b41a6a" start_index="0" end="2f692d16-858f-4980-9f37-78a8fef67efb" end_index="1" portType="0" />
     <Dynamo.Models.ConnectorModel start="c96ece39-3069-49c7-9b08-f74593ea1dd6" start_index="0" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="3" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c94fbaa0-5000-4bb1-97a4-8997cd89ecc1" start_index="0" end="e0a288c2-30b7-4f82-a8e2-8a01b7e30280" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ac22d311-6ccd-41d4-a30b-9da5e7a5efa9" start_index="0" end="3716afb7-690c-4b36-8304-6272da1cc88f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ac22d311-6ccd-41d4-a30b-9da5e7a5efa9" start_index="1" end="3716afb7-690c-4b36-8304-6272da1cc88f" end_index="1" portType="0" />
   </Connectors>
   <Notes />
-  <Annotations />
+  <Annotations>
+    <Dynamo.Models.AnnotationModel guid="07b83af9-9bb7-49ef-8dad-a3527ceed82e" annotationText="optional" left="1799.86200569923" top="182.024046970061" width="634.38840705294" height="159.859296963164" fontSize="14" InitialTop="212.024046970061" InitialHeight="159.859296963164" TextblockHeight="20" backgrouund="#FFD8D8D8">
+      <Models ModelGuid="ac22d311-6ccd-41d4-a30b-9da5e7a5efa9" />
+      <Models ModelGuid="3716afb7-690c-4b36-8304-6272da1cc88f" />
+    </Dynamo.Models.AnnotationModel>
+  </Annotations>
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12423.6625550316" eyeY="9805.433242987" eyeZ="-11469.511677205" lookX="-9823.82301665429" lookY="-3917.96681685669" lookZ="11583.8545858369" />
+    <Camera Name="background_preview" eyeX="12423.662109375" eyeY="9805.43359375" eyeZ="-11469.51171875" lookX="-9823.8232421875" lookY="-3917.966796875" lookZ="11583.8544921875" />
   </Cameras>
 </Workspace>

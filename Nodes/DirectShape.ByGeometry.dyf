@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="206.613205590998" Y="187.270233699957" zoom="1.51939327724692" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="0.8.2.2392" X="296.858712110862" Y="286.633902512561" zoom="0.915562285281223" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -75,7 +75,7 @@ def NewDS(s1,cat,name1):
 		satOpt = SATImportOptions()
 		satOpt.Placement = ImportPlacement.Origin
 		satOpt.Unit = ImportUnit.Foot
-		satId = doc.Import(sat1, satOpt, doc.ActiveView)
+		satId = doc.Import(sat1, satOpt, view1)
 		opt1 = Options()
 		opt1.ComputeReferences = True
 		el1 = doc.GetElement(satId)
@@ -93,13 +93,16 @@ def NewDS(s1,cat,name1):
 		pass
 	if message == None:
 		try:
+			dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
+			if dsLib.ContainsType(name1):
+				old_type = dsLib.FindDefinitionType(name1)
+				try: doc.Delete(old_type)
+				except: pass
 			dsType1 = DirectShapeType.Create(doc, name1, cat.Id)
 			dsType1.SetShape([s1])
-			dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
-			dsType1_LibId = dsType1.Id.ToString()
-			dsLib.AddDefinitionType(dsType1_LibId, dsType1.Id)
+			dsLib.AddDefinitionType(name1, dsType1.Id)
 			tf1 = Transform.Identity
-			ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, dsType1_LibId, tf1, "Dynamo","")
+			ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, name1, tf1, "Dynamo","")
 			ds1.SetTypeId(dsType1.Id)
 			return ds1.ToDSType(False)
 		except:
@@ -135,10 +138,10 @@ elif len(solids) == len(names):
 else:
 	OUT = "Make sure that each geometry\nobject has a unique type name."</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Nodes.Symbol" nickname="Input" x="53.2900822577822" y="41.0108202731795" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="category" />
+    <Dynamo.Nodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Nodes.Symbol" nickname="Input" x="-343.710489636924" y="37.8516645286593" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="category:var[]..[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" type="Dynamo.Nodes.Symbol" nickname="Input" x="80.4021758739333" y="104.979730908733" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.5283958888237" y="100.610830983185" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="name" />
     </Dynamo.Nodes.Symbol>
   </Elements>
@@ -152,6 +155,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-41.1442778676917" eyeY="39.2624364181745" eyeZ="20.0286417754079" lookX="-4.38226677529689" lookY="-4.3822667752969" lookZ="-4.3822667752969" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

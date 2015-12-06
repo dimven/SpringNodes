@@ -1,0 +1,40 @@
+<Workspace Version="0.8.2.2392" X="400.8" Y="78.4" zoom="1" Name="ClosedCurve.Offset+" Description="Offsets a curve both ways and correctly differenciates the external and internal offset. If an offset goes beyond the curve's bounds, the result will fail and a null value will be appended instead. Also works for convex curves like arcs." ID="8342e5b0-fb37-4302-9941-964d3b67265c" Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.Object" resolvedName="DSCore.Object" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Curve.Length" resolvedName="Autodesk.DesignScript.Geometry.Curve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="6f981e6b-40cf-4268-bb67-d373406c3360" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="425.422367664581" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="off1 = offset1(c, dist, f1);&#xA;min = List.FirstItem(off1&lt;1&gt;);&#xA;max = secondItem(off1);" ShouldFocus="false" />
+    <Dynamo.Nodes.DSFunction guid="62465b39-6312-47fd-a8d9-700b89fe17a3" type="Dynamo.Nodes.DSFunction" nickname="Curve.Length" x="250.8" y="115.13565303535" isVisible="false" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Curve.Length" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="0ba263c3-96c9-48e0-b7db-857096dfc76f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="426.607159259397" y="116.509192519343" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def offset1(c,dist,f1){&#xA;c1 = c.Offset(dist);&#xA;c2 = c.Offset(-dist);&#xA;c1 = c1 == null ? c : c1;&#xA;c2 = c2 == null ? c : c2;&#xA;l1 = SortByKey({c1,c2},f1);&#xA;//replace the original with a null&#xA;test = IndexOf(l1,c);&#xA;return = test == -1 ? l1 :&#xA;List.ReplaceItemAtIndex(l1,test,null);&#xA;};&#xA;&#xA;def secondItem(l1:var[]){&#xA;return = l1[1];&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="aa1b9551-34bc-4a84-84b9-1653ff2ad30d" type="Dynamo.Nodes.Symbol" nickname="Input" x="80.8" y="-9.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="curve" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="08331144-db4d-4f45-9b6b-7b49cf61abc9" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.2" y="64.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="distance" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="cf29285e-ce70-413e-9aa8-a0bcc3a82aa7" type="Dynamo.Nodes.Output" nickname="Output" x="783.207159259397" y="12" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="internal offset" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Output guid="45c19cc9-f17f-4929-a0c2-af19277969fc" type="Dynamo.Nodes.Output" nickname="Output" x="782.8" y="72.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="external offset" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="6f981e6b-40cf-4268-bb67-d373406c3360" start_index="1" end="cf29285e-ce70-413e-9aa8-a0bcc3a82aa7" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6f981e6b-40cf-4268-bb67-d373406c3360" start_index="2" end="45c19cc9-f17f-4929-a0c2-af19277969fc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="62465b39-6312-47fd-a8d9-700b89fe17a3" start_index="0" end="6f981e6b-40cf-4268-bb67-d373406c3360" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="aa1b9551-34bc-4a84-84b9-1653ff2ad30d" start_index="0" end="6f981e6b-40cf-4268-bb67-d373406c3360" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="08331144-db4d-4f45-9b6b-7b49cf61abc9" start_index="0" end="6f981e6b-40cf-4268-bb67-d373406c3360" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

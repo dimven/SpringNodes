@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-70.851349616716" Y="155.821163687476" zoom="1.24844365397223" Name="Element.Copy" Description="Copy the input Revit elements with the help of a translation vector, similarly to the Geometry.Translate node." ID="cba6fef1-c536-4337-ba89-2a1aedbbbef2" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="-70.851349616716" Y="155.821163687476" zoom="1.24844365397223" Name="Element.Copy" Description="Copy the input Revit elements with the help of a translation vector, similarly to the Geometry.Translate node." ID="cba6fef1-c536-4337-ba89-2a1aedbbbef2" Category="SpringNodes.Revit.Modify">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
@@ -89,4 +89,7 @@ TransactionManager.Instance.TransactionTaskDone()</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
 </Workspace>

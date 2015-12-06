@@ -10,6 +10,18 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.6.1 061215
+- Bug fixes:
+	- DirectShape.ByGeometry. The element was being offset from the origin.
+	- SelectInRevit will now work in R16.
+	- FamilyInstance.ByGeometry will now work in R16.
+- New nodes:
+	-Element.AddVoidCut, Element.RemoveVoidCut, Element.IsCut and Element.IsCutting for managing void cuts in a variety of ways. Works great in combination with FamilyInstance.ByGeometry.
+	- Select Linked Face will enable face selection from linked files.
+	- List.Split is a very simple but a time saving node for easy list management.
+	- Line.StraightenXY and Line.StraightenZ can be used to axially align lines. Usefull with those pesky Revit errors.
+	- Curve.Offset+ and ClosedCurve.Offset+(there's a special version for 0.9 due to name changes) improve the default offset functionality.
+
 82.5.0 171115
 - Minor maintenance on "SelectInRevit" and "Collector.LinkedInstanceElements".
 	- The collector was outputting vectors because I was only using it for links that were moved and were not mirrored or rotated/

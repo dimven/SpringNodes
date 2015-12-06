@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-159.848328490384" Y="187.59717945305" zoom="0.519778893279064" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+<Workspace Version="0.8.2.2392" X="302.699838843912" Y="174.860538523781" zoom="0.411552839142846" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
@@ -8,8 +8,8 @@
     <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSRevitNodesUI.Categories guid="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" type="DSRevitNodesUI.Categories" nickname="Categories" x="-158.888797678265" y="-109.043163193133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="371:GenericModel" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-142.959819253361" y="-17.9438349253207" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;My car&quot;;" ShouldFocus="false" />
+    <DSRevitNodesUI.Categories guid="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" type="DSRevitNodesUI.Categories" nickname="Categories" x="-164.555345910373" y="-11.5785336008687" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="380:GenericModel" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-156.559535010421" y="188.318520723425" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;My car&quot;;" ShouldFocus="false" />
     <Dynamo.Nodes.CodeBlockNodeModel guid="372635db-d34e-42a7-9932-c8b426f0833d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-584.189640692951" y="-69.3254497454216" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="r1 = Rectangle.ByWidthLength(3000,4000);&#xA;pts1 = r1.Points;&#xA;cpt = r1.Center();&#xA;s1 = Sphere.ByCenterPointRadius(pts1,800);&#xA;s2 = Sphere.ByCenterPointRadius(cpt,1700).&#xA;Translate(Vector.ByCoordinates(0,0,500));&#xA;s3 = s2.Scale(Plane.XY(),1,2,0.8);&#xA;c1 = Cuboid.ByLengths(2500,2000,1500).&#xA;Translate(Vector.ByCoordinates(0,1000,1500));&#xA;solid = s3.UnionAll(Flatten({s1,c1}));" ShouldFocus="false" />
     <Dynamo.Nodes.DSFunction guid="1e932680-c19b-445b-a6c7-6dcda1ca32bc" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="-154.879856613629" y="84.2315014638224" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
     <Dynamo.Nodes.CodeBlockNodeModel guid="e591181b-a09e-4b70-a6df-c6f0429a3dac" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-218.181481410791" y="294.639718345731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="a = 0..#5..6000;&#xA;b = 0..#5..8000;" ShouldFocus="false" />
@@ -24,15 +24,15 @@
     <Dynamo.Nodes.DSFunction guid="66e8b015-e7de-4e64-98c2-b7e42d303ed4" type="Dynamo.Nodes.DSFunction" nickname="Element.SetParameterByName" x="591.47403355544" y="-60.8110908265121" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Element.SetParameterByName@string,var" />
     <Dynamo.Nodes.CodeBlockNodeModel guid="47a7ea6d-df99-4a5a-8fc4-c689f6681ecd" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="355.385552557852" y="-1.79067684837892" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="&quot;Comments&quot;;&#xA;&quot;This is my car!&quot;;" ShouldFocus="false" />
     <Dynamo.Nodes.DSFunction guid="02a67175-8c7e-41ed-8625-3a66c499401c" type="Dynamo.Nodes.DSFunction" nickname="Transaction.End" x="349.431969525702" y="163.245570489877" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Transaction.Transaction.End@var" />
-    <Dynamo.Nodes.Function guid="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="58.9705954317552" y="-33.1285760834725" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+    <Dynamo.Nodes.Function guid="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="65.7704533102852" y="-38.7951243155809" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
       <PortInfo index="1" default="True" />
       <ID value="2416ec21-d9a2-4c67-a742-20d5cf82446e" />
       <Name value="DirectShape.ByGeometry" />
       <Description value="Attempts to create a DirectShape element inside the Revit document. It is based on an alternative process that uses a SAT inport and can produce smooth surfaces." />
       <Inputs>
+        <Input value="geometry" />
         <Input value="category" />
         <Input value="name" />
-        <Input value="geometry" />
       </Inputs>
       <Outputs>
         <Output value="DirectShape" />
@@ -54,10 +54,10 @@
     <Dynamo.Nodes.CodeBlockNodeModel guid="933c902b-8469-4796-bae2-033a7f136de6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="558.033472835771" y="94.1829286910585" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="/* This is a fast way of creating&#xA;duplicate DS elements. Create vectors,&#xA;just like the ones used for&#xA;Geometry.Translate */;" ShouldFocus="false" />
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6f8c0c8c-9a74-4140-8b84-8b4b0488aeb2" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ca26aa53-68e7-4fcd-a71e-7dc45604c1f4" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="2" portType="0" />
     <Dynamo.Models.ConnectorModel start="372635db-d34e-42a7-9932-c8b426f0833d" start_index="7" end="1e932680-c19b-445b-a6c7-6dcda1ca32bc" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="1e932680-c19b-445b-a6c7-6dcda1ca32bc" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="2" portType="0" />
+    <Dynamo.Models.ConnectorModel start="1e932680-c19b-445b-a6c7-6dcda1ca32bc" start_index="0" end="d50a188e-0a7e-4568-b3fb-fe3c5e72c574" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="e591181b-a09e-4b70-a6df-c6f0429a3dac" start_index="0" end="5e675006-e4df-491b-9742-10053963fbd6" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="e591181b-a09e-4b70-a6df-c6f0429a3dac" start_index="1" end="5e675006-e4df-491b-9742-10053963fbd6" end_index="1" portType="0" />
     <Dynamo.Models.ConnectorModel start="5e675006-e4df-491b-9742-10053963fbd6" start_index="0" end="7e04c98d-02c0-452a-b7b5-aa793badffb5" end_index="0" portType="0" />

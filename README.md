@@ -10,6 +10,19 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.7.1 061215
+- Bug fixes:
+	- Element.SetLocation works in Revit 2014 once again
+- New nodes:
+	- Collector.ElementSketch: fetches the actual geometry curves used to generate the element; can optionally fetch the model curve equivalents - this opens the (dangerous) functionality of moving and deleting curve loops that represent openings for example.
+	- Select Edges: Fetches multiple edges and converts them to Dynamo geometry.
+	- List.DragDropReorder: My current pride and joy - a node that allows us to visually reorder the elements of a list.
+	- Point.PullOntoPlane: Pulls a point along the plane normal. The Geom.ClosestTo was producing errors for some reason...
+- New functionality/changes:
+	- FamilyInstance.ByGeometry has a new optional Subcategory input. Also by popular demand, the newly generated geometry is now placed next to the family origin. The node is out of BETA (as long as it behaves) and can be found under SpringNodes>Revit>FamilyInstances
+	- "Filter.BySelection" and "List.DropDown" are out of BETA as well and have been moved to SpringNodes>Lists. They've also received a new paint job and support nested lists.
+	
+
 82.6.1 061215
 - Bug fixes:
 	- DirectShape.ByGeometry. The element was being offset from the origin.

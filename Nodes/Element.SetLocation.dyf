@@ -21,6 +21,7 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc =  DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -28,45 +29,63 @@ clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 clr.AddReference("RevitAPI")
-from Autodesk.Revit.DB import LocationCurve, LocationPoint, Wall, WallUtils
+from Autodesk.Revit.DB import *
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+isRvt14 = False
+if app.VersionName == "Autodesk Revit 2014": isRvt14 = True
+
+if not isRvt14:
+	from Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType
+	FrU = StructuralFramingUtils
 
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
 out1 = []
+framing = ["Beam", "Brace"]
 
 TransactionManager.Instance.EnsureInTransaction(doc)
-
-for e,l in zip(elements, newloc):
+for i in xrange(len(elements)):
 	try:
-		iswall = False
-		if e.GetType() == Wall:
-			WallUtils.DisallowWallJoinAtEnd(e,0)
-			WallUtils.DisallowWallJoinAtEnd(e,1)
-			iswall = True
-		newloc = l.ToRevitType()
-		oldloc = e.Location
-		if oldloc.GetType() == LocationCurve:
-			oldloc.Curve = newloc
-		if oldloc.GetType() == LocationPoint:
-			oldloc.Point = newloc
-		if iswall:
-			WallUtils.AllowWallJoinAtEnd(e,0)
-			WallUtils.AllowWallJoinAtEnd(e,1)
-		out1.append(e.ToDSType(True))
+		el_typ = elements[i].GetType().ToString()
+		isWall, isBeam = False, False
+		if el_typ == "Autodesk.Revit.DB.Wall":
+			w_start = WallUtils.IsWallJoinAllowedAtEnd(elements[i],0)
+			w_end = WallUtils.IsWallJoinAllowedAtEnd(elements[i],1)
+			WallUtils.DisallowWallJoinAtEnd(elements[i],0)
+			WallUtils.DisallowWallJoinAtEnd(elements[i],1)
+			isWall = True
+		elif el_typ == "Autodesk.Revit.DB.FamilyInstance" and not isRvt14:
+			if elements[i].StructuralType.ToString() in framing:
+				b_start = FrU.IsJoinAllowedAtEnd(elements[i],0)
+				b_end = FrU.IsJoinAllowedAtEnd(elements[i],1)
+				FrU.DisallowJoinAtEnd(elements[i],0)
+				FrU.DisallowJoinAtEnd(elements[i],1)
+				isBeam = True	
+		newloc1 = newloc[i].ToRevitType()
+		oldloc = elements[i].Location
+		loc_typ = oldloc.GetType().ToString()
+		if loc_typ == "Autodesk.Revit.DB.LocationCurve":
+			oldloc.Curve = newloc1
+		elif loc_typ == "Autodesk.Revit.DB.LocationPoint":
+			oldloc.Point = newloc1
+		if isWall:
+			if w_start: WallUtils.AllowWallJoinAtEnd(elements[i],0)
+			if w_end: WallUtils.AllowWallJoinAtEnd(elements[i],1)
+		if isBeam and not isRvt14:
+			if b_start: FrU.AllowJoinAtEnd(elements[i],0)
+			if b_end: FrU.AllowJoinAtEnd(elements[i],1)
+		out1.append(elements[i].ToDSType(True))
 	except:
 		out1.append([])
 TransactionManager.Instance.TransactionTaskDone()
 
-if len(out1) == 1 :
-	OUT = out1[0]
-else:
-	OUT = out1</Script>
+OUT = output1(out1)</Script>
     </DSIronPythonNode.PythonNode>
   </Elements>
   <Connectors>
@@ -78,6 +97,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="41882.0327741374" eyeY="-44744.3713018636" eyeZ="273903.141479278" lookX="-54334.5046350529" lookY="53989.0209968844" lookZ="-279526.79402602" />
   </Cameras>
 </Workspace>

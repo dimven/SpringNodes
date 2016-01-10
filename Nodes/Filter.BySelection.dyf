@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="165.678810839492" Y="186.436118053682" zoom="1.78359936238281" Name="Filter.BySelection" Description="Check the items that you'd like to filter in." ID="caf9ae92-b01b-4c76-856d-e7093bfff4c9" Category="SpringNodes.BETA">
+<Workspace Version="0.8.2.2392" X="105.678810839492" Y="165.636118053682" zoom="1.78359936238281" Name="Filter.BySelection" Description="Check the items that you'd like to filter in.  Unchecked items will be sent to the out list." ID="caf9ae92-b01b-4c76-856d-e7093bfff4c9" Category="SpringNodes.Lists">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="03382455-ddfd-4730-a3aa-a5cad2b3ce54" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
@@ -9,8 +9,8 @@ import clr
 clr.AddReference('System.Windows.Forms')
 clr.AddReference('System.Drawing')
 
-from System.Drawing import Point
-from System.Windows.Forms import Application, Button, CheckBox, Form, Label, Panel, BorderStyle
+from System.Drawing import Point, Color, Font
+from System.Windows.Forms import *
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
@@ -19,39 +19,51 @@ def tolist(obj1):
 class CheckBoxForm(Form):
 	def __init__(self):
 		self.Text = "SpringNodes: Filter By Selection"
-		self.Width = 360
-		self.Height = 100
+		self.Width = 367
+		self.BackColor = Color.FromArgb(40,40,40)
 		self.output1 = []
 		self.output2 = []
+		self.ControlBox = False
+		self.FormBorderStyle = FormBorderStyle.FixedDialog
+		self.StartPosition = FormStartPosition.CenterScreen
 		
 		self.label = Label()
 		self.label.Text = "Choose the objects you'd like to filter:"
-		self.label.Location = Point(25, 5)
+		self.label.Location = Point(5, 5)
+		self.label.ForeColor = Color.FromArgb(234,234,234)
+		self.label.Font = Font("Calibri", 10)
 		self.label.AutoSize = True
 		self.Controls.Add(self.label)
 
 		self.button1 = Button()
 		self.button1.Text = 'Save Selection'
 		self.button1.AutoSize = True
+		self.button1.ForeColor = Color.FromArgb(234,234,234)
+		self.button1.Font = Font("Calibri", 10)
 		self.button1.Click += self.save
 		self.Controls.Add(self.button1)
 
 		self.button2 = Button()
 		self.button2.Text = 'Uncheck All'
 		self.button2.AutoSize = True
+		self.button2.ForeColor = Color.FromArgb(234,234,234)
+		self.button2.Font = Font("Calibri", 10)
 		self.button2.Click += self.uncheckAll
 		self.Controls.Add(self.button2)
 
 		self.button3 = Button()
 		self.button3.Text = 'Check All'
 		self.button3.AutoSize = True
+		self.button3.ForeColor = Color.FromArgb(234,234,234)
+		self.button3.Font = Font("Calibri", 10)
 		self.button3.Click += self.checkAll
 		self.Controls.Add(self.button3)
 		
 		self.panel1 = Panel()
-		self.panel1.Location = Point(25, 30)
-		self.panel1.BorderStyle = BorderStyle.Fixed3D
-		self.panel1.Width = 300
+		self.panel1.Location = Point(5, 30)
+		self.panel1.Width = 350
+		self.panel1.BackColor = Color.FromArgb(53,53,53)
+		self.panel1.ForeColor = Color.FromArgb(234,234,234)
 		self.Controls.Add(self.panel1)
 		
 	def add_check(self, text1, y1):
@@ -59,16 +71,18 @@ class CheckBoxForm(Form):
 		self.check1.Text = text1
 		self.check1.Location = Point(5, y1)
 		self.check1.AutoSize = True
+		self.check1.Font = Font("Calibri", 10)
 		self.check1.Checked = True
 		self.panel1.Controls.Add(self.check1)
 	def btn_adjust(self,y1):
 		self.panel1.Height = y1
-		self.button1.Location = Point(25, y1 + 50)
-		self.button2.Location = Point(150, y1 + 50)
-		self.button3.Location = Point(245, y1 + 50)
-		self.Height = y1 + 125
-		if y1 &gt; 750:
+		self.button1.Location = Point(5,   y1 + 38)
+		self.button2.Location = Point(170, y1 + 38)
+		self.button3.Location = Point(275, y1 + 38)
+		self.Height = y1 + 100
+		if y1 &gt; 700:
 			self.AutoScroll = True
+			self.Width = 382
 			self.Height = 800
 			
 	def save(self, sender, event):
@@ -107,7 +121,7 @@ OUT = form.output1, form.output2
 Application.Exit()</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="ae79b1a2-58e1-4884-8bc6-fe747f932d25" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="list:var[]" />
+      <Symbol value="list" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="a19c71ba-3406-4731-bfa0-111f993aecdc" type="Dynamo.Nodes.Symbol" nickname="Input" x="-56.6270666665121" y="64.7790679870313" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="reset:bool = true" />
@@ -131,6 +145,6 @@ Application.Exit()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="52.7005795747084" eyeY="79.8974514094637" eyeZ="-53.3191356953278" lookX="-24.7596317629481" lookY="-24.7596317629481" lookZ="-24.7596317629481" />
   </Cameras>
 </Workspace>

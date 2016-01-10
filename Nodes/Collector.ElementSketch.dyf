@@ -1,0 +1,120 @@
+<Workspace Version="0.8.2.2392" X="16.4537920102325" Y="142.411807786504" zoom="0.954042924882813" Name="Collector.ElementSketch" Description="Get the actual sketch lines of a sketch based element (floor, ceiling, modified wall, etc.) . You can optionally fetch the matching model curves, however this might prove comptationally heavy on larger data sets." ID="94050ce4-e59f-4377-933d-16326991c630" Category="SpringNodes.Revit.Collectors">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Transaction" resolvedName="Revit.Transaction.Transaction" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="f8e36be0-b96f-4862-9c88-0737f835c5d3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="163.6" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>import clr
+import math
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+elements = UnwrapElement(tolist(IN[0]))
+getModel = IN[1]
+
+accepted_mc = "Autodesk.Revit.DB.ModelLine, Autodesk.Revit.DB.ModelArc, Autodesk.Revit.DB.ModelEllipse, Autodesk.Revit.DB.ModelHermiteSpline, Autodesk.Revit.DB.ModelNurbSpline"
+
+def almost_eq(line, mc):
+	line2 = mc.Location.Curve
+	xyz1 = line.Evaluate(0.5, True)
+	if not line2.IsBound:
+		xyz2 = line2.Center
+		try: xyz1 = line.Center
+		except: pass
+	else:
+		xyz2 = line2.Evaluate(0.5, True)
+	if xyz1.DistanceTo(xyz2) &lt;= 0.0001:
+		return True
+	else:
+		return False
+
+def clean1(l1):
+	for i in xrange(len(l1)):
+		l1[i] = [x for x in l1[i] if x != None]
+	return l1
+
+def getSketch(el1):
+	t1 = SubTransaction(doc)
+	t1.Start()
+	deleted = doc.Delete(el1.Id)
+	t1.RollBack()
+	
+	profile,mc = CurveArrArray(), []
+	for d in deleted:
+		test_el = doc.GetElement(d)
+		el_type = test_el.GetType().ToString()
+		if el_type == "Autodesk.Revit.DB.Sketch":
+			profile = test_el.Profile
+			if not getModel:
+				break
+		elif getModel and el_type in accepted_mc : mc.append(test_el)
+	ordered_mc = []
+	if getModel:
+		ordered_mc = [[None] * i.Size for i in profile]
+	curves = [[None] * i.Size for i in profile]
+	for i in xrange(profile.Size):
+		for j in xrange(profile[i].Size):
+			curves[i][j] = profile[i][j].ToProtoType()
+			if getModel:
+				for k in xrange(len(mc)):
+					if almost_eq(profile[i][j], mc[k]):
+						ordered_mc[i][j] = mc[k].ToDSType(True)
+						del mc[k]
+						break
+						
+	return curves, clean1(ordered_mc)
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+result = map(getSketch, elements)
+TransactionManager.Instance.TransactionTaskDone()
+OUT = output1([r[0] for r in result]), output1([r[1] for r in result])</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="165c5afd-8d3b-4475-adce-a02845f3edbf" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="52c75ec0-2e55-4aa6-8208-ad72ae18a023" type="Dynamo.Nodes.Symbol" nickname="Input" x="-157.6" y="59.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="fetchModelCurves:bool = false" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="e7f0e3b3-7cb8-4cfa-b74a-d9f2ae9ec80d" type="Dynamo.Nodes.Output" nickname="Output" x="484.2" y="-5.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="curves" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="307.2" y="-2.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="cd6f4ec2-2614-4c1f-a126-dc0bfcc5d503" type="Dynamo.Nodes.Output" nickname="Output" x="483.6" y="51.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="model curves" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="f8e36be0-b96f-4862-9c88-0737f835c5d3" start_index="0" end="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="165c5afd-8d3b-4475-adce-a02845f3edbf" start_index="0" end="f8e36be0-b96f-4862-9c88-0737f835c5d3" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="52c75ec0-2e55-4aa6-8208-ad72ae18a023" start_index="0" end="f8e36be0-b96f-4862-9c88-0737f835c5d3" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" start_index="0" end="e7f0e3b3-7cb8-4cfa-b74a-d9f2ae9ec80d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" start_index="1" end="cd6f4ec2-2614-4c1f-a126-dc0bfcc5d503" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="12391.1455078125" eyeY="99819.6171875" eyeZ="76410.4765625" lookX="-137008.765625" lookY="-124371.015625" lookZ="-397902.34375" />
+  </Cameras>
+</Workspace>

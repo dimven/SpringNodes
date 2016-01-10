@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-2145.29900349479" Y="201.332412005748" zoom="0.948784094383323" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+<Workspace Version="0.8.2.2392" X="-490.558489285309" Y="235.061987733215" zoom="0.761539191015086" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -13,6 +13,7 @@
       <PortInfo index="3" default="True" />
       <PortInfo index="4" default="True" />
       <PortInfo index="5" default="True" />
+      <PortInfo index="6" default="True" />
       <ID value="ecdb3729-0de2-4c50-bdca-28fe881027a2" />
       <Name value="FamilyInstance.ByGeometry" />
       <Description value="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The output is the resulting family and an instance aligned according to the project document's origin.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." />
@@ -23,6 +24,7 @@
         <Input value="category" />
         <Input value="material_name" />
         <Input value="isVoid" />
+        <Input value="subcategory_name" />
       </Inputs>
       <Outputs>
         <Output value="instance" />
@@ -182,7 +184,7 @@
     <Dynamo.Models.NoteModel guid="b1edc9a3-0772-4b11-ba76-e87d5901743a" text="separate the voids" x="1176.28709719289" y="-183.474784069631" />
   </Notes>
   <Annotations>
-    <Dynamo.Models.AnnotationModel guid="e4180246-6e57-4a0c-aab1-8137e2440180" annotationText="Let's generate some cutters and some elements to be cut" left="-232.579792457138" top="-421.607193259721" width="1286.05846771301" height="500.141129034836" fontSize="24" InitialTop="-382.807193259721" InitialHeight="529.302211080726" TextblockHeight="28.8" backgrouund="#FFFFAA45">
+    <Dynamo.Models.AnnotationModel guid="e4180246-6e57-4a0c-aab1-8137e2440180" annotationText="Let's generate some cutters and some elements to be cut" left="-232.579792457138" top="-421.607193259721" width="1286.05846771301" height="525.741129034836" fontSize="24" InitialTop="-382.807193259721" InitialHeight="529.302211080726" TextblockHeight="28.8" backgrouund="#FFFFAA45">
       <Models ModelGuid="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" />
       <Models ModelGuid="533210a4-8637-4839-812e-a0251477010f" />
       <Models ModelGuid="eb1666a9-021b-460b-bb7b-b33b2cffa9da" />
@@ -192,20 +194,20 @@
       <Models ModelGuid="9a001baf-fed0-433f-b199-d1f0364405a4" />
       <Models ModelGuid="cd1deed5-fac2-4fe2-947f-1607320d1df5" />
     </Dynamo.Models.AnnotationModel>
-    <Dynamo.Models.AnnotationModel guid="97e6df71-80ba-4a9e-83f3-3c478baae8b8" annotationText="Tests if the elements are being cut" left="2750.44416429545" top="-316.32350279627" width="532.0051598373" height="346.6" fontSize="24" InitialTop="-277.52350279627" InitialHeight="313.8" TextblockHeight="28.8" backgrouund="#FFC1D676">
+    <Dynamo.Models.AnnotationModel guid="97e6df71-80ba-4a9e-83f3-3c478baae8b8" annotationText="Tests if the elements are being cut" left="2750.44416429545" top="-316.32350279627" width="416.8051598373" height="267.019077930742" fontSize="24" InitialTop="-277.52350279627" InitialHeight="313.8" TextblockHeight="28.8" backgrouund="#FFC1D676">
       <Models ModelGuid="2f7b306e-11d8-4289-bd9e-c983addb5548" />
       <Models ModelGuid="90cef895-50f9-4f68-b046-7de68265d9ed" />
       <Models ModelGuid="67b97f65-2b28-4109-884d-9b4e42560932" />
     </Dynamo.Models.AnnotationModel>
-    <Dynamo.Models.AnnotationModel guid="ef89a56c-77e9-4e02-8470-b5bace330c75" annotationText="cuts all the instances with all the voids" left="1473.86868603865" top="-335.643836368417" width="514.07849985127" height="235.197235076322" fontSize="24" InitialTop="-296.843836368417" InitialHeight="226.397235076321" TextblockHeight="28.8" backgrouund="#FFC1D676">
+    <Dynamo.Models.AnnotationModel guid="ef89a56c-77e9-4e02-8470-b5bace330c75" annotationText="cuts all the instances with all the voids" left="1473.86868603865" top="-364.443836368417" width="379.67849985127" height="263.997235076322" fontSize="24" InitialTop="-296.843836368417" InitialHeight="226.397235076321" TextblockHeight="57.6" backgrouund="#FFC1D676">
       <Models ModelGuid="f21c1477-297e-4efb-92f8-f649413a9a3a" />
       <Models ModelGuid="ca748929-67ed-4cd4-bb35-13b36eba1f0a" />
     </Dynamo.Models.AnnotationModel>
-    <Dynamo.Models.AnnotationModel guid="cee9737b-794c-4fe2-aa34-4d75837fa7f9" annotationText="remove all but 1 of the cuts from the bottom slab" left="2189.42386024528" top="-49.0199075734983" width="535.3890201835" height="157" fontSize="24" InitialTop="-10.2199075734983" InitialHeight="148.2" TextblockHeight="28.8" backgrouund="#FFC1D676">
+    <Dynamo.Models.AnnotationModel guid="cee9737b-794c-4fe2-aa34-4d75837fa7f9" annotationText="remove all but 1 of the cuts from the bottom slab" left="2189.42386024528" top="-77.8199075734983" width="437.7890201835" height="185.8" fontSize="24" InitialTop="-10.2199075734983" InitialHeight="148.2" TextblockHeight="57.6" backgrouund="#FFC1D676">
       <Models ModelGuid="e04a54ba-6c9f-47d6-8767-50bc4dd03ae3" />
       <Models ModelGuid="472c17cf-bbde-4b50-93b3-a79bd6c7dac8" />
     </Dynamo.Models.AnnotationModel>
-    <Dynamo.Models.AnnotationModel guid="968b2e59-3824-4b0f-9c61-5affdb8d567e" annotationText="Checks if the elements are cutting something." left="2640.4332842587" top="136.330487700504" width="583.52047219085" height="429.564709941376" fontSize="24" InitialTop="175.130487700504" InitialHeight="396.764709941377" TextblockHeight="28.8" backgrouund="#FFC1D676">
+    <Dynamo.Models.AnnotationModel guid="968b2e59-3824-4b0f-9c61-5affdb8d567e" annotationText="Checks if the elements are cutting something." left="2640.4332842587" top="107.530487700504" width="468.32047219085" height="187.143284184395" fontSize="24" InitialTop="175.130487700504" InitialHeight="396.764709941377" TextblockHeight="57.6" backgrouund="#FFC1D676">
       <Models ModelGuid="cc2f7815-0fb6-4a7d-b0f5-20205b3b375a" />
       <Models ModelGuid="0d7b478b-8bb3-4b07-a2ff-e53be24e3b89" />
       <Models ModelGuid="b40974f4-47ec-4499-872c-f65a9372e9ac" />

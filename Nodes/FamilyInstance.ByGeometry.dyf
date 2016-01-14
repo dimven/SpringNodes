@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="302.177057048401" Y="70.8001563973724" zoom="0.921091684435553" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="0.8.2.2392" X="508.904175806788" Y="44.4188713725737" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -85,11 +85,13 @@ isRvt2014 = False
 if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
-acceptable_views = ["ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section"]
+acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 origin = XYZ(0,0,0)
 str_typ = StructuralType.NonStructural
 
 def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
+	enable_mat = True
+	if mat1 == None: enable_mat = False
 	enable_subcat = True
 	if subcat1 == None: enable_subcat = False
 	t1 = TransactionManager.Instance
@@ -149,21 +151,23 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 				void_par2 = famdoc.OwnerFamily.get_Parameter("Cut with Voids When Loaded")
 				void_par2.Set(1)
 			else: #voids do not have a material value or a sub-cateogry
-				try:
-					mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
-					for m in mat_fec:
-						if m.Name == mat1:
-							fam_mat = m
-							break
-					mat_par = s2.get_Parameter("Material")
-					mat_par.Set(fam_mat.Id)
-					#create the sub-category:
-					if enable_subcat:
+				if enable_mat:
+					try:
+						mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
+						for m in mat_fec:
+							if m.Name == mat1:
+								fam_mat = m
+								break
+						mat_par = s2.get_Parameter("Material")
+						mat_par.Set(fam_mat.Id)
+					except: pass
+				#create the sub-category:
+				if enable_subcat:
+					try:
 						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
 						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
-						subcat_par = s2.get_Parameter("Subcategory")
-						subcat_par.Set(new_subcat.Id)
-				except: pass
+						s2.Subcategory = new_subcat
+					except: pass
 			TransactionManager.ForceCloseTransaction(t1)
 			famdoc.SaveAs(save_path, SaveAsOpt)
 			family1 =  famdoc.LoadFamily(doc, FamOpt1())
@@ -185,6 +189,8 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 		return message
 
 def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
+	enable_mat = True
+	if mat1 == None: enable_mat = False
 	enable_subcat = True
 	if subcat1 == None: enable_subcat = False
 	t1 = TransactionManager.Instance
@@ -244,21 +250,23 @@ def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
 				void_par2 = famdoc.OwnerFamily.LookupParameter("Cut with Voids When Loaded")
 				void_par2.Set(1)
 			else: #voids do not have a material values or a sub-cateogry
-				try:
-					mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
-					for m in mat_fec:
-						if m.Name == mat1:
-							fam_mat = m
-							break
-					mat_par = s2.LookupParameter("Material")
-					mat_par.Set(fam_mat.Id)
-					#create the sub-category:
-					if enable_subcat:
+				if enable_mat:
+					try:
+						mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
+						for m in mat_fec:
+							if m.Name == mat1:
+								fam_mat = m
+								break
+						mat_par = s2.LookupParameter("Material")
+						mat_par.Set(fam_mat.Id)
+					except: pass
+				#create and assign the sub-category:
+				if enable_subcat:
+					try:
 						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
 						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
-						subcat_par = s2.LookupParameter("Subcategory")
-						subcat_par.Set(new_subcat.Id)
-				except: pass
+						s2.Subcategory = new_subcat
+					except: pass
 			TransactionManager.ForceCloseTransaction(t1)
 			famdoc.SaveAs(save_path, SaveAsOpt)
 			family1 =  famdoc.LoadFamily(doc, FamOpt1())
@@ -297,32 +305,32 @@ elif len(geom) == len(names):
 else: return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
 OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="7971abd8-ecd2-4e2f-a28e-52027545f3f6" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="7971abd8-ecd2-4e2f-a28e-52027545f3f6" type="Dynamo.Nodes.Symbol" nickname="Input" x="-1.65837633460887" y="4.14594083652204" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="geometry" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="487f0411-0bdf-4764-973d-cae73f53aff1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-99.7981966993975" y="57.4904356438169" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="487f0411-0bdf-4764-973d-cae73f53aff1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-99.7981966993975" y="60.8071883130345" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="family template path" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5923b814-be99-4137-acdd-60f1a8177b72" type="Dynamo.Nodes.Symbol" nickname="Input" x="-28.0332013200555" y="113.29887920843" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="5923b814-be99-4137-acdd-60f1a8177b72" type="Dynamo.Nodes.Symbol" nickname="Input" x="-26.3748249854466" y="116.615631877648" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="family name" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="3ab55325-8be4-4940-8341-2396cfdb6443" type="Dynamo.Nodes.Symbol" nickname="Input" x="-396.83584583572" y="173.183175444531" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="category:var[]..[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="325026ea-de93-449a-9cff-bea72f2165f3" type="Dynamo.Nodes.Output" nickname="Output" x="521.56484325839" y="85.556949702524" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Nodes.Output guid="325026ea-de93-449a-9cff-bea72f2165f3" type="Dynamo.Nodes.Output" nickname="Output" x="498.765809942973" y="90.9852909680996" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="instance" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="aff75132-a345-4885-beee-fdf45692a2f1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-198.444263012382" y="238.228673437629" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="material_name:var[]..[] = &quot;None&quot;" />
+    <Dynamo.Nodes.Symbol guid="aff75132-a345-4885-beee-fdf45692a2f1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-182.995245650377" y="233.637899759458" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="material_name:var[]..[] = null" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5340671d-e4f1-4bcc-946d-d88da17a3e84" type="Dynamo.Nodes.Symbol" nickname="Input" x="-133.222924041868" y="305.968234734693" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="5340671d-e4f1-4bcc-946d-d88da17a3e84" type="Dynamo.Nodes.Symbol" nickname="Input" x="-134.881300376477" y="299.334729396258" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="isVoid:var[]..[] = false" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" type="Dynamo.Nodes.Output" nickname="Output" x="531.298245432727" y="151.629918962473" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Nodes.Output guid="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" type="Dynamo.Nodes.Output" nickname="Output" x="500.899534345504" y="151.629918962473" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="family" />
     </Dynamo.Nodes.Output>
     <Dynamo.Nodes.CodeBlockNodeModel guid="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="335.512132008526" y="94.5418609815984" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" type="Dynamo.Nodes.Symbol" nickname="Input" x="-204.286004730739" y="369.138888334816" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" type="Dynamo.Nodes.Symbol" nickname="Input" x="-208.431945567261" y="362.505382996381" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="subcategory_name:var[]..[] = null" />
     </Dynamo.Nodes.Symbol>
   </Elements>
@@ -341,4 +349,7 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="7084.27197265625" eyeY="3406.11328125" eyeZ="10342.142578125" lookX="-10026.83203125" lookY="-929.802734375" lookZ="-4890.4130859375" />
+  </Cameras>
 </Workspace>

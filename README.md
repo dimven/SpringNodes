@@ -10,7 +10,15 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
-82.7.1 061215
+82.7.2 140116
+- Bug fixes:
+	- FamilyInstance.ByGeometry was failing to assign a subcategory when no material was in use ( Thanks Jeremy)
+	- HostedInstance.ByPoints did not work for non-active family types.
+- New nodes:
+	- ErrorReport.Parse is an awesome way of making sence of Revit errors and fetching the offending elements.
+	- InterferenceCheck.Parse similar to the error report node but for interference checks.
+
+82.7.1 100116
 - Bug fixes:
 	- Element.SetLocation works in Revit 2014 once again
 - New nodes:

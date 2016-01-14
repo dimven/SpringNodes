@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-680.074920534097" Y="-24.5859596340826" zoom="1.09269143853539" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+<Workspace Version="0.8.2.2392" X="-613.852595349648" Y="-61.7044694870278" zoom="0.858342672717094" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
   <NamespaceResolutionMap>
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
@@ -31,30 +31,29 @@ for n in names1:
 OUT = out1</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.CodeBlockNodeModel guid="6aa6131f-a100-40c9-a483-ba3a0c2bcf2b" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="867.116885702746" y="367.340734729372" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="v1 = Vector.ByCoordinates(3500 * GetKeys(cat),0);&#xA;c1 = Cuboid.ByLengths(3000,3000,3000);&#xA;c1.Translate(v1);" ShouldFocus="false" />
-    <Dynamo.Nodes.DSFunction guid="de35a381-a52f-46fe-b5cf-b544c7c70e22" type="Dynamo.Nodes.DSFunction" nickname="Category.Name" x="964.661614001596" y="276.352759747611" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Category.Name" />
-    <Dynamo.Nodes.Watch guid="e4eba455-97c9-462b-96e4-191a9f1e55a8" type="Dynamo.Nodes.Watch" nickname="Watch" x="1616.50070102445" y="229.057739314867" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
-    <Dynamo.Nodes.Function guid="1116887b-e555-410a-a4cb-a5fc84693ead" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="1381.66713593708" y="229.601974003521" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
+    <Dynamo.Nodes.DSFunction guid="de35a381-a52f-46fe-b5cf-b544c7c70e22" type="Dynamo.Nodes.DSFunction" nickname="Category.Name" x="954.409298370889" y="272.624644972808" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="RevitNodes.dll" function="Revit.Elements.Category.Name" />
+    <Dynamo.Nodes.Watch guid="e4eba455-97c9-462b-96e4-191a9f1e55a8" type="Dynamo.Nodes.Watch" nickname="Watch" x="1611.84055755595" y="217.87339499046" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
+    <Dynamo.Nodes.Function guid="1116887b-e555-410a-a4cb-a5fc84693ead" type="Dynamo.Nodes.Function" nickname="DirectShape.ByGeometry" x="1379.80307854968" y="214.689514904311" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
       <ID value="2416ec21-d9a2-4c67-a742-20d5cf82446e" />
       <Name value="DirectShape.ByGeometry" />
       <Description value="Attempts to create a DirectShape element inside the Revit document.  It is based on an alternative process that uses a SAT inport and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry." />
       <Inputs>
+        <Input value="geometry" />
         <Input value="category" />
         <Input value="name" />
-        <Input value="geometry" />
       </Inputs>
       <Outputs>
         <Output value="DirectShape" />
       </Outputs>
     </Dynamo.Nodes.Function>
     <Dynamo.Nodes.CodeBlockNodeModel guid="7765f65d-ba17-471f-ab09-aa7497d612e4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="693.813779191238" y="142.608768576242" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//all document categories" ShouldFocus="false" />
-    <DSRevitNodesUI.Categories guid="201be442-d09b-4c01-ac86-8becb7469bae" type="DSRevitNodesUI.Categories" nickname="Categories" x="1113.47542976861" y="147.363987909057" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" index="371:GenericModel" />
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="4b11cc94-4089-405a-b67f-8dd568ed4051" start_index="0" end="de35a381-a52f-46fe-b5cf-b544c7c70e22" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="4b11cc94-4089-405a-b67f-8dd568ed4051" start_index="0" end="6aa6131f-a100-40c9-a483-ba3a0c2bcf2b" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="4b11cc94-4089-405a-b67f-8dd568ed4051" start_index="0" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="6aa6131f-a100-40c9-a483-ba3a0c2bcf2b" start_index="2" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="2" portType="0" />
-    <Dynamo.Models.ConnectorModel start="de35a381-a52f-46fe-b5cf-b544c7c70e22" start_index="0" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4b11cc94-4089-405a-b67f-8dd568ed4051" start_index="0" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6aa6131f-a100-40c9-a483-ba3a0c2bcf2b" start_index="2" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="de35a381-a52f-46fe-b5cf-b544c7c70e22" start_index="0" end="1116887b-e555-410a-a4cb-a5fc84693ead" end_index="2" portType="0" />
     <Dynamo.Models.ConnectorModel start="1116887b-e555-410a-a4cb-a5fc84693ead" start_index="0" end="e4eba455-97c9-462b-96e4-191a9f1e55a8" end_index="0" portType="0" />
   </Connectors>
   <Notes />

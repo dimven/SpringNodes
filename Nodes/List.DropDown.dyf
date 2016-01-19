@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="131.627147497823" Y="159.181384257819" zoom="1.545620359375" Name="List.DropDown" Description="Selects one list item by a drop-down combo box." ID="a4a2f0a2-ccd6-4307-921d-241ffb37010f" Category="SpringNodes.Lists">
+<Workspace Version="0.8.2.2392" X="131.627147497823" Y="159.181384257819" zoom="1.545620359375" Name="List.DropDown" Description="Selects one list item by a drop-down combo box." ID="a4a2f0a2-ccd6-4307-921d-241ffb37010f" Category="SpringNodes.Core.List.Create">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="191.12396394882" y="-3.23494703577913" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">

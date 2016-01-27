@@ -9,7 +9,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="187.6" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -29,10 +29,8 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 def output1(l1):
 	if len(l1) == 1: return out1[0]
@@ -45,17 +43,17 @@ cat = dsTyped.Category
 TypeId = dsTyped.GetTypeId()
 Lib_TypeId = TypeId.ToString()
 transforms = []
-for v in vecs:
-	try: transforms.append(Transform.CreateTranslation(v.ToXyz(True)))
+for i in xrange(len(vecs)):
+	try: transforms.append(Transform.CreateTranslation(vecs[i].ToXyz(True)))
 	except: pass
 	
 def CopyDS(cat, TypeId, Lib_TypeId, transforms):
 	out1 = []
 	dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
 	if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)
-	for t in transforms:
+	for i in xrange(len(transforms)):
 		try:
-			ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, t, "Dynamo","")
+			ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transforms[i], "Dynamo","")
 			ds1.SetTypeId(TypeId)
 			out1.append(ds1.ToDSType(False))
 		except: out1.append([])
@@ -84,6 +82,6 @@ TransactionManager.Instance.TransactionTaskDone()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12128.1162109375" eyeY="129059.2109375" eyeZ="-13137.69140625" lookX="-882.235534667969" lookY="-88887.96875" lookZ="-28073.16015625" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

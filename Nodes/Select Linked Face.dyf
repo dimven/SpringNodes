@@ -1,8 +1,11 @@
-<Workspace Version="0.8.2.2392" X="193.6" Y="116" zoom="1" Name="Select Linked Face" Description="Select the linked instance first, followed by the face. If your selection fails, just press escape.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="6e98ce37-6cea-4a42-8e2d-7737e6c918ca" Category="SpringNodes.Revit.Selection">
+<Workspace Version="0.8.2.2392" X="-469.787610702462" Y="-24.9458009137826" zoom="2.72962159758084" Name="Select Linked Face" Description="Select the linked instance first, followed by the face. If your selection fails, just press escape.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="6e98ce37-6cea-4a42-8e2d-7737e6c918ca" Category="SpringNodes.Revit.Selection">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>import clr
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
 
 clr.AddReference("RevitAPIUI")
 from  Autodesk.Revit.UI import *
@@ -44,6 +47,6 @@ OUT = element.GetGeometryObjectFromReference(face_ref2).ToProtoType(True)[0]</Sc
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="20404.5938791735" eyeY="10409.9420309179" eyeZ="7818.72266454697" lookX="-14947.514777611" lookY="-8409.94254263666" lookZ="-7225.91108007432" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

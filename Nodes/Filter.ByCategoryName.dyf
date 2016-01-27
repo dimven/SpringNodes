@@ -4,7 +4,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="50269127-bcc6-4739-a94f-81962ad06018" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -14,24 +14,19 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
-elements = tolist(IN[0])
+elements = UnwrapElement(tolist(IN[0]))
 filter = tolist(IN[1])
 in1, out1 = [], []
 
-for e in elements:
-	try:
-		n1 = UnwrapElement(e).Category.Name.lower()
-	except:
-		n1 = ""
-	if any(f.lower() in n1 for f in filter):
-		in1.append(e)
-	else:
-		out1.append(e)
+for i in xrange(len(elements)):
+	try: n1 = elements[i].Category.Name.lower()
+	except: n1 = ""
+	if any(filter[j].lower() in n1 for j in xrange(len(filter))):
+		in1.append(elements[i])
+	else: out1.append(elements[i])
 OUT = in1, out1</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="eea797d7-0d22-4157-9dc9-473840764f94" type="Dynamo.Nodes.Symbol" nickname="Input" x="50.8133403699846" y="-2.39121601741101" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">

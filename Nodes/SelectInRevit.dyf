@@ -4,7 +4,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 #inspired by Julien Benoit @jbenoit44 
 #http://aecuandme.wordpress.com/
@@ -32,25 +32,23 @@ clr.AddReference("System")
 from System.Collections.Generic import List as cList
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 elements = UnwrapElement(tolist(IN[0]))
 
 if app.VersionName == "Autodesk Revit 2014":
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	sel1  = uidoc.Selection.Elements
-	for e in elements: 
-		try:(sel1.Add(e))
+	for i in xrange(len(elements)): 
+		try:(sel1.Add(elements[i]))
 		except: pass
 	OUT = "%s elements selected in Revit." %sel1.Size
 	TransactionManager.Instance.TransactionTaskDone()
 else:
 	ids1 = []
-	for e in elements:
-		try:(ids1.append(e.Id))
+	for i in xrange(len(elements)):
+		try:(ids1.append(elements[i].Id))
 		except: pass
 	ids2 = cList[ElementId](ids1)
 	uidoc.Selection.SetElementIds(ids2)

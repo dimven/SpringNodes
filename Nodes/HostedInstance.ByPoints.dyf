@@ -14,7 +14,7 @@
       <Symbol value="FamilyInstance" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="17a1d35a-8c92-487b-8080-cb584c9d61d6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="96.494417988601" y="11.7451279954348" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr

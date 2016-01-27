@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="207.804307042312" Y="83.7552904866771" zoom="1.87774416077545" Name="FloorOpening.ByCurves" Description="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." ID="7032b3a2-159c-479f-8139-ff559e155ecc" Category="SpringNodes.Revit.Openings">
+<Workspace Version="0.8.2.2392" X="-63.3956929576881" Y="114.155290486677" zoom="1.87774416077545" Name="FloorOpening.ByCurves" Description="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." ID="7032b3a2-159c-479f-8139-ff559e155ecc" Category="SpringNodes.Revit.Openings">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="08386b5d-a7cd-4089-9db9-aa0d26f7fb79" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="232.55343924463" y="4.41923188984042" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -22,17 +22,18 @@ clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 flr = UnwrapElement(tolist(IN[0]))
 hole = UnwrapElement(IN[1])
 
 openings = []
 newhl = []
-
 if not any(hasattr(h,"__iter__") for h in hole):
 	hole = [hole]
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -41,24 +42,19 @@ for i in xrange(len(hole)):
 	[z.Append(j.ToRevitType()) for j in hole[i] ]
 	newhl.append(z)
 if len(flr) == 1 :
-	for h in newhl:
+	for i in xrange(len(newhl)):
 		try:
-			x = doc.Create.NewOpening(flr[0],h,True)
+			x = doc.Create.NewOpening(flr[0],newhl[i],True)
 			openings.append(x.ToDSType(False))
-		except:
-			openings.append([])
+		except: openings.append([])
 else:
 	for f, h in zip(flr, newhl):
 		try:
 			x = doc.Create.NewOpening(f,h,True)
 			openings.append(x.ToDSType(False))
-		except:
-			openings.append([])
+		except: openings.append([])
 TransactionManager.Instance.TransactionTaskDone()
-if len(openings) == 1:
-	OUT = openings[0]
-else:
-	OUT = openings</Script>
+OUT = output1(openings)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="bb64368f-2a68-47ec-95e7-ad20e3da1242" type="Dynamo.Nodes.Symbol" nickname="Input" x="46.8954687591643" y="-4.24409111739354" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="host floor(s)" />

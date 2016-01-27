@@ -1,9 +1,9 @@
-<Workspace Version="0.8.2.2392" X="120.693991694612" Y="259.12112865643" zoom="1.2198072017255" Name="Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="171.893991694612" Y="177.52112865643" zoom="1.2198072017255" Name="Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="4d05e529-d541-4538-9713-ca203784c5bc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <DSIronPythonNode.PythonNode guid="4d05e529-d541-4538-9713-ca203784c5bc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
       <Script>#Copyright(c) 2015, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 #original design by Julien Benoit, @jbenoit44
@@ -61,6 +61,9 @@ else:
     <Dynamo.Nodes.Output guid="0ca5e986-503d-4761-87b4-83ab1ceb25c1" type="Dynamo.Nodes.Output" nickname="Output" x="536.10962206069" y="16.8270727404909" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="transform(s)" />
     </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="4857ef37-42d4-4b92-bdc7-c3b190ff44dc" type="Dynamo.Nodes.Symbol" nickname="Input" x="9.43106443901101" y="110.408385169652" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="4d05e529-d541-4538-9713-ca203784c5bc" start_index="0" end="6fcb4bbe-ced2-4f00-9a08-d26207cc6f67" end_index="0" portType="0" />
@@ -68,11 +71,12 @@ else:
     <Dynamo.Models.ConnectorModel start="5efc1764-2e33-4182-b564-c8454a714c31" start_index="0" end="4d05e529-d541-4538-9713-ca203784c5bc" end_index="1" portType="0" />
     <Dynamo.Models.ConnectorModel start="6fcb4bbe-ced2-4f00-9a08-d26207cc6f67" start_index="0" end="66772f0d-8f8d-4145-805e-d49dd692712b" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="6fcb4bbe-ced2-4f00-9a08-d26207cc6f67" start_index="1" end="0ca5e986-503d-4761-87b4-83ab1ceb25c1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4857ef37-42d4-4b92-bdc7-c3b190ff44dc" start_index="0" end="4d05e529-d541-4538-9713-ca203784c5bc" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-2588.72807535871" eyeY="14837.1774404616" eyeZ="7804.09162169149" lookX="1683.36097921079" lookY="-13362.3531590255" lookZ="-17482.3721983146" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

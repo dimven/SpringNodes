@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="261.984440390741" Y="344.591959465705" zoom="1.84611820260947" Name="Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
+<Workspace Version="0.8.2.2392" X="19.8027856748884" Y="227.924679060115" zoom="1.3231529419852" Name="Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 import clr
 import System
@@ -21,6 +21,7 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -82,10 +83,9 @@ def NewForm(s1, isVoid1):
 		try:
 			s2 = FreeFormElement.Create(doc,s1)
 			if isVoid1:
-				void_par = s2.get_Parameter("Solid/Void")
+				if isRvt2014: void_par = s2.get_Parameter("Solid/Void")
+				else: void_par = s2.LookupParameter("Solid/Void")
 				void_par.Set(1)
-				#void_par2 = doc.OwnerFamily.get_Parameter("Cut with Voids When Loaded")
-				#void_par2.Set(1)
 			return s2.ToDSType(False)
 		except:
 			message = traceback.format_exc()
@@ -96,7 +96,9 @@ def NewForm(s1, isVoid1):
 geom = tolist(IN[0])
 isVoid = tolist(IN[1])
 
-acceptable_views = ["ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section"]
+isRvt2014 = False
+if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
+acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
 for v in view_fec:
@@ -136,6 +138,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-41.1442778676917" eyeY="39.2624364181745" eyeZ="20.0286417754079" lookX="-4.38226677529689" lookY="-4.3822667752969" lookZ="-4.3822667752969" />
+    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
   </Cameras>
 </Workspace>

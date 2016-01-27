@@ -11,7 +11,7 @@
       <Symbol value="element(s)" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="c2d8deac-6440-4913-95bd-5d08d2a6f123" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="222.445792376673" y="-0.150734336487744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -47,7 +47,7 @@ if not isRvt14:
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
 out1 = []
-framing = ["Beam", "Brace"]
+framing = ("Beam", "Brace")
 
 TransactionManager.Instance.EnsureInTransaction(doc)
 for i in xrange(len(elements)):
@@ -97,6 +97,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="41882.0327741374" eyeY="-44744.3713018636" eyeZ="273903.141479278" lookX="-54334.5046350529" lookY="53989.0209968844" lookZ="-279526.79402602" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

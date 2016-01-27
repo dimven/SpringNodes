@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="296.858712110862" Y="286.633902512561" zoom="0.915562285281223" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="0.8.2.2392" X="308.908312600763" Y="297.419617491727" zoom="0.894168083312073" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -15,7 +15,7 @@
       <Symbol value="geometry" />
     </Dynamo.Nodes.Symbol>
     <DSIronPythonNode.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="203.336075860563" y="-22.515277602541" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -116,7 +116,7 @@ cat = tolist(IN[1])
 cat = [UnwrapElement(c) for c in cat]
 names = tolist(IN[2])
 
-acceptable_views = ["ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section"]
+acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
 for v in view_fec:

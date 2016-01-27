@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="163.343597821769" Y="123.371576076205" zoom="1.78359936238281" Name="FloorType.Duplicate" Description="Attemts to create duplicate floor types. If the floor type exists, it is appended to the end. Sets only the structural width of the floor. The width must be in feet." ID="f77cd172-4e26-4528-905a-8e99299befd5" Category="SpringNodes.Revit.ElementTypes">
+<Workspace Version="0.8.2.2392" X="-219.856402178231" Y="88.171576076205" zoom="1.78359936238281" Name="FloorType.Duplicate" Description="Attemts to create duplicate floor types. If the floor type exists, it is appended to the end. Sets only the structural width of the floor. The width must be in feet." ID="f77cd172-4e26-4528-905a-8e99299befd5" Category="SpringNodes.Revit.ElementTypes">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="f9d59242-c6cf-469a-9ff7-659465e9d5a5" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,10 +20,12 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 fs = UnwrapElement(IN[0])
 names = tolist(IN[1])
@@ -41,14 +43,11 @@ for i in xrange(len(names)):
 			x.SetCompoundStructure(cs)
 			nfs.append(x.ToDSType(False))
 		except:
-			nfs.append(Revit.Elements.FloorType.ByName(names[i]))
+			nfs.append(Revit.Elements.FloorType.ByName(str(names[i])))
 	except:
 		nfs.append(None)
 TransactionManager.Instance.TransactionTaskDone()
-if len(nfs) == 1:
-	OUT = nfs[0]
-else:
-	OUT = nfs</Script>
+OUT = output1(nfs)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="2491623e-c908-482c-a7ca-b459aae96787" type="Dynamo.Nodes.Symbol" nickname="Input" x="73.4434191584955" y="-36.7356198017598" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="floor type" />

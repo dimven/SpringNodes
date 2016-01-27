@@ -1,30 +1,27 @@
-<Workspace Version="0.8.2.2392" X="485.184014259549" Y="186.813298532813" zoom="3.16029073236314" Name="Wall.WallType" Description="Queries the wall type of the input wall. Works for types from linked documents as well." ID="37af5c09-7c57-4adc-8222-e65ab3da9850" Category="SpringNodes.Revit.ElementTypes">
+<Workspace Version="0.8.2.2392" X="261.081240810002" Y="147.371942382229" zoom="3.6364336153867" Name="Wall.WallType" Description="Queries the wall type of the input wall. Works for types from linked documents as well." ID="37af5c09-7c57-4adc-8222-e65ab3da9850" Category="SpringNodes.Revit.ElementTypes">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="e5b53eaa-e132-441f-bdb3-37d29c6f0500" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="-18.1144909556155" y="-6.68892700928771" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 walls = UnwrapElement(tolist(IN[0]))
 wt = []
-for w in walls:
-	try:
-		wt.append(w.WallType)
-	except:
-		wt.append([])
+for i in xrange(len(walls)):
+	try: wt.append(walls[i].WallType)
+	except: wt.append([])
 
-if len(wt) == 1:
-	OUT = wt[0] 
-else:
-	OUT = wt</Script>
+OUT = output1(wt)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="0e81e3d7-3985-460a-abe0-53b11169a115" type="Dynamo.Nodes.Symbol" nickname="Input" x="-148.041330508244" y="-3.92139474251397" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="wall(s)" />

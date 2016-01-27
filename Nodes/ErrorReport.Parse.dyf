@@ -44,6 +44,7 @@ with open(report1, 'r') as f:
 parser = ReportParser()
 parser.feed(read_data)
 parser.data1.pop(0)
+parser.data1.append(parser.temp_data)
 report_data = parser.data1
 parser.close()
 report_errors = [i.pop(0) for i in report_data]
@@ -98,6 +99,6 @@ OUT = report_errors, elements, unique_errors, sum_errors</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="32.5036849975586" eyeY="63.3167037963867" eyeZ="16.734245300293" lookX="-50.7057304382324" lookY="-5.26411056518555" lookZ="-12.1733694076538" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

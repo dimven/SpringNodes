@@ -1,8 +1,11 @@
-<Workspace Version="0.8.2.2392" X="176.45" Y="121.202" zoom="1.1575" Name="Select Linked Elements" Description="Select the linked instance first, followed by the elements. To finish the selection, press Finish. If your selection fails, just press escape or Cancel.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="611932ff-042d-4848-81d1-0ab27c80ae53" Category="SpringNodes.Revit.Selection">
+<Workspace Version="0.8.2.2392" X="-328.190846290419" Y="40.2557339329394" zoom="2.72962159758084" Name="Select Linked Elements" Description="Select the linked instance first, followed by the elements. To finish the selection, press Finish. If your selection fails, just press escape or Cancel.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="611932ff-042d-4848-81d1-0ab27c80ae53" Category="SpringNodes.Revit.Selection">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="498e4cdd-2c09-47a9-806f-92a53b46a7f8" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>import clr
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
 
 clr.AddReference("RevitAPIUI")
 from  Autodesk.Revit.UI import *

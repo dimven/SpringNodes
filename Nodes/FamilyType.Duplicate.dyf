@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="722.102693156674" Y="221.224371241389" zoom="1.66537098414077" Name="FamilyType.Duplicate" Description="Create duplicate family types with the specified name. If the type exists, it is called." ID="9666b149-66b9-4a56-97b4-6f82a69fdf00" Category="SpringNodes.Revit.ElementTypes">
+<Workspace Version="0.8.2.2392" X="278.902693156674" Y="127.624371241389" zoom="1.66537098414077" Name="FamilyType.Duplicate" Description="Create duplicate family types with the specified name. If the type exists, it is called." ID="9666b149-66b9-4a56-97b4-6f82a69fdf00" Category="SpringNodes.Revit.ElementTypes">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Nodes.Symbol guid="eb7c5417-fd41-4069-981a-287af49c1af9" type="Dynamo.Nodes.Symbol" nickname="Input" x="-207.292379435103" y="53.6373404382477" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
@@ -11,7 +11,7 @@
       <Symbol value="new type(s)" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="9e7831b2-8cf2-467f-a682-ea2331c59c27" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="-17.8649313053645" y="66.8160682217288" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -30,32 +30,30 @@ clr.AddReference("RevitAPI")
 import Autodesk
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 fs = UnwrapElement(IN[0])
 names = tolist(IN[1])
 nfs = []
 
 TransactionManager.Instance.EnsureInTransaction(doc)
-
-for n in names:
+for i in xrange(len(names)):
 	try:
 		try:
-			x = fs.Duplicate(str(n))
+			x = fs.Duplicate(str(names[i]))
 			nfs.append(x.ToDSType(False))
 		except:
-			nfs.append(Revit.Elements.FamilySymbol.ByName(n))
+			nfs.append(Revit.Elements.FamilySymbol.ByName(str(names[i])))
 	except:
 		nfs.append(None)
 TransactionManager.Instance.TransactionTaskDone()
 
-if len(nfs) == 1 :
-	OUT = nfs[0]
-else:
-	OUT = nfs</Script>
+OUT = output1(nfs)</Script>
     </DSIronPythonNode.PythonNode>
   </Elements>
   <Connectors>

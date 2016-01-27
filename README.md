@@ -10,6 +10,11 @@ Your recommendations and ideas on how to improve this package are always welcome
 
 CHANGE LOG
 
+82.7.3 270116
+- General maintenance. Converted most for loops to xrange loops.
+- All UI nodes now have an optional "names" input. This should make handling named objects such as views and sheets much easier.
+- Watch+ is a new UI node that provides an alternative to the built-in watch node.
+
 82.7.2 140116
 - Bug fixes:
 	- FamilyInstance.ByGeometry was failing to assign a subcategory when no material was in use ( Thanks Jeremy)

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-70.851349616716" Y="155.821163687476" zoom="1.24844365397223" Name="Element.Copy" Description="Copy the input Revit elements with the help of a translation vector, similarly to the Geometry.Translate node." ID="cba6fef1-c536-4337-ba89-2a1aedbbbef2" Category="SpringNodes.Revit.Modify">
+<Workspace Version="0.8.2.2392" X="-70.851349616716" Y="155.821163687476" zoom="1.24844365397223" Name="Element.Copy" Description="WARNING: Do not use this node in Automatic mode! Copy the input Revit elements with the help of a translation vector, similarly to the Geometry.Translate node." ID="cba6fef1-c536-4337-ba89-2a1aedbbbef2" Category="SpringNodes.Revit.Modify">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
@@ -9,7 +9,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="07c44ee4-0bfc-458b-98f6-efbc66bd25a6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -29,14 +29,11 @@ clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
 
 clr.AddReference("System")
-import System
-from System.Collections.Generic import List as CList
+from System.Collections.Generic import List as cList
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 def output1(l1):
 	if len(l1) == 1: return out1[0]
@@ -46,24 +43,24 @@ elements = UnwrapElement(tolist(IN[0]))
 vecs = tolist(IN[1])
 
 oldId = []
-for e in elements:
-	try: oldId.append(e.Id)
+for i in xrange(len(elements)):
+	try: oldId.append(elements[i].Id)
 	except: pass
-oldId1 = CList[ElementId](oldId)
+oldId1 = cList[ElementId](oldId)
 transforms = []
-for v in vecs:
-	try: transforms.append(v.ToXyz(True))
+for i in xrange(len(vecs)):
+	try: transforms.append(vecs[i].ToXyz(True))
 	except: pass
 	
 def CopyEls(oldId1, transforms):
 	out1 = []
-	for t in transforms:
+	for i in xrange(len(transforms)):
 		try:
-			newId = ElementTransformUtils.CopyElements(doc, oldId1, t)
+			newId = ElementTransformUtils.CopyElements(doc, oldId1, transforms[i])
 			if len(newId) == 1 :
 				out1.append(doc.GetElement(newId[0]).ToDSType(False))
 			else:
-				for i in newId: out1.append(doc.GetElement(i).ToDSType(False))
+				[out1.append(doc.GetElement(newId[i]).ToDSType(False)) for i in xrange(len(newId))]
 		except: out1.append([])
 	return out1
 	

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="508.904175806788" Y="44.4188713725737" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="0.8.2.2392" X="294.504175806788" Y="18.0188713725737" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -14,7 +14,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="1cc92fa8-a1b1-4217-a336-0a638867f39c" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="182.020730141385" y="89.4464077087041" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="7">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -350,6 +350,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="7084.27197265625" eyeY="3406.11328125" eyeZ="10342.142578125" lookX="-10026.83203125" lookY="-929.802734375" lookZ="-4890.4130859375" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

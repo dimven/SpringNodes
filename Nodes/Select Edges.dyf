@@ -1,8 +1,9 @@
-<Workspace Version="0.8.2.2392" X="105.6" Y="210.4" zoom="1" Name="Select Edges" Description="Select multiple edges from inside the Revit UI. Be sure to press &quot;Finish&quot; once done. You can use a Boolean toggle to refresh your selection." ID="900c22e1-0838-4722-b3a6-b2642d93d03b" Category="SpringNodes.Revit.Selection">
+<Workspace Version="0.8.2.2392" X="-561.065331739312" Y="97.2896866457724" zoom="3.14224078322401" Name="Select Edges" Description="Select multiple edges from inside the Revit UI. Be sure to press &quot;Finish&quot; once done. You can use a Boolean toggle to refresh your selection." ID="900c22e1-0838-4722-b3a6-b2642d93d03b" Category="SpringNodes.Revit.Selection">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="02ea08f7-6e03-4cec-a0ed-f91926739fd3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>#select multiple edges in Revit and convert to Dynamo geometry
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
 
 import clr
 
@@ -24,9 +25,9 @@ sel1 = uidoc.Selection
 ot1 = Selection.ObjectType.Edge
 refs = sel1.PickObjects(ot1, "Select the desired edges and press Finish")
 edges = []
-for r in refs:
-	el1 = doc.GetElement(r.ElementId)
-	edge = el1.GetGeometryObjectFromReference(r)
+for i in xrange(len(refs)):
+	el1 = doc.GetElement(refs[i].ElementId)
+	edge = el1.GetGeometryObjectFromReference(refs[i])
 	edges.append(edge.AsCurve().ToProtoType())
 OUT = edges</Script>
     </DSIronPythonNode.PythonNode>
@@ -45,6 +46,6 @@ OUT = edges</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-1001.42901611328" eyeY="5003.68359375" eyeZ="22225.8515625" lookX="-1820.99243164063" lookY="-1032.23449707031" lookZ="-26041.404296875" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

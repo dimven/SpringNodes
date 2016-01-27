@@ -2,7 +2,7 @@
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="a53761c8-e321-405b-b99c-72dce1dba17d" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" inputcount="0">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -11,7 +11,6 @@ clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
-
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
@@ -29,6 +28,6 @@ OUT = doc.ActiveView.ToDSType(True)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="7.67264249841033" eyeY="8.35031929600561" eyeZ="6.25394079767599" lookX="-2.5382298917474" lookY="-5.44599642574303" lookZ="-10.9942815394907" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

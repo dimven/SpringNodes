@@ -8,7 +8,10 @@
       <Symbol value="element" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="4d84601c-19ba-4b06-9bf0-318406c41c43" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="225.6" y="7.99999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>import clr
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
 
 clr.AddReference("RevitAPIUI")
 from  Autodesk.Revit.UI import *

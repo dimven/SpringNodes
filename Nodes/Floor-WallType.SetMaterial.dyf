@@ -1,11 +1,11 @@
-<Workspace Version="0.8.2.2392" X="271.204774630898" Y="373.726215875534" zoom="1.78359936238281" Name="Floor-WallType.SetMaterial" Description="Sets a new material to the structural core of the provided floor and wall types." ID="a0f33711-c70a-4787-9145-38edbeb15d58" Category="SpringNodes.Revit.ElementTypes">
+<Workspace Version="0.8.2.2392" X="89.4171510571152" Y="207.935993105498" zoom="1.44258909293313" Name="Floor-WallType.SetMaterial" Description="Sets a new material to the structural core of the provided floor and wall types." ID="a0f33711-c70a-4787-9145-38edbeb15d58" Category="SpringNodes.Revit.ElementTypes">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="b803659f-36d6-47d8-a0ef-9120a8aa00e4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="232.619415181566" y="8.4099603960166" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -26,24 +26,21 @@ import Autodesk
 from Autodesk.Revit.DB import *
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 wt = UnwrapElement(tolist(IN[0]))
 nmat = UnwrapElement(tolist(IN[1]))
 count = 0
 TransactionManager.Instance.EnsureInTransaction(doc)
-for w in wt:
+for i in xrange(len(wt)):
 	try:
-			cs = w.GetCompoundStructure()
-			ind = cs.StructuralMaterialIndex
-			cs.SetMaterialId(ind,nmat[0].Id)
-			w.SetCompoundStructure(cs)
-			count += 1
-	except:
-		pass
+		cs = wt[i].GetCompoundStructure()
+		ind = cs.StructuralMaterialIndex
+		cs.SetMaterialId(ind,nmat[0].Id)
+		wt[i].SetCompoundStructure(cs)
+		count += 1
+	except: pass
 TransactionManager.Instance.TransactionTaskDone()
 if count &gt; 0:
 	OUT = "Succesfuly changed %s materials." %count

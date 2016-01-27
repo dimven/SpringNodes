@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="-52.8051274898445" Y="112.858365688297" zoom="3.14224078322401" Name="Sheet.Views+" Description="Extracts all views placed on the input sheet(s).  Will be depreciated once the bult in node works with all plan types." ID="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" Category="SpringNodes.Revit.Views">
+<Workspace Version="0.8.2.2392" X="5.33671832813508" Y="110.172757972737" zoom="2.26511812821294" Name="Sheet.Views+" Description="Extracts all views placed on the input sheet(s).  Will be depreciated once the bult in node works with all plan types." ID="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" Category="SpringNodes.Revit.Views">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="69385820-2399-4ede-bdb2-8234cad8914e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="123.6" y="0.799999999999983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -18,10 +18,8 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 def output1(l1):
 	if len(l1) == 1: return l1[0]
@@ -31,17 +29,16 @@ sheets = UnwrapElement(tolist(IN[0]))
 sheetviews = []
 
 if app.VersionName == "Autodesk Revit 2014":
-	for s in sheets:
-		viewports = [doc.GetElement(v1) for v1 in s.GetAllViewports()]
+	for i in xrange(len(sheets)):
+		viewports = [doc.GetElement(v1) for v1 in sheets[i].GetAllViewports()]
 		views = [doc.GetElement(v1.ViewId) for v1 in viewports]
 		sheetviews.append(views)
-	OUT = output1(sheetviews)
 else:
-	for s in sheets:
-		viewsid = s.GetAllPlacedViews()
+	for i in xrange(len(sheets)):
+		viewsid = sheets[i].GetAllPlacedViews()
 		views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
 		sheetviews.append(views)
-	OUT = output1(sheetviews)</Script>
+OUT = output1(sheetviews)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="sheet(s)" />

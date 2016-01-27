@@ -2,16 +2,18 @@
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 out1 = []
 
@@ -19,11 +21,11 @@ keys = tolist(IN[0])
 elements = tolist(IN[1])
 searchVals = tolist(IN[2])
 dict1 = dict(zip(keys,elements))
-for v in searchVals:
-	try: out1.append(dict1[v])
+for i in xrange(len(searchVals)):
+	try: out1.append(dict1[searchVals[i]])
 	except: out1.append([])
-if len(out1) == 1: OUT = out1[0] 
-else: OUT = out1</Script>
+
+OUT = output1(out1)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="3cad9a23-eee6-4193-a3e7-479546624fa2" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="keys" />

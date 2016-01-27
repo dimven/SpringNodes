@@ -1,7 +1,7 @@
 <Workspace Version="0.8.2.2392" X="116.042484658974" Y="316.397472495964" zoom="2.09279142221127" Name="Collector.FloorTypes" Description="Collects Floor types by name." ID="0d1dabc5-8fe9-4a07-a8d0-f1facf02e876" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="-2.94733280728872" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <DSIronPythonNode.PythonNode guid="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="-2.94733280728872" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2015, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -60,12 +60,16 @@ if len(result) == 0 and len(similar) == 0:
     <Dynamo.Nodes.Output guid="c34c55c3-78e2-49bd-8a7e-77ce286cd89f" type="Dynamo.Nodes.Output" nickname="Output" x="541.502171484805" y="37.7067584380528" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="partial match" />
     </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="26c29356-12d7-4c2e-ae3b-5169898b0c81" type="Dynamo.Nodes.Symbol" nickname="Input" x="8.06837670678968" y="67.5320245611563" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" start_index="0" end="3c9aa7cd-5329-4813-aa07-34070c965f51" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="6277229a-deb7-4455-a3c0-cd8a41093156" start_index="0" end="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="3c9aa7cd-5329-4813-aa07-34070c965f51" start_index="0" end="e9a78cb3-f156-44da-8cc3-68fcf2508587" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="3c9aa7cd-5329-4813-aa07-34070c965f51" start_index="1" end="c34c55c3-78e2-49bd-8a7e-77ce286cd89f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="26c29356-12d7-4c2e-ae3b-5169898b0c81" start_index="0" end="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

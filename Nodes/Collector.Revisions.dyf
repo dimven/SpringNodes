@@ -1,7 +1,7 @@
-<Workspace Version="0.8.2.2392" X="-625.539657286292" Y="146.172711901659" zoom="4" Name="Collector.Revisions" Description="Collects all revisions from a specific date." ID="db9982b0-99c8-41b0-942d-70c2e355c330" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="37.1503044259633" Y="202.977594380831" zoom="2.080710428125" Name="Collector.Revisions" Description="Collects all revisions from a specific date." ID="db9982b0-99c8-41b0-942d-70c2e355c330" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="cf70f36c-7e14-423a-ae1d-3985068be490" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="233.741822738413" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <DSIronPythonNode.PythonNode guid="cf70f36c-7e14-423a-ae1d-3985068be490" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="233.741822738413" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2015, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -42,12 +42,16 @@ else:
     <Dynamo.Nodes.Output guid="6acc495a-2b1b-471b-a375-4d6e368e50b0" type="Dynamo.Nodes.Output" nickname="Output" x="520.168037948881" y="49.9299846717673" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="all revisions" />
     </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="33af6194-ad41-4320-a751-d775ec763780" type="Dynamo.Nodes.Symbol" nickname="Input" x="2.52644471053276" y="63.1656900085108" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="cf70f36c-7e14-423a-ae1d-3985068be490" start_index="0" end="a31b42ea-9130-4fb6-b5ab-9336373d3554" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="f8030bca-7064-4b84-9f4d-aebbd1fa628d" start_index="0" end="cf70f36c-7e14-423a-ae1d-3985068be490" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="a31b42ea-9130-4fb6-b5ab-9336373d3554" start_index="0" end="46effa28-479e-4a66-a94a-2e886b897c10" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="a31b42ea-9130-4fb6-b5ab-9336373d3554" start_index="1" end="6acc495a-2b1b-471b-a375-4d6e368e50b0" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="33af6194-ad41-4320-a751-d775ec763780" start_index="0" end="cf70f36c-7e14-423a-ae1d-3985068be490" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

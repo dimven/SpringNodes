@@ -2,11 +2,13 @@
 
 Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
-Every great mechanism could use a spring from time to time. Spring Nodes's goal is to fill a niche and keep things short and simple. It's main focus is on improving Dynamo's interaction with Revit and explore any means that can help accelerate BIM work-flows.
+   Its main focus is to improve Dynamo's interaction with Revit. The wider goal is to explore any and all means that can help accelerate BIM focused work-flows. Many of the nodes use either IronPython or DesignScript and can be a good starting point for learning the specific syntax and finer points of both.
 
-Some nodes provided in this package have been inspired by existing content, such as the wonderful "SteamNodes", "archi-lab.net", "Clockwork" and "LunchBox" packages. The aim is to improve upon the original content in one way or another, by giving it a new twist and open up new functionalists and uses, without affecting its direction in any way.
+   The package repository is posted under the MIT license. You will find all the [sample files](https://github.com/dimven/SpringNodes/tree/master/Samples) and brief descriptions [here](https://github.com/dimven/SpringNodes/wiki/Node-Documentation), that can further demonstrate how some of the nodes work.
 
-Your recommendations and ideas on how to improve this package are always welcome. Please be sure to report any issues.
+   Your recommendations and ideas on how to improve this package further are always welcome. Please be sure to report any [issues](https://github.com/dimven/SpringNodes/issues) or feedback directly to the repository.
+
+   Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always either improve upon the original content by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's direction.
 
 CHANGE LOG
 

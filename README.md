@@ -6,9 +6,9 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
    The package repository is posted under the MIT license. You will find all the [sample files](https://github.com/dimven/SpringNodes/tree/master/Samples) and brief descriptions [here](https://github.com/dimven/SpringNodes/wiki/Node-Documentation), that can further demonstrate how some of the nodes work.
 
-   Your recommendations and ideas on how to improve this package further are always welcome. Please be sure to report any [issues](https://github.com/dimven/SpringNodes/issues) or feedback directly to the repository.
+   Nobody likes squeaky springs. Therefore your recommendations and ideas on how to improve this package further are always welcome. Please be sure to report any [issues](https://github.com/dimven/SpringNodes/issues) or feedback directly to the repository.
 
-   Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always either improve upon the original content by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's direction.
+   Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always improve upon the original content either by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's goals and direction.
 
 CHANGE LOG
 

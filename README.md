@@ -12,6 +12,16 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 CHANGE LOG
 
+82.7.5 010216
+- Even more general maintenance.
+- FamilyInstance.ByGeometry and Form.ByGeometry now support localized versions of Revit.
+
+
+82.7.4 280116
+- More general maintenance.
+- All collector nodes now have a refresh toggle.
+- Sheet.Views+ now collects schedules as well.
+
 82.7.3 270116
 - General maintenance. Converted most for loops to xrange loops.
 - All UI nodes now have an optional "names" input. This should make handling named objects such as views and sheets much easier.

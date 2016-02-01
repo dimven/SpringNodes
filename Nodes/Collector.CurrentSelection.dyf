@@ -1,10 +1,13 @@
-<Workspace Version="0.8.2.2392" X="22.3188654458399" Y="118.315492748419" zoom="2.01045961824633" Name="Collector.CurrentSelection" Description="Gets the currently selected elements. Connect a boolean switch to refresh the selection. Compatible with Revit 2016" ID="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-369.979619775078" Y="93.0735909989299" zoom="2.43827113374099" Name="Collector.CurrentSelection" Description="Gets the currently selected elements. Connect a boolean switch to refresh the selection. Compatible with Revit 2016" ID="f153d48d-85dd-4a7e-8ba2-91b08d81e5e7" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="0439f9ad-caff-4969-b97e-a7bd82a5d352" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>import clr
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -17,8 +20,6 @@ doc = DocumentManager.Instance.CurrentDBDocument
 uiapp = DocumentManager.Instance.CurrentUIApplication
 app = uiapp.Application
 uidoc=uiapp.ActiveUIDocument
-
-bool = IN[0]
 
 if app.VersionName == "Autodesk Revit 2016":
 	selid = uidoc.Selection.GetElementIds()

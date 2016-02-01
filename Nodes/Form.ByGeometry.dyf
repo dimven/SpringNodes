@@ -46,9 +46,10 @@ def PadLists(lists):
 		if len2 == len1:
 			continue
 		elif len2 &gt; len1:
-			lists[i] = lists[i][0:len1]
+			lists[i] = lists[i][:len1]
 		else:
-			lists[i].extend([lists[i][-1]] * (len1 - len2))
+			for j in xrange(len1 - len2):
+				lists[i].append(lists[i][-1])
 	return lists
 
 def NewForm(s1, isVoid1):
@@ -83,8 +84,7 @@ def NewForm(s1, isVoid1):
 		try:
 			s2 = FreeFormElement.Create(doc,s1)
 			if isVoid1:
-				if isRvt2014: void_par = s2.get_Parameter("Solid/Void")
-				else: void_par = s2.LookupParameter("Solid/Void")
+				void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING)
 				void_par.Set(1)
 			return s2.ToDSType(False)
 		except:
@@ -96,8 +96,6 @@ def NewForm(s1, isVoid1):
 geom = tolist(IN[0])
 isVoid = tolist(IN[1])
 
-isRvt2014 = False
-if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
 acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
@@ -138,6 +136,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

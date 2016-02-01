@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="294.504175806788" Y="18.0188713725737" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="0.8.2.2392" X="-91.8958241932121" Y="-14.7811286274263" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -55,13 +55,15 @@ def output1(l1):
 	else: return l1
 
 def PadLists(lists):
-	len1 = max([len(l) for l in lists])
+	len1 = len(lists[0])
 	for i in xrange(len(lists)):
-		if len(lists[i]) == len1:
+		len2 = len(lists[i])
+		if len2 == len1:
 			continue
+		elif len2 &gt; len1:
+			lists[i] = lists[i][:len1]
 		else:
-			len2 = len1 - len(lists[i])
-			for j in xrange(len2):
+			for j in xrange(len1 - len2):
 				lists[i].append(lists[i][-1])
 	return lists
 
@@ -139,115 +141,15 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 			SaveAsOpt = SaveAsOptions()
 			SaveAsOpt.OverwriteExistingFile = True
 			t1.EnsureInTransaction(famdoc)
-			#set the category
-			try:
+			try: #set the category
 				fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
 				famdoc.OwnerFamily.FamilyCategory = fam_cat
 			except: pass
 			s2 = FreeFormElement.Create(famdoc,s1)
 			if isVoid1:
-				void_par = s2.get_Parameter("Solid/Void")
+				void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING)
 				void_par.Set(1)
-				void_par2 = famdoc.OwnerFamily.get_Parameter("Cut with Voids When Loaded")
-				void_par2.Set(1)
-			else: #voids do not have a material value or a sub-cateogry
-				if enable_mat:
-					try:
-						mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
-						for m in mat_fec:
-							if m.Name == mat1:
-								fam_mat = m
-								break
-						mat_par = s2.get_Parameter("Material")
-						mat_par.Set(fam_mat.Id)
-					except: pass
-				#create the sub-category:
-				if enable_subcat:
-					try:
-						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
-						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
-						s2.Subcategory = new_subcat
-					except: pass
-			TransactionManager.ForceCloseTransaction(t1)
-			famdoc.SaveAs(save_path, SaveAsOpt)
-			family1 =  famdoc.LoadFamily(doc, FamOpt1())
-			famdoc.Close(False)
-			System.IO.File.Delete(save_path)
-			symbols = family1.Symbols.GetEnumerator()
-			symbols.MoveNext()
-			symbol1 = symbols.Current
-			t1.EnsureInTransaction(doc)
-			if not symbol1.IsActive: symbol1.Activate()
-			inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
-			ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz())
-			TransactionManager.ForceCloseTransaction(t1)
-			return inst1.ToDSType(False), family1.ToDSType(False)
-		except:
-			message = (traceback.format_exc(),"")
-			return message
-	else:
-		return message
-
-def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
-	enable_mat = True
-	if mat1 == None: enable_mat = False
-	enable_subcat = True
-	if subcat1 == None: enable_subcat = False
-	t1 = TransactionManager.Instance
-	TransactionManager.ForceCloseTransaction(t1)
-	famdoc = doc.Application.NewFamilyDocument(fam_path)
-	message = None
-	temp_path = System.IO.Path.GetTempPath()
-	sat_path = "%s%s.sat" % (temp_path, name1)
-	try:
-		if factor != 1:
-			s1 = s1.Scale(factor)
-		vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry(s1).MinPoint, DynPoint.Origin())
-		s1 = s1.Translate(vec1)
-		sat1 = Geometry.ExportToSAT(s1, sat_path)
-		satOpt = SATImportOptions()
-		satOpt.Placement = ImportPlacement.Origin
-		satOpt.Unit = ImportUnit.Foot
-		view_fec = FilteredElementCollector(famdoc).OfClass(View)
-		view1 = None
-		for v in view_fec:
-			if str(v.ViewType) in acceptable_views:
-				view1 = v
-				break
-		t1.EnsureInTransaction(famdoc)
-		satId = famdoc.Import(sat1, satOpt, view1)
-		opt1 = Options()
-		opt1.ComputeReferences = True
-		el1 = famdoc.GetElement(satId)
-		geom1 = el1.get_Geometry(opt1)
-		enum = geom1.GetEnumerator()
-		enum.MoveNext()
-		geom2 = enum.Current.GetInstanceGeometry()
-		enum2 = geom2.GetEnumerator()
-		enum2.MoveNext()
-		s1 = enum2.Current
-		famdoc.Delete(satId)
-		TransactionManager.ForceCloseTransaction(t1)
-		System.IO.File.Delete(sat_path)
-	except:
-		message = (traceback.format_exc(),"")
-		pass
-	if message == None:
-		try:
-			save_path = "%s%s.rfa" % (temp_path, name1)
-			SaveAsOpt = SaveAsOptions()
-			SaveAsOpt.OverwriteExistingFile = True
-			t1.EnsureInTransaction(famdoc)
-			#set the category
-			try:
-				fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
-				famdoc.OwnerFamily.FamilyCategory = fam_cat
-			except: pass
-			s2 = FreeFormElement.Create(famdoc,s1)
-			if isVoid1:
-				void_par = s2.LookupParameter("Solid/Void")
-				void_par.Set(1)
-				void_par2 = famdoc.OwnerFamily.LookupParameter("Cut with Voids When Loaded")
+				void_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS)
 				void_par2.Set(1)
 			else: #voids do not have a material values or a sub-cateogry
 				if enable_mat:
@@ -257,11 +159,10 @@ def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
 							if m.Name == mat1:
 								fam_mat = m
 								break
-						mat_par = s2.LookupParameter("Material")
+						mat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM)
 						mat_par.Set(fam_mat.Id)
 					except: pass
-				#create and assign the sub-category:
-				if enable_subcat:
+				if enable_subcat: #create and assign the sub-category:
 					try:
 						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
 						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
@@ -272,9 +173,11 @@ def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
 			family1 =  famdoc.LoadFamily(doc, FamOpt1())
 			famdoc.Close(False)
 			System.IO.File.Delete(save_path)
-			symbols = family1.GetFamilySymbolIds().GetEnumerator()
+			if isRvt2014: symbols = family1.Symbols.GetEnumerator()
+			else: symbols = family1.GetFamilySymbolIds().GetEnumerator()
 			symbols.MoveNext()
-			symbol1 = doc.GetElement(symbols.Current)
+			if isRvt2014: symbol1 = symbols.Current
+			else: symbol1 = doc.GetElement(symbols.Current)
 			t1.EnsureInTransaction(doc)
 			if not symbol1.IsActive: symbol1.Activate()
 			inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
@@ -288,20 +191,14 @@ def NewForm_background_R16(s1, name1, cat1, isVoid1, mat1, subcat1):
 		return message
 
 if len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):
-	if isRvt2014:
-		return1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)
-	else:
-		return1 = map(NewForm_background_R16, geom, names, category, isVoid, material, subcat)
+	return1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)
 elif len(geom) == len(names):
-	padded = PadLists((geom, category, isVoid, material,subcat))
+	padded = PadLists([geom, category, isVoid, material,subcat])
 	p_category = padded[1]
 	p_isVoid = padded[2]
 	p_material = padded[3]
 	p_subcat = padded[4]
-	if isRvt2014:
-		return1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)
-	else:
-		return1 = map(NewForm_background_R16, geom, names, p_category, p_isVoid, p_material, p_subcat)
+	return1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)
 else: return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
 OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script>
     </DSIronPythonNode.PythonNode>
@@ -350,6 +247,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="12423.662109375" eyeY="9805.43359375" eyeZ="-11469.51171875" lookX="-9823.8232421875" lookY="-3917.966796875" lookZ="11583.8544921875" />
   </Cameras>
 </Workspace>

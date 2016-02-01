@@ -1,24 +1,24 @@
-<Workspace Version="0.8.2.2392" X="-27.8731475649585" Y="196.351097592762" zoom="1.03605787560061" Name="Object.Class" Description="Gets the input object's class name. Can process lists." ID="e4e8406d-3b77-4822-897b-3f9c08e1cd45" Category="SpringNodes.Core">
+<Workspace Version="0.8.2.2392" X="-318.78086994021" Y="140.583498236603" zoom="2.12842063749438" Name="Object.Class" Description="Gets the input object's class name. Can process lists." ID="e4e8406d-3b77-4822-897b-3f9c08e1cd45" Category="SpringNodes.Core">
   <NamespaceResolutionMap>
     <ClassMap partialName="Star" resolvedName="Geometry.Star" assemblyName="SpringNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="62a9d6f7-af2b-4ed4-8582-b52ecae976fc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="201.198671473321" y="-4.19966786833009" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
 
 item = IN[0]
 if hasattr(item, "__iter__"):
-	out1 = [i.GetType().ToString() for i in item if i != None]
+	out1 = [item[i].GetType().ToString() for i in xrange(len(item)) if item[i] != None]
 	OUT = out1, item.GetType().ToString()
 else:
 	if item != None:
 		OUT = item.GetType().ToString(), "N/A"
 	else:
-		OUT = []</Script>
+		OUT = None, "N/A"</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Output guid="d12cabc8-4a61-49dd-b3cf-f6497cf27a35" type="Dynamo.Nodes.Output" nickname="Output" x="481.272759701492" y="-26.0558558276386" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="class(str)" />

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-699.816417066894" Y="-211.902930782807" zoom="1.25584483561315" Name="Math.AlmostEqual" Description="Checks if a number is almost equal to a value with a specified tollerance." ID="cc115a30-0b40-4ebe-806a-3e9ee42e8a09" Category="SpringNodes.Misc">
+<Workspace Version="0.8.2.2392" X="-699.816417066894" Y="-211.902930782807" zoom="1.25584483561315" Name="Math.AlmostEqual" Description="Checks if a number is almost equal to a value with a specified tollerance." ID="cc115a30-0b40-4ebe-806a-3e9ee42e8a09" Category="SpringNodes.Core.Math.Create">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

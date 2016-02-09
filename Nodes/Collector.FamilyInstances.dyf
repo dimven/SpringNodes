@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="42.8274959812754" Y="181.281457042192" zoom="2.09271977949371" Name="Collector.FamilyInstances" Description="Collects placed family instance elements from the document that match the name. Partially mathing elements are collected as well. If no matches are found, a list of all isntance names will be output." ID="c0a4257d-0aec-4263-b59b-25b310cea858" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-211.572504018725" Y="144.481457042192" zoom="2.09271977949371" Name="Collector.FamilyInstances" Description="Collects placed family instance elements from the document that match the name. Partially mathing elements are collected as well. If no matches are found, a list of all isntance names will be output." ID="c0a4257d-0aec-4263-b59b-25b310cea858" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="7556c07d-ba07-4658-9378-f218ee2d39bc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="246.636015841593" y="-6.1673042904122" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,20 +20,14 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 fn = tolist(IN[0])
+fn = [str(n) for n in fn]
+result, similar, names = [], [], []
 
-fec = FilteredElementCollector(doc).OfClass(FamilyInstance).GetElementIterator()
-fec.Reset()
-
-result = []
-similar = []
-names = []
-
+fec = FilteredElementCollector(doc).OfClass(FamilyInstance)
 for i in fec:
 	n1 = i.Name
 	names.append(n1)
@@ -74,6 +68,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

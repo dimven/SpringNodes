@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="98.566969616671" Y="138.332407415005" zoom="1.72395684352182" Name="Collector.Views" Description="Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets." ID="a1d3c661-73ae-4309-8fa5-dd483cd6df6e" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-125.433030383329" Y="129.532407415005" zoom="1.72395684352182" Name="Collector.Views" Description="Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets." ID="a1d3c661-73ae-4309-8fa5-dd483cd6df6e" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="9e16e048-07e6-4f30-9fc0-a0aac6f5effb" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,27 +20,19 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 fn = tolist(IN[0])
 fn = [str(n) for n in fn]
 IncSchedules = IN[1]
+result, similar, names = [], [], []
 
-fec = FilteredElementCollector(doc).OfClass(View).GetElementIterator()
-fec.Reset()
-
-result = []
-similar = []
-names = []
-if IncSchedules:
-	exclude = ["DrawingSheet"]
-else:
-	exclude = ["DrawingSheet", "Schedule"]
+if IncSchedules: exclude = ("DrawingSheet")
+else: exclude = ("DrawingSheet", "Schedule")
+fec = FilteredElementCollector(doc).OfClass(View)
 for i in fec:
-	if not i.IsTemplate and not any(e in str(i.ViewType) for e in exclude):
+	if not i.IsTemplate and not i.ViewType.ToString() in exclude:
 		n1 = i.ViewName
 		names.append(n1)
 		if any(fn1 == n1 for fn1 in fn):
@@ -50,7 +42,7 @@ for i in fec:
 if len(result) &gt; 0:
 	OUT = result,similar
 if len(result) == 0 and len(similar) &gt; 0:
-	OUT = "No exact match found. Check partial below:",similar
+	OUT = "No exact match found. Check partial below:", similar
 if len(result) == 0 and len(similar) == 0:
 	OUT = "No match found! Check names below:", names</Script>
     </DSIronPythonNode.PythonNode>
@@ -64,8 +56,8 @@ if len(result) == 0 and len(similar) == 0:
     <Dynamo.Nodes.Output guid="3d8be64b-21e7-4074-8b2c-e5c61a7ccc34" type="Dynamo.Nodes.Output" nickname="Output" x="561.001987052564" y="50.264022626588" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="partial match" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="38447c8d-f9e1-4e13-a9d0-b0d489c55d4c" type="Dynamo.Nodes.Symbol" nickname="Input" x="-44.3310858467199" y="61.2861030513765" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="IncludeSheets:bool = false" />
+    <Dynamo.Nodes.Symbol guid="38447c8d-f9e1-4e13-a9d0-b0d489c55d4c" type="Dynamo.Nodes.Symbol" nickname="Input" x="-70.3178152525903" y="58.9658593544238" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="IncludeSchedules:bool = false" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="cef88f0e-700a-42a5-b18c-603cd34af1ac" type="Dynamo.Nodes.Symbol" nickname="Input" x="13.1514886255679" y="131.619977537646" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="refresh:bool = true" />
@@ -83,6 +75,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

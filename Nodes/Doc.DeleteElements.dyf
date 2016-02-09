@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-481.230343116918" Y="265.355491520207" zoom="2.63950307583218" Name="Doc.DeleteElements" Description="Attempts to delete the input revit elements and returns the number of successfully deleted elements. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="SpringNodes.Revit.Document">
+<Workspace Version="0.8.2.2392" X="-479.138122342205" Y="135.041957713568" zoom="1.91081381799997" Name="Doc.DeleteElements" Description="Attempts to delete the input list of elements from the active Revit document.The node returns the number of successfully deleted elements and their Ids as a string. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well. If an element in the list can not be deleted (for example last revision or last view), the whole list will fail to be deleted." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="SpringNodes.Revit.Document">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="6f652db6-14ef-41d7-ad07-7d9356a0db5f" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
@@ -30,7 +30,8 @@ for i in xrange(len(elements)):
 	except: pass
 str_list = []
 TransactionManager.Instance.EnsureInTransaction(doc)
-deleted = doc.Delete(idsToDelete)
+try: deleted = doc.Delete(idsToDelete)
+except: deleted = []
 TransactionManager.Instance.TransactionTaskDone()
 for i in xrange(len(deleted)):
 	str_list.append(deleted[i].ToString())

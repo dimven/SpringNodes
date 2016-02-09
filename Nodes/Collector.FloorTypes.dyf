@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="116.042484658974" Y="316.397472495964" zoom="2.09279142221127" Name="Collector.FloorTypes" Description="Collects Floor types by name." ID="0d1dabc5-8fe9-4a07-a8d0-f1facf02e876" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-196.757515341026" Y="219.597472495964" zoom="1.77410468743511" Name="Collector.FloorTypes" Description="Collects Floor types by name." ID="0d1dabc5-8fe9-4a07-a8d0-f1facf02e876" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="90ae1080-6e60-4a0b-bb9b-8a69f5a25ef4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="-2.94733280728872" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,23 +20,16 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 fn = tolist(IN[0])
 fn = [str(n) for n in fn]
+result, similar, names = [], [], []
 
-fec = FilteredElementCollector(doc).OfClass(FloorType).GetElementIterator()
-fec.Reset()
-
-result = []
-similar = []
-names = []
-
+fec = FilteredElementCollector(doc).OfClass(FloorType)
 for i in fec:
-	n1 = i.ToDSType(True).Name
+	n1 = Element.Name.__get__(i)
 	names.append(n1)
 	if any(fn1 == n1 for fn1 in fn):
 		result.append(i.ToDSType(True))
@@ -75,6 +68,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

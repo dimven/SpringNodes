@@ -21,13 +21,16 @@ uiapp = DocumentManager.Instance.CurrentUIApplication
 app = uiapp.Application
 uidoc=uiapp.ActiveUIDocument
 
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
 if app.VersionName == "Autodesk Revit 2016":
 	selid = uidoc.Selection.GetElementIds()
-	elements = [doc.GetElement(id).ToDSType(True) for id in selid]
-	OUT = elements
+	OUT = output1([doc.GetElement(id).ToDSType(True) for id in selid])
 else:
 	sel = uidoc.Selection.Elements
-	OUT = [s.ToDSType(True) for s in sel]</Script>
+	OUT = output1([s.ToDSType(True) for s in sel])</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="c9c8a6cc-93a7-47c4-8fbe-3f4d835ac76c" type="Dynamo.Nodes.Symbol" nickname="Input" x="26.7809029428663" y="1.24928152849356" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="refresh:bool = true" />
@@ -44,6 +47,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

@@ -2,7 +2,7 @@
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -10,32 +10,33 @@ import clr
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import FilteredElementCollector
-
-doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
-elements = []
 views = UnwrapElement(tolist(IN[0]))
-for v in views:
-	view_el = FilteredElementCollector(doc, v.Id).WhereElementIsNotElementType().ToElements()
-	view_el = [e.ToDSType(True) for e in view_el]
+elements = []
+
+for i in xrange(len(views)):
+	fec = FilteredElementCollector(doc, views[i].Id).WhereElementIsNotElementType().GetElementIterator()
+	fec.Reset()
+	view_el = []
+	while fec.MoveNext():
+		view_el.append(fec.Current.ToDSType(True))
 	elements.append(view_el)
-if len(elements) == 1:
-	OUT = view_el
-else:
-	OUT = elements</Script>
+OUT = output1(elements)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Output guid="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" type="Dynamo.Nodes.Output" nickname="Output" x="402.464885808708" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="element(s)" />
@@ -56,6 +57,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="17.0665245056152" eyeY="63.2038345336914" eyeZ="-45.2703590393066" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

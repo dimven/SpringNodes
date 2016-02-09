@@ -10,7 +10,10 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
    Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always improve upon the original content either by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's goals and direction.
 
-CHANGE LOG
+_CHANGE LOG_
+
+82.7.6 090216
+- Element Collectors get a much needed maintenance.
 
 82.7.5 010216
 - Even more general maintenance.

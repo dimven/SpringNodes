@@ -8,7 +8,7 @@
       <Symbol value="list:var[]..[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="08e18c1b-0df9-44ee-81bd-25907b7563c8" type="Dynamo.Nodes.Symbol" nickname="Input" x="-45.5027639208651" y="52.1261304343657" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="ammount:int" />
+      <Symbol value="amount:int" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="323243c9-7b9e-4a9d-9acb-9ebad4ecdce1" type="Dynamo.Nodes.Output" nickname="Output" x="486.434900142841" y="-9.21997076683823" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="list" />
@@ -23,6 +23,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

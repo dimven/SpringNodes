@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="-47.9118949477332" Y="178.193678877953" zoom="2.45244625" Name="Collector.FamilyTypes" Description="Collects non-system family types that fully match or partially match the provided names. If no matches are found, a list of all type names will be output." ID="69ea0174-9cf5-4900-9ec3-d6937f55e25f" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-29.1276895867703" Y="158.947341737128" zoom="1.49364430808002" Name="Collector.FamilyTypes" Description="Collects non-system family types that fully match or partially match the provided names. If no matches are found, a list of all type names will be output." ID="69ea0174-9cf5-4900-9ec3-d6937f55e25f" Category="SpringNodes.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="7e4e9441-7bb5-4c9f-be68-e93cf3210ca8" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="237.764031483038" y="-0.286566024164044" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+    <DSIronPythonNode.PythonNode guid="7e4e9441-7bb5-4c9f-be68-e93cf3210ca8" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="237.764031483038" y="-0.286566024164046" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,22 +20,16 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 fn = tolist(IN[0])
+fn = [str(n) for n in fn]
+result, similar, names = [], [], []
 
-fec = FilteredElementCollector(doc).OfClass(FamilySymbol).GetElementIterator()
-fec.Reset()
-
-result = []
-similar = []
-names = []
-
+fec = FilteredElementCollector(doc).OfClass(FamilySymbol)
 for i in fec:
-	n1 = i.ToDSType(True).Name
+	n1 = Element.Name.__get__(i)
 	names.append(n1)
 	if any(fn1 == n1 for fn1 in fn):
 		result.append(i.ToDSType(True))
@@ -74,6 +68,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

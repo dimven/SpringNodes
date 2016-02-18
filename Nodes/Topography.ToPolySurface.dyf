@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-29.2604000674989" Y="26.1404693597227" zoom="0.712594832628488" Name="Topography.ToPolySurface" Description="Optimized algorithm for converting topographies into polysurfaces. Tested with topographies containing up to 40 000 points. &#xD;&#xA;Warning conversions of such mangitudes consume a lot of resources and are sub-optimal. Ensure that you have plenty at least 8GB of ram and patience before attempting such a conversion, otherwise your Dynamo and Revit instances may crash." ID="b34e0607-e2ef-4e43-8d24-3f79407b545e" Category="SpringNodes.Revit.Topography">
+<Workspace Version="0.8.2.2392" X="-29.2604000674989" Y="26.1404693597227" zoom="0.712594832628488" Name="Topography.ToPolySurface" Description="Optimized algorithm for converting topographies into polysurfaces. Tested with topographies containing up to 40 000 points. &#xD;&#xA;Warning conversions of such mangitudes consume a lot of resources and are sub-optimal. Ensure that you have at least 8GB of ram and plenty of patience before attempting such a conversion, otherwise your Dynamo and Revit instances may crash." ID="b34e0607-e2ef-4e43-8d24-3f79407b545e" Category="SpringNodes.Revit.Topography">
   <NamespaceResolutionMap>
     <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Topography" resolvedName="Revit.Elements.Topography" assemblyName="RevitNodes.dll" />
@@ -23,6 +23,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="47309.21875" eyeY="21807.443359375" eyeZ="15891.6376953125" lookX="-21261.064453125" lookY="-27833.408203125" lookZ="-31759.3984375" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

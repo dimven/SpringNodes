@@ -21,6 +21,8 @@ import clr
 import System
 from System.Collections.Generic import *
 
+from itertools import repeat
+
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
 import sys
 sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
@@ -58,13 +60,9 @@ def PadLists(lists):
 	len1 = len(lists[0])
 	for i in xrange(len(lists)):
 		len2 = len(lists[i])
-		if len2 == len1:
-			continue
-		elif len2 &gt; len1:
-			lists[i] = lists[i][:len1]
-		else:
-			for j in xrange(len1 - len2):
-				lists[i].append(lists[i][-1])
+		if len2 == len1 : continue
+		elif len2 &gt; len1: lists[i] = lists[i][:len1]
+		else : lists[i].extend(repeat(lists[i][-1],len1 - len2))
 	return lists
 
 class FamOpt1(IFamilyLoadOptions):
@@ -187,19 +185,15 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 		except:
 			message = (traceback.format_exc(),"")
 			return message
-	else:
-		return message
+	else : return message
 
 if len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):
 	return1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)
 elif len(geom) == len(names):
 	padded = PadLists([geom, category, isVoid, material,subcat])
-	p_category = padded[1]
-	p_isVoid = padded[2]
-	p_material = padded[3]
-	p_subcat = padded[4]
+	p_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]
 	return1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)
-else: return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
+else : return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
 OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="7971abd8-ecd2-4e2f-a28e-52027545f3f6" type="Dynamo.Nodes.Symbol" nickname="Input" x="-1.65837633460887" y="4.14594083652204" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
@@ -247,6 +241,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12423.662109375" eyeY="9805.43359375" eyeZ="-11469.51171875" lookX="-9823.8232421875" lookY="-3917.966796875" lookZ="11583.8544921875" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

@@ -1,12 +1,17 @@
 <Workspace Version="0.8.2.2392" X="87.8755" Y="124.239" zoom="1.1575" Name="Fn.ElementsOfCategory" Description="Same as the built in &quot;All Elements of Category&quot; but can act as a function object." ID="178cbf10-efa4-4b29-aba7-2f4b046d99d4" Category="SpringNodes.SmartCopyMon">
-  <NamespaceResolutionMap />
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
   <Elements>
     <DSRevitNodesUI.ElementsOfCategory guid="b025bda2-3425-4501-92c3-ec31ad6b3c02" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" />
     <Dynamo.Nodes.Output guid="21815596-dfc3-45e6-b959-d807a2d70891" type="Dynamo.Nodes.Output" nickname="Output" x="499.4" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="elements" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="39247597-7478-4fe5-a4f7-e86edc62f172" type="Dynamo.Nodes.Symbol" nickname="Input" x="123.6" y="-2.80000000000004" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="category" />
+    <Dynamo.Nodes.Symbol guid="39247597-7478-4fe5-a4f7-e86edc62f172" type="Dynamo.Nodes.Symbol" nickname="Input" x="57.941252699784" y="1.34686825053993" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="category:Category" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="aa842026-75f2-4917-8e8a-0d1320361f63" type="Dynamo.Nodes.Symbol" nickname="Input" x="42.5913606911447" y="71.9965442764579" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
     </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
@@ -16,4 +21,7 @@
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="219220.729008304" eyeY="109223.531225488" eyeZ="-107487.018064126" lookX="-195312.950117781" lookY="-88036.5936050086" lookZ="26754.5461582372" />
+  </Cameras>
 </Workspace>

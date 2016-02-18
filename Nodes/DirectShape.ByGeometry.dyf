@@ -22,6 +22,8 @@ import clr
 import System
 from System.Collections.Generic import *
 
+from itertools import repeat
+
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
 import sys
 sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
@@ -56,12 +58,9 @@ def PadLists(lists):
 	len1 = len(lists[0])
 	for i in xrange(len(lists)):
 		len2 = len(lists[i])
-		if len2 == len1:
-			continue
-		elif len2 &gt; len1:
-			lists[i] = lists[i][0:len1]
-		else:
-			lists[i].extend([lists[i][-1]] * (len1 - len2))
+		if len2 == len1 : continue
+		elif len2 &gt; len1: lists[i] = lists[i][:len1]
+		else : lists[i].extend(repeat(lists[i][-1],len1 - len2))
 	return lists
 
 def NewDS(s1,cat,name1):
@@ -93,7 +92,6 @@ def NewDS(s1,cat,name1):
 		pass
 	if message == None:
 		try:
-			dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
 			if dsLib.ContainsType(name1):
 				old_type = dsLib.FindDefinitionType(name1)
 				try: doc.Delete(old_type)
@@ -102,14 +100,13 @@ def NewDS(s1,cat,name1):
 			dsType1.SetShape([s1])
 			dsLib.AddDefinitionType(name1, dsType1.Id)
 			tf1 = Transform.Identity
-			ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, name1, tf1, "Dynamo","")
+			ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, name1, tf1, "Dynamo","spring nodes")
 			ds1.SetTypeId(dsType1.Id)
 			return ds1.ToDSType(False)
 		except:
 			message = traceback.format_exc()
 			return message
-	else:
-		return message
+	else: return message
 
 solids = tolist(IN[0])
 cat = tolist(IN[1])
@@ -125,6 +122,7 @@ for v in view_fec:
 		break
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
+dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
 if len(solids) == len(cat) == len(names):
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	OUT = output1(map(NewDS, solids, cat, names))
@@ -135,8 +133,7 @@ elif len(solids) == len(names):
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	OUT = output1(map(NewDS, solids, p_cat, names))
 	TransactionManager.Instance.TransactionTaskDone()
-else:
-	OUT = "Make sure that each geometry\nobject has a unique type name."</Script>
+else : OUT = "Make sure that each geometry\nobject has a unique type name."</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Nodes.Symbol" nickname="Input" x="-343.710489636924" y="37.8516645286593" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="category:var[]..[] = Category.ByName(&quot;OST_GenericModel&quot;)" />

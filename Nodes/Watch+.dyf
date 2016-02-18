@@ -18,16 +18,14 @@ from System.Windows.Forms import *
 from cStringIO import StringIO
 
 def isElem(el1):
-	if hasattr(el1, "Id"): return True
-	else: return False
+	return hasattr(el1, "Id")
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 	
 def isList(obj1):
-	if hasattr(obj1,"__iter__"): return True
-	else: False
+	return hasattr(obj1,"__iter__")
 
 def write_str(str1):
 	str_file.write(''.join([j for j in GCL]))
@@ -142,6 +140,6 @@ str_file.close()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="88893.586205709" eyeY="214015.021294737" eyeZ="-57465.6266532865" lookX="-59741.3018769405" lookY="-63440.8361036451" lookZ="-68724.5062854868" />
   </Cameras>
 </Workspace>

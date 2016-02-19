@@ -4,8 +4,11 @@
     <ClassMap partialName="Transaction" resolvedName="Revit.Transaction.Transaction" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="f8e36be0-b96f-4862-9c88-0737f835c5d3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="163.6" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>import clr
+    <DSIronPythonNode.PythonNode guid="f8e36be0-b96f-4862-9c88-0737f835c5d3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="167.220681948369" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
 import math
 
 clr.AddReference("RevitServices")

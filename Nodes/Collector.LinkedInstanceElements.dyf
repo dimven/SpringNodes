@@ -4,7 +4,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="4d05e529-d541-4538-9713-ca203784c5bc" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 #original design by Julien Benoit, @jbenoit44
 # http://aecuandme.wordpress.com/
@@ -25,28 +25,26 @@ import Autodesk
 from Autodesk.Revit.DB import FilteredElementCollector, ElementCategoryFilter, XYZ
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
 
 Link1 = UnwrapElement(tolist(IN[0]))
 Cat1 = UnwrapElement(IN[1])
 elements, transforms = [], []
 
-for l in Link1:
-	LinkDoc = l.GetLinkDocument()
-	fec = FilteredElementCollector(LinkDoc).OfCategoryId(Cat1.Id).WhereElementIsNotElementType().ToElements()
+for i in xrange(len(Link1)):
+	LinkDoc = Link1[i].GetLinkDocument()
+	fec = FilteredElementCollector(LinkDoc).OfCategoryId(Cat1.Id).WhereElementIsNotElementType()
 	fec1 = [e.ToDSType(True) for e in fec]
 	elements.append(fec1)
-	tf1 = l.GetTransform()
+	tf1 = Link1[i].GetTransform()
 	cs1 = CoordinateSystem.ByOriginVectors(tf1.Origin.ToPoint(True),
 	tf1.BasisX.ToVector(True), tf1.BasisY.ToVector(True), tf1.BasisZ.ToVector(True))
 	transforms.append(cs1)
-if len(elements) == 1:
-	OUT = fec1, cs1
-else:
-	OUT = elements, transforms</Script>
+OUT = output1(elements), output1(transforms)</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="f3246400-4185-4769-b996-369fa96e6042" type="Dynamo.Nodes.Symbol" nickname="Input" x="34.6261033107697" y="-12.9114283531684" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="link instance(s)" />

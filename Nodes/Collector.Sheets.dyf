@@ -12,7 +12,7 @@
       <Symbol value="partial match" />
     </Dynamo.Nodes.Output>
     <DSIronPythonNode.PythonNode guid="07ccd681-b902-44b8-9560-0bae3b68a314" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="254.517772229413" y="7.71995079450434" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -20,42 +20,30 @@ import clr
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
-
+doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
-
-doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
-
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
-dataEnteringNode = IN
 fn = tolist(IN[0])
 fn = [str(n) for n in fn]
 NameNumber = IN[1]
+result, similar, names = [], [], []
 
-
-fec = FilteredElementCollector(doc).OfClass(View).GetElementIterator()
-fec.Reset()
-result = []
-similar = []
-names = []
-
+fec = FilteredElementCollector(doc).OfClass(View)
+ds_type = "DrawingSheet"
 for i in fec:
-	if i.ViewType == ViewType.DrawingSheet:
-		if NameNumber:
-			n1 = i.ViewName
-		else:
-			n1 = i.SheetNumber
+	if i.ViewType.ToString() == ds_type:
+		if NameNumber: n1 = i.ViewName
+		else: n1 = i.SheetNumber
 		names.append(n1)
 		if any(fn1 == n1 for fn1 in fn):
 			result.append(i.ToDSType(True))
@@ -87,6 +75,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

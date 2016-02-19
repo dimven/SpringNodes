@@ -4,7 +4,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <DSIronPythonNode.PythonNode guid="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+      <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
 import clr
@@ -14,24 +14,22 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"):
-		return obj1
-	else:
-		return [obj1]
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
 
 in1,out1 = [],[]
 
 elements = tolist(IN[0])
 filter = tolist(IN[1])
-for e in elements:
+for i in xrange(len(elements)):
 	try:
-		n1 = e.GetType().ToString().lower()
+		n1 = elements[i].GetType().ToString().lower()
 	except:
 		n1 = "null"
 	if any(f.lower() in n1 for f in filter):
-		in1.append(e)
+		in1.append(elements[i])
 	else:
-		out1.append(e)
+		out1.append(elements[i])
 	
 OUT = in1, out1</Script>
     </DSIronPythonNode.PythonNode>

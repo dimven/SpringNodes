@@ -8,6 +8,8 @@ import clr
 import System
 from System.Collections.Generic import *
 
+from itertools import repeat
+
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
 import sys
 sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
@@ -43,12 +45,9 @@ def PadLists(lists):
 	len1 = len(lists[0])
 	for i in xrange(len(lists)):
 		len2 = len(lists[i])
-		if len2 == len1:
-			continue
-		elif len2 &gt; len1:
-			lists[i] = lists[i][0:len1]
-		else:
-			lists[i].extend([lists[i][-1]] * (len1 - len2))
+		if len2 == len1 : continue
+		elif len2 &gt; len1: lists[i] = lists[i][:len1]
+		else : lists[i].extend(repeat(lists[i][-1],len1 - len2))
 	return lists
 
 def NewForm(s1, isVoid1):
@@ -83,21 +82,16 @@ def NewForm(s1, isVoid1):
 		try:
 			s2 = FreeFormElement.Create(doc,s1)
 			if isVoid1:
-				if isRvt2014: void_par = s2.get_Parameter("Solid/Void")
-				else: void_par = s2.LookupParameter("Solid/Void")
+				void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING)
 				void_par.Set(1)
 			return s2.ToDSType(False)
 		except:
 			message = traceback.format_exc()
 			return message
-	else:
-		return message
+	else : return message
 
-geom = tolist(IN[0])
-isVoid = tolist(IN[1])
+geom, isVoid = tolist(IN[0]),  tolist(IN[1])
 
-isRvt2014 = False
-if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
 acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
@@ -108,16 +102,17 @@ for v in view_fec:
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
 if doc.IsFamilyDocument:
-	TransactionManager.Instance.EnsureInTransaction(doc)
 	if len(geom) == len(isVoid):
+		TransactionManager.Instance.EnsureInTransaction(doc)
 		OUT = output1(map(NewForm, geom, isVoid))
+		TransactionManager.Instance.TransactionTaskDone()
 	else:
 		padded = PadLists([geom,isVoid])
 		p_isVoid = padded[1]
+		TransactionManager.Instance.EnsureInTransaction(doc)
 		OUT = output1(map(NewForm, geom, p_isVoid))
-	TransactionManager.Instance.TransactionTaskDone()
-else:
-	OUT = "Forms can only exist in family documents"</Script>
+		TransactionManager.Instance.TransactionTaskDone()
+else : OUT = "Forms can only exist in family documents"</Script>
     </DSIronPythonNode.PythonNode>
     <Dynamo.Nodes.Symbol guid="eae70b5f-0692-4372-ab80-d18a7b1f5adb" type="Dynamo.Nodes.Symbol" nickname="Input" x="127.34323536274" y="0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="geometry" />
@@ -138,6 +133,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

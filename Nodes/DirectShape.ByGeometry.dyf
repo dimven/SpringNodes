@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="308.908312600763" Y="297.419617491727" zoom="0.894168083312073" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="0.8.2.2392" X="158.277520481501" Y="253.897335942645" zoom="1.38571068305882" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -56,7 +56,7 @@ def output1(l1):
 
 def PadLists(lists):
 	len1 = len(lists[0])
-	for i in xrange(len(lists)):
+	for i in xrange(1,len(lists)):
 		len2 = len(lists[i])
 		if len2 == len1 : continue
 		elif len2 &gt; len1: lists[i] = lists[i][:len1]
@@ -117,7 +117,7 @@ acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "El
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
 for v in view_fec:
-	if str(v.ViewType) in acceptable_views:
+	if str(v.ViewType) in acceptable_views and not v.IsTemplate:
 		view1 = v
 		break
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
@@ -152,6 +152,6 @@ else : OUT = "Make sure that each geometry\nobject has a unique type name."</Scr
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="1820.01196289063" eyeY="1598.45764160156" eyeZ="712.223449707031" lookX="-1699.88635253906" lookY="-2716.51391601563" lookZ="-260.119110107422" />
   </Cameras>
 </Workspace>

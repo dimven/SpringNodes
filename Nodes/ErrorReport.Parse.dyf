@@ -53,7 +53,8 @@ unique_errors = [i[0] for i in group_errors]
 sum_errors = [i[1] for i in group_errors]
 sum_errors.append("Total errors : %s"%sum(sum_errors))
 
-id_expression = re.compile("\D(\d{5,7})\D")
+#id_expression = re.compile("\D(\d{5,8})\D")
+id_expression = re.compile(" id (.*)  ")
 elements = map(extractId, report_data)
 
 if fetch_elements:	#imports moved here to be able to process externally
@@ -99,6 +100,6 @@ OUT = report_errors, elements, unique_errors, sum_errors</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-0.622765966639582" eyeY="48.4185947362845" eyeZ="-12.7958287696449" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

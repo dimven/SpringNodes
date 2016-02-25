@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="63.7921620104267" Y="265.28569470311" zoom="1.59077689706107" Name="InterferenceCheck.Parse" Description="Process a Revit interference check (HTML file) and extract the interference categories, all affected elements and the total number of clashes. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="d0ea3d37-e270-4d77-af77-5e970177cc79" Category="SpringNodes.Revit.Utility">
+<Workspace Version="0.8.2.2392" X="-14.6078379895734" Y="199.68569470311" zoom="1.59077689706107" Name="InterferenceCheck.Parse" Description="Process a Revit interference check (HTML file) and extract the interference categories, all affected elements and the total number of clashes. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="d0ea3d37-e270-4d77-af77-5e970177cc79" Category="SpringNodes.Revit.Utility">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="4eec9315-409c-40b7-a5e2-9620d45396d0" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
@@ -25,7 +25,7 @@ class ReportParser(SGMLParser):
 			self.data1.append(self.temp_data)
 			self.temp_data = []
 
-interference_cats = ("Structural Columns ", "Air Terminals ", "Assemblies ", "Cable Tray Fittings ", "Cable Tray Runs ", "Cable Trays ", "Casework ", "Ceilings ", "Columns ", "Conduit Fittings ", "Conduit Runs ", "Conduits ", "Curtain Panels ", "Curtain Systems ", "Curtain Wall Mullions ","Doors ", "Duct Accessories ", "Duct Fittings ", "Duct Insulations ", "Duct Linings ", "Duct Placeholders ", "Duct Systems ", "Ducts ", "Electrical Circuits ", "Electrical Equipment ", "Electrical Fixtures ", "Fabrication Parts ", "Flex Ducts ", "Flex Pipes ", "Floors ", "Furniture ", "Furniture Systems ", "Generic Models ", "Gutters ", "Lighting Devices ", "Lighting Fixtures ", "Mass Floors ", "Mass ", "Mechanical Equipment ", "Pads ", "Parts ", "Pipe Accessories ", "Pipe Fittings ", "Pipe Insulations ", "Pipe Placeholders ", "Pipes ", "Piping Systems ",  "Plumbing Fixtures ", "Railings ", "Ramps ", "Roofs ", "Roof Soffits ", "Shaft Openings ", "Slab Edges ", "Specialty Equipment ", "Sprinklers ", "Stairs ", "Structural Connections ", "Structural Foundations ", "Structural Framing ", "Structural Trusses ", "Wall Sweeps ", "Walls ", "Windows ", "Wires ")
+interference_cats = ("Structural Columns", "Air Terminals", "Assemblies", "Cable Tray Fittings", "Cable Tray Runs", "Cable Trays", "Casework", "Ceilings", "Columns", "Conduit Fittings", "Conduit Runs", "Conduits", "Curtain Panels", "Curtain Systems", "Curtain Wall Mullions","Doors", "Ducts", "Duct Accessories", "Duct Fittings", "Duct Insulations", "Duct Linings", "Duct Placeholders", "Duct Systems", "Electrical Circuits", "Electrical Equipment", "Electrical Fixtures", "Fabrication Parts", "Flex Ducts", "Flex Pipes", "Floors", "Furniture", "Furniture Systems", "Generic Models", "Gutters", "Lighting Devices", "Lighting Fixtures", "Mass Floors", "Mass", "Mechanical Equipment", "Pads", "Parts", "Pipe Accessories", "Pipe Fittings", "Pipe Insulations", "Pipe Placeholders", "Pipes", "Piping Systems",  "Plumbing Fixtures", "Railings", "Ramps", "Roofs", "Roof Soffits", "Shaft Openings", "Slab Edges", "Specialty Equipment", "Sprinklers", "Stairs", "Structural Connections", "Structural Foundations", "Structural Framing", "Structural Trusses", "Wall Sweeps", "Walls", "Windows", "Wires")
 
 def extractId(list1):
 	return [i for j in list1 for i in id_expression.findall(j)]
@@ -35,16 +35,13 @@ def pullElement(list1):
 		try: out1.append(doc.GetElement(ElementId(int(i))))
 		except: out1.append(i)
 	return out1
-icn = xrange(len(interference_cats))
 def fetchCat(l1):
-	s1 = []
+	out1 = []
 	for i in xrange(len(l1)):
-		for j in icn:
-			if interference_cats[j] in l1[i]:
-				s1.append(interference_cats[j])
-				break
-	if not s1: return "Unidentified"
-	else: return "- ".join(s1)
+		s1 = l1[i].split(" : ")[0].lstrip()
+		if s1 in interference_cats: out1.append(s1)
+	if len(out1) &gt; 1 : return " - ".join(out1)
+	else: return "Unidentified"
 
 report1 = IN[0]
 fetch_elements = IN[1]
@@ -64,7 +61,8 @@ unique_cases = [i[0] for i in group_cases]
 sum_cases = [i[1] for i in group_cases]
 sum_cases.append("Total interferences : %s"%sum(sum_cases))
 
-id_expression = re.compile("\D(\d{5,7})\D")
+#id_expression = re.compile("\D(\d{5,8})\D")
+id_expression = re.compile(" id (.*)  ")
 elements = map(extractId, report_data)
 
 if fetch_elements:	#imports moved here to be able to process externally
@@ -111,6 +109,6 @@ OUT = cases, elements, unique_cases, sum_cases</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="32.5036849975586" eyeY="63.3167037963867" eyeZ="16.734245300293" lookX="-50.7057304382324" lookY="-5.26411056518555" lookZ="-12.1733694076538" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

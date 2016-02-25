@@ -43,7 +43,7 @@ def output1(l1):
 
 def PadLists(lists):
 	len1 = len(lists[0])
-	for i in xrange(len(lists)):
+	for i in xrange(1,len(lists)):
 		len2 = len(lists[i])
 		if len2 == len1 : continue
 		elif len2 &gt; len1: lists[i] = lists[i][:len1]
@@ -96,7 +96,7 @@ acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "El
 view_fec = FilteredElementCollector(doc).OfClass(View)
 view1 = None
 for v in view_fec:
-	if str(v.ViewType) in acceptable_views:
+	if str(v.ViewType) in acceptable_views and not v.IsTemplate:
 		view1 = v
 		break
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
@@ -133,6 +133,6 @@ else : OUT = "Forms can only exist in family documents"</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
   </Cameras>
 </Workspace>

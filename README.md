@@ -12,7 +12,10 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
-82.7.6 180216
+82.7.8 250216
+- General bug cleaning and optimization.
+
+82.7.7 180216
 - DirectShape.Transform added. (vector node renamed to DS.Translate)
 - Topography.ToPolySurface(py) added. Should provide a 5-10% boost compared to the DS version.
 

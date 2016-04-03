@@ -1,7 +1,7 @@
 <Workspace Version="0.8.2.2392" X="19.8027856748884" Y="227.924679060115" zoom="1.3231529419852" Name="Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0.755770529822257" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 import clr
@@ -23,7 +23,6 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -133,6 +132,6 @@ else : OUT = "Forms can only exist in family documents"</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

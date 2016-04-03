@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="204.772096447084" Y="146.948751447084" zoom="1.33823125" Name="List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="SpringNodes.BETA">
+<Workspace Version="0.8.2.2392" X="204.772096447084" Y="146.948751447084" zoom="1.33823125" Name="List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="SpringNodes.Lists">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="59955ff9-1bf7-4403-8a08-2bf5da484df7" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="94.8" y="-0.799999999999997" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">

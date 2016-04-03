@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="9.88802245453783" Y="149.765750169588" zoom="0.803321593462598" Name="Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="SpringNodes.Core">
+<Workspace Version="0.8.2.2392" X="61.6639102077711" Y="257.9528269813" zoom="1.92101320430154" Name="Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="SpringNodes.Core">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -20,13 +20,11 @@ def tolist(obj1):
 in1,out1 = [],[]
 
 elements = tolist(IN[0])
-filter = tolist(IN[1])
+filter = map(str.lower, map(str,tolist(IN[1]) ) )
 for i in xrange(len(elements)):
-	try:
-		n1 = elements[i].GetType().ToString().lower()
-	except:
-		n1 = "null"
-	if any(f.lower() in n1 for f in filter):
+	try : n1 = elements[i].GetType().ToString().lower()
+	except : n1 = "null"
+	if any(f in n1 for f in filter):
 		in1.append(elements[i])
 	else:
 		out1.append(elements[i])
@@ -58,6 +56,6 @@ OUT = in1, out1</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="909.813415527344" eyeY="9690.240234375" eyeZ="-932.905700683594" lookX="103.202018737793" lookY="-7911.1083984375" lookZ="-1553.78100585938" />
   </Cameras>
 </Workspace>

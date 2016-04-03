@@ -1,14 +1,14 @@
-<Workspace Version="0.8.1.1942" X="77.6" Y="90.4" zoom="1" Name="NullGetParameter" ID="988751e9-88e3-435e-bde7-6a060f655b27" Description="Similar to the built in node.Capable of handling null values, part of the SmartCopyMonitor workflow." Category="SpringNodes.SmartCopyMon">
+<Workspace Version="0.8.2.2392" X="361.385042189438" Y="164.887732182132" zoom="1.545620359375" Name="NullGetParameter" Description="Similar to the built in node.Capable of handling null values, part of the SmartCopyMonitor workflow." ID="988751e9-88e3-435e-bde7-6a060f655b27" Category="SpringNodes.SmartCopyMon">
   <NamespaceResolutionMap />
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="0c719cd9-9b03-46e5-9ead-2d78842cd6b1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="def NullGetPar(e1,par)&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;if (e1 != null)&#xA;{&#xA;val = e1.GetParameterValueByName(par);&#xA;return = val;&#xA;}&#xA;}&#xA;};&#xA;NullGetPar(e1,par);" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="4f8e173f-1815-4ac3-a300-326115c54ed2" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="element" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="0c719cd9-9b03-46e5-9ead-2d78842cd6b1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def NullGetPar(e1,par)&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;if (e1 != null)&#xA;{&#xA;val = e1.GetParameterValueByName(par);&#xA;return = val;&#xA;}&#xA;}&#xA;};&#xA;NullGetPar(e1,par);" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="4f8e173f-1815-4ac3-a300-326115c54ed2" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element:var" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="b59a68ef-0a90-47e1-a7b2-f0aba0947d39" type="Dynamo.Nodes.Symbol" nickname="Input" x="-4" y="70" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="parameter" />
+    <Dynamo.Nodes.Symbol guid="b59a68ef-0a90-47e1-a7b2-f0aba0947d39" type="Dynamo.Nodes.Symbol" nickname="Input" x="-4" y="70" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="parameter:var" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="f375fc4b-4c33-430b-bf35-f4231405b7b3" type="Dynamo.Nodes.Output" nickname="Output" x="683.4" y="1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+    <Dynamo.Nodes.Output guid="f375fc4b-4c33-430b-bf35-f4231405b7b3" type="Dynamo.Nodes.Output" nickname="Output" x="683.4" y="1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="value" />
     </Dynamo.Nodes.Output>
   </Elements>
@@ -19,4 +19,8 @@
   </Connectors>
   <Notes />
   <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
 </Workspace>

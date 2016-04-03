@@ -82,7 +82,7 @@ isVoid = tolist(IN[5])
 subcat = tolist(IN[6])
 
 isRvt2014 = False
-if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
+if "2014" in app.VersionName : isRvt2014 = True
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
 acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
@@ -241,6 +241,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12423.662109375" eyeY="9805.43359375" eyeZ="-11469.51171875" lookX="-9823.8232421875" lookY="-3917.966796875" lookZ="11583.8544921875" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

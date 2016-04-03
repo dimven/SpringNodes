@@ -1,11 +1,11 @@
-<Workspace Version="0.8.2.2392" X="84.3542326436298" Y="165.492001921442" zoom="0.784369328044827" Name="List.ShiftIndices+" Description="The built in node fails if the shift number is greater than the lenght of the list. This node acts as a work-around." ID="781add30-6975-417e-8655-20ea02cc2eb5" Category="SpringNodes.Lists">
+<Workspace Version="0.8.2.2392" X="345.575185586056" Y="216.781694120337" zoom="1.2198072017255" Name="List.ShiftIndices+" Description="The built in node fails if the shift number is greater than the lenght of the list. This node acts as a work-around." ID="781add30-6975-417e-8655-20ea02cc2eb5" Category="SpringNodes.Lists">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <Dynamo.Nodes.CodeBlockNodeModel guid="c0db66bf-650d-46bc-b293-7dfd3ad7ea37" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="107.669322339802" y="-5.78579990488612" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="List.ShiftIndices(l1,n%Count(l1));" ShouldFocus="false" />
     <Dynamo.Nodes.Symbol guid="11bf23ff-87fd-462a-9970-d4b6f8446f2d" type="Dynamo.Nodes.Symbol" nickname="Input" x="-59.2394473686734" y="-9.44396987036819" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="list:var[]..[]" />
+      <Symbol value="list:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="08e18c1b-0df9-44ee-81bd-25907b7563c8" type="Dynamo.Nodes.Symbol" nickname="Input" x="-45.5027639208651" y="52.1261304343657" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="amount:int" />
@@ -23,6 +23,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

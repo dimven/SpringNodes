@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="332" Y="114.4" zoom="1" Name="Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="SpringNodes.BETA">
+<Workspace Version="0.8.2.2392" X="332" Y="114.4" zoom="1" Name="Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="SpringNodes.Core">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -140,6 +140,6 @@ str_file.close()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="88893.586205709" eyeY="214015.021294737" eyeZ="-57465.6266532865" lookX="-59741.3018769405" lookY="-63440.8361036451" lookZ="-68724.5062854868" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

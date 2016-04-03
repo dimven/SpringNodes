@@ -1,4 +1,4 @@
-<Workspace Version="0.8.1.1942" X="-52.8994428157073" Y="173.320391187444" zoom="1.19179377129296" Name="NullReorder" ID="c0f559dc-e1b2-4b5e-93b2-90e8b9c33397" Description="Simiar to the built-in function with the difference that it can handle null indices. Part of the SmartCopyMonitor workflow." Category="SpringNodes.SmartCopyMon">
+<Workspace Version="0.8.2.2392" X="96.3291702768819" Y="139.537477647235" zoom="1.59077689706108" Name="NullReorder" Description="Simiar to the built-in function with the difference that it can handle null indices. Part of the SmartCopyMonitor workflow." ID="c0f559dc-e1b2-4b5e-93b2-90e8b9c33397" Category="SpringNodes.SmartCopyMon">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -13,15 +13,15 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="3e07fb36-4c7c-4b7a-bf52-8677bd84a0ea" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="def NullReplace(l1:var[],l2:var[])&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;out1 = {};&#xA;n = 0;&#xA;for (i in l2)&#xA;{&#xA;if (i == null)&#xA;{&#xA;n = n + 1;&#xA;}&#xA;else&#xA;{&#xA;out1[i] = l1[n];&#xA;n = n + 1;&#xA;}&#xA;}&#xA;return = out1;&#xA;}&#xA;};&#xA;NullReplace(list,indices);" ShouldFocus="false" />
-    <Dynamo.Nodes.Output guid="792e082e-aaff-45ae-adfc-7aa030a1947c" type="Dynamo.Nodes.Output" nickname="Output" x="676.184595315845" y="7.20560170332934" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+    <Dynamo.Nodes.CodeBlockNodeModel guid="3e07fb36-4c7c-4b7a-bf52-8677bd84a0ea" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def NullReplace(l1:var[],l2:var[])&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;out1 = {};&#xA;n = 0;&#xA;for (i in l2)&#xA;{&#xA;if (i == null)&#xA;{&#xA;n = n + 1;&#xA;}&#xA;else&#xA;{&#xA;out1[i] = l1[n];&#xA;n = n + 1;&#xA;}&#xA;}&#xA;return = out1;&#xA;}&#xA;};&#xA;NullReplace(list,indices);" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="792e082e-aaff-45ae-adfc-7aa030a1947c" type="Dynamo.Nodes.Output" nickname="Output" x="676.184595315845" y="7.20560170332934" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="list" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="426d8503-b04c-49df-8ed0-970259dde698" type="Dynamo.Nodes.Symbol" nickname="Input" x="113.561019170157" y="-7.44881789156092" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="list" />
+    <Dynamo.Nodes.Symbol guid="426d8503-b04c-49df-8ed0-970259dde698" type="Dynamo.Nodes.Symbol" nickname="Input" x="72.7004810770491" y="-6.19157056561913" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="list:var[]" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="b5e617bb-f840-4c2e-842d-c3a1cc82e721" type="Dynamo.Nodes.Symbol" nickname="Input" x="109.360233227394" y="59.3385814698731" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="indices" />
+    <Dynamo.Nodes.Symbol guid="b5e617bb-f840-4c2e-842d-c3a1cc82e721" type="Dynamo.Nodes.Symbol" nickname="Input" x="68.4996951342861" y="60.5958287958149" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="indices:var[]" />
     </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
@@ -31,4 +31,8 @@
   </Connectors>
   <Notes />
   <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
 </Workspace>

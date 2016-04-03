@@ -37,7 +37,7 @@ def tolist(obj1):
 
 elements = UnwrapElement(tolist(IN[0]))
 
-if app.VersionName == "Autodesk Revit 2014":
+if "2014" in app.VersionName :
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	sel1  = uidoc.Selection.Elements
 	for i in xrange(len(elements)): 

@@ -23,8 +23,7 @@ def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-fn = tolist(IN[0])
-fn = [str(n) for n in fn]
+fn = map(str,tolist(IN[0]) )
 result, similar, names = [], [], []
 
 fec = FilteredElementCollector(doc).OfClass(WallType)
@@ -68,6 +67,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.1.1942" X="-189.741613590206" Y="106.192331707598" zoom="2.37004060791358" Name="Pt2Str" ID="0183b651-93d4-4495-93ad-a87b119c7f91" Description="Serilize a geometry point to a string for use in Revit parameters" Category="SpringNodes.Geometry.Serialization">
+<Workspace Version="0.8.2.2392" X="-189.741613590206" Y="106.192331707598" zoom="2.37004060791358" Name="Pt2Str" Description="Serilize a geometry point to a string for use in Revit parameters" ID="0183b651-93d4-4495-93ad-a87b119c7f91" Category="SpringNodes.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -13,11 +13,11 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="c9820050-dc28-4c2e-9d2e-311688c36430" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="240.295524927631" y="19.830883843537" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="def Pt2Rvt(p1)&#xA;{&#xA;return = p1.X + &quot;,&quot; + p1.Y + &quot;,&quot; + p1.Z;&#xA;};&#xA;&#xA;Pt2Rvt(pts);" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="44316470-0a03-4627-a93f-10b0989496e9" type="Dynamo.Nodes.Symbol" nickname="Input" x="125.836473773078" y="18.0602844348414" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="point(s)" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="c9820050-dc28-4c2e-9d2e-311688c36430" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="240.295524927631" y="19.830883843537" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def Pt2Rvt(p1)&#xA;{&#xA;return = p1.X + &quot;,&quot; + p1.Y + &quot;,&quot; + p1.Z;&#xA;};&#xA;&#xA;Pt2Rvt(pts);" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="44316470-0a03-4627-a93f-10b0989496e9" type="Dynamo.Nodes.Symbol" nickname="Input" x="125.836473773078" y="18.0602844348414" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="point:var" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="7ee7501f-1fbe-48f8-b757-dd039a8c6e32" type="Dynamo.Nodes.Output" nickname="Output" x="675.194149608932" y="102.447024194573" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
+    <Dynamo.Nodes.Output guid="7ee7501f-1fbe-48f8-b757-dd039a8c6e32" type="Dynamo.Nodes.Output" nickname="Output" x="675.194149608932" y="102.447024194573" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="string" />
     </Dynamo.Nodes.Output>
   </Elements>
@@ -27,4 +27,8 @@
   </Connectors>
   <Notes />
   <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
 </Workspace>

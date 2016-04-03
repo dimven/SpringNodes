@@ -12,6 +12,14 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+82.8.1 030416
+- Lots of tiny optimizations.
+- New nodes:
+	- AreaPlan.ByLevelName will generate new area plans.
+	- Polygon.ContainmentTest+ should perform a bit faster than the built-in node at the cost of some accuracy
+	- FamilyInsance.ByFacePoints will place multiple face based families on a target face
+	- "Select Elements (ordered)" and "Select Linked Elements (ordered)" will preserve the order of selection of your elements.
+
 82.7.8 250216
 - General bug cleaning and optimization.
 
@@ -25,7 +33,6 @@ _CHANGE LOG_
 82.7.5 010216
 - Even more general maintenance.
 - FamilyInstance.ByGeometry and Form.ByGeometry now support localized versions of Revit.
-
 
 82.7.4 280116
 - More general maintenance.

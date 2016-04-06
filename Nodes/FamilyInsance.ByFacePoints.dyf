@@ -73,6 +73,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="8884.197265625" eyeY="6695.74755859375" eyeZ="18885.5390625" lookX="-5064.21484375" lookY="-2710.1181640625" lookZ="-21935.5234375" />
+    <Camera Name="background_preview" eyeX="22553.8077762633" eyeY="11621.9069488037" eyeZ="-1713.26510040416" lookX="-23668.7752049504" lookY="-1185.81792355493" lookZ="7462.73601486493" />
   </Cameras>
 </Workspace>

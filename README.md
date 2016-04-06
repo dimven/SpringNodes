@@ -12,6 +12,9 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+82.8.1 040416
+- AreaPlan.ByLevelName, "Select Linked Face" revised.
+
 82.8.1 030416
 - Lots of tiny optimizations.
 - New nodes:

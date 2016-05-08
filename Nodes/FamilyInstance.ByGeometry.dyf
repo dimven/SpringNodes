@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-91.8958241932121" Y="-14.7811286274263" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="0.8.2.2392" X="198.104175806788" Y="43.2188713725737" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -88,13 +88,13 @@ factor = UnitUtils.ConvertToInternalUnits(1,units)
 acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
 origin = XYZ(0,0,0)
 str_typ = StructuralType.NonStructural
+t1 = TransactionManager.Instance
 
 def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 	enable_mat = True
 	if mat1 == None: enable_mat = False
 	enable_subcat = True
 	if subcat1 == None: enable_subcat = False
-	t1 = TransactionManager.Instance
 	TransactionManager.ForceCloseTransaction(t1)
 	famdoc = doc.Application.NewFamilyDocument(fam_path)
 	message = None
@@ -128,7 +128,7 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 		enum2.MoveNext()
 		s1 = enum2.Current
 		famdoc.Delete(satId)
-		TransactionManager.ForceCloseTransaction(t1)
+		#TransactionManager.ForceCloseTransaction(t1)
 		System.IO.File.Delete(sat_path)
 	except:
 		message = (traceback.format_exc(),"")
@@ -138,7 +138,7 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 			save_path = "%s%s.rfa" % (temp_path, name1)
 			SaveAsOpt = SaveAsOptions()
 			SaveAsOpt.OverwriteExistingFile = True
-			t1.EnsureInTransaction(famdoc)
+			#t1.EnsureInTransaction(famdoc)
 			try: #set the category
 				fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
 				famdoc.OwnerFamily.FamilyCategory = fam_cat
@@ -168,7 +168,7 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 					except: pass
 			TransactionManager.ForceCloseTransaction(t1)
 			famdoc.SaveAs(save_path, SaveAsOpt)
-			family1 =  famdoc.LoadFamily(doc, FamOpt1())
+			family1 = famdoc.LoadFamily(doc, FamOpt1() )
 			famdoc.Close(False)
 			System.IO.File.Delete(save_path)
 			if isRvt2014: symbols = family1.Symbols.GetEnumerator()
@@ -179,7 +179,7 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 			t1.EnsureInTransaction(doc)
 			if not symbol1.IsActive: symbol1.Activate()
 			inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
-			ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz())
+			ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz() )
 			TransactionManager.ForceCloseTransaction(t1)
 			return inst1.ToDSType(False), family1.ToDSType(False)
 		except:
@@ -241,6 +241,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="5119.65848813037" eyeY="5119.65848813037" eyeZ="5119.65848813037" lookX="-5119.65848813037" lookY="-5119.65848813037" lookZ="-5119.65848813037" />
   </Cameras>
 </Workspace>

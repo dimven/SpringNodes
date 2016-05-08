@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="455.630642634989" Y="141.988575" zoom="1.33823125" Name="Element.AddVoidCut" Description="Accepts single or list inputs. If an element that can be cut and a family that can act as a void cutting entity are provided, the element will be cut. Please make sure that the geometries of the elements actually cut. Otherwise an empty cut will be created that may impede the performance of your file. Add void cuts sparcely because they affect the size of your project." ID="d59aaf9f-51ca-49bb-b43d-d6a69c77c775" Category="SpringNodes.Revit.VoidCuts">
+<Workspace Version="0.8.2.2392" X="84.7624851107734" Y="189.885549659473" zoom="0.954042924882813" Name="Element.AddVoidCut" Description="Accepts single or list inputs. If an element that can be cut and a family that can act as a void cutting entity are provided, the element will be cut. Please make sure that the geometries of the elements actually cut. Otherwise an empty cut will be created that may impede the performance of your file. Add void cuts sparcely because they affect the size of your project. Lacing takes an integer input.&#xD;&#xA;0 = Shortest (default)&#xD;&#xA;1 = Longest&#xD;&#xA;2 = Cross-product" ID="d59aaf9f-51ca-49bb-b43d-d6a69c77c775" Category="SpringNodes.Revit.VoidCuts">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,8 +8,9 @@
     <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="5aa9da07-2375-47ca-8443-ce68d00b55c3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="211.740543721423" y="-1.19560800870553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <DSIronPythonNode.PythonNode guid="5aa9da07-2375-47ca-8443-ce68d00b55c3" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="211.740543721423" y="-1.19560800870553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
       <Script>import clr
+from itertools import repeat
 
 clr.AddReference("RevitServices")
 import RevitServices
@@ -28,48 +29,66 @@ def output1(l1):
 	if len(l1) == 1: return l1[0]
 	else: return l1
 
-ToBeCut = UnwrapElement(tolist(IN[0]))
-Cuts = UnwrapElement(tolist(IN[1]))
-out1 = []
+def PadLists(lists):
+	len1 = max(map(len, lists) )
+	for i in xrange(len(lists) ):
+		len2 = len(lists[i])
+		if len2 == len1 : continue
+		elif len2 &gt; len1: lists[i] = lists[i][:len1]
+		else : lists[i].extend(repeat(lists[i][-1],len1 - len2))
+	return lists
 
 cutU = InstanceVoidCutUtils
+def cut1(host, cut, cutU = cutU):
+	result = 0
+	if cutU.CanBeCutWithVoid(host) and cutU.IsVoidInstanceCuttingElement(cut):
+		if not cutU.InstanceVoidCutExists(host,cut):
+			try: 
+				cutU.AddInstanceVoidCut(doc,host,cut)
+				result = 1
+			except: pass
+	return result
+
+def lace_2(lacing, fn1, in0, in1):
+	if lacing == 0: return [fn1(*z) for z in zip(in0, in1)]
+	if lacing == 1:
+		in0, in1 = PadLists( (in0, in1) )
+		return map(fn1, in0, in1)
+	else : return [fn1(i,j) for i in in0 for j in in1]
+
+ToBeCut = tolist(map(UnwrapElement,IN[0]) )
+Cuts = tolist(map(UnwrapElement,IN[1]) )
+lacing = IN[2]
+
 TransactionManager.Instance.EnsureInTransaction(doc)
-for i in xrange(len(ToBeCut)):
-	if cutU.CanBeCutWithVoid(ToBeCut[i]):
-		count = 0
-		for j in xrange(len(Cuts)):
-			if cutU.IsVoidInstanceCuttingElement(Cuts[j]) and \
-			not cutU.InstanceVoidCutExists(ToBeCut[i],Cuts[j]):
-				try: 
-					cutU.AddInstanceVoidCut(doc,ToBeCut[i],Cuts[j])
-					count += 1
-				except: pass
-		out1.append("%s out of %s cuts created." %(count, len(Cuts)) )
-	else:
-		out1.append("Element could not be cut")
+do_cuts = lace_2(lacing, cut1, ToBeCut, Cuts)
 TransactionManager.Instance.TransactionTaskDone()
 
-OUT = output1(out1)</Script>
+OUT = "%s cuts successfully created." % sum(do_cuts)</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="f2628d6d-e827-4ffd-bd5f-27db138bfdb5" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="element(s)ToBeCut" />
+    <Dynamo.Nodes.Symbol guid="f2628d6d-e827-4ffd-bd5f-27db138bfdb5" type="Dynamo.Nodes.Symbol" nickname="Input" x="-68.621425760727" y="-1.41487475795313" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element(s)ToBeCut:var[]..[]" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="50cfb11f-7cd0-4fe0-b0fa-500fddd9b5d0" type="Dynamo.Nodes.Symbol" nickname="Input" x="0.597804004352724" y="56.1447713166167" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="cuttingElement(s)" />
+    <Dynamo.Nodes.Symbol guid="50cfb11f-7cd0-4fe0-b0fa-500fddd9b5d0" type="Dynamo.Nodes.Symbol" nickname="Input" x="-69.8392782770911" y="56.1447713166167" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="cuttingElement(s):var[]..[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="90533403-88a8-4143-93f6-7808269964cc" type="Dynamo.Nodes.Output" nickname="Output" x="381.052539499432" y="0.597804004352753" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="result" />
     </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="ab07fb5f-ae3f-4ab8-9682-1a87d5244475" type="Dynamo.Nodes.Symbol" nickname="Input" x="38.9650960418914" y="117.844710964026" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="lacing:int = 0" />
+    </Dynamo.Nodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="5aa9da07-2375-47ca-8443-ce68d00b55c3" start_index="0" end="90533403-88a8-4143-93f6-7808269964cc" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="f2628d6d-e827-4ffd-bd5f-27db138bfdb5" start_index="0" end="5aa9da07-2375-47ca-8443-ce68d00b55c3" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="50cfb11f-7cd0-4fe0-b0fa-500fddd9b5d0" start_index="0" end="5aa9da07-2375-47ca-8443-ce68d00b55c3" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ab07fb5f-ae3f-4ab8-9682-1a87d5244475" start_index="0" end="5aa9da07-2375-47ca-8443-ce68d00b55c3" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="6.41910210016922" eyeY="14.9817120053439" eyeZ="13.5991858944869" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

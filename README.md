@@ -12,6 +12,14 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+82.8.3 080516
+- New node: PlanarFace.FixDomain fixes PointAtParameter for 3&4 corner planar revit faces.
+- ClosedCurve.Offset+(0.90) merged into main node(alternative solution)
+- Element.AddVoidCut now accepts a new integer based lacing input
+- List.DropFirstLast also lists the removed items
+
+82.8.2 040416
+- tiny bugfix
 82.8.1 040416
 - AreaPlan.ByLevelName, "Select Linked Face" revised.
 

@@ -10,8 +10,6 @@
 # http://aecuandme.wordpress.com/
 
 import clr
-
-import clr
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 

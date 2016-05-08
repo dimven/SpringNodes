@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-490.558489285309" Y="235.061987733215" zoom="0.761539191015086" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+<Workspace Version="0.8.2.2392" X="-867.438968278231" Y="281.5730910999" zoom="0.889217394778329" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,7 +8,7 @@
     <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1071.60327485075" y="-83.7414629584852" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="2;" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1069.70508305666" y="12.1172226431797" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="2;" ShouldFocus="false" />
     <Dynamo.Nodes.Function guid="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" type="Dynamo.Nodes.Function" nickname="FamilyInstance.ByGeometry" x="803.478675255875" y="-142.066064224885" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False">
       <PortInfo index="3" default="True" />
       <PortInfo index="4" default="True" />
@@ -77,6 +77,7 @@
       <Inputs>
         <Input value="element(s)ToBeCut" />
         <Input value="cuttingElement(s)" />
+        <Input value="lacing" />
       </Inputs>
       <Outputs>
         <Output value="result" />
@@ -150,6 +151,7 @@
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" start_index="0" end="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="d0af74ba-bc3c-4ee5-a579-ef750f561ef0" start_index="0" end="ca748929-67ed-4cd4-bb35-13b36eba1f0a" end_index="2" portType="0" />
     <Dynamo.Models.ConnectorModel start="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" start_index="0" end="28f278cf-bb99-4b7b-a7a6-bd3c3e4153b6" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="eb1666a9-021b-460b-bb7b-b33b2cffa9da" start_index="0" end="151d84e4-23b7-479a-aeb4-b4aa0c3a4cf3" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="eb1666a9-021b-460b-bb7b-b33b2cffa9da" start_index="0" end="9a001baf-fed0-433f-b199-d1f0364405a4" end_index="0" portType="0" />
@@ -199,7 +201,7 @@
       <Models ModelGuid="90cef895-50f9-4f68-b046-7de68265d9ed" />
       <Models ModelGuid="67b97f65-2b28-4109-884d-9b4e42560932" />
     </Dynamo.Models.AnnotationModel>
-    <Dynamo.Models.AnnotationModel guid="ef89a56c-77e9-4e02-8470-b5bace330c75" annotationText="cuts all the instances with all the voids" left="1473.86868603865" top="-364.443836368417" width="379.67849985127" height="263.997235076322" fontSize="24" InitialTop="-296.843836368417" InitialHeight="226.397235076321" TextblockHeight="57.6" backgrouund="#FFC1D676">
+    <Dynamo.Models.AnnotationModel guid="ef89a56c-77e9-4e02-8470-b5bace330c75" annotationText="cuts all the instances with all the voids" left="1473.86868603865" top="-364.443836368417" width="379.67849985127" height="289.597235076322" fontSize="24" InitialTop="-296.843836368417" InitialHeight="226.397235076321" TextblockHeight="57.6" backgrouund="#FFC1D676">
       <Models ModelGuid="f21c1477-297e-4efb-92f8-f649413a9a3a" />
       <Models ModelGuid="ca748929-67ed-4cd4-bb35-13b36eba1f0a" />
     </Dynamo.Models.AnnotationModel>

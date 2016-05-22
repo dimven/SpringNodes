@@ -8,7 +8,7 @@
     <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="07c44ee4-0bfc-458b-98f6-efbc66bd25a6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <DSIronPythonNode.PythonNode guid="07c44ee4-0bfc-458b-98f6-efbc66bd25a6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.199002696823" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -36,7 +36,7 @@ def tolist(obj1):
 	else: return [obj1]
 
 def output1(l1):
-	if len(l1) == 1: return out1[0]
+	if len(l1) == 1: return l1[0]
 	else: return l1
 
 elements = UnwrapElement(tolist(IN[0]))
@@ -87,6 +87,6 @@ TransactionManager.Instance.TransactionTaskDone()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="45.174999841575" eyeY="44.3223684674554" eyeZ="-54.4973683090304" lookX="-10" lookY="-10" lookZ="-10" />
   </Cameras>
 </Workspace>

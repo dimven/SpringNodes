@@ -12,6 +12,14 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+82.9.1 220516
+- New nodes:
+	- AdaptiveFamily.ByFacetedGeometry will genearate a new adaptive component family type from any solid or polysurface consisting of planar faces.
+	- List.MergeByBoolMask will merge two lists by a third of true and false values.
+	- List.Subpairs is similar in principle to the built-in Sublists node.
+	- PolyCurve.Chamfer creates chamfered edges with the specified distance. Neeeds to be tweaked for 1.0
+- Geometry.SplitRecursively(Dir) is an alternative of the node with the same name. It has an additional point.geometry input that defines the general direction of the split. The old node does not function as expexted when lines are used as the split tools.
+
 82.8.3 080516
 - New node: PlanarFace.FixDomain fixes PointAtParameter for 3&4 corner planar revit faces.
 - ClosedCurve.Offset+(0.90) merged into main node(alternative solution)

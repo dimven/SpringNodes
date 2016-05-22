@@ -1,0 +1,29 @@
+<Workspace Version="0.8.2.2392" X="104.66888428283" Y="109.099699445726" zoom="1.47618023926361" Name="PolyCurve.Chamfer" Description="Symmetrically chamfers the corners of the polycurve by the designated distance" ID="3cc2d22a-8f08-4162-b98d-e202dcacd24d" Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle.b" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="fcc3f2ed-6b2c-4f8b-8492-4208fc462c98" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def shorten1(c,d1){&#xA;d2 = c.Length - d1;&#xA;return = c.PointAtDistance({d1,d2});&#xA;};&#xA;def chamfer1(pc,d1){&#xA;return = PolyCurve.ByPoints(Flatten(&#xA;shorten1(pc.Curves(),d1)), pc.IsClosed);&#xA;};&#xA;chamfer1(c1,d1);" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="23403af3-531d-4315-939b-b001d0986c51" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.7401533553998" y="-2.43110223644511" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="polycurve:var" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="ed995fb7-4e35-4898-9198-032858d16d98" type="Dynamo.Nodes.Symbol" nickname="Input" x="86.0610191701571" y="62.4803194879759" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="distance:var" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="7f5bb2e6-5707-447c-aeb1-3123f4491539" type="Dynamo.Nodes.Output" nickname="Output" x="672.935164425503" y="2.0322721576984" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="polycurve" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="fcc3f2ed-6b2c-4f8b-8492-4208fc462c98" start_index="0" end="7f5bb2e6-5707-447c-aeb1-3123f4491539" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="23403af3-531d-4315-939b-b001d0986c51" start_index="0" end="fcc3f2ed-6b2c-4f8b-8492-4208fc462c98" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ed995fb7-4e35-4898-9198-032858d16d98" start_index="0" end="fcc3f2ed-6b2c-4f8b-8492-4208fc462c98" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="-8821.67572742485" eyeY="7219.56518870556" eyeZ="7414.69445716558" lookX="1456.18730869959" lookY="-7244.19448953924" lookZ="-7157.38928891144" />
+  </Cameras>
+</Workspace>

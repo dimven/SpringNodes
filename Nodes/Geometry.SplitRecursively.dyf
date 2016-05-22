@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="278.25001638326" Y="28.6584696371582" zoom="1.24844365397223" Name="Geometry.SplitRecursively" Description="Splits a surface or a solid recursively, using the resulting reduced geometry for every next split." ID="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="278.25001638326" Y="28.6584696371582" zoom="1.24844365397223" Name="Geometry.SplitRecursively" Description="Splits a surface or a solid recursively, using the resulting reduced geometry for every consecutive split." ID="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" Category="SpringNodes.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
@@ -18,8 +18,8 @@
     <Dynamo.Nodes.Symbol guid="991f9142-1c80-418c-bb6c-df015f10736c" type="Dynamo.Nodes.Symbol" nickname="Input" x="87.9999999999999" y="492.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="tools:var[]" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="25979cf5-14ac-4dcc-b7a8-0be82749e50b" type="Dynamo.Nodes.Output" nickname="Output" x="586.6" y="445.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="geometry" />
+    <Dynamo.Nodes.Output guid="25979cf5-14ac-4dcc-b7a8-0be82749e50b" type="Dynamo.Nodes.Output" nickname="Output" x="576.187035058701" y="442.396010787293" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="geometry[]" />
     </Dynamo.Nodes.Output>
   </Elements>
   <Connectors>
@@ -31,6 +31,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-0.709565409066689" eyeY="17.4087472919208" eyeZ="12.2458974780632" lookX="-1.1142107205665" lookY="-16.9035340312702" lookZ="-10.6010076465203" />
   </Cameras>
 </Workspace>

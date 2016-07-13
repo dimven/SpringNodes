@@ -1,7 +1,7 @@
-<Workspace Version="0.8.2.2392" X="301.392" Y="186.8" zoom="1.1575" Name="Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="SpringNodes.Core">
+<Workspace Version="1.0.0.1180" X="250.090970774073" Y="121.092555514821" zoom="2.05668026833428" Name="Springs.Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="Springs.Core.List.Create">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    <PythonNodeModels.PythonNode guid="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="175.122051117491" y="39.3838562304109" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -22,34 +22,31 @@ elements = tolist(IN[1])
 searchVals = tolist(IN[2])
 dict1 = dict(zip(keys,elements))
 for i in xrange(len(searchVals)):
-	try: out1.append(dict1[searchVals[i]])
-	except: out1.append([])
+	if searchVals[i] in dict1: out1.append(dict1[searchVals[i]])
+	else: out1.append([])
 
 OUT = output1(out1)</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="3cad9a23-eee6-4193-a3e7-479546624fa2" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="keys" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="b4e363dd-3a1a-4392-82ac-37b6fa6927be" type="Dynamo.Nodes.Symbol" nickname="Input" x="1.38228941684656" y="65.6803455723542" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="values" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="c0b7c65f-fd31-4e98-ae32-ec917af6a23f" type="Dynamo.Nodes.Output" nickname="Output" x="400.728725701944" y="-1.38228941684662" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3cad9a23-eee6-4193-a3e7-479546624fa2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="17.9901565496938" y="6.32086581475731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="keys:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b4e363dd-3a1a-4392-82ac-37b6fa6927be" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="1.38228941684656" y="65.6803455723542" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="values:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="c0b7c65f-fd31-4e98-ae32-ec917af6a23f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="320.988572346544" y="40.4326690500094" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="result" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="4a063300-b375-4993-9fba-b78e3e57ca94" type="Dynamo.Nodes.Symbol" nickname="Input" x="-0.187473002159862" y="131.295896328294" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="search keys" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4a063300-b375-4993-9fba-b78e3e57ca94" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-30.8193611813684" y="125.947471408115" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="searchKeys:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" start_index="0" end="c0b7c65f-fd31-4e98-ae32-ec917af6a23f" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3cad9a23-eee6-4193-a3e7-479546624fa2" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="b4e363dd-3a1a-4392-82ac-37b6fa6927be" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="4a063300-b375-4993-9fba-b78e3e57ca94" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" start_index="0" end="c0b7c65f-fd31-4e98-ae32-ec917af6a23f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3cad9a23-eee6-4193-a3e7-479546624fa2" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b4e363dd-3a1a-4392-82ac-37b6fa6927be" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4a063300-b375-4993-9fba-b78e3e57ca94" start_index="0" end="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
-  </Cameras>
 </Workspace>

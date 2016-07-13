@@ -1,34 +1,31 @@
-<Workspace Version="0.8.2.2392" X="10.872635059807" Y="66.5634539400374" zoom="0.803321593462598" Name="List.Randomise&amp;Divide" Description="Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further." ID="ad795fc1-a530-482f-94a0-95882af53b62" Category="SpringNodes.Lists">
+<Workspace Version="1.0.0.1180" X="10.872635059807" Y="66.5634539400374" zoom="0.803321593462598" Name="Springs.List.Randomise&amp;Divide" Description="Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further." ID="ad795fc1-a530-482f-94a0-95882af53b62" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="c4084f70-f805-4195-8ca9-8096da738fc6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="252.259149112666" y="-62.1865001114098" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def RandSplit(l1:var[],ratio:var[],seed)&#xA;{&#xA;	return = [Imperative]&#xA;	{&#xA;	len = Count(l1);&#xA;	l2 = List.Shuffle(l1);&#xA;	out1 = {};&#xA;	start = 0;&#xA;	end = -1;&#xA;	i = 0;&#xA;	if (Math.Sum(ratio) &lt; 1)&#xA;	{&#xA;		ratio = List.AddItemToEnd(&#xA;		1 - Math.Sum(ratio),ratio);&#xA;	}&#xA;	for (r in ratio)&#xA;	{&#xA;		end = end + Math.Ceiling(r*len);&#xA;		out1[i] = l2[start..end];&#xA;		i = i + 1;&#xA;		start = end + 1;&#xA;	}&#xA;	return = List.Clean(out1,false);&#xA;	}&#xA;};" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="9d163831-b554-4544-b234-b4f41f7f08cb" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="268.349495022501" y="425.288033038218" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="RandSplit(l1,ratios,seed);" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="116d2008-e229-4150-8676-8d3bfa1a0e90" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.5786280492666" y="389.052417721887" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c4084f70-f805-4195-8ca9-8096da738fc6" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="252.259149112666" y="-62.1865001114098" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def RandSplit(l1:var[],ratio:var[],seed)&#xA;{&#xA;	return = [Imperative]&#xA;	{&#xA;	len = Count(l1);&#xA;	l2 = List.Shuffle(l1);&#xA;	out1 = {};&#xA;	start = 0;&#xA;	end = -1;&#xA;	i = 0;&#xA;	if (Math.Sum(ratio) &lt; 1)&#xA;	{&#xA;		ratio = List.AddItemToEnd(&#xA;		1 - Math.Sum(ratio),ratio);&#xA;	}&#xA;	for (r in ratio)&#xA;	{&#xA;		end = end + Math.Ceiling(r*len);&#xA;		out1[i] = l2[start..end];&#xA;		i = i + 1;&#xA;		start = end + 1;&#xA;	}&#xA;	return = List.Clean(out1,false);&#xA;	}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="9d163831-b554-4544-b234-b4f41f7f08cb" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="268.349495022501" y="425.288033038218" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="RandSplit(l1,ratios,seed);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="116d2008-e229-4150-8676-8d3bfa1a0e90" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="79.5786280492666" y="389.052417721887" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list:var[]" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5d07b00f-f10b-4df4-b21c-ccb2679c1e3a" type="Dynamo.Nodes.Symbol" nickname="Input" x="98.5697259721153" y="445.996037899929" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5d07b00f-f10b-4df4-b21c-ccb2679c1e3a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="98.5697259721153" y="445.996037899929" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="ratios" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="15ea6856-6030-4ed8-a29c-5416c8cbb50e" type="Dynamo.Nodes.Symbol" nickname="Input" x="65.5821888801271" y="502.80197261803" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="15ea6856-6030-4ed8-a29c-5416c8cbb50e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="65.5821888801271" y="502.80197261803" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="seed:double = 1" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="e09cece1-b8ca-443a-a611-31063a0ce94e" type="Dynamo.Nodes.Output" nickname="Output" x="595.766377507347" y="423.59045862492" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="e09cece1-b8ca-443a-a611-31063a0ce94e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="595.766377507347" y="423.59045862492" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="lists" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="2c5a4236-dcbf-4560-b8d4-75d6f8566195" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="36" y="74" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="//add rest of ratios" ShouldFocus="false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="2c5a4236-dcbf-4560-b8d4-75d6f8566195" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="36" y="74" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//add rest of ratios" ShouldFocus="false" />
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="9d163831-b554-4544-b234-b4f41f7f08cb" start_index="0" end="e09cece1-b8ca-443a-a611-31063a0ce94e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="116d2008-e229-4150-8676-8d3bfa1a0e90" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="5d07b00f-f10b-4df4-b21c-ccb2679c1e3a" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="15ea6856-6030-4ed8-a29c-5416c8cbb50e" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9d163831-b554-4544-b234-b4f41f7f08cb" start_index="0" end="e09cece1-b8ca-443a-a611-31063a0ce94e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="116d2008-e229-4150-8676-8d3bfa1a0e90" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5d07b00f-f10b-4df4-b21c-ccb2679c1e3a" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="15ea6856-6030-4ed8-a29c-5416c8cbb50e" start_index="0" end="9d163831-b554-4544-b234-b4f41f7f08cb" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="22.2668933868408" eyeY="43.5514678955078" eyeZ="14.5720806121826" lookX="-49.6114921569824" lookY="-0.0627991035580635" lookZ="-25.7161540985107" />
-  </Cameras>
 </Workspace>

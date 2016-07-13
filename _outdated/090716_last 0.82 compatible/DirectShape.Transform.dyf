@@ -1,0 +1,92 @@
+<Workspace Version="0.8.2.2392" X="74.8077180133533" Y="145.867717988019" zoom="1.130842140625" Name="DirectShape.Transform" Description="Transforms the typed DirectShape element from the identity coordinate system to the input coordinate system(s), in a manner similar to Dynamo's Geometry.Transform node." ID="12780047-c2ae-4b94-bb43-6408c7dbd8ef" Category="SpringNodes.Revit.DirectShape">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane.XY" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="187.6" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return out1[0]
+	else: return l1
+
+units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+factor = 1 / UnitUtils.ConvertToInternalUnits(1,units)
+
+def cs2Trans(cs, scale = factor):
+	tf1 = Transform(Transform.Identity)
+	tf1.Origin = cs.Origin.ToXyz(True)
+	tf1.Basis[0] = cs.XAxis.ToXyz(True)
+	tf1.Basis[1] = cs.YAxis.ToXyz(True)
+	tf1.Basis[2] = cs.ZAxis.ToXyz(True)
+	return tf1.ScaleBasis(scale)
+
+dsTyped = UnwrapElement(IN[0])
+cs1 = tolist(IN[1])
+
+transforms = map(cs2Trans, cs1)
+cat = dsTyped.Category
+TypeId = dsTyped.GetTypeId()
+Lib_TypeId = TypeId.ToString()
+dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
+if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)
+
+def TransformDS(transf):
+	try:
+		ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, "Dynamo","spring nodes")
+		ds1.SetTypeId(TypeId)
+		return ds1.ToDSType(False)
+	except: return None
+	
+TransactionManager.Instance.EnsureInTransaction(doc)
+OUT = output1(map(TransformDS, transforms))
+TransactionManager.Instance.TransactionTaskDone()</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="b3522dbf-d73c-43aa-ba7a-e47a5cc15bfe" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="direct shape " />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="5a074050-f54e-47c0-9942-5d7ed48c3283" type="Dynamo.Nodes.Symbol" nickname="Input" x="-4.91236991701585" y="62.1851252420469" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="CoordSystem(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="6e27f05e-f107-40dc-97aa-1feeca987a8f" type="Dynamo.Nodes.Output" nickname="Output" x="346.6" y="0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="direct shape(s)" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" start_index="0" end="6e27f05e-f107-40dc-97aa-1feeca987a8f" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b3522dbf-d73c-43aa-ba7a-e47a5cc15bfe" start_index="0" end="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5a074050-f54e-47c0-9942-5d7ed48c3283" start_index="0" end="8e8f02c4-80f0-4d4b-a41d-7794c28705d4" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="1820.01196289063" eyeY="1598.45764160156" eyeZ="712.223449707031" lookX="-1699.88635253906" lookY="-2716.51391601563" lookZ="-260.119110107422" />
+  </Cameras>
+</Workspace>

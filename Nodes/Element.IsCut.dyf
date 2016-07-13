@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-266.831425608785" Y="164.341564342793" zoom="2.33041206914125" Name="Element.IsCut" Description="Tests if the element is being cut by any void instances. If any cuts exist all cutting elements will be provided." ID="a530754f-4351-4bdd-81aa-d47d7555fef1" Category="SpringNodes.Revit.VoidCuts">
+<Workspace Version="1.1.1.1841" X="-513.69990427469" Y="95.9399472973911" zoom="1.63719728218044" Name="Springs.Element.IsCut" Description="Tests if the element is being cut by any void instances. If any cuts exist all cutting elements will be provided." ID="a530754f-4351-4bdd-81aa-d47d7555fef1" Category="Springs.Revit.Element">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,7 +8,7 @@
     <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <PythonNodeModels.PythonNode guid="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
       <Script>import clr
 
 clr.AddReference("RevitServices")
@@ -55,28 +55,28 @@ for i in xrange(len(elements)):
 		cutters.append([])		
 
 OUT = output1(out1), cutters</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="e1633339-921a-4d6b-93ce-c6cb9d488141" type="Dynamo.Nodes.Symbol" nickname="Input" x="99.2" y="2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="element(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="eff4c465-83e3-4fa5-a836-26007c97b05f" type="Dynamo.Nodes.Output" nickname="Output" x="551.310468348329" y="-8.28656884476153" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e1633339-921a-4d6b-93ce-c6cb9d488141" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="99.2" y="2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="element:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="eff4c465-83e3-4fa5-a836-26007c97b05f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="551.310468348329" y="-8.28656884476153" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="bool" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="409d4548-4854-4381-8e91-69fce2b7cbd8" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="390.742296820078" y="0.362175540042585" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
-    <Dynamo.Nodes.Output guid="067394bc-ce51-4677-a883-1297ef52f059" type="Dynamo.Nodes.Output" nickname="Output" x="552.628280733945" y="51.0552676588813" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="cuts" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="409d4548-4854-4381-8e91-69fce2b7cbd8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="390.742296820078" y="0.362175540042585" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="067394bc-ce51-4677-a883-1297ef52f059" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="552.628280733945" y="51.0552676588813" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="cutter" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" start_index="0" end="409d4548-4854-4381-8e91-69fce2b7cbd8" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="e1633339-921a-4d6b-93ce-c6cb9d488141" start_index="0" end="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="409d4548-4854-4381-8e91-69fce2b7cbd8" start_index="0" end="eff4c465-83e3-4fa5-a836-26007c97b05f" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="409d4548-4854-4381-8e91-69fce2b7cbd8" start_index="1" end="067394bc-ce51-4677-a883-1297ef52f059" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" start_index="0" end="409d4548-4854-4381-8e91-69fce2b7cbd8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e1633339-921a-4d6b-93ce-c6cb9d488141" start_index="0" end="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="409d4548-4854-4381-8e91-69fce2b7cbd8" start_index="0" end="eff4c465-83e3-4fa5-a836-26007c97b05f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="409d4548-4854-4381-8e91-69fce2b7cbd8" start_index="1" end="067394bc-ce51-4677-a883-1297ef52f059" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

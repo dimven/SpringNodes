@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="479.417013061745" Y="85.4933367028954" zoom="1.0669527078898" Name="Line.StraightenXY" Description="Checks a line's end points for irregularities and corrects them if they are at or below the specified margin. The default margin is 1/5000 of the curve length, which is conservative." ID="626a5222-777d-42dd-aab3-6b1ec1799aa0" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="479.417013061745" Y="85.4933367028954" zoom="1.0669527078898" Name="Springs.Line.StraightenXY" Description="Checks a line's end points for irregularities and corrects them if they are at or below the specified margin. The default margin is 1/5000 of the curve length, which is conservative." ID="626a5222-777d-42dd-aab3-6b1ec1799aa0" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>

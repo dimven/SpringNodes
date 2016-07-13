@@ -1,0 +1,54 @@
+<Workspace Version="0.8.2.2392" X="-472.822736384995" Y="167.628087783219" zoom="1.96524455617686" Name="Springs.SelectLinkedFace" Description="Select the linked instance first, followed by the face. If your selection fails, just press escape.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="6e98ce37-6cea-4a42-8e2d-7737e6c918ca" Category="Springs.Revit.Selection">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitAPIUI")
+from  Autodesk.Revit.UI import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+sel1 = uidoc.Selection
+ot1 = Selection.ObjectType.Element
+ot2 = Selection.ObjectType.PointOnElement
+li_ref = sel1.PickObject(ot1, "Select a link instance first.")
+face_ref = sel1.PickObject(ot2, "Pick a face.")
+Link1 = doc.GetElement(li_ref.ElementId)
+LinkDoc = Link1.GetLinkDocument()
+element = LinkDoc.GetElement(face_ref.LinkedElementId)
+face_ref2 = face_ref.CreateReferenceInLink()
+sf1 = element.GetGeometryObjectFromReference(face_ref2).ToProtoType(True)[0]
+sf1.Tags.AddTag("RevitFaceReference", face_ref)
+OUT = sf1</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="2e81ce6f-7bb8-41f6-806e-3eac7cd56ffe" type="Dynamo.Nodes.Output" nickname="Output" x="400.692475892588" y="-0.46929939489466" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="surface" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="9cb024b8-6ae8-4fd3-8238-48c39c3fc9fe" type="Dynamo.Nodes.Symbol" nickname="Input" x="28.3999999999999" y="0.84928152849362" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" start_index="0" end="2e81ce6f-7bb8-41f6-806e-3eac7cd56ffe" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="9cb024b8-6ae8-4fd3-8238-48c39c3fc9fe" start_index="0" end="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="22553.8077762633" eyeY="11621.9069488037" eyeZ="-1713.26510040416" lookX="-23668.7752049504" lookY="-1185.81792355493" lookZ="7462.73601486493" />
+  </Cameras>
+</Workspace>

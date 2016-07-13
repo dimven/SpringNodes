@@ -1,27 +1,24 @@
-<Workspace Version="0.8.2.2392" X="65.152830926026" Y="185.01496875" zoom="1.33823125" Name="List.EveryOther" Description="Useful for when you want to combine an item on the list with every other item on the list. For example in list {1,2,3} , &quot;2&quot; will be paired up only with &quot;1&quot; and &quot;3&quot; and will not be paired up with itself." ID="8b57c43c-4e2e-47af-876a-bd8f1c12ce46" Category="SpringNodes.Lists">
+<Workspace Version="1.0.0.1180" X="65.152830926026" Y="185.01496875" zoom="1.33823125" Name="Springs.List.EveryOther" Description="Useful for when you want to combine an item on the list with every other item on the list. For example in list {1,2,3} , &quot;2&quot; will be paired up only with &quot;1&quot; and &quot;3&quot; and will not be paired up with itself." ID="8b57c43c-4e2e-47af-876a-bd8f1c12ce46" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="cfcd0d95-a227-4e8d-8bd5-0973861ea206" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="438.693988386747" y="17.8524274877461" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="__Map(fn1,GetKeys(l1));" ShouldFocus="false" />
-    <Dynamo.Nodes.DSFunction guid="3cb015ce-733f-4fcf-903e-13788ce4df4c" type="Dynamo.Nodes.DSFunction" nickname="List.RemoveItemAtIndex" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.List.RemoveItemAtIndex@var[]..[],int[]" />
-    <Dynamo.Nodes.Symbol guid="08f2e14c-ddae-47a6-855b-ef2aa385d614" type="Dynamo.Nodes.Symbol" nickname="Input" x="98.6376607182055" y="23.1649051686695" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="cfcd0d95-a227-4e8d-8bd5-0973861ea206" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="438.693988386747" y="17.8524274877461" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="__Map(fn1,GetKeys(l1));" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="3cb015ce-733f-4fcf-903e-13788ce4df4c" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.RemoveItemAtIndex" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.RemoveItemAtIndex@var[]..[],int[]" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="08f2e14c-ddae-47a6-855b-ef2aa385d614" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="98.6376607182055" y="23.1649051686695" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list:var[]" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" type="Dynamo.Nodes.Output" nickname="Output" x="726.364178049408" y="12.7033350924962" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="726.364178049408" y="12.7033350924962" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="lists" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="cfcd0d95-a227-4e8d-8bd5-0973861ea206" start_index="0" end="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3cb015ce-733f-4fcf-903e-13788ce4df4c" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="3cb015ce-733f-4fcf-903e-13788ce4df4c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="cfcd0d95-a227-4e8d-8bd5-0973861ea206" start_index="0" end="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3cb015ce-733f-4fcf-903e-13788ce4df4c" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="3cb015ce-733f-4fcf-903e-13788ce4df4c" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
-  </Cameras>
 </Workspace>

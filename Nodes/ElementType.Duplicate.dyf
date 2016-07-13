@@ -1,0 +1,76 @@
+<Workspace Version="1.0.0.1180" X="-57.6389127537797" Y="117.187811576674" zoom="1.33823125" Name="Springs.ElementType.Duplicate" Description="Create duplicate element types. If the type exists, it will be appended instead." ID="2f100688-f6ca-4fa0-af85-e130ec1b400f" Category="Springs.Revit.ElementType">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="c9743def-3c15-46b7-bc2b-60d4482b9615" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <Script># Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+# based on Clockwork's node by the same name
+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference('RevitServices')
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+famtypes = tolist(IN[0])
+newnames = tolist(IN[1])
+elementlist, fail = [],[]
+func_enum = {'Revit.Elements.Material' : Revit.Elements.Material.ByName,
+			 'Revit.Elements.WallType' : Revit.Elements.WallType.ByName,
+			 'Revit.Elements.FloorType' : Revit.Elements.FloorType.ByName,
+			 'Revit.Elements.FamilyType' : Revit.Elements.FamilyType.ByName}
+
+
+ft_len = len(famtypes) == 1
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in xrange(len(newnames) ):
+	j = 0 if ft_len else i
+	try:
+		elementlist.append(UnwrapElement(famtypes[j]).Duplicate(str(newnames[i]) ) )
+	except:
+		try:
+			t1 = famtypes[j].GetType().ToString()
+			if t1 in func_enum:
+				elementlist.append(func_enum[t1](str(newnames[i]) ) )
+			else:
+				elementlist.append(fail)
+		except:
+			elementlist.append(fail)
+TransactionManager.Instance.TransactionTaskDone()
+OUT = elementlist</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="78e030e9-f9f7-468a-8505-91a9d72b15f9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="elementType:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="62c2af44-d4c3-4919-ab81-a6cb943f83eb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="405.553719695307" y="0.597804004352781" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="ElementType" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="343a663e-2e01-4c88-ad19-bdaf19af420a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="21.8456227202885" y="75.5957724048067" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="newName:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="c9743def-3c15-46b7-bc2b-60d4482b9615" start_index="0" end="62c2af44-d4c3-4919-ab81-a6cb943f83eb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="78e030e9-f9f7-468a-8505-91a9d72b15f9" start_index="0" end="c9743def-3c15-46b7-bc2b-60d4482b9615" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="343a663e-2e01-4c88-ad19-bdaf19af420a" start_index="0" end="c9743def-3c15-46b7-bc2b-60d4482b9615" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

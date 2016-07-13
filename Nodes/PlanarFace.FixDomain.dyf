@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-119.700353701292" Y="153.512847484657" zoom="1.74331992875497" Name="PlanarFace.FixDomain" Description="Corrects the surface domain of a 3 or 4 point planar face extracted from Revit." ID="6bf23363-d854-436b-be05-81d4dc473acf" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="-119.700353701292" Y="153.512847484657" zoom="1.74331992875497" Name="Springs.PlanarFace.FixDomain" Description="Corrects the surface domain of a 3 or 4 point planar face extracted from Revit." ID="6bf23363-d854-436b-be05-81d4dc473acf" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Surface.ByLoftc[{0, 2}]" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />

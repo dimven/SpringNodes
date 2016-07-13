@@ -1,5 +1,7 @@
 ![Image](spring nodes logo.jpg)
 
+a.k.a. Springs for Dynamo, Dynamo Springs
+
 Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
    Its main focus is to improve Dynamo's interaction with Revit. The wider goal is to explore any and all means that can help accelerate BIM focused work-flows. Many of the nodes use either IronPython or DesignScript and can be a good starting point for learning the specific syntax and finer points of both.
@@ -11,6 +13,20 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
    Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always improve upon the original content either by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's goals and direction.
 
 _CHANGE LOG_
+
+100.0.0 130716
+- A lot of nodes provided duplicate functionality or needed refactoring and were removed / replaced. You can find a full list of the changes [here](https://github.com/dimven/SpringNodes/wiki/Depreciated-Nodes-for-the-1.0.0-release)
+- The library organisation has been revised. Everything is now under the "Springs" tab. All nodes have a "Springs" prefix so that users don't have to wonder where that node comes from.
+- As Dynamo 0.82 was the last version that supported Revit 2014, Spring Nodes no longer targets Revit 2014.
+- New nodes:
+	- Geometry.Extents fetches the W/L/H of a geometry object.
+	- Mesh.ToToolkitMesh converts a dynamo mesh (like the one you'd get from a toposurface) to a mesh toolkit mesh
+- Refactored nodes:
+	- Geometry.GroupByDistance acts similarly to archi-lab's "Group Curves" node and the "Lines.GroupAndFixCorners" but works for all types of geometry
+	- LineLoop.Merge replaces the "Lines.GroupAndFixCorners" after you've first grouped the lines with the "Geometry.GroupByDistance" node.
+	- Mesh.ToPolySurface is now multithreaded and replaces the "Topography.ToPolySurface" node. This way you can also process meshes obtained through other means and still handle toposurfaces by first extracting their mesh with the built-in "Topography.Mesh" node.
+	- ElementType.Duplicate is similar to Clockwork's node with the same name but can handle duplicate names. It will be merged with clockwork's node after Clockwork 1.0
+
 
 82.9.1 220516
 - New nodes:

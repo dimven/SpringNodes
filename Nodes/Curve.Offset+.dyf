@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="394.039095701817" Y="277.114382970452" zoom="1.07925372895183" Name="Curve.Offset+" Description="Offsets a curve towards the specified point" ID="fbfba0b2-62c4-4639-9f83-4af9665a373d" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="394.039095701817" Y="277.114382970452" zoom="1.07925372895183" Name="Springs.Curve.Offset+" Description="Offsets a curve towards the specified point" ID="fbfba0b2-62c4-4639-9f83-4af9665a373d" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />

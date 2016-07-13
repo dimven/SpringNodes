@@ -1,31 +1,34 @@
-<Workspace Version="0.8.2.2392" X="278.25001638326" Y="28.6584696371582" zoom="1.24844365397223" Name="Geometry.SplitRecursively" Description="Splits a surface or a solid recursively, using the resulting reduced geometry for every consecutive split." ID="6fd49f7a-83bb-4da0-b9bb-70ea42e47f65" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="-17.3953075050831" Y="63.8107273397094" zoom="0.954042924882813" Name="Springs.Geometry.SplitRecursively" Description="Splits a surface or a solid recursively, using the resulting reduced geometry for every consecutive split. Select a point or another geometry to control the direction of the split." ID="aa362d48-4b0d-412d-abcf-0e3ac67b7e2b" Category="Springs.Geometry">
   <NamespaceResolutionMap>
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="NurbsSurface" resolvedName="Autodesk.DesignScript.Geometry.NurbsSurface" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Geometry" resolvedName="Autodesk.DesignScript.Geometry.Geometry" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="14a135d9-aa7f-4093-9f31-b63f0c26d04f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="247.6" y="30.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def splitface1(face, planes:var[])&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;out1 = {};&#xA;for (p in planes)&#xA;{&#xA;s1 = face.Split(p);&#xA;if(Count(s1) &lt; 2)&#xA;{&#xA;face = s1[0];&#xA;continue;&#xA;}&#xA;face = s1[0];&#xA;s2 = s1[1];&#xA;out1 = List.AddItemToEnd(s2,out1);&#xA;}&#xA;out1 = List.AddItemToEnd(face,out1);&#xA;return = List.Clean(out1, false);&#xA;}&#xA;};" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="7bca18cf-a40b-47ba-86cd-038af80a2cf8" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="252.577185308588" y="445.302550563685" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="splitface1(face, planes);" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="8a9bd609-496a-4caa-aed5-7323ef5db86a" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.2339083080127" y="429.600997303177" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.CodeBlockNodeModel guid="441ab852-7cf4-447a-95ba-59dfdcf2e787" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="282.993396979989" y="529.435082896769" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="splitface1(face, tools,dir1);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="a4167781-0e8a-41cd-a0e6-6204dcb9e7bb" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="273.059759080235" y="133.117700144991" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def splitface1(face, planes:var[],dir1){&#xA;return = [Imperative]{&#xA;	out1 = {};&#xA;	for (p in planes){&#xA;		s1 = face.Split(p);&#xA;		if(Count(s1) &lt; 2){&#xA;			face = s1[0];&#xA;			continue;&#xA;		}&#xA;		ind1 = SortIndexByValue(&#xA;			dir1.DistanceTo(s1) );&#xA;		s1 = Reorder(s1,ind1);&#xA;		face = s1[0];&#xA;		s2 = s1[1];&#xA;		out1 = List.AddItemToEnd(s2,out1);&#xA;	}&#xA;	out1 = List.AddItemToEnd(face,out1);&#xA;	return = List.Clean(out1, false);&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="fc0129da-c04a-4d62-8a82-d3e809f6e6dd" type="Dynamo.Nodes.Symbol" nickname="Input" x="88.8243203482209" y="480.165110663796" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="geometry:var" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="991f9142-1c80-418c-bb6c-df015f10736c" type="Dynamo.Nodes.Symbol" nickname="Input" x="87.9999999999999" y="492.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="d8882ad4-1ccd-4eb6-960f-f1c3bf132f0f" type="Dynamo.Nodes.Symbol" nickname="Input" x="97.7913804135122" y="544.230785038087" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="tools:var[]" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="25979cf5-14ac-4dcc-b7a8-0be82749e50b" type="Dynamo.Nodes.Output" nickname="Output" x="576.187035058701" y="442.396010787293" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Nodes.Symbol guid="5991023e-8be2-4c69-80a6-6884683b2059" type="Dynamo.Nodes.Symbol" nickname="Input" x="80.6045152883704" y="609.043714417818" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="pickPoint:var" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="ba31a892-dba5-47b1-a551-8d48ff3dde2b" type="Dynamo.Nodes.Output" nickname="Output" x="622.254260564847" y="526.181775376262" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="geometry[]" />
     </Dynamo.Nodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="7bca18cf-a40b-47ba-86cd-038af80a2cf8" start_index="0" end="25979cf5-14ac-4dcc-b7a8-0be82749e50b" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="8a9bd609-496a-4caa-aed5-7323ef5db86a" start_index="0" end="7bca18cf-a40b-47ba-86cd-038af80a2cf8" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="991f9142-1c80-418c-bb6c-df015f10736c" start_index="0" end="7bca18cf-a40b-47ba-86cd-038af80a2cf8" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="441ab852-7cf4-447a-95ba-59dfdcf2e787" start_index="0" end="ba31a892-dba5-47b1-a551-8d48ff3dde2b" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="fc0129da-c04a-4d62-8a82-d3e809f6e6dd" start_index="0" end="441ab852-7cf4-447a-95ba-59dfdcf2e787" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="d8882ad4-1ccd-4eb6-960f-f1c3bf132f0f" start_index="0" end="441ab852-7cf4-447a-95ba-59dfdcf2e787" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5991023e-8be2-4c69-80a6-6884683b2059" start_index="0" end="441ab852-7cf4-447a-95ba-59dfdcf2e787" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

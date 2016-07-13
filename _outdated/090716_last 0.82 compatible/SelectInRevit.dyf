@@ -1,0 +1,78 @@
+<Workspace Version="0.8.2.2392" X="-204.361480514739" Y="157.38939154704" zoom="2.43827113374098" Name="SelectInRevit" Description="Selects the input elements in Revit. Works with Revit 2016." ID="8fe565e9-1f46-4933-b75c-2ee2947e342e" Category="SpringNodes.Revit.Selection">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+#inspired by Julien Benoit @jbenoit44 
+#http://aecuandme.wordpress.com/
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import ElementId
+clr.AddReference("RevitAPIUI")
+from Autodesk.Revit.UI.Selection import *
+
+clr.AddReference("System")
+from System.Collections.Generic import List as cList
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+elements = UnwrapElement(tolist(IN[0]))
+
+if "2014" in app.VersionName :
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	sel1  = uidoc.Selection.Elements
+	for i in xrange(len(elements)): 
+		try:(sel1.Add(elements[i]))
+		except: pass
+	OUT = "%s elements selected in Revit." %sel1.Size
+	TransactionManager.Instance.TransactionTaskDone()
+else:
+	ids1 = []
+	for i in xrange(len(elements)):
+		try:(ids1.append(elements[i].Id))
+		except: pass
+	ids2 = cList[ElementId](ids1)
+	uidoc.Selection.SetElementIds(ids2)
+	OUT = "%s elements selected in Revit." %ids2.Count</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="86d0140e-e8ac-414a-a132-476259f6293c" type="Dynamo.Nodes.Symbol" nickname="Input" x="101.626680739969" y="0.597804004352781" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="8bbb9a23-f1c9-4b37-8c0f-c17ab06bef42" type="Dynamo.Nodes.Output" nickname="Output" x="398.388855625663" y="-1.19560800870553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="success?" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="73406a5d-afb0-46e1-b125-e13964dc62e3" type="Dynamo.Nodes.Symbol" nickname="Input" x="35.6581311442392" y="67.0939820951629" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="reset:bool = true;" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" start_index="0" end="8bbb9a23-f1c9-4b37-8c0f-c17ab06bef42" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="86d0140e-e8ac-414a-a132-476259f6293c" start_index="0" end="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="73406a5d-afb0-46e1-b125-e13964dc62e3" start_index="0" end="8a4d2e89-8dcf-44a3-b861-2590a0033f8e" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

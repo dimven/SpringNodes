@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="27.5077862650799" Y="125.182512438366" zoom="0.69990909121839" Name="ClosedCurve.Offset+" Description="Offsets a curve both ways and correctly differenciates the external and internal offset. If an offset goes beyond the curve's bounds, the result will fail and a null value will be appended instead. Also works for convex curves like arcs." ID="8342e5b0-fb37-4302-9941-964d3b67265c" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="27.5077862650799" Y="125.182512438366" zoom="0.69990909121839" Name="Springs.ClosedCurve.Offset+" Description="Offsets a curve both ways and correctly differenciates the external and internal offset. If an offset goes beyond the curve's bounds, the result will fail and a null value will be appended instead. Also works for convex curves like arcs." ID="8342e5b0-fb37-4302-9941-964d3b67265c" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />

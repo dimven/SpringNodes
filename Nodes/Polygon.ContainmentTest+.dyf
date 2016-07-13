@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="98.0663234703666" Y="139.234582923735" zoom="1.51051845643135" Name="Polygon.ContainmentTest+" Description="A less accurate method that should perform faster than the built-in node for large data sets." ID="4e62fd9c-a775-4f8e-a440-2ee029abd122" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="98.0663234703666" Y="139.234582923735" zoom="1.51051845643135" Name="Springs.Polygon.ContainmentTest+" Description="A less accurate method that should perform faster than the built-in node for large data sets." ID="4e62fd9c-a775-4f8e-a440-2ee029abd122" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
@@ -6,7 +6,7 @@
     <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250.662024350475" y="5.9582191542782" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <DSIronPythonNode.PythonNode guid="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="251.986073051426" y="5.29619480380282" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -32,7 +32,10 @@ pts = tolist(IN[0])
 poly = IN[1]
 in1, out1 = [],[]
 
-poly_pts = list(poly.Points)
+if "Polygon" in poly.GetType().ToString():
+	poly_pts = list(poly.Points)
+else:
+	poly_pts = [c.StartPoint for c in poly.Curves()]
 poly_pts.append(poly_pts[0])
 polyX = poly.DoesIntersect
 
@@ -45,11 +48,11 @@ OUT = in1, out1</Script>
     <Dynamo.Nodes.Output guid="97a72249-7ac3-4884-9147-2c99e1196f17" type="Dynamo.Nodes.Output" nickname="Output" x="509.906240243733" y="1.9860730514261" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="in" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="ff7b71dc-31f7-4db1-a05b-218f769eac93" type="Dynamo.Nodes.Symbol" nickname="Input" x="103.925794629066" y="5.56998916319597" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="ff7b71dc-31f7-4db1-a05b-218f769eac93" type="Dynamo.Nodes.Symbol" nickname="Input" x="88.0372102176575" y="33.3750118831609" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="polygon:var" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="76c1b705-a0f8-451d-a5f7-a44fd59d893d" type="Dynamo.Nodes.Symbol" nickname="Input" x="107.935696117962" y="74.7230867388665" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="points" />
+    <Dynamo.Nodes.Symbol guid="76c1b705-a0f8-451d-a5f7-a44fd59d893d" type="Dynamo.Nodes.Symbol" nickname="Input" x="80.7926977484724" y="-29.8767606362396" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="points:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="f15753b0-f11d-4455-95a6-6a08154f2935" type="Dynamo.Nodes.Output" nickname="Output" x="509.192087248897" y="71.4825997293593" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="out" />
@@ -58,8 +61,8 @@ OUT = in1, out1</Script>
   </Elements>
   <Connectors>
     <Dynamo.Models.ConnectorModel start="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" start_index="0" end="88736f58-8d13-42f1-96e1-d220faa76e24" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="ff7b71dc-31f7-4db1-a05b-218f769eac93" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="76c1b705-a0f8-451d-a5f7-a44fd59d893d" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ff7b71dc-31f7-4db1-a05b-218f769eac93" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="76c1b705-a0f8-451d-a5f7-a44fd59d893d" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="88736f58-8d13-42f1-96e1-d220faa76e24" start_index="0" end="97a72249-7ac3-4884-9147-2c99e1196f17" end_index="0" portType="0" />
     <Dynamo.Models.ConnectorModel start="88736f58-8d13-42f1-96e1-d220faa76e24" start_index="1" end="f15753b0-f11d-4455-95a6-6a08154f2935" end_index="0" portType="0" />
   </Connectors>
@@ -67,6 +70,6 @@ OUT = in1, out1</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-4.65494186956428" eyeY="166.892195670601" eyeZ="-7.67752116203953" lookX="21.0815143248684" lookY="-74.0552386559833" lookZ="-68.9545263311066" />
   </Cameras>
 </Workspace>

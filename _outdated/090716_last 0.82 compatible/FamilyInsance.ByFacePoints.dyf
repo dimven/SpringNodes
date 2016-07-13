@@ -1,0 +1,78 @@
+<Workspace Version="0.8.2.2392" X="37.0189777250002" Y="86.0219046625" zoom="1.545620359375" Name="FamilyInsance.ByFacePoints" Description="Places instances on the input face oriented to the face's U tangent and the global Z axis." ID="c86820cc-d9dd-48fa-aea2-ecf281f01d0b" Category="SpringNodes.Revit.FamilyInstances">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="f3dc1c3c-354d-4594-84ad-f8edb93132eb" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="236.025028805434" y="-3.10554915434793" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+clr.AddReference('RevitServices')
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+def first(obj1):
+	if hasattr(obj1,'__iter__'): return obj1[0]
+	else: return obj1
+
+host = first(IN[0])
+ftype = UnwrapElement(first(IN[1]))
+pts = tolist(IN[2])
+
+out1 = []
+ref1 = host.Tags.LookupTag("RevitFaceReference")
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in xrange(len(pts) ):
+	uv1 = host.UVParameterAtPoint(pts[i])
+	dir1 = host.TangentAtUParameter(uv1.U,uv1.V).ToXyz()
+	try:
+		inst1 = doc.Create.NewFamilyInstance(ref1,pts[i].ToXyz(),dir1,ftype)
+		out1.append(inst1.ToDSType(False) )
+	except: out1.append(None)
+TransactionManager.Instance.TransactionTaskDone()
+OUT = output1(out1)</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="6f7450c3-1f8a-4990-bb88-6fa98fa6102e" type="Dynamo.Nodes.Symbol" nickname="Input" x="116.458093288048" y="-2.58795762862329" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="face" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="5ac24cfc-cb3b-4d2a-b47d-ee341520920c" type="Dynamo.Nodes.Symbol" nickname="Input" x="120.081233968121" y="58.9038914724602" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="type" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="f408bec1-e3d7-44e1-a03c-430338c961c6" type="Dynamo.Nodes.Symbol" nickname="Input" x="86.4377847960178" y="116.255008367747" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="point(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="1858d34c-b36e-4d5b-8f24-52fed20a5c1d" type="Dynamo.Nodes.Output" nickname="Output" x="388.206608438766" y="-3.10554915434795" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="FamilyInstance" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="f3dc1c3c-354d-4594-84ad-f8edb93132eb" start_index="0" end="1858d34c-b36e-4d5b-8f24-52fed20a5c1d" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6f7450c3-1f8a-4990-bb88-6fa98fa6102e" start_index="0" end="f3dc1c3c-354d-4594-84ad-f8edb93132eb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5ac24cfc-cb3b-4d2a-b47d-ee341520920c" start_index="0" end="f3dc1c3c-354d-4594-84ad-f8edb93132eb" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f408bec1-e3d7-44e1-a03c-430338c961c6" start_index="0" end="f3dc1c3c-354d-4594-84ad-f8edb93132eb" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="22553.8077762633" eyeY="11621.9069488037" eyeZ="-1713.26510040416" lookX="-23668.7752049504" lookY="-1185.81792355493" lookZ="7462.73601486493" />
+  </Cameras>
+</Workspace>

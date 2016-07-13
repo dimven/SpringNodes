@@ -1,0 +1,55 @@
+<Workspace Version="1.0.0.1180" X="178.233401288165" Y="126.79808164577" zoom="1.55469255719439" Name="Springs.Geometry.GroupByDistance" Description="Splits the list of curves into groups if the distance between them is lesser than the provided margin." ID="31f2a383-fdc6-402b-9511-32ff8dd77add" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="65599f3a-d443-4e38-a973-b53a7d6a0d2a" type="PythonNodeModels.PythonNode" nickname="Python Script" x="190.974267230302" y="0.508842523876694" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+#Inspired from the "Group Curves" node by Konrad Sobon
+# @arch_laboratory, http://archi-lab.net
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import Geometry
+
+pts = IN[0]
+margin = IN[1]
+dist1 = Geometry.DistanceTo
+
+Groups, Queue = [], []
+while pts:
+	group = []
+	Queue.append(pts.pop() )
+	while Queue:
+		p1 = Queue.pop()
+		group.append(p1)
+		for i in xrange(len(pts)-1,-1,-1):
+			if dist1(p1, pts[i]) &lt;= margin:
+				Queue.append(pts.pop(i) )
+	Groups.append(group)
+
+OUT = Groups</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f1e52fbb-fd8e-4283-9182-c13505a7bd70" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="1a220ca1-e5e7-47b9-942f-ab7a76ec1905" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-33.8162096083134" y="57.7919249188582" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="margin: double = 1" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8f4928f0-859a-43c0-83ad-83f81548ce56" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="329.937576175295" y="1.01768504775342" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry[][]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="65599f3a-d443-4e38-a973-b53a7d6a0d2a" start_index="0" end="8f4928f0-859a-43c0-83ad-83f81548ce56" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f1e52fbb-fd8e-4283-9182-c13505a7bd70" start_index="0" end="65599f3a-d443-4e38-a973-b53a7d6a0d2a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1a220ca1-e5e7-47b9-942f-ab7a76ec1905" start_index="0" end="65599f3a-d443-4e38-a973-b53a7d6a0d2a" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-9798.44921875" eyeY="70784.609375" eyeZ="-6666.2255859375" lookX="-524.346435546875" lookY="-68548.2578125" lookZ="-8546.9619140625" upX="-0.0577214732766151" upY="0.333806872367859" upZ="-0.940872609615326" />
+  </Cameras>
+</Workspace>

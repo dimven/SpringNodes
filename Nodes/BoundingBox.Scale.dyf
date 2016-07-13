@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="318.120821849936" Y="143.896891929735" zoom="1.24844365397223" Name="BoundingBox.Scale" Description="Scales the bounding box in three dimensions according to it's center." ID="92e695d2-fa2d-4b57-83f5-0f8db42e28f3" Category="SpringNodes.Geometry">
+<Workspace Version="0.8.2.2392" X="318.120821849936" Y="143.896891929735" zoom="1.24844365397223" Name="Springs.BoundingBox.Scale" Description="Scales the bounding box in three dimensions according to it's center." ID="92e695d2-fa2d-4b57-83f5-0f8db42e28f3" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point.ByCoordinates" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />

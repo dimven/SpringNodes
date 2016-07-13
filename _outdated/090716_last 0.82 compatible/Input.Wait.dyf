@@ -1,0 +1,24 @@
+<Workspace Version="0.8.2.2392" X="87.9717857392432" Y="166.015071471346" zoom="1.78359936238281" Name="Input.Wait" Description="Waits for all inputs to be completed before continuing the execution process.Part of the SmartCopyMon workflow." ID="10e44f91-a8da-4f5e-82ca-3e3489fd906f" Category="SpringNodes.SmartCopyMon">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.DSFunction guid="cc73f265-2c42-4ce2-b816-c0b8e067b85e" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="250" y="86.3630005145153" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
+    <Dynamo.Nodes.DSFunction guid="6f9b4de5-4938-41f3-9674-886e6fd9ca70" type="Dynamo.Nodes.DSFunction" nickname="Object.Identity" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" assembly="DSCoreNodes.dll" function="DSCore.Object.Identity@var" />
+    <Dynamo.Nodes.Output guid="c3adfc4a-b045-4b45-b931-b69ad3b03582" type="Dynamo.Nodes.Output" nickname="Output" x="399.039489988047" y="89.1081544479498" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="Output" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="590883a8-bd73-4f4a-8849-6bdbb574c257" type="Dynamo.Nodes.Symbol" nickname="Input" x="108.798783731667" y="0.616455006863674" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="WaitForMe" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="406c92f8-8f8c-47e0-ba3c-3506487b445d" type="Dynamo.Nodes.Symbol" nickname="Input" x="132.957591185872" y="89.1639454284123" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Output" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="cc73f265-2c42-4ce2-b816-c0b8e067b85e" start_index="0" end="c3adfc4a-b045-4b45-b931-b69ad3b03582" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="590883a8-bd73-4f4a-8849-6bdbb574c257" start_index="0" end="6f9b4de5-4938-41f3-9674-886e6fd9ca70" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="406c92f8-8f8c-47e0-ba3c-3506487b445d" start_index="0" end="cc73f265-2c42-4ce2-b816-c0b8e067b85e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

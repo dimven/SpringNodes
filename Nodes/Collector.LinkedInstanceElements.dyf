@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="171.893991694612" Y="177.52112865643" zoom="1.2198072017255" Name="Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="277.704319002785" Y="211.02743097562" zoom="2.49400635960208" Name="Springs.Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform vector can be used to get the exact location of the elements in the local file" ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
@@ -44,8 +44,8 @@ for i in xrange(len(Link1)):
 	transforms.append(cs1)
 OUT = output1(elements), output1(transforms)</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="f3246400-4185-4769-b996-369fa96e6042" type="Dynamo.Nodes.Symbol" nickname="Input" x="34.6261033107697" y="-12.9114283531684" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="link instance(s)" />
+    <Dynamo.Nodes.Symbol guid="f3246400-4185-4769-b996-369fa96e6042" type="Dynamo.Nodes.Symbol" nickname="Input" x="18.1866905393678" y="-13.7133509273831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="LinkInstance:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Symbol guid="5efc1764-2e33-4182-b564-c8454a714c31" type="Dynamo.Nodes.Symbol" nickname="Input" x="28.1841553837043" y="43.5316487553731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="category:Category" />
@@ -73,6 +73,6 @@ OUT = output1(elements), output1(transforms)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-4.65494186956428" eyeY="166.892195670601" eyeZ="-7.67752116203953" lookX="21.0815143248684" lookY="-74.0552386559833" lookZ="-68.9545263311066" />
   </Cameras>
 </Workspace>

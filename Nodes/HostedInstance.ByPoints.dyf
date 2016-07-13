@@ -1,19 +1,19 @@
-<Workspace Version="0.8.2.2392" X="312.318649358621" Y="253.423876538153" zoom="1.47618023926361" Name="HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="2b432cef-fa0a-44ef-92c2-89b586bfc8ba" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="1.0.0.1180" X="-24.4813506413791" Y="169.423876538153" zoom="1.47618023926361" Name="Springs.HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="2b432cef-fa0a-44ef-92c2-89b586bfc8ba" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap />
   <Elements>
-    <Dynamo.Nodes.Symbol guid="01b001a1-0f4b-46c2-b40b-9a76321397df" type="Dynamo.Nodes.Symbol" nickname="Input" x="-40.645443153968" y="12.8710569987566" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="host(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="21d9da14-52e4-40f9-a262-6d4531da35be" type="Dynamo.Nodes.Symbol" nickname="Input" x="-44.5633712265382" y="74.4282041967319" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="type(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="62c7092e-74eb-459c-a699-0df7ef89b809" type="Dynamo.Nodes.Symbol" nickname="Input" x="-48.0416473981198" y="131.317782250332" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="point(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="c8c50cf6-8557-4116-b38f-3eb1e2c12614" type="Dynamo.Nodes.Output" nickname="Output" x="254.579296913519" y="10.8387848410581" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="01b001a1-0f4b-46c2-b40b-9a76321397df" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-40.645443153968" y="12.8710569987566" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="host:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="21d9da14-52e4-40f9-a262-6d4531da35be" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-44.5633712265382" y="74.4282041967319" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="type:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="62c7092e-74eb-459c-a699-0df7ef89b809" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-48.0416473981198" y="131.317782250332" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="point:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="c8c50cf6-8557-4116-b38f-3eb1e2c12614" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="276.256866595635" y="10.8387848410581" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="FamilyInstance" />
-    </Dynamo.Nodes.Output>
-    <DSIronPythonNode.PythonNode guid="17a1d35a-8c92-487b-8080-cb584c9d61d6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="96.494417988601" y="11.7451279954348" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <PythonNodeModels.PythonNode guid="17a1d35a-8c92-487b-8080-cb584c9d61d6" type="PythonNodeModels.PythonNode" nickname="Python Script" x="118.171987670717" y="11.7451279954348" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -73,18 +73,15 @@ else:
 TransactionManager.Instance.TransactionTaskDone()
 
 OUT = output1(nfl)</Script>
-    </DSIronPythonNode.PythonNode>
+    </PythonNodeModels.PythonNode>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="01b001a1-0f4b-46c2-b40b-9a76321397df" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="21d9da14-52e4-40f9-a262-6d4531da35be" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="62c7092e-74eb-459c-a699-0df7ef89b809" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="2" portType="0" />
-    <Dynamo.Models.ConnectorModel start="17a1d35a-8c92-487b-8080-cb584c9d61d6" start_index="0" end="c8c50cf6-8557-4116-b38f-3eb1e2c12614" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="01b001a1-0f4b-46c2-b40b-9a76321397df" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="21d9da14-52e4-40f9-a262-6d4531da35be" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="62c7092e-74eb-459c-a699-0df7ef89b809" start_index="0" end="17a1d35a-8c92-487b-8080-cb584c9d61d6" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="17a1d35a-8c92-487b-8080-cb584c9d61d6" start_index="0" end="c8c50cf6-8557-4116-b38f-3eb1e2c12614" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
-  </Cameras>
 </Workspace>

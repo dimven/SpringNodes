@@ -1,0 +1,102 @@
+<Workspace Version="0.8.2.2392" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="SpringNodes.Revit.Modify">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="61e46993-03f6-4a2e-9726-c414ed48bb4e" type="Dynamo.Nodes.Symbol" nickname="Input" x="85.6" y="-0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="ae6130ca-5464-4075-8f5d-f9240228246a" type="Dynamo.Nodes.Symbol" nickname="Input" x="76" y="62" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="location(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="75586c6e-832e-4bda-97b9-da911b3c771e" type="Dynamo.Nodes.Output" nickname="Output" x="378.498087128763" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Output>
+    <DSIronPythonNode.PythonNode guid="c2d8deac-6440-4913-95bd-5d08d2a6f123" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="222.445792376673" y="-0.150734336487744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc =  DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+isRvt14 = False
+if app.VersionName == "Autodesk Revit 2014": isRvt14 = True
+
+if not isRvt14:
+	from Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType
+	FrU = StructuralFramingUtils
+
+elements = UnwrapElement(tolist(IN[0]))
+newloc = UnwrapElement(tolist(IN[1]))
+out1 = []
+framing = ("Beam", "Brace")
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in xrange(len(elements)):
+	try:
+		el_typ = elements[i].GetType().ToString()
+		isWall, isBeam = False, False
+		if el_typ == "Autodesk.Revit.DB.Wall":
+			w_start = WallUtils.IsWallJoinAllowedAtEnd(elements[i],0)
+			w_end = WallUtils.IsWallJoinAllowedAtEnd(elements[i],1)
+			WallUtils.DisallowWallJoinAtEnd(elements[i],0)
+			WallUtils.DisallowWallJoinAtEnd(elements[i],1)
+			isWall = True
+		elif el_typ == "Autodesk.Revit.DB.FamilyInstance" and not isRvt14:
+			if elements[i].StructuralType.ToString() in framing:
+				b_start = FrU.IsJoinAllowedAtEnd(elements[i],0)
+				b_end = FrU.IsJoinAllowedAtEnd(elements[i],1)
+				FrU.DisallowJoinAtEnd(elements[i],0)
+				FrU.DisallowJoinAtEnd(elements[i],1)
+				isBeam = True	
+		newloc1 = newloc[i].ToRevitType()
+		oldloc = elements[i].Location
+		loc_typ = oldloc.GetType().ToString()
+		if loc_typ == "Autodesk.Revit.DB.LocationCurve":
+			oldloc.Curve = newloc1
+		elif loc_typ == "Autodesk.Revit.DB.LocationPoint":
+			oldloc.Point = newloc1
+		if isWall:
+			if w_start: WallUtils.AllowWallJoinAtEnd(elements[i],0)
+			if w_end: WallUtils.AllowWallJoinAtEnd(elements[i],1)
+		if isBeam and not isRvt14:
+			if b_start: FrU.AllowJoinAtEnd(elements[i],0)
+			if b_end: FrU.AllowJoinAtEnd(elements[i],1)
+		out1.append(elements[i].ToDSType(True))
+	except:
+		out1.append([])
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = output1(out1)</Script>
+    </DSIronPythonNode.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="61e46993-03f6-4a2e-9726-c414ed48bb4e" start_index="0" end="c2d8deac-6440-4913-95bd-5d08d2a6f123" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="ae6130ca-5464-4075-8f5d-f9240228246a" start_index="0" end="c2d8deac-6440-4913-95bd-5d08d2a6f123" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="c2d8deac-6440-4913-95bd-5d08d2a6f123" start_index="0" end="75586c6e-832e-4bda-97b9-da911b3c771e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

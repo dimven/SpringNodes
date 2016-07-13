@@ -1,0 +1,67 @@
+<Workspace Version="0.8.2.2392" X="-93.3605595500001" Y="86.9722673" zoom="1.545620359375" Name="Springs.SelectLinkedElements(ordered)" Description="Select the linked instance first. Then select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node." ID="b1c08346-4bd4-4548-bce5-c6504f7a9586" Category="Springs.Revit.Selection">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+#inspired by Troy Gates https://forums.autodesk.com/t5/revit-api/revit-api-selected-element-set-order/td-p/5597203
+
+import clr
+
+clr.AddReference("RevitAPIUI")
+from  Autodesk.Revit.UI import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+sel1 = uidoc.Selection
+obt1 = Selection.ObjectType.Element
+obt2 = Selection.ObjectType.LinkedElement
+out1 = []
+
+TaskDialog.Show("Spring Nodes", "First select a link instance. Then pick elements from that instance in the desired order. Hit ESC to stop picking.")
+msg1 = 'Pick elements in the desired order, hit ESC to stop picking.'
+
+li_ref = sel1.PickObject(obt1, "Select a link instance first.")
+Link1 = doc.GetElement(li_ref.ElementId)
+LinkDoc = Link1.GetLinkDocument()
+
+flag = True
+while flag:
+	try:
+		el1 = sel1.PickObject(obt2, msg1).LinkedElementId
+		out1.append(el1)
+	except : flag = False
+out1 = [LinkDoc.GetElement(el).ToDSType(True) for el in out1]
+OUT = output1(out1)</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" type="Dynamo.Nodes.Output" nickname="Output" x="407.4" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="elements" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="b35a0403-2326-4cb4-a402-59dc25ead61f" type="Dynamo.Nodes.Symbol" nickname="Input" x="36.4" y="0.400000000000034" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" start_index="0" end="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b35a0403-2326-4cb4-a402-59dc25ead61f" start_index="0" end="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="-7717.35546875" eyeY="10465.021484375" eyeZ="6683.43603515625" lookX="712.438537597656" lookY="-9433.8134765625" lookZ="-7398.95703125" />
+  </Cameras>
+</Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-125.433030383329" Y="129.532407415005" zoom="1.72395684352182" Name="Collector.Views" Description="Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets." ID="a1d3c661-73ae-4309-8fa5-dd483cd6df6e" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="232.566969616671" Y="155.532407415005" zoom="1.72395684352182" Name="Springs.Collector.Views" Description="Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets." ID="a1d3c661-73ae-4309-8fa5-dd483cd6df6e" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="9e16e048-07e6-4f30-9fc0-a0aac6f5effb" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
@@ -45,8 +45,8 @@ if len(result) == 0 and len(similar) &gt; 0:
 if len(result) == 0 and len(similar) == 0:
 	OUT = "No match found! Check names below:", names</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="9c5784e0-fd0a-4e8e-89cd-1ae1bbc067fb" type="Dynamo.Nodes.Symbol" nickname="Input" x="59.4235537172628" y="-1.60322933775471" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="name(s)" />
+    <Dynamo.Nodes.Symbol guid="9c5784e0-fd0a-4e8e-89cd-1ae1bbc067fb" type="Dynamo.Nodes.Symbol" nickname="Input" x="86.106356232219" y="0.13695343495981" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="name:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="30959af0-c8ee-43fe-ac2c-23606ae3daf7" type="Dynamo.Nodes.Output" nickname="Output" x="557.518581130832" y="-14.6309611080824" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="exact match" />
@@ -58,7 +58,7 @@ if len(result) == 0 and len(similar) == 0:
     <Dynamo.Nodes.Symbol guid="38447c8d-f9e1-4e13-a9d0-b0d489c55d4c" type="Dynamo.Nodes.Symbol" nickname="Input" x="-70.3178152525903" y="58.9658593544238" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="IncludeSchedules:bool = false" />
     </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="cef88f0e-700a-42a5-b18c-603cd34af1ac" type="Dynamo.Nodes.Symbol" nickname="Input" x="13.1514886255679" y="131.619977537646" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="cef88f0e-700a-42a5-b18c-603cd34af1ac" type="Dynamo.Nodes.Symbol" nickname="Input" x="10.8312449286153" y="120.018759052882" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="refresh:bool = true" />
     </Dynamo.Nodes.Symbol>
   </Elements>
@@ -74,6 +74,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-4.65494186956428" eyeY="166.892195670601" eyeZ="-7.67752116203953" lookX="21.0815143248684" lookY="-74.0552386559833" lookZ="-68.9545263311066" />
   </Cameras>
 </Workspace>

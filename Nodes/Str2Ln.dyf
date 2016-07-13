@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-42.0312799356378" Y="132.486771968391" zoom="1.545620359375" Name="Str2Ln" Description="De-serilize a Revit parameter string into a geometric line." ID="95425f93-d15f-4887-b341-c0e64bd3efce" Category="SpringNodes.Geometry.Serialization">
+<Workspace Version="0.8.2.2392" X="-42.0312799356378" Y="132.486771968391" zoom="1.545620359375" Name="Springs.Str2Ln" Description="De-serilize a Revit parameter string into a geometric line." ID="95425f93-d15f-4887-b341-c0e64bd3efce" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />

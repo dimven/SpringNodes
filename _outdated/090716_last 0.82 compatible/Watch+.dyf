@@ -1,0 +1,145 @@
+<Workspace Version="0.8.2.2392" X="332" Y="114.4" zoom="1" Name="Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="SpringNodes.Core">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="112.4" y="-3.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference('System.Windows.Forms')
+clr.AddReference('System.Drawing')
+from System.Drawing import Point, Color, Font
+from System.Windows.Forms import *
+from cStringIO import StringIO
+
+def isElem(el1):
+	return hasattr(el1, "Id")
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+	
+def isList(obj1):
+	return hasattr(obj1,"__iter__")
+
+def write_str(str1):
+	str_file.write(''.join([j for j in GCL]))
+	str_file.write(str1)
+
+GCL = []
+GCint = -1
+def list2str(l1):
+	global GCint, height1
+	GCint += 1
+	GCL.insert(GCint,"")
+	for i in xrange(len(l1)):
+		GCL[GCint] = "[%s] " % i
+		if isElem(l1[i]):
+			write_str("%s        %s\n" % (l1[i].ToString(), l1[i].Id.ToString()) )
+		elif isList(l1[i]) and not l1[i]:
+			write_str("Empty List\n")
+		elif isList(l1[i]):
+			list2str(l1[i])
+		else:
+			write_str("%s\n" % l1[i].ToString())
+		height1 += 24
+	GCL.pop(GCint)
+	GCint -= 1
+
+class WatchBox(Form):
+	def __init__(self):
+		self.Text = "SpringNodes: Expandable Watch Window"
+		self.BackColor = Color.FromArgb(40,40,40)
+		self.ControlBox = False
+		self.TopMost = True
+		self.FormBorderStyle = FormBorderStyle.Sizable
+		self.StartPosition = FormStartPosition.CenterScreen
+		self.Resize += self.resize1
+
+		self.button1 = Button()
+		self.button1.Text = 'Close'
+		self.button1.Font = Font("Calibri", 10)
+		self.button1.AutoSize = True
+		self.button1.Width = 200
+		self.button1.ForeColor = Color.FromArgb(234,234,234)
+		self.button1.Click += self.save
+		self.Controls.Add(self.button1)
+		
+		self.box1 = RichTextBox()
+		self.box1.Multiline = True
+		self.box1.Location = Point(5, 5)
+		self.box1.Font = Font("Calibri", 12)
+		self.box1.BackColor = Color.FromArgb(53,53,53)
+		self.box1.ForeColor = Color.FromArgb(234,234,234)
+		self.box1.DetectUrls = True
+		self.Controls.Add(self.box1)
+
+	def adjust_controls(self, height1, width1):
+		if height1 &gt; 800:
+			height1 = 800
+			self.box1.ScrollBars = RichTextBoxScrollBars.Vertical
+		if width1 &lt; 23 : width1 = 23
+		if width1 &gt; 88: width1 = 88
+		self.Width = 10 + (width1 + 2) * 9 #character width seems to vary between PCs
+		self.Height = height1 + 90
+		self.box1.Width = self.Width - 17
+		self.box1.Height = self.Height - 80
+		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
+	
+	def resize1(self, sender, event):
+		if self.Width &lt; 210: self.Width = 230
+		if self.Height &lt; 120: self.Height = 120
+		self.box1.Width = self.Width - 17
+		self.box1.Height = self.Height - 80
+		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
+	
+	def setTxt(self, t1):
+		self.box1.Text = t1
+		self.Refresh()
+			
+	def save(self, sender, event):
+		self.text1 = self.box1.Text
+		self.Close()
+
+if IN[0] == None: l1 = []
+else: l1 = tolist(IN[0])
+height1 = 30
+str_file = StringIO()
+list2str(l1)
+str_content = str_file.getvalue()
+width1 = max([len(i) for i in str_content.split('\n')])
+form = WatchBox()
+form.adjust_controls(height1, width1)
+form.setTxt(str_content)
+Application.Run(form)
+OUT = form.text1
+Application.Exit()
+str_file.close()</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="input" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="3d9e94be-75a4-45b4-902f-61a2019e1f73" type="Dynamo.Nodes.Symbol" nickname="Input" x="-98.4000000000001" y="56.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="reset:bool = true" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="43a77d27-3a16-4650-9710-85700cd25a9e" type="Dynamo.Nodes.Output" nickname="Output" x="265.8" y="-6.40000000000001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" start_index="0" end="43a77d27-3a16-4650-9710-85700cd25a9e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="3d9e94be-75a4-45b4-902f-61a2019e1f73" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

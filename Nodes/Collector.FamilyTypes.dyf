@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-29.1276895867703" Y="158.947341737128" zoom="1.49364430808002" Name="Collector.FamilyTypes" Description="Collects non-system family types that fully match or partially match the provided names. If no matches are found, a list of all type names will be output." ID="69ea0174-9cf5-4900-9ec3-d6937f55e25f" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="229.87231041323" Y="165.947341737128" zoom="1.49364430808002" Name="Springs.Collector.FamilyTypes" Description="Collects non-system family types that fully match or partially match the provided names. If no matches are found, a list of all type names will be output." ID="69ea0174-9cf5-4900-9ec3-d6937f55e25f" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="7e4e9441-7bb5-4c9f-be68-e93cf3210ca8" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="237.764031483038" y="-0.286566024164046" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
@@ -42,8 +42,8 @@ if len(result) == 0 and len(similar) &gt; 0:
 if len(result) == 0 and len(similar) == 0:
 	OUT = "No match found! Check names below:", names</Script>
     </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="19034471-152a-4e66-a0ad-983758208f02" type="Dynamo.Nodes.Symbol" nickname="Input" x="70.1181243454627" y="-0.516946008771072" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="type name(s)" />
+    <Dynamo.Nodes.Symbol guid="19034471-152a-4e66-a0ad-983758208f02" type="Dynamo.Nodes.Symbol" nickname="Input" x="53.3805383855659" y="-1.85595288556283" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="typeName:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="52549cef-c243-465b-a880-a570c02a9aee" type="Dynamo.Nodes.Output" nickname="Output" x="559.673461697792" y="-1.51694600877107" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="exact match" />
@@ -52,7 +52,7 @@ if len(result) == 0 and len(similar) == 0:
     <Dynamo.Nodes.Output guid="9395b6e7-8de5-4b67-bd38-2e19044ba0d7" type="Dynamo.Nodes.Output" nickname="Output" x="561.50297204387" y="61.2666884902505" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="partial match" />
     </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="bcc335bb-a15d-40c8-bd98-9f99a1acc2ba" type="Dynamo.Nodes.Symbol" nickname="Input" x="13.927707046115" y="62.8493100234874" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Nodes.Symbol guid="bcc335bb-a15d-40c8-bd98-9f99a1acc2ba" type="Dynamo.Nodes.Symbol" nickname="Input" x="10.5801898541356" y="56.8237790779245" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
       <Symbol value="refresh:bool = true" />
     </Dynamo.Nodes.Symbol>
   </Elements>
@@ -67,6 +67,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-4.65494186956428" eyeY="166.892195670601" eyeZ="-7.67752116203953" lookX="21.0815143248684" lookY="-74.0552386559833" lookZ="-68.9545263311066" />
   </Cameras>
 </Workspace>

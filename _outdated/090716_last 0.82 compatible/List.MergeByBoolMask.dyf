@@ -1,0 +1,57 @@
+<Workspace Version="0.8.2.2392" X="373.355307119687" Y="344.977214665195" zoom="1.78359936238281" Name="List.MergeByBoolMask" Description="Merge two lists by a boolean mask list. The true count in the mask should be the same as the length of the true list and vice versa for the false list." ID="c018f3a9-1a3e-4393-9a23-ed97ab89f2a6" Category="SpringNodes.Lists">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Arc" resolvedName="Autodesk.DesignScript.Geometry.Arc" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Display" resolvedName="Display.Display" assemblyName="Display.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="edbf94a6-8348-4971-912d-5726bfb8b93a" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+t1 = tolist(IN[0])
+l1 = tolist(IN[1])
+l2 = tolist(IN[2])
+
+try: OUT = [l1.pop(0) if i else l2.pop(0) for i in t1]
+except: OUT = 'List mismatch.'</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="e7845a99-1011-4db6-8ad5-8761c4f793a1" type="Dynamo.Nodes.Output" nickname="Output" x="401.904221782307" y="1.68199207920333" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="list" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="581b5793-9bc8-4fa4-98c0-fa0890af5476" type="Dynamo.Nodes.Symbol" nickname="Input" x="97.2113676567856" y="-16.5312884488189" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="mask:var[]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="198da870-8527-4ca8-a1df-4fe09a4e9ccb" type="Dynamo.Nodes.Symbol" nickname="Input" x="62.5032105613713" y="44.2132805280223" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="trueList:var[]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="06302f87-99d3-4dd0-874b-869c6deabd17" type="Dynamo.Nodes.Symbol" nickname="Input" x="54.5619617165357" y="102.991050824919" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="falseList:var[]" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="edbf94a6-8348-4971-912d-5726bfb8b93a" start_index="0" end="e7845a99-1011-4db6-8ad5-8761c4f793a1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="581b5793-9bc8-4fa4-98c0-fa0890af5476" start_index="0" end="edbf94a6-8348-4971-912d-5726bfb8b93a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="198da870-8527-4ca8-a1df-4fe09a4e9ccb" start_index="0" end="edbf94a6-8348-4971-912d-5726bfb8b93a" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="06302f87-99d3-4dd0-874b-869c6deabd17" start_index="0" end="edbf94a6-8348-4971-912d-5726bfb8b93a" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="55252.3755978651" eyeY="63564.3192448261" eyeZ="59950.3992585094" lookX="-42450.5384271766" lookY="-57179.9182964913" lookZ="-65368.0862280612" />
+  </Cameras>
+</Workspace>

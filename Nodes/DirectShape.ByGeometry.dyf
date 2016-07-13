@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="158.277520481501" Y="253.897335942645" zoom="1.38571068305882" Name="DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="1.1.1.1841" X="574.932555421908" Y="173.232572287628" zoom="2.04571504479109" Name="Springs.DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -6,15 +6,16 @@
     <ClassMap partialName="Cylinder" resolvedName="Autodesk.DesignScript.Geometry.Cylinder" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Category.ByName" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.Output guid="378d0694-3f14-43b9-9ae6-930a6781aae0" type="Dynamo.Nodes.Output" nickname="Output" x="359.821634187539" y="-21.9777851761107" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="378d0694-3f14-43b9-9ae6-930a6781aae0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="359.821634187539" y="-21.9777851761107" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="DirectShape" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" type="Dynamo.Nodes.Symbol" nickname="Input" x="52.6783848184826" y="-22.4361403956349" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="geometry" />
-    </Dynamo.Nodes.Symbol>
-    <DSIronPythonNode.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="203.336075860563" y="-22.515277602541" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="2.81806812397618" y="-24.8802735669342" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <PythonNodeModels.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="PythonNodeModels.PythonNode" nickname="Python Script" x="203.336075860563" y="-22.515277602541" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -134,24 +135,24 @@ elif len(solids) == len(names):
 	OUT = output1(map(NewDS, solids, p_cat, names))
 	TransactionManager.Instance.TransactionTaskDone()
 else : OUT = "Make sure that each geometry\nobject has a unique type name."</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Nodes.Symbol" nickname="Input" x="-343.710489636924" y="37.8516645286593" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="category:var[]..[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" type="Dynamo.Nodes.Symbol" nickname="Input" x="79.5283958888237" y="100.610830983185" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="name" />
-    </Dynamo.Nodes.Symbol>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-309.844174686363" y="37.2941993010844" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="category:var[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="36.507473833428" y="95.2379162468539" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="name:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" start_index="0" end="378d0694-3f14-43b9-9ae6-930a6781aae0" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="e97089f6-028f-4687-a3ab-c93d40734dac" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" start_index="0" end="378d0694-3f14-43b9-9ae6-930a6781aae0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e97089f6-028f-4687-a3ab-c93d40734dac" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" start_index="0" end="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="1820.01196289063" eyeY="1598.45764160156" eyeZ="712.223449707031" lookX="-1699.88635253906" lookY="-2716.51391601563" lookZ="-260.119110107422" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

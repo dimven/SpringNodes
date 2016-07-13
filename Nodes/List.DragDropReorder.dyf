@@ -1,7 +1,7 @@
-<Workspace Version="0.8.2.2392" X="204.772096447084" Y="146.948751447084" zoom="1.33823125" Name="List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="SpringNodes.Lists">
+<Workspace Version="1.0.0.1180" X="204.772096447084" Y="146.948751447084" zoom="1.33823125" Name="Springs.List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="Springs.Core.List">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="59955ff9-1bf7-4403-8a08-2bf5da484df7" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="94.8" y="-0.799999999999997" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    <PythonNodeModels.PythonNode guid="59955ff9-1bf7-4403-8a08-2bf5da484df7" type="PythonNodeModels.PythonNode" nickname="Python Script" x="94.8" y="-0.799999999999997" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -121,30 +121,27 @@ l1_arr = Array[Object](l1)
 out1 = None
 EnableDrop()
 OUT = [i.obj for i in out1]</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="2f075382-60e4-4c49-b32c-1890c588ec72" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2f075382-60e4-4c49-b32c-1890c588ec72" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3239d12f-549a-4561-bbda-03ae1d9a797b" type="Dynamo.Nodes.Symbol" nickname="Input" x="-148.255064287282" y="59.2131759738834" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3239d12f-549a-4561-bbda-03ae1d9a797b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-148.255064287282" y="59.2131759738834" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="names:var[]..[] = null" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="ac638096-2824-4fb0-80ec-84febe0a6a67" type="Dynamo.Nodes.Output" nickname="Output" x="252.2" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="ac638096-2824-4fb0-80ec-84febe0a6a67" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="252.2" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="list" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" type="Dynamo.Nodes.Symbol" nickname="Input" x="-109.539949800966" y="126.759527587564" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-109.539949800966" y="126.759527587564" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="59955ff9-1bf7-4403-8a08-2bf5da484df7" start_index="0" end="ac638096-2824-4fb0-80ec-84febe0a6a67" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="2f075382-60e4-4c49-b32c-1890c588ec72" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3239d12f-549a-4561-bbda-03ae1d9a797b" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="59955ff9-1bf7-4403-8a08-2bf5da484df7" start_index="0" end="ac638096-2824-4fb0-80ec-84febe0a6a67" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2f075382-60e4-4c49-b32c-1890c588ec72" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3239d12f-549a-4561-bbda-03ae1d9a797b" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
-  </Cameras>
 </Workspace>

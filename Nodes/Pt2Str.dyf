@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-189.741613590206" Y="106.192331707598" zoom="2.37004060791358" Name="Pt2Str" Description="Serilize a geometry point to a string for use in Revit parameters" ID="0183b651-93d4-4495-93ad-a87b119c7f91" Category="SpringNodes.Geometry.Serialization">
+<Workspace Version="0.8.2.2392" X="-189.741613590206" Y="106.192331707598" zoom="2.37004060791358" Name="Springs.Pt2Str" Description="Serilize a geometry point to a string for use in Revit parameters" ID="0183b651-93d4-4495-93ad-a87b119c7f91" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />

@@ -1,0 +1,62 @@
+<Workspace Version="0.8.2.2392" X="-67.9305882850724" Y="219.836148340256" zoom="1.92101320430154" Name="Collector.ElementsInView" Description="Selects all elements visible in the input view." ID="b5bdff96-365e-44a7-af60-1cf3936c4b36" Category="SpringNodes.Revit.Collectors">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import FilteredElementCollector
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+views = UnwrapElement(tolist(IN[0]))
+elements = []
+
+for i in xrange(len(views)):
+	fec = FilteredElementCollector(doc, views[i].Id).WhereElementIsNotElementType().GetElementIterator()
+	fec.Reset()
+	view_el = []
+	while fec.MoveNext():
+		view_el.append(fec.Current.ToDSType(True))
+	elements.append(view_el)
+OUT = output1(elements)</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" type="Dynamo.Nodes.Output" nickname="Output" x="402.464885808708" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="element(s)" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="552eab9b-8333-42d4-9d3a-afe5928c2d4b" type="Dynamo.Nodes.Symbol" nickname="Input" x="137.128431684578" y="1.08047524780022" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="view(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="79e7a498-ca8d-4741-bab2-f803ed22952d" type="Dynamo.Nodes.Symbol" nickname="Input" x="37.0329158429464" y="63.8069449123469" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" start_index="0" end="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="552eab9b-8333-42d4-9d3a-afe5928c2d4b" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="79e7a498-ca8d-4741-bab2-f803ed22952d" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="17.0665245056152" eyeY="63.2038345336914" eyeZ="-45.2703590393066" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

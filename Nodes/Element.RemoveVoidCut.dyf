@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="425.582559200034" Y="96.0636844236248" zoom="1.545620359375" Name="Element.RemoveVoidCut" Description="Removes the void cut between the input elements, if such exists." ID="8e939b52-ea4c-41ff-97bb-f54ba062c938" Category="SpringNodes.Revit.VoidCuts">
+<Workspace Version="1.0.0.1180" X="-51.2174407999661" Y="97.6636844236248" zoom="1.545620359375" Name="Springs.Element.RemoveVoidCut" Description="Removes the void cut between the input elements, if such exists." ID="8e939b52-ea4c-41ff-97bb-f54ba062c938" Category="Springs.Revit.Element">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,7 +8,7 @@
     <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="6451a467-72c7-440f-b8c5-4bd2791f6c5d" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="225.155606765216" y="-1.55277457717398" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <PythonNodeModels.PythonNode guid="6451a467-72c7-440f-b8c5-4bd2791f6c5d" type="PythonNodeModels.PythonNode" nickname="Python Script" x="225.155606765216" y="-1.55277457717398" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
       <Script>import clr
 
 clr.AddReference("RevitServices")
@@ -50,26 +50,23 @@ for i in xrange(len(ToBeCut)):
 TransactionManager.Instance.TransactionTaskDone()
 
 OUT = output1(out1)</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="9ff9dc4c-45aa-4c03-a2a5-6de0b141d8c3" type="Dynamo.Nodes.Symbol" nickname="Input" x="12.9397881431165" y="-2.07036610289862" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="element(s)BeingCut" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="eb7e5e33-5f47-4d5f-8ae3-c16b6a9acf02" type="Dynamo.Nodes.Symbol" nickname="Input" x="22.2564356061603" y="62.5270321525329" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="cuttingElement(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="4426ed96-35ed-4c7d-9f75-caaf24685997" type="Dynamo.Nodes.Output" nickname="Output" x="381.477918604345" y="-1.55277457717398" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9ff9dc4c-45aa-4c03-a2a5-6de0b141d8c3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-8.79905593731912" y="2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="elementBeingCut:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="eb7e5e33-5f47-4d5f-8ae3-c16b6a9acf02" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-8.28146441159456" y="63.0446236782576" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="cuttingElement:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4426ed96-35ed-4c7d-9f75-caaf24685997" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="381.477918604345" y="-1.55277457717398" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="result" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="6451a467-72c7-440f-b8c5-4bd2791f6c5d" start_index="0" end="4426ed96-35ed-4c7d-9f75-caaf24685997" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="9ff9dc4c-45aa-4c03-a2a5-6de0b141d8c3" start_index="0" end="6451a467-72c7-440f-b8c5-4bd2791f6c5d" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="eb7e5e33-5f47-4d5f-8ae3-c16b6a9acf02" start_index="0" end="6451a467-72c7-440f-b8c5-4bd2791f6c5d" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6451a467-72c7-440f-b8c5-4bd2791f6c5d" start_index="0" end="4426ed96-35ed-4c7d-9f75-caaf24685997" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9ff9dc4c-45aa-4c03-a2a5-6de0b141d8c3" start_index="0" end="6451a467-72c7-440f-b8c5-4bd2791f6c5d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb7e5e33-5f47-4d5f-8ae3-c16b6a9acf02" start_index="0" end="6451a467-72c7-440f-b8c5-4bd2791f6c5d" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
-  <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
-  </Cameras>
 </Workspace>

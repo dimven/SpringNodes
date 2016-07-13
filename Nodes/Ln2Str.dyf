@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="29.5541631376962" Y="158.668388669197" zoom="1.545620359375" Name="Ln2Str" Description="Serilize a geometry line to a string for use in Revit parameters" ID="6c712c67-329c-4499-a399-d1cedd2b45bf" Category="SpringNodes.Geometry.Serialization">
+<Workspace Version="0.8.2.2392" X="29.5541631376962" Y="158.668388669197" zoom="1.545620359375" Name="Springs.Ln2Str" Description="Serilize a geometry line to a string for use in Revit parameters" ID="6c712c67-329c-4499-a399-d1cedd2b45bf" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />

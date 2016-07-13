@@ -1,0 +1,49 @@
+<Workspace Version="0.8.2.2392" X="-179.940618469598" Y="116.560227288919" zoom="1.87774416077545" Name="Springs.SelectLinkedElement" Description="Select the linked instance first, followed by the element. If your selection fails, just press escape.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="103fe51c-7e28-46c5-9175-d07c9d05437b" Category="Springs.Revit.Selection">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Nodes.Symbol guid="34ef6e0a-c18d-47b5-b63a-65c6242531da" type="Dynamo.Nodes.Symbol" nickname="Input" x="10" y="11.2492815284936" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="c92d542e-cbf2-4c80-994a-96272bfa36a5" type="Dynamo.Nodes.Output" nickname="Output" x="377.019097057134" y="8.40000000000001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="element" />
+    </Dynamo.Nodes.Output>
+    <DSIronPythonNode.PythonNode guid="4d84601c-19ba-4b06-9bf0-318406c41c43" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="225.6" y="7.99999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitAPIUI")
+from  Autodesk.Revit.UI import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+sel1 = uidoc.Selection
+ot1 = Selection.ObjectType.Element
+ot2 = Selection.ObjectType.LinkedElement
+li_ref = sel1.PickObject(ot1, "Select a link instance first.")
+el_ref = sel1.PickObject(ot2, "Pick a linked element.")
+Link1 = doc.GetElement(li_ref.ElementId)
+LinkDoc = Link1.GetLinkDocument()
+OUT = LinkDoc.GetElement(el_ref.LinkedElementId).ToDSType(True)</Script>
+    </DSIronPythonNode.PythonNode>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="34ef6e0a-c18d-47b5-b63a-65c6242531da" start_index="0" end="4d84601c-19ba-4b06-9bf0-318406c41c43" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="4d84601c-19ba-4b06-9bf0-318406c41c43" start_index="0" end="c92d542e-cbf2-4c80-994a-96272bfa36a5" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

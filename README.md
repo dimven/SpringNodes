@@ -14,6 +14,10 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+100.0.1 140716
+- Sheet.Views+ got a big speed boost
+- Doc.DeleteElements now handles elements that could not be deleted and returns their ids as a chained string
+
 100.0.0 130716
 - A lot of nodes provided duplicate functionality or needed refactoring and were removed / replaced. You can find a full list of the changes [here](https://github.com/dimven/SpringNodes/wiki/Depreciated-Nodes-for-the-1.0.0-release)
 - The library organisation has been revised. Everything is now under the "Springs" tab. All nodes have a "Springs" prefix so that users don't have to wonder where that node comes from.

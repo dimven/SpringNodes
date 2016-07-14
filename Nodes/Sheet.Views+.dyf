@@ -1,16 +1,15 @@
-<Workspace Version="1.0.0.1180" X="-75.7564004190108" Y="150.318354174059" zoom="1.37758335255866" Name="Springs.Sheet.Views+" Description="Extracts all views and schedules (minus the revision schedule) placed on the input sheet (or sheets).&#xD;&#xA;Will be depreciated once the bult in node works with all plan types." ID="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" Category="Springs.Revit.Views">
+<Workspace Version="1.1.1.1841" X="99.6074068301532" Y="106.261709267217" zoom="2.22719516868275" Name="Springs.Sheet.Views+" Description="Extracts all views and schedules (minus the revision schedule) placed on the input sheet (or sheets).&#xD;&#xA;Will be depreciated once the bult in node works with all plan types." ID="d0f1130e-18a9-4600-b9f5-5d8730d99cba" Category="Springs.Revit.Views">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="69385820-2399-4ede-bdb2-8234cad8914e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="123.6" y="0.799999999999983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
-#schedule section inspired by Clockwork
+
 import clr
 
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -30,19 +29,23 @@ def output1(l1):
 sheets = UnwrapElement(tolist(IN[0]))
 sheet_views, sheets_scheds = [], []
 rev_str = "&lt;Revision Schedule&gt;"
+sched_dict = dict()
+fec1 = FilteredElementCollector(doc).OfClass(ScheduleSheetInstance)
+for s in fec1:
+	if rev_str not in s.Name:
+		key = s.OwnerViewId.IntegerValue
+		if key not in sched_dict:
+			sched_dict[key] = [s]
+		else:
+			sched_dict[key].append(s)
 
-for i in xrange(len(sheets)):
-	if app.VersionName == "Autodesk Revit 2014":
-		viewports = [doc.GetElement(v1) for v1 in sheets[i].GetAllViewports()]
-		views = [doc.GetElement(v1.ViewId) for v1 in viewports]
-	else:
-		viewsid = sheets[i].GetAllPlacedViews()
-		views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
+for i in xrange(len(sheets) ):
+	viewsid = sheets[i].GetAllPlacedViews()
+	views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
 	sheet_views.append(views)
-	fec1 = FilteredElementCollector(doc, sheets[i].Id).OfClass(ScheduleSheetInstance)
-	scheds = [doc.GetElement(i.ScheduleId) for i in fec1 if rev_str not in i.Name]
+	s_id = sheets[i].Id.IntegerValue
+	scheds = sched_dict[s_id] if s_id in sched_dict else []
 	sheets_scheds.append(scheds)
-
 OUT = output1(sheet_views), output1(sheets_scheds)</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-26.8418672045012" y="1.7659123160856" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -66,6 +69,6 @@ OUT = output1(sheet_views), output1(sheets_scheds)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-16.0699081420898" eyeY="38.3537330627441" eyeZ="46.9752159118652" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

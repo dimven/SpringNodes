@@ -14,12 +14,23 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+110.0.0 061116
+- New nodes:
+	- Springs.BrepShape.ByGeometry works only in Revit 2017 and later and implements the new BrepBuilder class to generate DirectShapes with materials. However, poly-surfaces and solids with periodic faces like spheres, cylinders and cones are not supported at thistime.
+	- Springs.SelectFaces+ works in a similar manner to the built in node, with the exception that it provides a valid face reference for family instance elements and the global picl point during selection. You can use the pick point to easily identfy the correct face for planar surfaces with multiple loops.
+	- Springs.BoundingBox.MidPoint is a simple utility node that can quickly compute the mid point between a BB's min and max extent.
+	- Springs.Points.ConvexHull2D is an evolution of Clockwork's "UV.ConvexHull2D".
+- All UI nodes now have an additional "CustomMsg" input to provide additional insight when using the nodes with DynamoPlayer.
+- The serialization nodes now have an optional separator input to customize the output for use with some CSV files.
+- The even/odd list utility node have been merged.
+
+
 100.0.1 140716
 - Sheet.Views+ got a big speed boost
 - Doc.DeleteElements now handles elements that could not be deleted and returns their ids as a chained string
 
 100.0.0 130716
-- A lot of nodes provided duplicate functionality or needed refactoring and were removed / replaced. You can find a full list of the changes [here](https://github.com/dimven/SpringNodes/wiki/Depreciated-Nodes-for-the-1.0.0-release)
+- A lot of nodes provided duplicate functionality or needed refactoring and were removed / replaced. You can find a full list of the changes [here](https://github.com/dimven/SpringNodes/wiki/Depreciated-and-Changed-nodes-throughout-versions)
 - The library organisation has been revised. Everything is now under the "Springs" tab. All nodes have a "Springs" prefix so that users don't have to wonder where that node comes from.
 - As Dynamo 0.82 was the last version that supported Revit 2014, Spring Nodes no longer targets Revit 2014.
 - New nodes:

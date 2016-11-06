@@ -1,4 +1,4 @@
-<Workspace Version="1.1.1.1841" X="375.35963180481" Y="92.5484466581762" zoom="0.931811528498331" Name="Springs.N-hedron.ByOriginVector" Description="Creates a multi-sided poyhedron with defined side length and total height." ID="82009e60-8e1b-45dc-8d87-b701992d1c1e" Category="Springs.Geometry">
+<Workspace Version="1.1.0.2094" X="366.073923295968" Y="15.1808137708098" zoom="1.07925372895183" Name="Springs.N-hedron.ByOriginVector" Description="Creates a multi-sided poyhedron with defined side length and total height." ID="82009e60-8e1b-45dc-8d87-b701992d1c1e" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -45,6 +45,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-2.63841588652905" eyeY="6.36802127485979" eyeZ="23.2305380436052" lookX="-4.4770450663592" lookY="-8.39673377486955" lookZ="-27.3079129853778" upX="-0.0126936556307634" upY="0.99691733373313" upZ="-0.0774254532383173" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

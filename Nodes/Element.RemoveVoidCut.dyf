@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="-51.2174407999661" Y="97.6636844236248" zoom="1.545620359375" Name="Springs.Element.RemoveVoidCut" Description="Removes the void cut between the input elements, if such exists." ID="8e939b52-ea4c-41ff-97bb-f54ba062c938" Category="Springs.Revit.Element">
+<Workspace Version="1.1.0.2094" X="-51.2174407999661" Y="97.6636844236248" zoom="1.545620359375" Name="Springs.Element.RemoveVoidCut" Description="Removes the void cut between the input elements, if such exists." ID="8e939b52-ea4c-41ff-97bb-f54ba062c938" Category="Springs.Revit.Element">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -69,4 +69,7 @@ OUT = output1(out1)</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+  </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.1.1.1841" X="120.136279804598" Y="234.299242646061" zoom="0.977255254109396" Name="Springs.Doc.DeleteElements" Description="Attempts to delete the input list of elements from the active Revit document.The node returns the number of successfully deleted elements and their Ids as a string. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well. If an element in the list can not be deleted (for example last revision or last view), the whole list will fail to be deleted." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="Springs.Revit.Document">
+<Workspace Version="1.1.0.2094" X="120.136279804598" Y="234.299242646061" zoom="0.977255254109396" Name="Springs.Doc.DeleteElements" Description="Attempts to delete the input list of elements from the active Revit document.The node returns the number of successfully deleted elements and their Ids as a string. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well. If an element in the list can not be deleted (for example last revision or last view), the whole list will fail to be deleted." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="Springs.Revit.Document">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="6f652db6-14ef-41d7-ad07-7d9356a0db5f" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
@@ -63,6 +63,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

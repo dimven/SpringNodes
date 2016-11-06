@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
+<Workspace Version="1.1.0.2094" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="61e46993-03f6-4a2e-9726-c414ed48bb4e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="62.4336804095385" y="-2.05223349137634" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -21,7 +21,6 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc =  DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -30,19 +29,16 @@ clr.ImportExtensions(Revit.GeometryConversion)
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType
+FrU = StructuralFramingUtils
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
+
 def output1(l1):
 	if len(l1) == 1: return l1[0]
 	else: return l1
-isRvt14 = False
-if app.VersionName == "Autodesk Revit 2014": isRvt14 = True
-
-if not isRvt14:
-	from Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType
-	FrU = StructuralFramingUtils
 
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
@@ -97,6 +93,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

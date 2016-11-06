@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="250.090970774073" Y="121.092555514821" zoom="2.05668026833428" Name="Springs.Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="Springs.Core.List.Create">
+<Workspace Version="1.1.0.2094" X="250.090970774073" Y="121.092555514821" zoom="2.05668026833428" Name="Springs.Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="Springs.Core.List.Create">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="175.122051117491" y="39.3838562304109" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
@@ -15,7 +15,7 @@ def output1(l1):
 	if len(l1) == 1: return l1[0]
 	else: return l1
 
-out1 = []
+out1, fail = [], []
 
 keys = tolist(IN[0])
 elements = tolist(IN[1])
@@ -23,7 +23,7 @@ searchVals = tolist(IN[2])
 dict1 = dict(zip(keys,elements))
 for i in xrange(len(searchVals)):
 	if searchVals[i] in dict1: out1.append(dict1[searchVals[i]])
-	else: out1.append([])
+	else: out1.append(fail)
 
 OUT = output1(out1)</Script>
     </PythonNodeModels.PythonNode>
@@ -49,4 +49,7 @@ OUT = output1(out1)</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

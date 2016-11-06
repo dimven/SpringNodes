@@ -1,4 +1,4 @@
-<Workspace Version="1.1.1.1841" X="113.497434757296" Y="201.204863419799" zoom="2.26511812821295" Name="Springs.DirectShape.Transform" Description="Transforms the typed DirectShape element from the identity coordinate system to the input coordinate system(s), in a manner similar to Dynamo's Geometry.Transform node." ID="12780047-c2ae-4b94-bb43-6408c7dbd8ef" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.1.0.2094" X="-247.302565242704" Y="206.004863419799" zoom="2.26511812821295" Name="Springs.DirectShape.Transform" Description="Transforms the typed DirectShape element from the identity coordinate system to the input coordinate system(s), in a manner similar to Dynamo's Geometry.Transform node." ID="12780047-c2ae-4b94-bb43-6408c7dbd8ef" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
@@ -33,7 +33,7 @@ def tolist(obj1):
 	else: return [obj1]
 
 def output1(l1):
-	if len(l1) == 1: return out1[0]
+	if len(l1) == 1: return l1[0]
 	else: return l1
 
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits

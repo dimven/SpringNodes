@@ -1,4 +1,4 @@
-<Workspace Version="1.1.1.1841" X="104.66888428283" Y="109.099699445726" zoom="1.47618023926361" Name="Springs.PolyCurve.Chamfer" Description="Symmetrically chamfers the corners of the polycurve by the designated distance" ID="3cc2d22a-8f08-4162-b98d-e202dcacd24d" Category="Springs.Geometry">
+<Workspace Version="1.1.0.2094" X="104.66888428283" Y="109.099699445726" zoom="1.47618023926361" Name="Springs.PolyCurve.Chamfer" Description="Symmetrically chamfers the corners of the polycurve by the designated distance" ID="3cc2d22a-8f08-4162-b98d-e202dcacd24d" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle.b" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
@@ -24,6 +24,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="26.2532582856461" eyeY="32.5660729968158" eyeZ="20.2052852331241" lookX="-23.4377955463739" lookY="-36.5945442702144" lookZ="-29.1396653140033" upX="-0.332126051621528" upY="0.848048096156429" upZ="-0.412924584445826" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

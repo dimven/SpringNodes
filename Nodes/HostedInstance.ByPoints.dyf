@@ -1,14 +1,14 @@
-<Workspace Version="1.0.0.1180" X="-24.4813506413791" Y="169.423876538153" zoom="1.47618023926361" Name="Springs.HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="2b432cef-fa0a-44ef-92c2-89b586bfc8ba" Category="Springs.Revit.FamilyInstance">
+<Workspace Version="1.1.0.2094" X="222.064854430481" Y="210.789464578543" zoom="1.24844365397223" Name="Springs.HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="2b432cef-fa0a-44ef-92c2-89b586bfc8ba" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="01b001a1-0f4b-46c2-b40b-9a76321397df" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-40.645443153968" y="12.8710569987566" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="host:var[]" />
+      <Symbol value="host: var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="21d9da14-52e4-40f9-a262-6d4531da35be" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-44.5633712265382" y="74.4282041967319" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="type:var[]" />
+      <Symbol value="type: var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="62c7092e-74eb-459c-a699-0df7ef89b809" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-48.0416473981198" y="131.317782250332" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="point:var[]" />
+      <Symbol value="point: var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="c8c50cf6-8557-4116-b38f-3eb1e2c12614" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="276.256866595635" y="10.8387848410581" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="FamilyInstance" />
@@ -44,32 +44,24 @@ host = UnwrapElement(tolist(IN[0]))
 ftype = UnwrapElement(tolist(IN[1]))
 fpts = UnwrapElement(tolist(IN[2]))
 
-Rpts =[p.ToXyz() for p in fpts]
+Rpts =[p.ToXyz(True) for p in fpts]
 
 nfl = []
 strt = Autodesk.Revit.DB.Structure.StructuralType.NonStructural
+ftp_len = len(ftype) == 1
+hst_len = len(host) == 1
 
 TransactionManager.Instance.EnsureInTransaction(doc)
-if len(ftype) == 1:
-	if not ftype[0].IsActive:
-		ftype[0].Activate()
-	for  p, h in zip(Rpts, host):
-		try:
-			level = doc.GetElement(h.LevelId)
-			nf = doc.Create.NewFamilyInstance(p,ftype[0],h,level,strt)
-			nfl.append(nf.ToDSType(False))
-		except:
-			nfl.append(None)
-else:
-	for  p, ft, h in zip(Rpts, ftype, host):
-		try:
-			if not ft.IsActive:
-				ft.Activate()
-			level = doc.GetElement(h.LevelId)
-			nf = doc.Create.NewFamilyInstance(p,ft,h,level,strt)
-			nfl.append(nf.ToDSType(False))
-		except:
-			nfl.append(None)
+for i in xrange(len(Rpts) ):
+	j = 0 if ftp_len else i
+	k = 0 if hst_len else i
+	try:
+		if not ftype[j].IsActive : ft.Activate()
+		level = doc.GetElement(host[k].LevelId)
+		nf = doc.Create.NewFamilyInstance(Rpts[i],ftype[j],host[k],level,strt)
+		nfl.append(nf.ToDSType(False))
+	except:
+		nfl.append(None)
 TransactionManager.Instance.TransactionTaskDone()
 
 OUT = output1(nfl)</Script>
@@ -84,4 +76,7 @@ OUT = output1(nfl)</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+  </Cameras>
 </Workspace>

@@ -1,7 +1,7 @@
-<Workspace Version="1.0.0.1180" X="-54.1117736863961" Y="196.854927689186" zoom="1.22704736140834" Name="Springs.Filter.BySelection" Description="Check the items that you'd like to filter in.  Unchecked items will be sent to the out list. The optional names input will override the object representation." ID="caf9ae92-b01b-4c76-856d-e7093bfff4c9" Category="Springs.Core.List">
+<Workspace Version="1.1.0.2094" X="146.688226313604" Y="86.4549276891861" zoom="1.22704736140834" Name="Springs.Filter.BySelection" Description="Check the items that you'd like to filter in.  Unchecked items will be sent to the out list. The optional names input will override the object representation." ID="caf9ae92-b01b-4c76-856d-e7093bfff4c9" Category="Springs.Core.List">
   <NamespaceResolutionMap />
   <Elements>
-    <PythonNodeModels.PythonNode guid="03382455-ddfd-4730-a3aa-a5cad2b3ce54" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+    <PythonNodeModels.PythonNode guid="03382455-ddfd-4730-a3aa-a5cad2b3ce54" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="5">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -20,7 +20,7 @@ def hasInd(l1, i):
 	except: return False
 
 class CheckBoxForm(Form):
-	def __init__(self):
+	def __init__(self, cm1):
 		self.Text = "SpringNodes: Filter By Selection"
 		self.Width = 367
 		self.BackColor = Color.FromArgb(40,40,40)
@@ -32,7 +32,7 @@ class CheckBoxForm(Form):
 		self.StartPosition = FormStartPosition.CenterScreen
 		
 		self.label = Label()
-		self.label.Text = "Choose the objects you'd like to filter:"
+		self.label.Text = cm1
 		self.label.Location = Point(5, 5)
 		self.label.ForeColor = Color.FromArgb(234,234,234)
 		self.label.Font = Font("Calibri", 10)
@@ -70,13 +70,13 @@ class CheckBoxForm(Form):
 		self.panel1.ForeColor = Color.FromArgb(234,234,234)
 		self.Controls.Add(self.panel1)
 		
-	def add_check(self, text1, y1):
+	def add_check(self, text1, y1, b1):
 		self.check1 = CheckBox()
 		self.check1.Text = text1
 		self.check1.Location = Point(5, y1)
 		self.check1.AutoSize = True
 		self.check1.Font = Font("Calibri", 10)
-		self.check1.Checked = True
+		self.check1.Checked = b1
 		self.panel1.Controls.Add(self.check1)
 	def btn_adjust(self,y1):
 		if y1 &gt; 700:
@@ -115,13 +115,13 @@ l1 = tolist(IN[0])
 if IN[1] == None: names = None
 else: names = tolist(IN[1])
 
-form = CheckBoxForm()
+form = CheckBoxForm(IN[2])
 y1 = 5
 for i in xrange(len(l1)):
 	try:
 		if hasInd(names, i): val1 = names[i].ToString()
 		else: val1 = l1[i].ToString()
-		form.add_check(val1, y1)
+		form.add_check(val1, y1, IN[3])
 		y1 += 25
 	except: pass
 form.btn_adjust(y1)
@@ -130,10 +130,10 @@ Application.Run(form)
 OUT = form.output1, form.output2
 Application.Exit()</Script>
     </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ae79b1a2-58e1-4884-8bc6-fe747f932d25" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="141.25280735339" y="0.336901410323549" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ae79b1a2-58e1-4884-8bc6-fe747f932d25" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="112.103380990011" y="-22.4821036913729" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a19c71ba-3406-4731-bfa0-111f993aecdc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-14.6407054277842" y="56.6030110154634" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a19c71ba-3406-4731-bfa0-111f993aecdc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-44.6966190099891" y="37.0518980907398" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="names: var[]..[] = null" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="c67ccb3e-716d-4b56-976e-abb93193c86b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="529.73561980176" y="-16.8199207920333" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
@@ -143,7 +143,13 @@ Application.Exit()</Script>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="0caa3370-f060-42dd-acf7-f27929e93841" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="531.036959734598" y="39.4706776952953" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="out" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="da124c1f-175b-4268-88b3-b3832474ea2d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="35.1415296718776" y="116.10406378768" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="da124c1f-175b-4268-88b3-b3832474ea2d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-374.296619009989" y="96.5858998728525" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="customMsg : string = &quot;Choose the objects you'd like to filter:&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f8dce7e0-227d-4343-9b2d-28d5116c8e0b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-44.6966190099891" y="156.119901654965" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="checkAll : bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9ad465d9-b0ec-486f-ae95-9f692ab84b41" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="4.90338099001085" y="215.653903437078" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
@@ -154,8 +160,13 @@ Application.Exit()</Script>
     <Dynamo.Graph.Connectors.ConnectorModel start="363190b6-0eb7-4e4c-b23b-a419a6768534" start_index="0" end="c67ccb3e-716d-4b56-976e-abb93193c86b" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="363190b6-0eb7-4e4c-b23b-a419a6768534" start_index="1" end="0caa3370-f060-42dd-acf7-f27929e93841" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="da124c1f-175b-4268-88b3-b3832474ea2d" start_index="0" end="03382455-ddfd-4730-a3aa-a5cad2b3ce54" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f8dce7e0-227d-4343-9b2d-28d5116c8e0b" start_index="0" end="03382455-ddfd-4730-a3aa-a5cad2b3ce54" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9ad465d9-b0ec-486f-ae95-9f692ab84b41" start_index="0" end="03382455-ddfd-4730-a3aa-a5cad2b3ce54" end_index="4" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+  </Cameras>
 </Workspace>

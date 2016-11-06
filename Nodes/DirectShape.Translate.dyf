@@ -1,4 +1,4 @@
-<Workspace Version="1.1.1.1841" X="-319.993609287779" Y="192.485295621425" zoom="2.05668026833428" Name="Springs.DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.1.0.2094" X="-648.793609287779" Y="190.885295621425" zoom="2.05668026833428" Name="Springs.DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="ed190f5b-44d3-48ea-a62a-8b384a18b745" type="PythonNodeModels.PythonNode" nickname="Python Script" x="456.912369917016" y="-20" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
@@ -26,7 +26,7 @@ def tolist(obj1):
 	else: return [obj1]
 
 def output1(l1):
-	if len(l1) == 1: return out1[0]
+	if len(l1) == 1: return l1[0]
 	else: return l1
 
 dsTyped, vecs = UnwrapElement(IN[0]), tolist(IN[1])
@@ -42,11 +42,11 @@ dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
 if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)
 
 def CopyDS(transf):
-	try:
+	#try:
 		ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, "Dynamo","spring nodes")
 		ds1.SetTypeId(TypeId)
 		return ds1.ToDSType(False)
-	except: return None
+	#except: return None
 	
 TransactionManager.Instance.EnsureInTransaction(doc)
 OUT = output1(map(CopyDS, transforms))

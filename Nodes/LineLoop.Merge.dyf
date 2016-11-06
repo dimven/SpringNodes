@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="98.4000000000001" Y="34.4" zoom="1" Name="Springs.LineLoop.Merge" Description="Attempts to join lines into a single chain of joined curves. The node returns the new lines as a chain and with the original order. The success outputs returns the success of the execution as a true/false boolean." ID="7f4c4e1d-2393-4151-a71b-5880332ca202" Category="Springs.Geometry">
+<Workspace Version="1.1.0.2094" X="98.4000000000001" Y="34.4" zoom="1" Name="Springs.LineLoop.Merge" Description="Attempts to join lines into a single chain of joined curves. The node returns the new lines as a chain and with the original order. The success outputs returns the success of the execution as a true/false boolean." ID="7f4c4e1d-2393-4151-a71b-5880332ca202" Category="Springs.Geometry">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="844355ab-8442-4d1a-bade-e512e1932fbc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="56.8" y="166" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -10,7 +10,7 @@
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="15a522fd-3434-44b8-b9c2-c28a4cc20adf" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="490.6" y="129.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="lines" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <PythonNodeModels.PythonNode guid="061c8703-4952-42d0-95d8-20cd8dda4280" type="PythonNodeModels.PythonNode" nickname="Python Script" x="220.4" y="168.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+    <PythonNodeModels.PythonNode guid="061c8703-4952-42d0-95d8-20cd8dda4280" type="PythonNodeModels.PythonNode" nickname="Python Script" x="219.6" y="167.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -44,9 +44,11 @@ def OrderCurves(cl0,cl1):
 			k = i + 1
 			if cl1[i].DoesIntersect(cl1[k]) : pass
 			else :
-				int_test = [cl1[i].DoesIntersect(cl1[j])\
-				for j in xrange(k, _ln)]
-				switch1(k, k + int_test.index(True) )
+				try:
+					int_test = [cl1[i].DoesIntersect(cl1[j])\
+					for j in xrange(k, _ln)]
+					switch1(k, k + int_test.index(True) )
+				except : pass
 	return cl0, cl1
 
 def ClosedCase(cl0,cl1):
@@ -64,11 +66,12 @@ def OpenCase(cl0,cl1):
 	return PolyCurve.ByPoints(pts).Curves()
 
 def joinCurves(cl0,th1):
-	if len(cl0) &lt; 2 : return cl0, False
+	len1 = len(cl0)
+	if len1 &lt; 2 : return cl0, False
 	else:
 		cl1 = [c.ExtendStart(th1).ExtendEnd(th1) for c in cl0]
 		cl0, cl1 = OrderCurves(cl0,cl1)
-		_fn = ClosedCase if cl1[0].DoesIntersect(cl1[-1]) else OpenCase
+		_fn = ClosedCase if cl1[0].DoesIntersect(cl1[-1]) and len1 &gt; 2 else OpenCase
 		try : return _fn(cl0,cl1), True
 		except : return cl0, False
 
@@ -104,4 +107,7 @@ OUT = out1[0], ReorderCurves(original,out1[0]), out1[1]</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-26590.4818455237" eyeY="37160.2774957114" eyeZ="-3104.92560624796" lookX="347.564779954944" lookY="-38298.9161940543" lookZ="5084.36183460621" upX="-0.0679612143070458" upY="0.0836778433323145" upZ="-0.994172667037856" />
+  </Cameras>
 </Workspace>

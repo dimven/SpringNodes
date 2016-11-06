@@ -1,0 +1,28 @@
+<Workspace Version="1.1.0.2094" X="-388.934854784931" Y="354.883802470563" zoom="1.545620359375" Name="Springs.List.GetEvenOdd" Description="Gets even indices from the list." ID="d0ec40ae-d2fe-4ae1-bb0a-1257df968c5a" Category="Springs.Core.List">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2df2c169-70a0-41cc-bcf1-74dcbc371bbf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="312.473434306611" y="-18.6469894071558" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="list:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="f9d44ba8-4f59-4e41-ba1e-7b00e1f6cc8b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="835.054601572221" y="-30.0108678652219" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="even" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="470.65170972056" y="-16.8276249778065" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="List.TakeEveryNthItem(l1,2,0);&#xA;List.DropEveryNthItem(l1,2,0);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="c334f997-77f4-4967-9c6f-5e71910b8656" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="834.876084570405" y="31.3964541927507" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="odd" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="2df2c169-70a0-41cc-bcf1-74dcbc371bbf" start_index="0" end="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" start_index="0" end="f9d44ba8-4f59-4e41-ba1e-7b00e1f6cc8b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" start_index="1" end="c334f997-77f4-4967-9c6f-5e71910b8656" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+  </Cameras>
+</Workspace>

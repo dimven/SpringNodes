@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-42.0312799356378" Y="132.486771968391" zoom="1.545620359375" Name="Springs.Str2Ln" Description="De-serilize a Revit parameter string into a geometric line." ID="95425f93-d15f-4887-b341-c0e64bd3efce" Category="Springs.Geometry.Serialization">
+<Workspace Version="1.1.0.2094" X="29.1227021639248" Y="156.813306153614" zoom="0.931811528498331" Name="Springs.Str2Ln" Description="De-serilize a Revit parameter string into a geometric line." ID="95425f93-d15f-4887-b341-c0e64bd3efce" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -13,22 +13,26 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def Rvt2Ln(par)&#xA;{&#xA;par1 = String.ToNumber(String.Split(par,&quot;,&quot;));&#xA;p1 = Point.ByCoordinates(par1[0],par1[1],par1[2]);&#xA;p2 = Point.ByCoordinates(par1[3],par1[4],par1[5]);&#xA;return = Line.ByStartPointEndPoint(p1,p2);&#xA;};&#xA;Rvt2Ln(str);" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="3129cf66-2999-4314-9eee-82f8612c6121" type="Dynamo.Nodes.Symbol" nickname="Input" x="128.317004272647" y="-1.93034751630826" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Rvt2Ln(par, s1)&#xA;{&#xA;par1 = String.ToNumber(String.Split(par, s1));&#xA;p1 = Point.ByCoordinates(par1[0],par1[1],par1[2]);&#xA;p2 = Point.ByCoordinates(par1[3],par1[4],par1[5]);&#xA;return = Line.ByStartPointEndPoint(p1,p2);&#xA;};&#xA;Rvt2Ln(str, s1);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3129cf66-2999-4314-9eee-82f8612c6121" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="128.317004272647" y="-1.93034751630826" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="str:var" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="44a7255b-39c3-4fec-91cf-c129f12cbefb" type="Dynamo.Nodes.Output" nickname="Output" x="767.309538079394" y="121.602430347197" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="44a7255b-39c3-4fec-91cf-c129f12cbefb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="767.309538079394" y="121.602430347197" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="line(s)" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="174c8475-cea2-446f-8a48-a8bf0f0b8198" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-4.69174502373932" y="64.6528897989109" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="separator: string = &quot;,&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" start_index="0" end="44a7255b-39c3-4fec-91cf-c129f12cbefb" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3129cf66-2999-4314-9eee-82f8612c6121" start_index="0" end="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" start_index="0" end="44a7255b-39c3-4fec-91cf-c129f12cbefb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3129cf66-2999-4314-9eee-82f8612c6121" start_index="0" end="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="174c8475-cea2-446f-8a48-a8bf0f0b8198" start_index="0" end="08d1be68-7c9e-44b8-a52b-3f4a98cce2b1" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="-174.181022275" Y="84.4219046625" zoom="1.545620359375" Name="Springs.FamilyInsance.ByFacePoints" Description="Places instances on the input face oriented to the face's U tangent and the global Z axis." ID="c86820cc-d9dd-48fa-aea2-ecf281f01d0b" Category="Springs.Revit.FamilyInstance">
+<Workspace Version="1.1.0.2094" X="-174.181022275" Y="84.4219046625" zoom="1.545620359375" Name="Springs.FamilyInstance.ByFacePoints" Description="Places instances on the input face oriented to the face's U tangent and the global Z axis." ID="c86820cc-d9dd-48fa-aea2-ecf281f01d0b" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="f3dc1c3c-354d-4594-84ad-f8edb93132eb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="236.025028805434" y="-3.10554915434793" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
@@ -72,4 +72,7 @@ OUT = output1(out1)</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-7346.38800015192" eyeY="3486.6446745748" eyeZ="116.966105019699" lookX="527.624251875002" lookY="-2599.6184375" lookZ="-6167.917238" upX="0.0153860179707408" upY="0.983571469783783" upZ="-0.179862260818481" />
+  </Cameras>
 </Workspace>

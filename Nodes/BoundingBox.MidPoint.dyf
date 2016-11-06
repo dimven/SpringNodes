@@ -1,0 +1,29 @@
+<Workspace Version="1.0.0.1180" X="75.0935372874749" Y="151.296667474657" zoom="1.44258909293313" Name="Springs.BoundingBox.MidPoint" Description="Fetches the mid point of the bounding box." ID="74b59bed-610f-4fc1-a3b7-8b69fd6fb160" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="184573a4-ac83-484a-bd72-3ca0110821d8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="288.844109670721" y="-3.52613890067347" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="bbMid(bb1);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="b34fc205-a812-48af-a27a-fb28b6679f91" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="233.785179603284" y="59.0345828933117" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def bbMid(bb1){&#xA;p1 = bb1.MinPoint;&#xA;p2 = bb1.MaxPoint;&#xA;return = Point.ByCoordinates(&#xA;Math.Average({p1.X, p2.X}),&#xA;Math.Average({p1.Y, p2.Y}),&#xA;Math.Average({p1.Z, p2.Z}));&#xA;};" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7a308835-0ca5-404f-8111-8e8b4053c99a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="489.736635260488" y="-6.23878278581796" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="Point" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a6b9731d-45da-427e-9e1e-4cfa445f7154" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="90.6393923252282" y="-7.85685095165766" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="boundingBox:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="184573a4-ac83-484a-bd72-3ca0110821d8" start_index="0" end="7a308835-0ca5-404f-8111-8e8b4053c99a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a6b9731d-45da-427e-9e1e-4cfa445f7154" start_index="0" end="184573a4-ac83-484a-bd72-3ca0110821d8" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="5.74703434322775" eyeY="106.108948581614" eyeZ="6.69743667678213" lookX="-14.7455063506866" lookY="-67.1429177892159" lookZ="-57.8041137156777" upX="-0.145288054759496" upY="0.809016994374948" upZ="-0.569546208798486" />
+  </Cameras>
+</Workspace>

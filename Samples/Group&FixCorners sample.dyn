@@ -1,0 +1,93 @@
+<Workspace Version="1.1.0.2094" X="177.406423723155" Y="443.685531495391" zoom="0.776325148178341" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSRevitNodesUI.Categories guid="b85146b8-495a-4e89-94da-4a3ad26491b2" type="DSRevitNodesUI.Categories" nickname="Categories" x="-487.827309169379" y="-115.283425366679" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="574:Walls" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="392ab2bd-959e-4521-bfc6-c519af48dfa1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="26.6206430627011" y="-63.5741514452769" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//don't be too generous&#xA;//with the margin" ShouldFocus="false" />
+    <DSRevitNodesUI.ElementsOfCategory guid="d44ce6a3-1411-4cba-85a9-722d9177d638" type="DSRevitNodesUI.ElementsOfCategory" nickname="All Elements of Category" x="-279.02730916938" y="-116.883425366678" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="7a62a096-013b-4c48-a285-ff0ece4514da" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="80.9792656424289" y="-161.086918199831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="1500;" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="05ad9047-a8d2-49b3-8f8f-95fcf4df44da" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Element.SetLocation" x="705.117794768045" y="-122.731036914988" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <ID value="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" />
+      <Name value="Element.SetLocation" />
+      <Description value="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." />
+      <Inputs>
+        <Input value="element" />
+        <Input value="location" />
+      </Inputs>
+      <Outputs>
+        <Output value="element" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="4d2321fd-deaa-4874-bd16-395161c31296" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="639.915891685198" y="-1.09982456204997" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//I guess this is a sample for&#xA;//Element.SetLocation as well :)" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="991d531b-f94a-4adb-874e-3d4790a3f183" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Element.Location" x="-39.80335746246" y="-424.825648087752" isVisible="false" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <ID value="0b59c4d8-afe4-4063-bf7e-2195fa33e8a9" />
+      <Name value="Element.Location" />
+      <Description value="Returns the location of an element as an XYZ (or if it's line-based the start and end point of the line), along with some booleans to help filtering the results. Use this for some element types (e.g. walls or lines) that do not work with the built-in Get Family Instance Location node. " />
+      <Inputs>
+        <Input value="element" />
+      </Inputs>
+      <Outputs>
+        <Output value="points" />
+        <Output value="curveEndpoints" />
+        <Output value="curves" />
+        <Output value="isPoint" />
+        <Output value="isCurve" />
+        <Output value="hasLocation" />
+        <Output value="angle" />
+        <Output value="hasRotation" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="dd1a4045-a874-4e84-93e2-a31910fc02d9" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-57.0649277022607" y="-516.482038080114" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//from the clockwork package" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="69d411e7-28e4-464a-ac96-a139017df26a" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.LineLoop.Merge" x="463.345889435527" y="-267.03378297489" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="1" default="True" />
+      <ID value="7f4c4e1d-2393-4151-a71b-5880332ca202" />
+      <Name value="Springs.LineLoop.Merge" />
+      <Description value="Attempts to join lines into a single chain of joined curves. The node returns the new lines as a chain and with the original order. The success outputs returns the success of the execution as a true/false boolean." />
+      <Inputs>
+        <Input value="lines" />
+        <Input value="margin" />
+      </Inputs>
+      <Outputs>
+        <Output value="lines" />
+        <Output value="ordered" />
+        <Output value="success" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="2131443f-5ba4-4108-b093-0edfb8ce8a7f" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Geometry.GroupByDistance" x="210.362017951085" y="-317.836812096189" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="1" default="True" />
+      <ID value="31f2a383-fdc6-402b-9511-32ff8dd77add" />
+      <Name value="Springs.Geometry.GroupByDistance" />
+      <Description value="Splits the list of curves into groups if the distance between them is lesser than the provided margin." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="margin" />
+      </Inputs>
+      <Outputs>
+        <Output value="geometry" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <CoreNodeModels.Watch guid="616e5ae3-06e6-4feb-9c21-8f9b1cf7b537" type="CoreNodeModels.Watch" nickname="Watch" x="957.973627588949" y="-210.751165632127" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" />
+    <CoreNodeModels.Logic.If guid="11f16146-7e82-4879-b15a-9d5e855dc6c0" type="CoreNodeModels.Logic.If" nickname="If" x="710.191314180527" y="-367.9986747291" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="4b55b5de-95a0-4da4-8eb2-bd6e59df3c64" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="904.470222845819" y="-374.27524776849" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Flatten@var[]..[]" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="b85146b8-495a-4e89-94da-4a3ad26491b2" start_index="0" end="d44ce6a3-1411-4cba-85a9-722d9177d638" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d44ce6a3-1411-4cba-85a9-722d9177d638" start_index="0" end="991d531b-f94a-4adb-874e-3d4790a3f183" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d44ce6a3-1411-4cba-85a9-722d9177d638" start_index="0" end="05ad9047-a8d2-49b3-8f8f-95fcf4df44da" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7a62a096-013b-4c48-a285-ff0ece4514da" start_index="0" end="69d411e7-28e4-464a-ac96-a139017df26a" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7a62a096-013b-4c48-a285-ff0ece4514da" start_index="0" end="2131443f-5ba4-4108-b093-0edfb8ce8a7f" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="05ad9047-a8d2-49b3-8f8f-95fcf4df44da" start_index="0" end="616e5ae3-06e6-4feb-9c21-8f9b1cf7b537" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="991d531b-f94a-4adb-874e-3d4790a3f183" start_index="2" end="2131443f-5ba4-4108-b093-0edfb8ce8a7f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="69d411e7-28e4-464a-ac96-a139017df26a" start_index="1" end="11f16146-7e82-4879-b15a-9d5e855dc6c0" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="69d411e7-28e4-464a-ac96-a139017df26a" start_index="2" end="11f16146-7e82-4879-b15a-9d5e855dc6c0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2131443f-5ba4-4108-b093-0edfb8ce8a7f" start_index="0" end="69d411e7-28e4-464a-ac96-a139017df26a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2131443f-5ba4-4108-b093-0edfb8ce8a7f" start_index="0" end="11f16146-7e82-4879-b15a-9d5e855dc6c0" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="11f16146-7e82-4879-b15a-9d5e855dc6c0" start_index="0" end="4b55b5de-95a0-4da4-8eb2-bd6e59df3c64" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4b55b5de-95a0-4da4-8eb2-bd6e59df3c64" start_index="0" end="05ad9047-a8d2-49b3-8f8f-95fcf4df44da" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-3316.12041054136" eyeY="59361.2773413129" eyeZ="-13034.7705208445" lookX="-781.892255290447" lookY="-58523.2641086169" lookZ="26510.5720202221" upX="0.0288365565229832" upY="-0.20791169081776" upZ="-0.977722446213236" />
+  </Cameras>
+</Workspace>

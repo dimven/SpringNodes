@@ -20,6 +20,7 @@ _CHANGE LOG_
 	- Springs.SelectFaces+ works in a similar manner to the built in node, with the exception that it provides a valid face reference for family instance elements and the global picl point during selection. You can use the pick point to easily identfy the correct face for planar surfaces with multiple loops.
 	- Springs.BoundingBox.MidPoint is a simple utility node that can quickly compute the mid point between a BB's min and max extent.
 	- Springs.Points.ConvexHull2D is an evolution of Clockwork's "UV.ConvexHull2D".
+- The DirectShapeType implementation has been revised in an attempt to make it more robust between Revit sessions.
 - All UI nodes now have an additional "CustomMsg" input to provide additional insight when using the nodes with DynamoPlayer.
 - The serialization nodes now have an optional separator input to customize the output for use with some CSV files.
 - The even/odd list utility node have been merged.

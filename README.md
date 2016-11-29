@@ -14,6 +14,12 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+110.0.2 291116
+- Fix for #20
+
+110.0.1 101116
+- Fixed a regression in Element.SetLocation, that I created previously, when cleaning up old Revit2014 code.
+
 110.0.0 061116
 - New nodes:
 	- Springs.BrepShape.ByGeometry works only in Revit 2017 and later and implements the new BrepBuilder class to generate DirectShapes with materials. However, poly-surfaces and solids with periodic faces like spheres, cylinders and cones are not supported at thistime.

@@ -12,7 +12,10 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
    Some of the nodes provided in this package have been sprung by existing content, such as the wonderful SteamNodes, archi-lab.net, Clockwork and LunchBox, because every great mechanism could use a spare spring from time to time. The aim is to always improve upon the original content either by enabling additional functionality or opening up new uses. By giving it a new twist, we avoid affecting the original content's goals and direction.
 
-_CHANGE LOG_
+##INSTALLATION
+Installation is simple - just use Dynamo's built-in package manager and search for ```spring```.
+   
+##CHANGE LOG
 
 110.1.0 300117
 - ErrorReport/InterferenceCheck.Parse get a big speed boost from improved iteration.

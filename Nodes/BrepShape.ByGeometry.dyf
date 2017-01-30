@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-77.5634813840652" Y="50.792442124992" zoom="1.703916824555" Name="Springs.BrepShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model." ID="43629155-311e-4c61-b15f-5c14be2e02c3" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.1.0.2094" X="-77.5634813840652" Y="50.792442124992" zoom="1.703916824555" Name="Springs.BrepShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model." ID="43629155-311e-4c61-b15f-5c14be2e02c3" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
@@ -125,7 +125,13 @@ def NewDS_R17(geom1, cat1, name1, mat1):
 				old_type.SetShape(br1)
 				fec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()
 				insts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]
-				return insts[0].ToDSType(False)
+				if insts:
+					return insts[0].ToDSType(False)
+				else:
+					dsLib.AddDefinitionType(name1, old_type.Id)
+					ds1 =  DirectShape.CreateElementInstance(doc, old_type.Id, cat.Id, name1, tf1, "Dynamo","spring nodes")
+					ds1.SetTypeId(old_type.Id)
+					return ds1.ToDSType(False)
 			else:
 				if cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):
 					cat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)
@@ -192,6 +198,6 @@ else : OUT = "Make sure that each geometry\nobject has a unique type name."</Scr
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

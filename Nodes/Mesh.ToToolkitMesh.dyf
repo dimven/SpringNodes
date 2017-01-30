@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="107.2" Y="117.6" zoom="1" Name="Springs.Mesh.ToToolkitMesh" Description="Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d992f1f9-a78e-4864-b50f-92973fe214fe" Category="Springs.Geometry">
+<Workspace Version="1.1.0.2094" X="107.2" Y="117.6" zoom="1" Name="Springs.Mesh.ToToolkitMesh" Description="Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d992f1f9-a78e-4864-b50f-92973fe214fe" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Dynamo.Mesh" resolvedName="Autodesk.Dynamo.MeshToolkit.Mesh" assemblyName="MeshToolkit.dll" />
@@ -14,7 +14,7 @@
       <Symbol value="mesh:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="bc38c9e5-2075-4882-bca1-29a4c1deb11f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="676.2" y="106.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <Symbol value="toolkitMesh" />
+      <Symbol value="tkMesh" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
@@ -25,6 +25,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="31160.4344563659" eyeY="86607.3966554698" eyeZ="116270.111861701" lookX="-48311.2955088628" lookY="-51506.8830524174" lookZ="-99446.2303244004" upX="-0.0953217574239409" upY="0.975916720431984" upZ="-0.196214763184763" />
+    <Camera Name="Background Preview" eyeX="75.8142976819515" eyeY="80.1999564366379" eyeZ="-16.657231707204" lookX="-76.1555313837575" lookY="-54.8019187055428" lookZ="12.4854560009828" upX="-0.385583525236394" upY="0.92050485345247" upZ="0.0632151867575213" />
   </Cameras>
 </Workspace>

@@ -42,7 +42,7 @@ def output1(l1):
 
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
-out1 = []
+out1, fail = [], []
 framing = ("Beam", "Brace")
 
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -56,7 +56,7 @@ for i in xrange(len(elements)):
 			WallUtils.DisallowWallJoinAtEnd(elements[i],0)
 			WallUtils.DisallowWallJoinAtEnd(elements[i],1)
 			isWall = True
-		elif el_typ == "Autodesk.Revit.DB.FamilyInstance" and not isRvt14:
+		elif el_typ == "Autodesk.Revit.DB.FamilyInstance":
 			if elements[i].StructuralType.ToString() in framing:
 				b_start = FrU.IsJoinAllowedAtEnd(elements[i],0)
 				b_end = FrU.IsJoinAllowedAtEnd(elements[i],1)
@@ -78,7 +78,7 @@ for i in xrange(len(elements)):
 			if b_end: FrU.AllowJoinAtEnd(elements[i],1)
 		out1.append(elements[i].ToDSType(True))
 	except:
-		out1.append([])
+		out1.append(fail)
 TransactionManager.Instance.TransactionTaskDone()
 
 OUT = output1(out1)</Script>
@@ -93,6 +93,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="503402.53125" eyeY="213.646377563477" eyeZ="-6987186" lookX="151.058212280273" lookY="-163.646377563477" lookZ="-730.114685058594" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

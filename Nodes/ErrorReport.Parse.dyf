@@ -1,8 +1,8 @@
-<Workspace Version="1.0.0.1180" X="143.319473171163" Y="236.495401346001" zoom="1.51051845643135" Name="Springs.ErrorReport.Parse" Description="Process a Revit error report (HTML file) and extract the error types, all affected elements and the total number of errors. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="f7974021-f210-460d-84f1-a9665d99dbe2" Category="Springs.Revit.Utility">
+<Workspace Version="1.1.0.2094" X="0.319473171162997" Y="226.495401346001" zoom="1.51051845643135" Name="Springs.ErrorReport.Parse" Description="Process a Revit error report (HTML file) and extract the error types, all affected elements and the total number of errors. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="f7974021-f210-460d-84f1-a9665d99dbe2" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="f545012d-4a88-45cf-82bc-9d8a9cc173ff" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="391.527350939437" y="3.19470722770575" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];&#xA;res[2];&#xA;res[3];" ShouldFocus="false" />
-    <PythonNodeModels.PythonNode guid="c9f9080f-27f0-4706-9d36-e7360d91e5eb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+    <PythonNodeModels.PythonNode guid="c9f9080f-27f0-4706-9d36-e7360d91e5eb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="248.013926948574" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
       <Script>import clr
 import System
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
@@ -12,6 +12,7 @@ sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
 from sgmllib import SGMLParser
 from collections import Counter
 import re
+from operator import itemgetter
 
 class ReportParser(SGMLParser):
 	def __init__(self, verbose=0):
@@ -35,23 +36,22 @@ def pullElement(list1):
 		except: out1.append(i)
 	return out1
 
-report1 = IN[0]
-fetch_elements = IN[1]
+report1, fetch_elements = IN
 
 known_errors = ("  ", "td&gt;  ", "&amp;")
-with open(report1, 'r') as f:
-	read_data = f.read()
 parser = ReportParser()
-parser.feed(read_data)
+with open(report1, 'r') as f:
+	for line in f:
+		parser.feed(line)
 parser.data1.pop(0)
 parser.data1.append(parser.temp_data)
 report_data = parser.data1
 parser.close()
 report_errors = [i.pop(0) for i in report_data]
-group_errors = Counter(report_errors).items()
-unique_errors = [i[0] for i in group_errors]
-sum_errors = [i[1] for i in group_errors]
-sum_errors.append("Total errors : %s"%sum(sum_errors))
+group_errors = Counter(report_errors).most_common()
+unique_errors = map(itemgetter(0), group_errors)
+sum_errors = map(itemgetter(1), group_errors)
+sum_errors.append("Total errors : %d" % sum(sum_errors) )
 
 #id_expression = re.compile("\D(\d{5,8})\D")
 id_expression = re.compile(" id (.*)  ")

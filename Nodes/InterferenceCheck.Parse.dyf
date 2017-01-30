@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="-14.6078379895734" Y="199.68569470311" zoom="1.59077689706107" Name="Springs.InterferenceCheck.Parse" Description="Process a Revit interference check (HTML file) and extract the interference categories, all affected elements and the total number of clashes. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="d0ea3d37-e270-4d77-af77-5e970177cc79" Category="Springs.Revit.Utility">
+<Workspace Version="1.1.0.2094" X="-14.6078379895734" Y="199.68569470311" zoom="1.59077689706107" Name="Springs.InterferenceCheck.Parse" Description="Process a Revit interference check (HTML file) and extract the interference categories, all affected elements and the total number of clashes. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="d0ea3d37-e270-4d77-af77-5e970177cc79" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="4eec9315-409c-40b7-a5e2-9620d45396d0" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
@@ -43,14 +43,13 @@ def fetchCat(l1):
 	if len(out1) &gt; 1 : return " - ".join(out1)
 	else: return "Unidentified"
 
-report1 = IN[0]
-fetch_elements = IN[1]
+report1, fetch_elements = IN
 
 known_errors = ("  ", "td&gt;  ", "&amp;")
-with open(report1, 'r') as f:
-	read_data = f.read()
 parser = ReportParser()
-parser.feed(read_data)
+with open(report1, 'r') as f:
+	for line in f:
+		parser.feed(line)
 parser.data1.append(parser.temp_data)
 report_data = parser.data1[2:]
 parser.close()

@@ -14,6 +14,14 @@ Spring Nodes is a custom node package for [Dynamo](http://www.dynamobim.org) .
 
 _CHANGE LOG_
 
+110.1.0 300117
+- ErrorReport/InterferenceCheck.Parse get a big speed boost from improved iteration.
+- BrepShape/DirectShape.ByGeometry have been revised in accordance with issue #25
+- Collector.ElementSketch has been revised to improve performance (if elementid - 1 is a sketch, avoid an expensive sub-transaction)
+- List management (like the Dictionary.ByKeysValues and List.MergeBuBoolMask) nodes's inputs have been revised so that they work better with nested lists and the new list@level functionality.
+- Bugs in Feet2Fraction & Fraction2Feet fixed. However DesignScript functions have been behaving problematically. (VM failing to register the function inside a custom node).
+- New Node: Elements.GroupByDistance provides a functionality very similar to the Geometry.GroupByDistance node. By pairing each element with a geometry, we cal quickly detect element groups.
+
 110.0.2 291116
 - Fix for #20
 

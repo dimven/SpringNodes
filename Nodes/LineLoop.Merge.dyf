@@ -24,10 +24,6 @@ margin = IN[1]
 original = curves[:]
 
 def OrderCurves(cl0,cl1):
-	def countTrue(l1, n = 0):
-		for i in l1: n += 1 if i else 0
-		return n
-
 	def switch1(i, j, cl0 = cl0, cl1 = cl1):
 		cl0[i],cl0[j] = cl0[j],cl0[i]
 		cl1[i],cl1[j] = cl1[j],cl1[i]
@@ -36,7 +32,7 @@ def OrderCurves(cl0,cl1):
 	xr1 =  xrange(_ln)
 	int_test = [[cl1[i].DoesIntersect(cl1[j])\
 	for j in xr1 if j != i] for i in xr1]
-	countT = map(countTrue, int_test)
+	countT = map(sum, int_test)
 	if 0 not in countT:
 		if 1 in countT and countT[0] != 1 :
 			switch1(0, countT.index(1) )
@@ -108,6 +104,6 @@ OUT = out1[0], ReorderCurves(original,out1[0]), out1[1]</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-26590.4818455237" eyeY="37160.2774957114" eyeZ="-3104.92560624796" lookX="347.564779954944" lookY="-38298.9161940543" lookZ="5084.36183460621" upX="-0.0679612143070458" upY="0.0836778433323145" upZ="-0.994172667037856" />
+    <Camera Name="Background Preview" eyeX="7191.5638982534" eyeY="82115.3271070615" eyeZ="-76767.062973007" lookX="34.2995394157797" lookY="-21431.2615507996" lookZ="514.959910630598" upX="-0.0652380001863528" upY="0.190808995684465" upZ="-0.979456971060573" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-62.5119800122942" Y="135.900078693148" zoom="0.784369328044827" Name="Springs.Ln2Str" Description="Serilize a geometry line to a string for use in Revit parameters" ID="6c712c67-329c-4499-a399-d1cedd2b45bf" Category="Springs.Geometry.Serialization">
+<Workspace Version="1.1.0.2094" X="162.288019987706" Y="127.100078693148" zoom="0.784369328044827" Name="Springs.Ln2Str" Description="Serilize a geometry line to a string for use in Revit parameters" ID="6c712c67-329c-4499-a399-d1cedd2b45bf" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -13,8 +13,12 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e7e969ff-4b40-470f-858d-4acfcbbaed8a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Pt2Rvt(p1, s1)&#xA;{&#xA;return = p1.X + s1 + p1.Y + s1 + p1.Z;&#xA;};&#xA;&#xA;def Ln2Rvt(l1, s1)&#xA;{&#xA;return = Pt2Rvt(l1.StartPoint) + s1 + Pt2Rvt(l1.EndPoint);&#xA;};&#xA;&#xA;Ln2Rvt(cl, s1);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e7e969ff-4b40-470f-858d-4acfcbbaed8a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Pt2Rvt(p1, s1)&#xA;{&#xA;return = p1.X + s1 + p1.Y + s1 + p1.Z;&#xA;};&#xA;&#xA;def Ln2Rvt(l1, s1)&#xA;{&#xA;return = Pt2Rvt(l1.StartPoint, s1) + s1 + Pt2Rvt(l1.EndPoint, s1);&#xA;};&#xA;&#xA;Ln2Rvt(cl, s1);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="97bad80b-b29d-486f-9515-1789f3c00209" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="822" y="167" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="string" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f7725858-946b-4854-a550-3b8ae202997c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="127.5" y="1" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -33,6 +37,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="-10307.7724609375" eyeY="112439.2109375" eyeZ="-62784.42578125" lookX="40.0748672485352" lookY="-104764.1796875" lookZ="692.777404785156" upX="-0.056487288326025" upY="0.207911714911461" upZ="-0.976515173912048" />
   </Cameras>
 </Workspace>

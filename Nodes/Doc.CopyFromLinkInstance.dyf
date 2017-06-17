@@ -1,0 +1,75 @@
+<Workspace Version="1.2.1.3083" X="-21.1479519998463" Y="305.889516762583" zoom="1.78359936238281" Name="Springs.Doc.CopyFromLinkInstance" Description="The node will use the total transformation of the link instance to copy the input elements into the local document." ID="1747bc42-6b08-4141-8861-99eb7bbf23cc" Category="Springs.Revit.Document">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="b8ab592e-e6d5-4143-8e01-8fb99c761209" type="PythonNodeModels.PythonNode" nickname="Python Scrpit" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>import clr
+
+clr.AddReference('RevitServices')
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+from System.Collections.Generic import List
+
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def singleton(x):
+	if hasattr(x,'__iter__'): return x[0]
+	else : return x
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+
+linkInst = UnwrapElement(singleton(IN[0]) )
+elements = UnwrapElement(tolist(IN[1]) )
+
+linkDoc = linkInst.GetLinkDocument()
+tf1 = linkInst.GetTotalTransform()
+eId = List[ElementId]()
+for e in elements:
+	try:
+		id1 = e.Id
+	except:
+		continue
+	eId.Add(id1)
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+copy = ElementTransformUtils.CopyElements(linkDoc, eId, doc, tf1, None)
+TransactionManager.Instance.TransactionTaskDone()
+
+OUT = [doc.GetElement(i).ToDSType(False) for i in copy]</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f4f315aa-a3f3-4844-972f-fbd19f21fdee" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="LinkInstance:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0796a9bf-f4dd-4de3-b020-c699d9f8c8c3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-1.1213280528022" y="61.9757478550257" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="element:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4754e8d3-5593-4687-958f-c846a04aa050" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="402.146877887911" y="-0.560664026401128" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="local element" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="b8ab592e-e6d5-4143-8e01-8fb99c761209" start_index="0" end="4754e8d3-5593-4687-958f-c846a04aa050" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f4f315aa-a3f3-4844-972f-fbd19f21fdee" start_index="0" end="b8ab592e-e6d5-4143-8e01-8fb99c761209" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0796a9bf-f4dd-4de3-b020-c699d9f8c8c3" start_index="0" end="b8ab592e-e6d5-4143-8e01-8fb99c761209" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-32753.822265625" eyeY="23993.158203125" eyeZ="236293.15625" lookX="136315.96875" lookY="-46676.24609375" lookZ="-130770.8671875" upX="0.018890118226409" upY="0.999657332897186" upZ="-0.0181217007339001" />
+  </Cameras>
+</Workspace>

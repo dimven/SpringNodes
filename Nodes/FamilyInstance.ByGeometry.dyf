@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="259.400187921041" Y="157.042783848514" zoom="1.21316139457394" Name="Springs.FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="Springs.Revit.FamilyInstance">
+<Workspace Version="1.2.1.3083" X="259.400187921041" Y="157.042783848514" zoom="1.21316139457394" Name="Springs.FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -14,6 +14,13 @@
   </NamespaceResolutionMap>
   <Elements>
     <PythonNodeModels.PythonNode guid="1cc92fa8-a1b1-4217-a336-0a638867f39c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="193.874021205893" y="98.5069454669779" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="7">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <PortInfo index="4" default="False" />
+      <PortInfo index="5" default="False" />
+      <PortInfo index="6" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -25,30 +32,30 @@ from itertools import repeat
 
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
 import sys
-sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
+sys.path.append('%s\IronPython 2.7\Lib' %pf_path)
 import traceback
 
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 from Autodesk.DesignScript.Geometry import Point as DynPoint
 
-clr.AddReference("RevitServices")
+clr.AddReference('RevitServices')
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
 
-clr.AddReference("RevitAPI")
+clr.AddReference('RevitAPI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Structure import StructuralType
 
-clr.AddReference("RevitNodes")
+clr.AddReference('RevitNodes')
 import Revit
 clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
+	if hasattr(obj1,'__iter__'): return obj1
 	else: return [obj1]
 
 def output1(l1):
@@ -82,11 +89,12 @@ subcat = tolist(IN[6])
 
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
-acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
-origin = XYZ(0,0,0)
+acceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')
+origin = XYZ.Zero
 str_typ = StructuralType.NonStructural
 t1 = TransactionManager.Instance
 temp_path = System.IO.Path.GetTempPath()
+invalid_chars = System.IO.Path.GetInvalidFileNameChars()
 satOpt = SATImportOptions()
 satOpt.Placement = ImportPlacement.Origin
 satOpt.Unit = ImportUnit.Foot
@@ -96,14 +104,14 @@ SaveAsOpt = SaveAsOptions()
 SaveAsOpt.OverwriteExistingFile = True
 
 def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
-	enable_mat = False if mat1 is None else True
-	enable_subcat = False if subcat1 is None else True
-	TransactionManager.ForceCloseTransaction(t1)
-	famdoc = doc.Application.NewFamilyDocument(fam_path)
-	message = None
-	temp_path = System.IO.Path.GetTempPath()
-	sat_path = "%s%s.sat" % (temp_path, name1)
 	try:
+		enable_mat = False if mat1 is None else True
+		enable_subcat = False if subcat1 is None else True
+		if any( (c in name1 for c in invalid_chars) ):
+			raise Exception('Family name contains invalid characters')
+		TransactionManager.ForceCloseTransaction(t1)
+		famdoc = doc.Application.NewFamilyDocument(fam_path)
+		sat_path = '%s%s.sat' % (temp_path, name1)
 		if factor != 1:
 			s1 = s1.Scale(factor)
 		vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry(s1).MinPoint, DynPoint.Origin())
@@ -127,54 +135,49 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 		s1 = enum2.Current
 		famdoc.Delete(satId)
 		System.IO.File.Delete(sat_path)
+
+		save_path = '%s%s.rfa' % (temp_path, name1)
+		try: #set the category
+			fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
+			famdoc.OwnerFamily.FamilyCategory = fam_cat
+		except: pass
+		s2 = FreeFormElement.Create(famdoc,s1)
+		if isVoid1:
+			void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)
+			void_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)
+		else: #voids do not have a material values or a sub-cateogry
+			if enable_mat:
+				try:
+					mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
+					for m in mat_fec:
+						if m.Name == mat1:
+							fam_mat = m
+							break
+					mat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)
+				except: pass
+			if enable_subcat: #create and assign the sub-category:
+				try:
+					current_fam_cat = famdoc.OwnerFamily.FamilyCategory
+					new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
+					s2.Subcategory = new_subcat
+				except: pass
+		TransactionManager.ForceCloseTransaction(t1)
+		famdoc.SaveAs(save_path, SaveAsOpt)
+		family1 = famdoc.LoadFamily(doc, FamOpt1() )
+		famdoc.Close(False)
+		System.IO.File.Delete(save_path)
+		symbols = family1.GetFamilySymbolIds().GetEnumerator()
+		symbols.MoveNext()
+		symbol1 = doc.GetElement(symbols.Current)
+		t1.EnsureInTransaction(doc)
+		if not symbol1.IsActive: symbol1.Activate()
+		inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
+		ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz() )
+		TransactionManager.ForceCloseTransaction(t1)
+		return inst1.ToDSType(False), family1.ToDSType(False)
+		
 	except:
-		message = (traceback.format_exc(),"")
-		pass
-	if message is None:
-		try:
-			save_path = "%s%s.rfa" % (temp_path, name1)
-			try: #set the category
-				fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
-				famdoc.OwnerFamily.FamilyCategory = fam_cat
-			except: pass
-			s2 = FreeFormElement.Create(famdoc,s1)
-			if isVoid1:
-				void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)
-				void_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)
-			else: #voids do not have a material values or a sub-cateogry
-				if enable_mat:
-					try:
-						mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
-						for m in mat_fec:
-							if m.Name == mat1:
-								fam_mat = m
-								break
-						mat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)
-					except: pass
-				if enable_subcat: #create and assign the sub-category:
-					try:
-						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
-						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
-						s2.Subcategory = new_subcat
-					except: pass
-			TransactionManager.ForceCloseTransaction(t1)
-			famdoc.SaveAs(save_path, SaveAsOpt)
-			family1 = famdoc.LoadFamily(doc, FamOpt1() )
-			famdoc.Close(False)
-			System.IO.File.Delete(save_path)
-			symbols = family1.GetFamilySymbolIds().GetEnumerator()
-			symbols.MoveNext()
-			symbol1 = doc.GetElement(symbols.Current)
-			t1.EnsureInTransaction(doc)
-			if not symbol1.IsActive: symbol1.Activate()
-			inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
-			ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz() )
-			TransactionManager.ForceCloseTransaction(t1)
-			return inst1.ToDSType(False), family1.ToDSType(False)
-		except:
-			message = (traceback.format_exc(),"")
-			return message
-	else : return message
+		return traceback.format_exc(),''
 
 if len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):
 	return1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)
@@ -182,7 +185,7 @@ elif len(geom) == len(names):
 	padded = PadLists([geom, category, isVoid, material,subcat])
 	p_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]
 	return1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)
-else : return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
+else : return1 = [('Make sure that each geometry\nobject has a unique family name.', '')]
 OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])
 satOpt.Dispose()
 opt1.Dispose()
@@ -201,6 +204,7 @@ SaveAsOpt.Dispose()</Script>
       <Symbol value="category:var[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="325026ea-de93-449a-9cff-bea72f2165f3" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="481.34169886937" y="97.2579709545968" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="instance" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="aff75132-a345-4885-beee-fdf45692a2f1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-121.888507975185" y="236.250639579471" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -210,9 +214,12 @@ SaveAsOpt.Dispose()</Script>
       <Symbol value="isVoid:var[] = false" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="482.081494386012" y="156.508670063082" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="family" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="334.118203122638" y="101.51150541104" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="334.118203122638" y="101.51150541104" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-146.888507975185" y="353.019759545222" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="subcategoryName:var[] = null" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
@@ -233,6 +240,6 @@ SaveAsOpt.Dispose()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-9.19272125753637" eyeY="13.0784624004798" eyeZ="20.9641004725462" lookX="1.98757174959178" lookY="-17.9107426082534" lookZ="-24.2303553944167" upX="0.0332521800396792" upY="0.913545457642601" upZ="-0.405375121761536" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="387.159335520163" Y="188.915162086108" zoom="1.51051845643135" Name="Springs.AdaptiveFamily.ByFacetedGeometry" Description="Genearate a new eight point adaptive component family type from any solid or polysurface consisting of planar faces. Faces with openigs are not supported." ID="fd198d9c-0e5e-4472-af70-464c835ba923" Category="Springs.Revit.ElementType">
+<Workspace Version="1.2.1.3083" X="387.159335520163" Y="188.915162086108" zoom="1.51051845643135" Name="Springs.AdaptiveFamily.ByFacetedGeometry" Description="Genearate a new eight point adaptive component family type from any solid or polysurface consisting of planar faces. Faces with openigs are not supported." ID="fd198d9c-0e5e-4472-af70-464c835ba923" Category="Springs.Revit.ElementType">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
@@ -14,7 +14,13 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="9fdcb41e-4439-4c41-aa8f-1f972f3b6caa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="163.606911447084" y="1.72786177105831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="6">
+    <PythonNodeModels.PythonNode guid="9fdcb41e-4439-4c41-aa8f-1f972f3b6caa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="164.268935797559" y="1.06583742058297" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="6">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <PortInfo index="4" default="False" />
+      <PortInfo index="5" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -37,6 +43,7 @@ clr.AddReference('RevitServices')
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference('RevitNodes')
 import Revit
@@ -135,6 +142,7 @@ def NewAC_background(s1, name1, cat1, mat1, subcat1):
 			pt_arr.Append(pts[1])
 			l1 = factory.NewCurveByPoints(pt_arr)
 			l1.IsReferenceLine = True
+			l1.ReferenceType = ReferenceType.None
 			return l1
 
 		def ref_pt(l1, par1, pmt = pmt, pmf = pmf, factory = factory, app = app.Create):
@@ -265,12 +273,16 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
       <Symbol value="subcategoryName:var[] = null" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="809c94fc-f188-4f06-a8d7-8ba3c28d324c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="462.222022594786" y="3.57622615282703" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="type" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="d5fbedc4-553b-42b2-8bf0-77d4b3145160" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="464.355746997316" y="74.1512194043307" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="family" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="60796755-f91f-4ca2-9a66-8b20c3058802" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="304.926563814617" y="7.13279616632583" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="60796755-f91f-4ca2-9a66-8b20c3058802" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="304.926563814617" y="7.13279616632583" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
   </Elements>
   <Connectors>
     <Dynamo.Graph.Connectors.ConnectorModel start="9fdcb41e-4439-4c41-aa8f-1f972f3b6caa" start_index="0" end="60796755-f91f-4ca2-9a66-8b20c3058802" end_index="0" portType="0" />
@@ -287,6 +299,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="-386.782204207869" eyeY="4518.45120217078" eyeZ="4195.72145134856" lookX="381.782204207869" lookY="-4507.45120217078" lookZ="-4203.72145134856" upX="0.0512301976784809" upY="0.824126188622016" upZ="-0.564084649740776" />
   </Cameras>
 </Workspace>

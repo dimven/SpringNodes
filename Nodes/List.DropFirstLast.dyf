@@ -1,16 +1,20 @@
-<Workspace Version="1.0.0.1180" X="-9.34837871303586" Y="152.072723353291" zoom="0.959788699581266" Name="Springs.List.DropFirstLast" Description="Removes the first and last items from the list" ID="2ff558d0-5868-45f0-bb84-67ad6f0526bd" Category="Springs.Core.List">
+<Workspace Version="1.2.1.3083" X="-9.34837871303586" Y="152.072723353291" zoom="0.959788699581266" Name="Springs.List.DropFirstLast" Description="Removes the first and last items from the list" ID="2ff558d0-5868-45f0-bb84-67ad6f0526bd" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fa24f103-de4d-4ddd-9580-5eaedf763bf6" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="218.027734264208" y="0.81980168553315" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="List.DropItems(List.DropItems(l1,1),-1);&#xA;l1[{0,-1}];" ShouldFocus="false" />
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="621eafcf-479b-4c4f-b112-bc0fd8418d65" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="81.1603668677787" y="-0.819801685533122" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="list:var[]" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fa24f103-de4d-4ddd-9580-5eaedf763bf6" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="218.027734264208" y="0.81980168553315" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="List.DropItems(List.DropItems(l1,1),-1);&#xA;l1[{0,-1}];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="621eafcf-479b-4c4f-b112-bc0fd8418d65" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="51.9872790702085" y="-1.86169767830347" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="list:var[]..[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="1f3ad4b6-ec4d-40cb-9a53-90c01d3a041b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="671.229617821527" y="-29.1836712736686" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="list" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="9ed4ef8b-a0b1-4d25-aeaa-1f4236ad59fa" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="670.504185836715" y="33.2564875848555" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="F&amp;L" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -22,4 +26,7 @@
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-135853.377091537" eyeY="128481.409500831" eyeZ="-254577.968545506" lookX="151999.770363001" lookY="-62617.3561032672" lookZ="288163.599095596" upX="-0.0122128752991557" upY="0.999657332897186" upZ="-0.0231533665210009" />
+  </Cameras>
 </Workspace>

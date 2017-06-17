@@ -1,7 +1,9 @@
-<Workspace Version="1.1.0.2094" X="-648.793609287779" Y="190.885295621425" zoom="2.05668026833428" Name="Springs.DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.2.2.373" X="-648.793609287779" Y="190.885295621425" zoom="2.05668026833428" Name="Springs.DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="ed190f5b-44d3-48ea-a62a-8b384a18b745" type="PythonNodeModels.PythonNode" nickname="Python Script" x="456.912369917016" y="-20" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -42,11 +44,11 @@ dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
 if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)
 
 def CopyDS(transf):
-	#try:
+	try:
 		ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, "Dynamo","spring nodes")
 		ds1.SetTypeId(TypeId)
 		return ds1.ToDSType(False)
-	#except: return None
+	except: return None
 	
 TransactionManager.Instance.EnsureInTransaction(doc)
 OUT = output1(map(CopyDS, transforms))
@@ -59,6 +61,7 @@ TransactionManager.Instance.TransactionTaskDone()</Script>
       <Symbol value="vector:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="eedcb694-4715-4797-aeed-b620d370055f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="615.6" y="-18.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="directShape" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>

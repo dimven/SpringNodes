@@ -1,4 +1,4 @@
-<Workspace Version="1.0.0.1180" X="217.462573012712" Y="157.865285593894" zoom="2.11614042156078" Name="Springs.File.Size" Description="Checks the file size. Provide a file path as a string." ID="0672c281-9887-40f9-886e-248abb55564b" Category="Springs.Core.File.Query">
+<Workspace Version="1.2.2.373" X="271.862573012712" Y="143.465285593894" zoom="2.11614042156078" Name="Springs.File.Size" Description="Outputs the the file size in kilobytes or megabytes. Provide a file path as a string. Set kbOnly to true for a consistent output." ID="0672c281-9887-40f9-886e-248abb55564b" Category="Springs.Core.File.Query">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="NurbsCurve" resolvedName="Autodesk.DesignScript.Geometry.NurbsCurve" assemblyName="ProtoGeometry.dll" />
@@ -7,37 +7,50 @@
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="b97ce17c-f4be-4def-b9db-89a6c4358238" type="PythonNodeModels.PythonNode" nickname="Python Script" x="173.344021395248" y="0.580727110642044" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <Script>#Copyright(c) 2015, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="b97ce17c-f4be-4def-b9db-89a6c4358238" type="PythonNodeModels.PythonNode" nickname="Python Script" x="173.344021395248" y="0.580727110642044" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
-import clr
-import sys
-sys.path.append('C:\Program Files (x86)\IronPython 2.7\Lib')
-import os
+from System.IO import FileInfo
 
-def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
-	else: return [obj1]
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+def output(x):
+	if len(x) == 1: return x[0]
+	else : return x
 
 paths = tolist(IN[0])
-size = [os.stat(p).st_size for p in paths]
-size_f = [str(int(s)/1024) + " KB" for s in size]
-OUT = output1(size_f)</Script>
+mb = 1048576.0
+kb = 1024.0
+def getSize(p, mb=mb, kb=kb, kbOnly = IN[1]):
+	sb = FileInfo(p).Length
+	if sb &lt; mb or kbOnly:
+		return '%.3f KB' % (sb / kb)
+	else:
+		return '%.3f MB' % (sb / mb)
+
+OUT = output(map(getSize, paths) )</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="23fff3c9-5676-49e4-91a3-d9218997d553" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="34.0918821760733" y="1.41767529670234" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="path:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="fea3370b-82db-4bdf-8296-b835f3c624af" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="329.370215207735" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="size" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3a3d5af8-a25c-46e9-9c0a-0d1b76025b3b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-36.7435942780005" y="67.9174250285392" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="kbOnly:bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
     <Dynamo.Graph.Connectors.ConnectorModel start="b97ce17c-f4be-4def-b9db-89a6c4358238" start_index="0" end="fea3370b-82db-4bdf-8296-b835f3c624af" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="23fff3c9-5676-49e4-91a3-d9218997d553" start_index="0" end="b97ce17c-f4be-4def-b9db-89a6c4358238" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3a3d5af8-a25c-46e9-9c0a-0d1b76025b3b" start_index="0" end="b97ce17c-f4be-4def-b9db-89a6c4358238" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

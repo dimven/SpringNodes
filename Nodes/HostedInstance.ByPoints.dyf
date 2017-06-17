@@ -1,3 +1,4 @@
+<Workspace Version="1.1.0.2094" X="-39.535145569519" Y="226.789464578543" zoom="1.24844365397223" Name="Springs.HostedInstance.ByPoints" Description="Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance." ID="2b432cef-fa0a-44ef-92c2-89b586bfc8ba" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="01b001a1-0f4b-46c2-b40b-9a76321397df" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-40.645443153968" y="12.8710569987566" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">

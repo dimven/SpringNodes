@@ -129,7 +129,7 @@ def NewDS_R17(geom1, cat1, name1, mat1):
 					return insts[0].ToDSType(False)
 				else:
 					dsLib.AddDefinitionType(name1, old_type.Id)
-					ds1 =  DirectShape.CreateElementInstance(doc, old_type.Id, cat.Id, name1, tf1, "Dynamo","spring nodes")
+					ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1.Id, name1, tf1, "Dynamo","spring nodes")
 					ds1.SetTypeId(old_type.Id)
 					return ds1.ToDSType(False)
 			else:

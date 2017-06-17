@@ -1,16 +1,20 @@
-<Workspace Version="1.1.0.2094" X="-448.934854784931" Y="303.883802470563" zoom="1.545620359375" Name="Springs.List.GetEvenOdd" Description="Gets the even and odd indices from the list." ID="d0ec40ae-d2fe-4ae1-bb0a-1257df968c5a" Category="Springs.Core.List">
+<Workspace Version="1.2.1.3083" X="-448.934854784931" Y="303.883802470563" zoom="1.545620359375" Name="Springs.List.GetEvenOdd" Description="Gets the even and odd indices from the list." ID="d0ec40ae-d2fe-4ae1-bb0a-1257df968c5a" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2df2c169-70a0-41cc-bcf1-74dcbc371bbf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="312.473434306611" y="-18.6469894071558" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="list:var[]" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2df2c169-70a0-41cc-bcf1-74dcbc371bbf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="276.242027505885" y="-19.2939788143116" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="list:var[]..[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="f9d44ba8-4f59-4e41-ba1e-7b00e1f6cc8b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="813.703951136079" y="29.5121575931137" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="even" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="459.652889798911" y="-14.886656756339" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="List.TakeEveryNthItem(l1,2,0);&#xA;List.DropEveryNthItem(l1,2,0);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d779bc2f-5433-4baf-a5f1-68d1c0eb0bcd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="459.652889798911" y="-14.886656756339" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="List.TakeEveryNthItem(l1,2,0);&#xA;List.DropEveryNthItem(l1,2,0);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="c334f997-77f4-4967-9c6f-5e71910b8656" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="814.819412948575" y="-35.8904441514548" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="odd" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -23,6 +27,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-28.1765797010988" eyeY="237.423501635855" eyeZ="27.5341367467493" lookX="0.106286353412727" lookY="-248.280636099723" lookZ="-6.15584244189521" upX="0.0167685643934548" upY="0.238534019906155" upZ="-0.970988840474229" />
+    <Camera Name="Background Preview" eyeX="-135853.377091537" eyeY="128481.409500831" eyeZ="-254577.968545506" lookX="151999.770363001" lookY="-62617.3561032672" lookZ="288163.599095596" upX="-0.0122128752991557" upY="0.999657332897186" upZ="-0.0231533665210009" />
   </Cameras>
 </Workspace>

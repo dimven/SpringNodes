@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
+<Workspace Version="1.2.2.373" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="61e46993-03f6-4a2e-9726-c414ed48bb4e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="62.4336804095385" y="-2.05223349137634" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -8,9 +8,12 @@
       <Symbol value="location:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="75586c6e-832e-4bda-97b9-da911b3c771e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="376.619736891699" y="-1.2522334913763" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="element" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <PythonNodeModels.PythonNode guid="c2d8deac-6440-4913-95bd-5d08d2a6f123" type="PythonNodeModels.PythonNode" nickname="Python Script" x="224.950259359426" y="-0.150734336487744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -42,7 +45,7 @@ def output1(l1):
 
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
-out1, fail = [], []
+out1 = []
 framing = ("Beam", "Brace")
 
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -78,7 +81,7 @@ for i in xrange(len(elements)):
 			if b_end: FrU.AllowJoinAtEnd(elements[i],1)
 		out1.append(elements[i].ToDSType(True))
 	except:
-		out1.append(fail)
+		out1.append(None)
 TransactionManager.Instance.TransactionTaskDone()
 
 OUT = output1(out1)</Script>
@@ -93,6 +96,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="503402.53125" eyeY="213.646377563477" eyeZ="-6987186" lookX="151.058212280273" lookY="-163.646377563477" lookZ="-730.114685058594" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

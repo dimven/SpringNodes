@@ -1,0 +1,34 @@
+<Workspace Version="1.2.2.373" X="81.1295089553963" Y="310.582908080035" zoom="0.931811528498331" Name="Springs.ScopeBox.Geometry" Description="Fetches the base curve and solid representation of a scope box element." ID="b99149b8-f8a0-4a73-ae80-c06bd6a5d165" Category="Springs.Revit.Utility">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="93707410-ade9-4d25-944b-218daf92b08a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="221" y="-133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def scopeGeo(s){&#xA;c1 = s.Geometry();&#xA;msk = Vector.ZAxis().Dot(c1.Direction) == 0;&#xA;c2 = List.FilterByBoolMask(c1, msk)[&quot;in&quot;];&#xA;c3 = List.SortByKey(c2, c2.EndPoint.Z)[&quot;sorted list&quot;];&#xA;pc1 = PolyCurve.ByJoinedCurves(c3[0..3]);&#xA;s1 = pc1.ExtrudeAsSolid(c3[4].EndPoint.Z - c3[0].EndPoint.Z);&#xA;return = {pc1, s1};&#xA;};&#xA;r = scopeGeo(x);&#xA;r[0];&#xA;r[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="56f4e352-89cf-4c09-a9a9-4897144c767a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="35" y="-135" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="scopeBox:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="39d8d3e1-4b46-48c4-a76f-64fde28fd1ba" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="833.177095335598" y="0.646989407155814" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="polyCurve" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="783f962d-4e0b-4041-8575-ca9329accf6c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="830.963694092277" y="62.9626613471162" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="solid" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="93707410-ade9-4d25-944b-218daf92b08a" start_index="1" end="39d8d3e1-4b46-48c4-a76f-64fde28fd1ba" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="93707410-ade9-4d25-944b-218daf92b08a" start_index="2" end="783f962d-4e0b-4041-8575-ca9329accf6c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="56f4e352-89cf-4c09-a9a9-4897144c767a" start_index="0" end="93707410-ade9-4d25-944b-218daf92b08a" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

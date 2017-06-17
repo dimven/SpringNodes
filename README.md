@@ -19,6 +19,28 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 ### CHANGE LOG
 ------
 
+#### 121.0.0 170617
+- All nodes that previously returned an empty list when an error occurs, return a null value instead. This is due to Dynamo's issues when processing empty lists. (like list rank reduction).
+- The ElementType.Duplicate node now handles most element types. Previously the existing type detection was limited to floor, wall and instance types only.
+- The File.Size and Number.ToString nodes now have additional functionality.
+- The Polygon.ContainmentTest+ node now returns a list of bools (instead of a pair of in/out lists). This is to bring it more in line with Dynamo's other geometric nodes and provide easier coexistance with the core list management nodes.
+- The Pt2Str and Ln2Str have been converted from DS to python for increased performance. (calling DS functions on thousands of elements has a big overhead) They also have additional rounding and trimming options.
+- The Collector.ElementsInView now has an optional category input for when you'd like to get only the elements of a specific category.
+- New nodes:
+	- Doc.CentralPath: If the document is workshared, the node returns the path to the central document as a string. Otherwise a null value will be returned.
+	- Doc.CopyFromLinkInstance: The node will use the total transformation of the link instance to copy the input elements into the local document.
+	- Element.Unjoin: Unjoins the element(s) in the second list from the primary  input element.
+	- ElementType.Instances: Fetches all instances of the input element type. (optimised for concurrent use with multiple types)
+	- Geometry.IndexByDistance: Provides the index of the closest or farthest geometry. Should prove much faster than getting the geometry and finding its index in two separate operations.
+	- ScopeBox.Geometry: Fetches the base curve and solid representation of a scope box element.
+	- RevitProcess.EmptyWorkingSet: Use at your own risk! Removes as many pages as possible from the working set of the active Revit session. (I've seen some improvements in performance by doing this in cases where Dynamo has been running for a while and has accumulated a lot of memory and after closing it, fails to release that memory.)
+
+
+#### 110.2.0 190217
+- Minor bug fixes and two new nodes for working with 2d:
+	- Polygon.2DArea, used to quickly get the 2d area of a polygon using simple numeric calculations.
+	- Delaunay2D.ByPoints, is a fix for the built in node with the same name. It works with 2d collections of points.
+
 #### 110.1.0 300117
 - ErrorReport/InterferenceCheck.Parse get a big speed boost from improved iteration.
 - BrepShape/DirectShape.ByGeometry have been revised in accordance with issue #25

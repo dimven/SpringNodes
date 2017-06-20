@@ -1,4 +1,4 @@
-<Workspace Version="1.2.2.373" X="-8.81127774839621" Y="214.295482111091" zoom="1.07925372895183" Name="Springs.RevitProcess.EmptyWorkingSet" Description="Use at your own risk! Removes as many pages as possible from the working set of the active Revit session." ID="37fdeeb1-18bb-42e0-a045-891143b93891" Category="Springs.Revit.Utility">
+<Workspace Version="1.2.1.3083" X="-8.81127774839621" Y="214.295482111091" zoom="1.07925372895183" Name="Springs.RevitProcess.EmptyWorkingSet" Description="Use at your own risk! Removes as many pages as possible from the working set of the active Revit session." ID="37fdeeb1-18bb-42e0-a045-891143b93891" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="f3482f35-d33d-4ed5-bb63-83290fe810c3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">

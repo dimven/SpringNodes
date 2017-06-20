@@ -1,4 +1,4 @@
-<Workspace Version="1.2.2.373" X="81.1295089553963" Y="310.582908080035" zoom="0.931811528498331" Name="Springs.ScopeBox.Geometry" Description="Fetches the base curve and solid representation of a scope box element." ID="b99149b8-f8a0-4a73-ae80-c06bd6a5d165" Category="Springs.Revit.Utility">
+<Workspace Version="1.2.1.3083" X="81.1295089553963" Y="310.582908080035" zoom="0.931811528498331" Name="Springs.ScopeBox.Geometry" Description="Fetches the base curve and solid representation of a scope box element." ID="b99149b8-f8a0-4a73-ae80-c06bd6a5d165" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />

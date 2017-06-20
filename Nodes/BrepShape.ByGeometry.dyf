@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-77.5634813840652" Y="50.792442124992" zoom="1.703916824555" Name="Springs.BrepShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model." ID="43629155-311e-4c61-b15f-5c14be2e02c3" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.3.0.875" X="-36.7634813840651" Y="58.792442124992" zoom="1.703916824555" ScaleFactor="1" Name="Springs.BrepShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model." ID="43629155-311e-4c61-b15f-5c14be2e02c3" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
@@ -17,8 +17,12 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="cec336e2-b902-4c79-922e-af8ed9d955ca" type="PythonNodeModels.PythonNode" nickname="Python Script" x="257.288632343215" y="22.9872250824455" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
-      <Script># Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="cec336e2-b902-4c79-922e-af8ed9d955ca" type="PythonNodeModels.PythonNode" nickname="Python Script" x="258.227645314355" y="22.5177185968757" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
 
@@ -120,30 +124,29 @@ def NewDS_R17(geom1, cat1, name1, mat1):
 			br1.FinishFace(sfId)
 		result = br1.Finish()
 		if result == RVT.BRepBuilderOutcome.Success:
+			if cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):
+				cat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)
+			else:
+				cat1Id = cat1.Id
 			if name1 in dst_enum: #definition exists
 				old_type = dst_enum[name1]
 				old_type.SetShape(br1)
 				fec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()
 				insts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]
 				if insts:
-					return insts[0].ToDSType(False)
+					ds1 = insts[0]
 				else:
 					dsLib.AddDefinitionType(name1, old_type.Id)
-					ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1.Id, name1, tf1, "Dynamo","spring nodes")
+					ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1)
 					ds1.SetTypeId(old_type.Id)
-					return ds1.ToDSType(False)
 			else:
-				if cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):
-					cat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)
-				else:
-					cat1Id = cat1.Id
 				dsType1 = RVT.DirectShapeType.Create(doc, name1, cat1Id)
 				dsType1.SetShape(br1)
 				dsLib.AddDefinitionType(name1, dsType1.Id)
-				ds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id,
-					cat1Id, name1, tf1)
+				ds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1)
 				ds1.SetTypeId(dsType1.Id)
-				return ds1.ToDSType(False)
+			
+			return ueWrapper.Invoke(None, (ds1, False) )
 		else:
 			return result
 	except:
@@ -159,9 +162,18 @@ mat = tolist(IN[3])
 mat = [UnwrapElement(m) for m in mat]
 
 dsLib = RVT.DirectShapeLibrary.GetDirectShapeLibrary(doc)
+tf1 = RVT.Transform.Identity
+
 dst_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShapeType)
 dst_enum = dict([(RVT.Element.Name.__get__(i), i) for i in dst_fec])
-tf1 = RVT.Transform.Identity
+
+ueWrapper = None
+wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()
+for w in wrappers:
+	if w.ToString().startswith("Revit.Elements.UnknownElement"):
+		ueWrapper = w
+		break
+
 if len(solids) == len(names):
 	if not len(solids) == len(cat) == len(mat):
 		padded = PadLists([solids, cat, mat])
@@ -181,6 +193,7 @@ else : OUT = "Make sure that each geometry\nobject has a unique type name."</Scr
       <Symbol value="name:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="f27b0765-1dc6-4485-9e97-ce7f84370df0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="398.615588042379" y="23.7352505959175" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="DirectShape" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="88711c82-f5fb-43f8-bf3f-607a9a1603c4" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="3.77986139724089" y="161.086516159817" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -198,6 +211,6 @@ else : OUT = "Make sure that each geometry\nobject has a unique type name."</Scr
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-1537.94827304259" eyeY="1671.6939624628" eyeZ="7401.2499863725" lookX="1532.94827304259" lookY="-1660.6939624628" lookZ="-7409.2499863725" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

@@ -18,6 +18,10 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 121.0.0 200617
+- The DirectShape nodes now work in Revit 2018
+- The Geometry.IndexByDistance node returns the distance between the elements
+
 
 #### 121.0.0 170617
 - All nodes that previously returned an empty list when an error occurs, return a null value instead. This is due to Dynamo's issues when processing empty lists. (like list rank reduction).

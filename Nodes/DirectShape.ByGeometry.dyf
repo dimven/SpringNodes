@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-52.079143083895" Y="152.057723295161" zoom="1.46821119452095" Name="Springs.DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces.It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="Springs.Revit.DirectShape">
+<Workspace Version="1.3.0.875" X="405.163835208678" Y="211.462261465035" zoom="1.04850666193807" ScaleFactor="1" Name="Springs.DirectShape.ByGeometry" Description="Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces. It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default. The default category is &#xD;&#xA;Generic Models." ID="2416ec21-d9a2-4c67-a742-20d5cf82446e" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -10,12 +10,16 @@
   </NamespaceResolutionMap>
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="378d0694-3f14-43b9-9ae6-930a6781aae0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="359.821634187539" y="-21.9777851761107" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="DirectShape" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a5efe1ad-c89c-4254-b3be-cdc29be8caaa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="2.81806812397618" y="-24.8802735669342" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="geometry:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <PythonNodeModels.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="PythonNodeModels.PythonNode" nickname="Python Script" x="186.717213335161" y="9.36024560191852" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+    <PythonNodeModels.PythonNode guid="eb1ec0d2-0ad0-4b48-9629-b7474c15de33" type="PythonNodeModels.PythonNode" nickname="Python Script" x="186.717213335161" y="8.59725569537729" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
       <Script>#Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
@@ -39,6 +43,8 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+isRvt2017 = int(app.VersionNumber) &gt; 2016
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -46,7 +52,13 @@ clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 clr.AddReference("RevitAPI")
-from Autodesk.Revit.DB import *
+import Autodesk.Revit.DB as RVT
+
+class SpringsDirectShape(object):
+	def __init__(self, ds):
+		self.InternalElement = ds
+	def ToString(self):
+		return "%s %i" % (RVT.Element.Name.__get__(self.InternalElement), self.InternalElement.Id.IntegerValue)
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
@@ -65,7 +77,7 @@ def PadLists(lists):
 		else : lists[i].extend(repeat(lists[i][-1],len1 - len2))
 	return lists
 
-def NewDS(s1,cat,name1):
+def NewDS(s1, cat1, name1):
 	message = None
 	temp_path = System.IO.Path.GetTempPath()
 	sat_path = "%s%s.sat"% (temp_path, name1)
@@ -84,74 +96,89 @@ def NewDS(s1,cat,name1):
 		s1 = enum2.Current
 		doc.Delete(satId)
 		System.IO.File.Delete(sat_path)
-	except:
-		message = traceback.format_exc()
-		pass
-	if message == None:
-		try:
-			if name1 in dst_enum:
-				old_type = dst_enum[name1]
-				old_type.SetShape([s1])
-				fec1 = FilteredElementCollector(doc).OfClass(DirectShape).WhereElementIsNotElementType()
-				insts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]
-				if insts:
-					return insts[0].ToDSType(False)
-				else:
-					dsLib.AddDefinitionType(name1, old_type.Id)
-					ds1 =  DirectShape.CreateElementInstance(doc, old_type.Id, cat.Id, name1, tf1, "Dynamo","spring nodes")
-					ds1.SetTypeId(old_type.Id)
-					return ds1.ToDSType(False) 
+		
+		if cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):
+			cat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)
+		else:
+			cat1Id = cat1.Id
+
+		if name1 in dst_enum:
+			old_type = dst_enum[name1]
+			old_type.SetShape([s1])
+			fec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()
+			insts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]
+			if insts:
+				ds1 = insts[0]
 			else:
-				dsType1 = DirectShapeType.Create(doc, name1, cat.Id)
-				dsType1.SetShape([s1])
-				dsLib.AddDefinitionType(name1, dsType1.Id)
-				ds1 =  DirectShape.CreateElementInstance(doc, dsType1.Id, cat.Id, name1, tf1, "Dynamo","spring nodes")
-				ds1.SetTypeId(dsType1.Id)
-				return ds1.ToDSType(False)
-		except:
-			message = traceback.format_exc()
-			return message
-	else: return message
+				dsLib.AddDefinitionType(name1, old_type.Id)
+				if isRvt2017:
+					ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1)
+				else:
+					ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1, "Dynamo", "spring nodes")
+				ds1.SetTypeId(old_type.Id)
+		else:
+			dsType1 = RVT.DirectShapeType.Create(doc, name1, cat1Id)
+			dsType1.SetShape([s1])
+			dsLib.AddDefinitionType(name1, dsType1.Id)
+			if isRvt2017:
+				ds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1)
+			else:
+				ds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1, "Dynamo", "spring nodes")
+			ds1.SetTypeId(dsType1.Id)
+
+		return ueWrapper.Invoke(None, (ds1, False) )
+	except:
+		return traceback.format_exc()
 
 solids = tolist(IN[0])
 cat = tolist(IN[1])
 cat = [UnwrapElement(c) for c in cat]
 names = tolist(IN[2])
 
-satOpt = SATImportOptions()
-satOpt.Placement = ImportPlacement.Origin
-satOpt.Unit = ImportUnit.Foot
-opt1 = Options()
+satOpt = RVT.SATImportOptions()
+satOpt.Placement = RVT.ImportPlacement.Origin
+satOpt.Unit = RVT.ImportUnit.Foot
+opt1 = RVT.Options()
 opt1.ComputeReferences = True
-acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
-view_fec = FilteredElementCollector(doc).OfClass(View)
+
+acceptable_views = "ThreeD, FloorPlan, EngineeringPlan, CeilingPlan, Elevation, Section"
+view_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.View)
 view1 = None
 for v in view_fec:
-	if str(v.ViewType) in acceptable_views and not v.IsTemplate:
+	if v.ViewType.ToString() in acceptable_views and not v.IsTemplate:
 		view1 = v
 		break
-units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
-factor = UnitUtils.ConvertToInternalUnits(1,units)
-dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)
-tf1 = Transform.Identity
-dst_fec = FilteredElementCollector(doc).OfClass(DirectShapeType)
-dst_enum = dict([(Element.Name.__get__(i), i) for i in dst_fec])
-if len(solids) == len(cat) == len(names):
+
+units = doc.GetUnits().GetFormatOptions(RVT.UnitType.UT_Length).DisplayUnits
+factor = RVT.UnitUtils.ConvertToInternalUnits(1, units)
+
+dsLib = RVT.DirectShapeLibrary.GetDirectShapeLibrary(doc)
+tf1 = RVT.Transform.Identity
+
+dst_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShapeType)
+dst_enum = dict([(RVT.Element.Name.__get__(i), i) for i in dst_fec])
+
+ueWrapper = None
+wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()
+for w in wrappers:
+	if w.ToString().startswith("Revit.Elements.UnknownElement"):
+		ueWrapper = w
+		break
+
+if len(solids) == len(names):
+	if not len(solids) == len(cat):
+		padded = PadLists( (solids, cat) )
+		cat = padded[1]
 	TransactionManager.Instance.EnsureInTransaction(doc)
-	OUT = output1(map(NewDS, solids, cat, names))
+	OUT = output1(map(NewDS, solids, cat, names) )
 	TransactionManager.Instance.TransactionTaskDone()
-elif len(solids) == len(names):
-	padded = PadLists([solids,cat])
-	p_cat = padded[1]
-	TransactionManager.Instance.EnsureInTransaction(doc)
-	OUT = output1(map(NewDS, solids, p_cat, names))
-	TransactionManager.Instance.TransactionTaskDone()
-else : OUT = "Make sure that each geometry\nobject has a unique type name."
+else :
+	OUT = "Make sure that each geometry\nobject has a unique type name."
 satOpt.Dispose()
 opt1.Dispose()</Script>
     </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-309.844174686363" y="37.2941993010844" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="category:var[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e97089f6-028f-4687-a3ab-c93d40734dac" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-54.2425559950453" y="35.7682194880019" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="category:var[] = null" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3ab7cee6-f39c-4d93-af65-8668f4a2a1bc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="36.507473833428" y="95.2379162468539" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="name:var[]" />
@@ -167,6 +194,6 @@ opt1.Dispose()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-1537.94827304259" eyeY="1671.6939624628" eyeZ="7401.2499863725" lookX="1532.94827304259" lookY="-1660.6939624628" lookZ="-7409.2499863725" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

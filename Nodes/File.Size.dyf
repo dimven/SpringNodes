@@ -1,4 +1,4 @@
-<Workspace Version="1.2.2.373" X="271.862573012712" Y="143.465285593894" zoom="2.11614042156078" Name="Springs.File.Size" Description="Outputs the the file size in kilobytes or megabytes. Provide a file path as a string. Set kbOnly to true for a consistent output." ID="0672c281-9887-40f9-886e-248abb55564b" Category="Springs.Core.File.Query">
+<Workspace Version="1.2.1.3083" X="271.862573012712" Y="143.465285593894" zoom="2.11614042156078" Name="Springs.File.Size" Description="Outputs the the file size in kilobytes or megabytes. Provide a file path as a string. Set kbOnly to true for a consistent output." ID="0672c281-9887-40f9-886e-248abb55564b" Category="Springs.Core.File.Query">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="NurbsCurve" resolvedName="Autodesk.DesignScript.Geometry.NurbsCurve" assemblyName="ProtoGeometry.dll" />

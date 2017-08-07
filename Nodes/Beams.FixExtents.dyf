@@ -1,11 +1,16 @@
-<Workspace Version="1.0.0.1180" X="-231.46802832419" Y="52.7915934777796" zoom="0.789161032924816" Name="Springs.Beams.FixExtents" Description="Detects all beams from the input list with broken extents(actual length - cut length &lt;  margin) and attemts to correct them." ID="7ae83d0d-faed-43ba-ae85-fdd942b47e2d" Category="Springs.Revit.Utility">
+<Workspace Version="1.2.1.3083" X="-225.531954487673" Y="151.033641597716" zoom="0.752278291023545" ScaleFactor="1" Name="Springs.Beams.FixExtents" Description="Detects all beams from the input list with broken extents(actual length - cut length &lt;  margin) and attemts to correct them." ID="7ae83d0d-faed-43ba-ae85-fdd942b47e2d" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="ecc1645e-4fab-457f-9d22-4f638da88831" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="600.082862215375" y="12.169730206782" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def filter1(l1:var[], margin)&#xA;{&#xA;test1 = (l1[0] &gt; l1[1] ? l1[0] - l1[1] : l1[1] - l1[0]);&#xA;return = test1 &gt; margin;&#xA;};" ShouldFocus="false" />
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1383d6d7-f3f2-466e-b87d-07fb6c8c99cd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="612.745923040193" y="148.40692552161" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="len1 = str1&lt;1&gt;.GetParameterValueByName(&#xA;{&quot;Length&quot;,&quot;Cut Length&quot;}&lt;2&gt;);&#xA;mask1 = filter1(len1, margin);&#xA;List.FilterByBoolMask(str1,mask1)[&quot;in&quot;];" ShouldFocus="false" />
-    <PythonNodeModels.PythonNode guid="6826ab31-96ff-4e52-8ee9-78f3a09e8d49" type="PythonNodeModels.PythonNode" nickname="Python Script" x="1070.70821445363" y="193.232492528571" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1383d6d7-f3f2-466e-b87d-07fb6c8c99cd" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="612.745923040193" y="148.40692552161" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="len1 = str1&lt;1&gt;.GetParameterValueByName(&#xA;{&quot;Length&quot;,&quot;Cut Length&quot;}&lt;2&gt;);&#xA;mask1 = filter1(len1, margin);&#xA;DSCore.List.FilterByBoolMask(str1,mask1)[&quot;in&quot;];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="6826ab31-96ff-4e52-8ee9-78f3a09e8d49" type="PythonNodeModels.PythonNode" nickname="Python Script" x="1129.54240798669" y="193.986777061046" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
       <Script>#Copyright(c) 2015, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -51,17 +56,20 @@ uidoc.Selection.SetElementIds(ids2)
 OUT = "%s beams corrected in Revit." %ids2.Count
 TransactionManager.Instance.TransactionTaskDone()</Script>
     </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="0e242a3e-c651-4aa9-b8ba-d479bb00bc48" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="274.046929822188" y="160.749774280288" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="&quot;framing&quot;;" ShouldFocus="false" />
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d34959a1-f9bf-4cc7-8831-da399c6b279f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="269.797757484782" y="98.7958483155021" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="0e242a3e-c651-4aa9-b8ba-d479bb00bc48" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="208.154167977022" y="154.66736549458" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="&quot;framing&quot;;" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d34959a1-f9bf-4cc7-8831-da399c6b279f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="203.904995639616" y="92.7134395297945" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="beams:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="52d80ced-cff5-4359-b259-9417e874ffb0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="384.601387171996" y="219.089690317136" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="margin:double = 300" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="5b762c6c-eaf4-4b2c-a5ee-bc6d3cf40f64" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="1223.79254044128" y="195.695865214954" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="5b762c6c-eaf4-4b2c-a5ee-bc6d3cf40f64" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="1282.62673397434" y="196.450149747429" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="result" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Function guid="45a0fb48-d596-4710-aed7-b8e8d978caaa" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Filter.ByClassName" x="428.275063074201" y="101.314726693479" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="45a0fb48-d596-4710-aed7-b8e8d978caaa" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Filter.ByClassName" x="362.382301229035" y="95.2323179077714" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <ID value="3760b286-a8de-438d-9238-c6755dc9c862" />
       <Name value="Filter.ByClassName" />
       <Description value="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." />
@@ -87,6 +95,6 @@ TransactionManager.Instance.TransactionTaskDone()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="13.4373041798721" eyeY="99.6964800421176" eyeZ="39.3309208553611" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

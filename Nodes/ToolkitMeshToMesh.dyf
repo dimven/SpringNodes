@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="269" Y="75" zoom="1" Name="Springs.ToolkitMeshToMesh" Description="Attempts to convert a toolkit mesh to a Dynamo mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d5628e40-52de-47c9-b35b-c201d87344e0" Category="Springs.Geometry">
+<Workspace Version="1.2.1.3083" X="-169.4" Y="95" zoom="1" ScaleFactor="1" Name="Springs.ToolkitMeshToMesh" Description="Attempts to convert a toolkit mesh to a Dynamo mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d5628e40-52de-47c9-b35b-c201d87344e0" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Dynamo.Mesh" resolvedName="Autodesk.Dynamo.MeshToolkit.Mesh" assemblyName="MeshToolkit.dll" />
@@ -8,13 +8,17 @@
     <ClassMap partialName="Autodesk.DesignScript.Geometry.Mesh.ByPointsFaceIndices" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Autodesk.DesignScript.Geometry.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="IndexGroup" resolvedName="Autodesk.DesignScript.Geometry.IndexGroup" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="154c81a2-cc67-4bf9-a3ec-1afed7f06a5d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Mesh2MeshB(m1){&#xA;vp = m1.Vertices();&#xA;fi = m1.VertexIndicesByTri();&#xA;fi2 = List.Transpose(List.Chop(fi,3) );&#xA;fi3 = IndexGroup.ByIndices(fi2[0], fi2[1], fi2[2]);&#xA;return = DesignScript.Mesh.ByPointsFaceIndices(vp,fi3);&#xA;};&#xA;Mesh2MeshB(m1);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="154c81a2-cc67-4bf9-a3ec-1afed7f06a5d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Mesh2MeshB(m1){&#xA;vp = m1.Vertices();&#xA;fi = m1.VertexIndicesByTri();&#xA;fi2 = DSCore.List.Transpose(List.Chop(fi,3) );&#xA;fi3 = IndexGroup.ByIndices(fi2[0], fi2[1], fi2[2]);&#xA;return = DesignScript.Mesh.ByPointsFaceIndices(vp,fi3);&#xA;};&#xA;Mesh2MeshB(m1);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b59dd113-e470-4f10-9920-d9e5eba74297" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="tkMesh:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="9ae68474-b1e7-421a-9848-59fff96502bb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="846" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="mesh" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -26,6 +30,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="75.8142976819515" eyeY="80.1999564366379" eyeZ="-16.657231707204" lookX="-76.1555313837575" lookY="-54.8019187055428" lookZ="12.4854560009828" upX="-0.385583525236394" upY="0.92050485345247" upZ="0.0632151867575213" />
+    <Camera Name="Background Preview" eyeX="13.4373044967651" eyeY="99.6964797973633" eyeZ="39.3309211730957" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

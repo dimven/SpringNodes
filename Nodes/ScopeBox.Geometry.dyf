@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="81.1295089553963" Y="310.582908080035" zoom="0.931811528498331" Name="Springs.ScopeBox.Geometry" Description="Fetches the base curve and solid representation of a scope box element." ID="b99149b8-f8a0-4a73-ae80-c06bd6a5d165" Category="Springs.Revit.Utility">
+<Workspace Version="1.2.1.3083" X="-181.270491044604" Y="320.982908080035" zoom="0.931811528498331" ScaleFactor="1" Name="Springs.ScopeBox.Geometry" Description="Fetches the base curve and solid representation of a scope box element." ID="b99149b8-f8a0-4a73-ae80-c06bd6a5d165" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -6,9 +6,10 @@
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="93707410-ade9-4d25-944b-218daf92b08a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="221" y="-133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def scopeGeo(s){&#xA;c1 = s.Geometry();&#xA;msk = Vector.ZAxis().Dot(c1.Direction) == 0;&#xA;c2 = List.FilterByBoolMask(c1, msk)[&quot;in&quot;];&#xA;c3 = List.SortByKey(c2, c2.EndPoint.Z)[&quot;sorted list&quot;];&#xA;pc1 = PolyCurve.ByJoinedCurves(c3[0..3]);&#xA;s1 = pc1.ExtrudeAsSolid(c3[4].EndPoint.Z - c3[0].EndPoint.Z);&#xA;return = {pc1, s1};&#xA;};&#xA;r = scopeGeo(x);&#xA;r[0];&#xA;r[1];" ShouldFocus="false">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="93707410-ade9-4d25-944b-218daf92b08a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="221" y="-133" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def scopeGeo(s){&#xA;c1 = s.Geometry();&#xA;msk = Vector.ZAxis().Dot(c1.Direction) == 0;&#xA;c2 = DSCore.List.FilterByBoolMask(c1, msk)[&quot;in&quot;];&#xA;c3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z)[&quot;sorted list&quot;];&#xA;pc1 = PolyCurve.ByJoinedCurves(c3[0..3]);&#xA;s1 = pc1.ExtrudeAsSolid(c3[4].EndPoint.Z - c3[0].EndPoint.Z);&#xA;return = {pc1, s1};&#xA;};&#xA;r = scopeGeo(x);&#xA;r[0];&#xA;r[1];" ShouldFocus="false">
       <PortInfo index="0" default="False" />
     </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="56f4e352-89cf-4c09-a9a9-4897144c767a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="35" y="-135" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -31,4 +32,7 @@
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="13.4373044967651" eyeY="99.6964797973633" eyeZ="39.3309211730957" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

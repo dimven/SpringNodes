@@ -18,7 +18,11 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
-#### 121.0.0 200617
+#### 121.0.2 070817
+- All namespace clashes with the List class from arch-lab.net should be fixed.
+- Small bufgix in Element.SetLocation
+
+#### 121.0.1 200617
 - The DirectShape nodes now work in Revit 2018
 - The Geometry.IndexByDistance node returns the distance between the elements
 

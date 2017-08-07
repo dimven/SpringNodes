@@ -1,12 +1,13 @@
-<Workspace Version="1.2.1.3083" X="45.3621384135226" Y="102.806574831989" zoom="0.822695359375" Name="Springs.Delaunay2D.ByPoints" Description="Create a delaunay triangulation of a set of planar points. You can get the result as points or as lines." ID="256691b0-0f18-4ec7-9668-afecd29c935f" Category="Springs.Geometry">
+<Workspace Version="1.2.1.3083" X="-168.113628448924" Y="108.983146184127" zoom="0.931811528498331" ScaleFactor="1" Name="Springs.Delaunay2D.ByPoints" Description="Create a delaunay triangulation of a set of planar points. You can get the result as points or as lines." ID="256691b0-0f18-4ec7-9668-afecd29c935f" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Delaunay" resolvedName="Tessellation.Delaunay" assemblyName="Tessellation.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="0c214bbe-233c-4c2f-b309-a4a673907710" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250.819027021493" y="4.0951351074653" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def delaunay1(pts0:var[], asPts:bool){&#xA;p0 = Point.ByCoordinates(12345,12345,12345);&#xA;pts1 = List.AddItemToEnd(p0, pts0);&#xA;c1 = List.Chop(Delaunay.ByPoints(pts1), 3);&#xA;p1 = c1.StartPoint;&#xA;m1 = AllFalse(p0.IsAlmostEqualTo(p1)&lt;1&gt;);&#xA;r1 = asPts ? p1 : c1;&#xA;return = List.FilterByBoolMask(r1, m1)[&quot;in&quot;];&#xA;};&#xA;&#xA;delaunay1(a, b);" ShouldFocus="false">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="0c214bbe-233c-4c2f-b309-a4a673907710" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250.819027021493" y="4.0951351074653" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def delaunay1(pts0:var[], asPts:bool){&#xA;p0 = Point.ByCoordinates(12345,12345,12345);&#xA;pts1 = DSCore.List.AddItemToEnd(p0, pts0);&#xA;c1 = DSCore.List.Chop(Delaunay.ByPoints(pts1), 3);&#xA;p1 = c1.StartPoint;&#xA;m1 = AllFalse(p0.IsAlmostEqualTo(p1)&lt;1&gt;);&#xA;r1 = asPts ? p1 : c1;&#xA;return = DSCore.List.FilterByBoolMask(r1, m1)[&quot;in&quot;];&#xA;};&#xA;&#xA;delaunay1(a, b);" ShouldFocus="false">
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
     </Dynamo.Graph.Nodes.CodeBlockNodeModel>
@@ -16,7 +17,7 @@
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2fe249bf-6daa-4718-a038-55f02d94ad44" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0.819027021493071" y="62.3641087002425" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="asPoints: bool = false" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8e1e2c9c-00f8-4bb6-9f39-2cd4fb931df2" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="721.991135312222" y="9.82832425791673" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8e1e2c9c-00f8-4bb6-9f39-2cd4fb931df2" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="769.210984664063" y="8.96978154242867" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <PortInfo index="0" default="False" />
       <Symbol value="pts/lines" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
@@ -30,6 +31,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="48.53054411794" eyeY="160.487058491732" eyeZ="82.3988558106289" lookX="-18.6526042061862" lookY="-131.387994761685" lookZ="-102.530509124779" upX="-0.113123616154778" upY="0.77494448870418" upZ="-0.621823195848372" />
+    <Camera Name="Background Preview" eyeX="5.34922456965715" eyeY="12.7765175374583" eyeZ="8.58852143294809" lookX="-5.10164642558367" lookY="-12.7765175374583" lookZ="-8.58852143294809" upX="-0.32553399236027" upY="0.770513242775788" upZ="-0.548030074471395" />
   </Cameras>
 </Workspace>

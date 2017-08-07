@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="366.073923295968" Y="15.1808137708098" zoom="1.07925372895183" Name="Springs.N-hedron.ByOriginVector" Description="Creates a multi-sided poyhedron with defined side length and total height." ID="82009e60-8e1b-45dc-8d87-b701992d1c1e" Category="Springs.Geometry">
+<Workspace Version="1.2.1.3083" X="364.473923295968" Y="13.5808137708098" zoom="1.07925372895183" ScaleFactor="1" Name="Springs.N-hedron.ByOriginVector" Description="Creates a multi-sided poyhedron with defined side length and total height." ID="82009e60-8e1b-45dc-8d87-b701992d1c1e" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -10,10 +10,17 @@
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="PolySurface" resolvedName="Autodesk.DesignScript.Geometry.PolySurface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="9ebdb791-7590-4c09-95a1-b1b34083f86b" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="221.230910568371" y="254.815482081095" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Nhedron(pt,vec,n,l,h);" ShouldFocus="false" />
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="017467f0-ce23-4107-a217-b3b0e910fa95" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="220.809547673407" y="38.6344221969609" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Nhedron(pt,vec,n,l,h){&#xA;r1 = l/Math.Sin(360/n)/2;&#xA;c1 = Circle.ByCenterPointRadiusNormal(pt,r1,vec);&#xA;pol1 = Polygon.RegularPolygon(c1,n);&#xA;pt2 = pt.Translate(vec,h);&#xA;l1 = Line.ByStartPointEndPoint(pt2,pol1.Points);&#xA;l1 = List.AddItemToEnd(l1[0],l1);&#xA;return = PolySurface.ByJoinedSurfaces({Surface.&#xA;	ByRuledLoft(l1),pol1.Patch()}).ExtractSolids()[0];&#xA;};" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="9ebdb791-7590-4c09-95a1-b1b34083f86b" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="221.230910568371" y="254.815482081095" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="Nhedron(pt,vec,n,l,h);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <PortInfo index="4" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="017467f0-ce23-4107-a217-b3b0e910fa95" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="220.809547673407" y="38.6344221969609" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Nhedron(pt,vec,n,l,h){&#xA;r1 = l/Math.Sin(360/n)/2;&#xA;c1 = Circle.ByCenterPointRadiusNormal(pt,r1,vec);&#xA;pol1 = Polygon.RegularPolygon(c1,n);&#xA;pt2 = pt.Translate(vec,h);&#xA;l1 = Line.ByStartPointEndPoint(pt2,pol1.Points);&#xA;l1 = DSCore.List.AddItemToEnd(l1[0],l1);&#xA;return = PolySurface.ByJoinedSurfaces({Surface.&#xA;	ByRuledLoft(l1),pol1.Patch()}).ExtractSolids()[0];&#xA;};" ShouldFocus="false" />
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="fc1852b0-0f40-4e9f-97cd-a346139ae643" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-187.2" y="171.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="origin : Point = Point.Origin()" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
@@ -30,6 +37,7 @@
       <Symbol value="height : double = 8" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="e7eca4b2-eb65-4a66-9b2c-de23da409de3" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="490.22182312675" y="254.754734355757" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="solid" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -45,6 +53,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="-3.39957072670301" eyeY="3.95107794334121" eyeZ="17.6278862087531" lookX="3.6471488707765" lookY="-3.95107794334121" lookZ="-17.6278862087531" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

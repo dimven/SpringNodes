@@ -1,14 +1,18 @@
-<Workspace Version="1.0.0.1180" X="199.255435049245" Y="169.814342450864" zoom="1.51051845643135" Name="Springs.NullAllIndicesOf" Description="list all of the indices of a list that match the specified value. Capable of handling null values, part of the SmartCopyMonitor workflow." ID="858e6bd7-c0fa-4568-a225-ef815e68f8e3" Category="Springs.Core.List">
+<Workspace Version="1.2.1.3083" X="-67.0174680590081" Y="40.0208382375674" zoom="1.00600419002725" ScaleFactor="1" Name="Springs.NullAllIndicesOf" Description="list all of the indices of a list that match the specified value. Capable of handling null values, part of the SmartCopyMonitor workflow." ID="858e6bd7-c0fa-4568-a225-ef815e68f8e3" Category="Springs.Core.List">
   <NamespaceResolutionMap />
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1c205943-1f2c-487a-8748-79c2e13369bc" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def NullAllInd(l1:var[],val)&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;out1 = {};&#xA;for(i in GetKeys(l1))&#xA;{&#xA;if(l1[i] == val)&#xA;{&#xA;out1 = List.AddItemToEnd(i,out1);&#xA;}&#xA;}&#xA;return = out1;&#xA;}&#xA;};&#xA;&#xA;NullAllInd(l1,val);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1c205943-1f2c-487a-8748-79c2e13369bc" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def NullAllInd(l1:var[],val)&#xA;{&#xA;return = [Imperative]&#xA;{&#xA;out1 = {};&#xA;for(i in GetKeys(l1))&#xA;{&#xA;if(l1[i] == val)&#xA;{&#xA;out1 = Flatten({out1, i});&#xA;}&#xA;}&#xA;return = out1;&#xA;}&#xA;};&#xA;&#xA;NullAllInd(l1,val);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d263a7a7-36ab-4000-9e93-e83f96314464" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="105.245470627142" y="-3.04265610560445" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="c1325905-cea4-4538-b417-4ae599411195" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="113.976759075961" y="61.9867194719778" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="value:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="653df1ec-b7f9-4459-8cd2-9423ca039da4" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="662.6" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="653df1ec-b7f9-4459-8cd2-9423ca039da4" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="699.161667992061" y="3.13385725646236" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="indices" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -20,4 +24,7 @@
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="13.4373044967651" eyeY="99.6964797973633" eyeZ="39.3309211730957" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

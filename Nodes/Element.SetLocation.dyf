@@ -76,7 +76,7 @@ for i in xrange(len(elements)):
 		if isWall:
 			if w_start: WallUtils.AllowWallJoinAtEnd(elements[i],0)
 			if w_end: WallUtils.AllowWallJoinAtEnd(elements[i],1)
-		if isBeam and not isRvt14:
+		if isBeam:
 			if b_start: FrU.AllowJoinAtEnd(elements[i],0)
 			if b_end: FrU.AllowJoinAtEnd(elements[i],1)
 		out1.append(elements[i].ToDSType(True))

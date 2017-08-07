@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="107.2" Y="117.6" zoom="1" Name="Springs.Mesh.ToToolkitMesh" Description="Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d992f1f9-a78e-4864-b50f-92973fe214fe" Category="Springs.Geometry">
+<Workspace Version="1.2.1.3083" X="-123.207067807775" Y="125.0292824946" zoom="0.97676875" ScaleFactor="1" Name="Springs.Mesh.ToToolkitMesh" Description="Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d992f1f9-a78e-4864-b50f-92973fe214fe" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Dynamo.Mesh" resolvedName="Autodesk.Dynamo.MeshToolkit.Mesh" assemblyName="MeshToolkit.dll" />
@@ -7,13 +7,17 @@
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="8a64e7b6-3c9a-4300-95b0-ffd7e4ca42c2" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="162" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Mesh2Mesh(m1){&#xA;vp = m1.VertexPositions;&#xA;fi = m1.FaceIndices;&#xA;fi2 = Flatten(List.Transpose({fi.A,fi.B,fi.C}));&#xA;return = Dynamo.Mesh.ByVerticesAndIndices(vp,fi2);&#xA;};&#xA;Mesh2Mesh(m1);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="8a64e7b6-3c9a-4300-95b0-ffd7e4ca42c2" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="162" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def Mesh2Mesh(m1){&#xA;vp = m1.VertexPositions;&#xA;fi = m1.FaceIndices;&#xA;fi2 = Flatten(DSCore.List.Transpose({fi.A,fi.B,fi.C}));&#xA;return = Dynamo.Mesh.ByVerticesAndIndices(vp,fi2);&#xA;};&#xA;Mesh2Mesh(m1);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24c2dfa7-f176-46b2-bb37-7aa1e79bdf8b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="mesh:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bc38c9e5-2075-4882-bca1-29a4c1deb11f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="676.2" y="106.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bc38c9e5-2075-4882-bca1-29a4c1deb11f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="719.608432139132" y="99.8477838280556" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="tkMesh" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -25,6 +29,6 @@
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="75.8142976819515" eyeY="80.1999564366379" eyeZ="-16.657231707204" lookX="-76.1555313837575" lookY="-54.8019187055428" lookZ="12.4854560009828" upX="-0.385583525236394" upY="0.92050485345247" upZ="0.0632151867575213" />
+    <Camera Name="Background Preview" eyeX="5.34922456965715" eyeY="12.7765175374583" eyeZ="8.58852143294809" lookX="-5.10164642558367" lookY="-12.7765175374583" lookZ="-8.58852143294809" upX="-0.32553399236027" upY="0.770513242775788" upZ="-0.548030074471395" />
   </Cameras>
 </Workspace>

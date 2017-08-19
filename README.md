@@ -18,6 +18,11 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 121.0.3 190817
+- Dictionary.ByKeysValues has an new optional default return. That means that if a  kay is not found, the default value will be used instead.
+- The watch+ node can display information without writing the list indexes.
+- The new FamilyTemplatePaths node simply points to the default templates folder and returns the mass and generic model templates.
+
 #### 121.0.2 070817
 - All namespace clashes with the List class from arch-lab.net should be fixed.
 - Small bufgix in Element.SetLocation

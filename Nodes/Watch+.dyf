@@ -1,13 +1,17 @@
-<Workspace Version="1.0.0.1180" X="293.6" Y="118.4" zoom="1" Name="Springs.Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="Springs.Core.View.Query">
+<Workspace Version="1.2.1.3083" X="393.143974240344" Y="124.500579776336" zoom="1.70391682455499" ScaleFactor="1" Name="Springs.Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="Springs.Core.View.Query">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="112.4" y="-3.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="118.307071783181" y="-1.09033150600672" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 import clr
 
@@ -16,6 +20,10 @@ clr.AddReference('System.Drawing')
 from System.Drawing import Point, Color, Font
 from System.Windows.Forms import *
 from cStringIO import StringIO
+
+str_file = StringIO()
+GCL = []
+GCint = -1
 
 def isElem(el1):
 	return hasattr(el1, "Id")
@@ -27,24 +35,22 @@ def tolist(obj1):
 def isList(obj1):
 	return hasattr(obj1,"__iter__")
 
-def write_str(str1):
+def write_str(str1, str_file=str_file, GCL=GCL):
 	str_file.write(''.join([j for j in GCL]))
 	str_file.write(str1)
 
-GCL = []
-GCint = -1
-def list2str(l1):
+def list2str(l1, writeInd, GCL=GCL):
 	global GCint, height1
 	GCint += 1
 	GCL.insert(GCint,"")
-	for i in xrange(len(l1)):
-		GCL[GCint] = "[%s] " % i
+	for i in xrange(len(l1) ):
+		GCL[GCint] = "[%i] " % i if writeInd else " "
 		if isElem(l1[i]):
-			write_str("%s        %s\n" % (l1[i].ToString(), l1[i].Id.ToString()) )
+			write_str("%s        %i\n" % (l1[i].ToString(), l1[i].Id) )
 		elif isList(l1[i]) and not l1[i]:
 			write_str("Empty List\n")
 		elif isList(l1[i]):
-			list2str(l1[i])
+			list2str(l1[i], writeInd)
 		elif l1[i] is None:
 			write_str("null\n")
 		else:
@@ -110,9 +116,9 @@ class WatchBox(Form):
 
 if IN[0] == None: l1 = []
 else: l1 = tolist(IN[0])
+
 height1 = 30
-str_file = StringIO()
-list2str(l1)
+list2str(l1, IN[1])
 str_content = str_file.getvalue()
 width1 = max([len(i) for i in str_content.split('\n')])
 form = WatchBox()
@@ -123,20 +129,25 @@ OUT = form.text1
 Application.Exit()
 str_file.close()</Script>
     </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-188.182429664202" y="-2.95353589159062" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="input" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3d9e94be-75a4-45b4-902f-61a2019e1f73" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-98.4000000000001" y="56.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3d9e94be-75a4-45b4-902f-61a2019e1f73" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-189.53767894051" y="53.8683978072081" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="addIndexes:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="43a77d27-3a16-4650-9710-85700cd25a9e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="267.065801096396" y="-1.33679561441611" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="str" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="602ac5b7-dc57-4f63-9c6b-00c98cf0ff0c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-188.673644496303" y="112.686298096685" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="43a77d27-3a16-4650-9710-85700cd25a9e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="265.8" y="-6.40000000000001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <Symbol value="" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
     <Dynamo.Graph.Connectors.ConnectorModel start="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" start_index="0" end="43a77d27-3a16-4650-9710-85700cd25a9e" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="3d9e94be-75a4-45b4-902f-61a2019e1f73" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="602ac5b7-dc57-4f63-9c6b-00c98cf0ff0c" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />

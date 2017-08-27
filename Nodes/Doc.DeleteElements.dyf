@@ -1,7 +1,9 @@
-<Workspace Version="1.1.0.2094" X="120.136279804598" Y="234.299242646061" zoom="0.977255254109396" Name="Springs.Doc.DeleteElements" Description="Attempts to delete the input list of elements from the active Revit document.The node returns the number of successfully deleted elements and their Ids as a string. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well. If an element in the list can not be deleted (for example last revision or last view), the whole list will fail to be deleted." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="Springs.Revit.Document">
+<Workspace Version="1.2.1.3083" X="120.136279804598" Y="234.299242646061" zoom="0.977255254109396" ScaleFactor="1" Name="Springs.Doc.DeleteElements" Description="Attempts to delete the input list of elements from the active Revit document.The node returns the number of successfully deleted elements and their Ids as a string. Carefully observe the deleted elements count. It may be greater than the input list because hosted elements or tags will be deleted as well. If an element in the list can not be deleted (for example last revision or last view), the whole list will fail to be deleted." ID="a8709c69-aa1d-4e0d-b2f1-182332d5b6b9" Category="Springs.Revit.Document">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="6f652db6-14ef-41d7-ad07-7d9356a0db5f" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -17,16 +19,20 @@ def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-ids = [e.Id for e in UnwrapElement(tolist(IN[0]) )]
+elems = UnwrapElement(tolist(IN[0]) )
 
 if IN[1]:
 	deleted, failed = [], []
 	TransactionManager.Instance.EnsureInTransaction(doc)
-	for id in ids:
+	for e in elems:
+		id = None
 		try:
+			id = e.Id
 			del_id = doc.Delete(id)
 			deleted.extend([d.ToString() for d in del_id])
-		except : failed.append(id.ToString() )
+		except:
+			if id is not None:
+				failed.append(id.ToString() )
 	TransactionManager.Instance.TransactionTaskDone()
 	s = set(deleted)
 	failed1 = [x for x in failed if x not in s]
@@ -38,16 +44,21 @@ else:
       <Symbol value="element:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="07f217b1-c3df-4ed3-844f-137b83de3fbf" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="517.879205581096" y="-42.0655859658187" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="count" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="4b1592f2-8437-4a8c-a017-84dbf3e65968" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="518.127849628788" y="13.7705852456983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="deletedIds(str)" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="861351b0-1fdc-4738-9413-78b0f97067ad" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="393.278691362299" y="0.879349143153888" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="d[0];&#xA;d[1];&#xA;d[2];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="861351b0-1fdc-4738-9413-78b0f97067ad" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="393.278691362299" y="0.879349143153888" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="d[0];&#xA;d[1];&#xA;d[2];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="40dcaa8c-c7b8-4c3c-9179-7807890c7d41" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="94.3295777036335" y="58.6484038427827" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="confirm:bool" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="342f5692-46ef-4fc5-a23c-805badcee965" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="519.000070340407" y="70.6431622888128" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="failedIds(str)" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -63,6 +74,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="17.8164291381836" eyeY="9.8563346862793" eyeZ="29.8623905181885" lookX="6.22470664978027" lookY="-6.74343204498291" lookZ="-30.0860824584961" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

@@ -18,6 +18,10 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 121.1.0 270817
+- Geometry.ReadTag and Geometry.WriteTag are a pair of nodes that exploit the option to store custom information into any dynamo geometry.
+- Doc.DeleteElement now has better null handling.
+
 #### 121.0.3 190817
 - Dictionary.ByKeysValues has an new optional default return. That means that if a  kay is not found, the default value will be used instead.
 - The watch+ node can display information without writing the list indexes.

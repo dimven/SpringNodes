@@ -18,6 +18,11 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 121.1.1 170917
+- Polygon.IsRectangular will tell you if any four points are square or rectangular.
+- FamilyInstance.ByGeometry subcategory tweaks; now existing subcategories are assigned as expected
+- other minor tweaks
+
 #### 121.1.0 270817
 - Geometry.ReadTag and Geometry.WriteTag are a pair of nodes that exploit the option to store custom information into any dynamo geometry.
 - Doc.DeleteElement now has better null handling.

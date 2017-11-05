@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="387.159335520163" Y="188.915162086108" zoom="1.51051845643135" Name="Springs.AdaptiveFamily.ByFacetedGeometry" Description="Genearate a new eight point adaptive component family type from any solid or polysurface consisting of planar faces. Faces with openigs are not supported." ID="fd198d9c-0e5e-4472-af70-464c835ba923" Category="Springs.Revit.ElementType">
+<Workspace Version="1.3.1.1736" X="387.159335520163" Y="188.915162086108" zoom="1.51051845643135" ScaleFactor="1" Name="Springs.AdaptiveFamily.ByFacetedGeometry" Description="Genearate a new eight point adaptive component family type from any solid or polysurface consisting of planar faces. Faces with openigs are not supported." ID="fd198d9c-0e5e-4472-af70-464c835ba923" Category="Springs.Revit.ElementType">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
@@ -56,10 +56,6 @@ from Autodesk.Revit.DB import *
 def tolist(obj1):
 	if hasattr(obj1,'__iter__'): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 def PadLists(lists):
 	len1 = len(lists[0])
@@ -252,7 +248,7 @@ elif len(geom) == len(names):
 	return1 = map(NewAC_background, geom, names, p_category, p_material, p_subcat)
 else : return1 = [('Make sure that each geometry\\nobject has a unique family name.', '')]
 
-OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script>
+OUT = [i[0] for i in return1], [i[1] for i in return1]</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b6861b4c-82cf-44d7-a2ac-b74b029fa281" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-43.9544957328497" y="-75" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="geometry:var[]" />
@@ -299,6 +295,6 @@ OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-386.782204207869" eyeY="4518.45120217078" eyeZ="4195.72145134856" lookX="381.782204207869" lookY="-4507.45120217078" lookZ="-4203.72145134856" upX="0.0512301976784809" upY="0.824126188622016" upZ="-0.564084649740776" />
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

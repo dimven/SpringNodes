@@ -1,10 +1,13 @@
-<Workspace Version="1.1.0.2094" X="306.064449550647" Y="66.698719218751" zoom="1.96524455617686" Name="Springs.Collector.ElementSketch" Description="Get the actual sketch lines of a sketch based element (floor, ceiling, modified wall, etc.) . You can optionally fetch the matching model curves, however this might prove comptationally heavy on larger data sets." ID="94050ce4-e59f-4377-933d-16326991c630" Category="Springs.Revit.Collectors">
+<Workspace Version="1.3.1.1736" X="306.064449550647" Y="66.698719218751" zoom="1.96524455617686" ScaleFactor="1" Name="Springs.Collector.ElementSketch" Description="Get the actual sketch lines of a sketch based element (floor, ceiling, modified wall, etc.) . You can optionally fetch the matching model curves, however this might prove comptationally heavy on larger data sets. Does not work with elements from linked files." ID="94050ce4-e59f-4377-933d-16326991c630" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Material" resolvedName="Revit.Elements.Material" assemblyName="RevitNodes.dll" />
     <ClassMap partialName="Transaction" resolvedName="Revit.Transaction.Transaction" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
     <PythonNodeModels.PythonNode guid="f8e36be0-b96f-4862-9c88-0737f835c5d3" type="PythonNodeModels.PythonNode" nickname="Python Script" x="167.220681948369" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -28,10 +31,6 @@ from Autodesk.Revit.DB import *
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 elements = UnwrapElement(tolist(IN[0]))
 getModel = IN[1]
@@ -98,7 +97,7 @@ def getSketch(el1):
 TransactionManager.Instance.EnsureInTransaction(doc)
 result = map(getSketch, elements)
 TransactionManager.Instance.TransactionTaskDone()
-OUT = output1([r[0] for r in result]), output1([r[1] for r in result])</Script>
+OUT = [r[0] for r in result], [r[1] for r in result]</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="165c5afd-8d3b-4475-adce-a02845f3edbf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="element:var[]" />
@@ -107,10 +106,14 @@ OUT = output1([r[0] for r in result]), output1([r[1] for r in result])</Script>
       <Symbol value="fetchModelCurves:bool = false" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="e7f0e3b3-7cb8-4cfa-b74a-d9f2ae9ec80d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="484.2" y="-5.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="curves" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="307.2" y="-2.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="094e1ff9-993b-4f1b-acbd-9877a0ecb76d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="307.2" y="-2.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="cd6f4ec2-2614-4c1f-a126-dc0bfcc5d503" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="483.6" y="51.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="model curves" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ea667445-ec60-4b75-a1da-ec882da4db60" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-75.2445233808256" y="118.427785318653" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -129,6 +132,6 @@ OUT = output1([r[0] for r in result]), output1([r[1] for r in result])</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="72654.9371707179" eyeY="73842.2231863845" eyeZ="67175.1562903359" lookX="-63502.875770036" lookY="-66899.8317258472" lookZ="-94821.400024477" upX="-0.171952441374363" upY="0.951056516295155" upZ="-0.256756422934116" />
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="-115.659526699007" Y="66.3686191847277" zoom="0.915562285281223" ScaleFactor="1" Name="Springs.Feet2Fraction" Description="Converts a decimal foot value to a fractional foot/inch string." ID="3784aae0-dd38-4cfd-ac57-a87ebe885a81" Category="Springs.Core.Units">
+<Workspace Version="1.3.2.2480" X="93.7140601551746" Y="121.354412904882" zoom="1.11798788304238" ScaleFactor="1" Name="Springs.Feet2Fraction" Description="Converts a decimal foot value to a fractional foot/inch string." ID="3784aae0-dd38-4cfd-ac57-a87ebe885a81" Category="Springs.Core.Units">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -8,15 +8,14 @@
     <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="50735672-61ee-4677-a565-9ec271d29642" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="269.297050137876" y="70.9447876620684" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def ft2frac(x,f1){&#xA;frac = Math.Pow(2, 1..8);&#xA;ft1 = Math.Floor(x);&#xA;in1 = (x - ft1) * 12;&#xA;in2 = Math.Floor(in1);&#xA;fr1 = (in1 - in2) * frac;&#xA;fr2 = Math.Round(fr1);&#xA;v1 = Math.Abs(fr1 - fr2);&#xA;ind1 = DSCore.List.FirstIndexOf(v1, DSCore.List.MinimumItem(v1));&#xA;fr3 = __Apply(f1,fr2[ind1]) + &quot;/&quot; + __Apply(f1,frac[ind1]);&#xA;t0 = fr3[0] == fr3[-1];&#xA;in3 = t0 ? (in2 + 1) : in2;&#xA;ft1s = __Apply(f1,ft1) + &quot;'&quot;;&#xA;in3s = __Apply(f1,in3);&#xA;ft1s = ft1s == &quot;0'&quot; ? &quot;&quot; : ft1s;&#xA;t1 = in3 == 0;&#xA;t2 = fr3 == &quot;0/2&quot;;&#xA;in2s = t1 ? &quot;&quot; : in3s;&#xA;fr3s = t2 || t0 ? &quot;&quot; : fr3;&#xA;mid = t1 || t2 || t0 ? &quot;&quot; : &quot; &quot;;&#xA;end = t1 &amp;&amp; t2 ? &quot;&quot; : &quot;\&quot;&quot;;&#xA;return = ft1s+in2s+mid+fr3s+end;&#xA;};" ShouldFocus="false" />
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c24410fb-6c38-4302-997e-19ac0937cfb5" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="273.707011635968" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="ft2frac(x,f1);" ShouldFocus="false">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="50735672-61ee-4677-a565-9ec271d29642" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250.271346576513" y="4.89962072314762" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="sign = _x &lt; 0 ? &quot;-&quot; : &quot;&quot;;&#xA;x = Math.Abs(_x);&#xA;frac = Math.Pow(2, 1..8);&#xA;ft1 = Math.Floor(x);&#xA;in1 = (x - ft1) * 12;&#xA;in2 = Math.Floor(in1);&#xA;fr1 = (in1 - in2) * frac;&#xA;fr2 = Math.Round(fr1);&#xA;v1 = Math.Abs(fr1 - fr2);&#xA;ind1 = DSCore.List.FirstIndexOf(v1, DSCore.List.MinimumItem(v1));&#xA;fr3 = __Apply(f1,fr2[ind1]) + &quot;/&quot; + __Apply(f1,frac[ind1]);&#xA;t0 = fr3[0] == fr3[-1];&#xA;in3 = t0 ? (in2 + 1) : in2;&#xA;ft1s = __Apply(f1,ft1) + &quot;'&quot;;&#xA;in3s = __Apply(f1,in3);&#xA;ft1s = ft1s == &quot;0'&quot; ? &quot;&quot; : ft1s;&#xA;t1 = in3 == 0;&#xA;t2 = fr3 == &quot;0/2&quot;;&#xA;in2s = t1 ? &quot;&quot; : in3s;&#xA;fr3s = t2 || t0 ? &quot;&quot; : fr3;&#xA;mid = t1 || t2 || t0 ? &quot;&quot; : &quot; &quot;;&#xA;end = t1 &amp;&amp; t2 ? &quot;&quot; : &quot;\&quot;&quot;;&#xA;sign+ft1s+in2s+mid+fr3s+end;" ShouldFocus="false">
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
     </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2981bc68-6581-4f9a-ab0d-24cd9cde62a9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="number:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="555.344151022097" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="917.602102242351" y="141.325324179753" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <PortInfo index="0" default="False" />
       <Symbol value="fraction(str)" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
@@ -36,14 +35,14 @@
     </Dynamo.Graph.Nodes.CustomNodes.Function>
   </Elements>
   <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="c24410fb-6c38-4302-997e-19ac0937cfb5" start_index="0" end="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="2981bc68-6581-4f9a-ab0d-24cd9cde62a9" start_index="0" end="c24410fb-6c38-4302-997e-19ac0937cfb5" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="5155fd01-4013-4980-9789-bb488b8ccc2e" start_index="0" end="c24410fb-6c38-4302-997e-19ac0937cfb5" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="50735672-61ee-4677-a565-9ec271d29642" start_index="21" end="73b5f31b-eca3-4ac0-b281-8e6f98c2f79c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2981bc68-6581-4f9a-ab0d-24cd9cde62a9" start_index="0" end="50735672-61ee-4677-a565-9ec271d29642" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5155fd01-4013-4980-9789-bb488b8ccc2e" start_index="0" end="50735672-61ee-4677-a565-9ec271d29642" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="13.4373041798721" eyeY="99.6964800421176" eyeZ="39.3309208553611" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="55.5282192569884" eyeY="195.783824846012" eyeZ="-51.2844799379119" lookX="-0.858967644938325" lookY="-87.9430536372463" lookZ="-60.7081984053477" upX="-0.00964871154219384" upY="0.731353701619171" upZ="-0.681930103084996" />
   </Cameras>
 </Workspace>

@@ -6,7 +6,7 @@
     <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" type="PythonNodeModels.PythonNode" nickname="Python Script" x="251.986073051426" y="5.29619480380282" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+    <PythonNodeModels.PythonNode guid="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" type="PythonNodeModels.PythonNode" nickname="Python Script" x="253.310121752377" y="4.63417045332747" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
       <Script># Copyright(c) 2017, Dimitar Venkov
@@ -18,25 +18,27 @@ def tolist(obj1):
 	else: return [obj1]
 
 def containment(poly, pt):
-	def is_CCW(A,B,C): return (B.X - A.X) * (C.Y - A.Y) &gt; (B.Y - A.Y) * (C.X - A.X)
+	def testCCW(A,B,C): return (B.X - A.X) * (C.Y - A.Y) &gt; (B.Y - A.Y) * (C.X - A.X)
 	
 	wn = 0
-	for i in xrange(len(poly)-1):
+	ln1 = len(poly)
+	for i in xrange(ln1):
+		j = (i+1) % ln1
+		isCCW = testCCW(poly[i], poly[j], pt)
 		if poly[i].Y &lt;= pt.Y:
-			if poly[i+1].Y &gt; pt.Y and is_CCW(poly[i], poly[i+1],pt): wn += 1
+			if poly[j].Y &gt; pt.Y and isCCW: wn += 1
 		else:
-			if poly[i+1].Y &lt;=pt.Y and not is_CCW(poly[i], poly[i+1],pt): wn -= 1
-	if wn != 0 : return True
-	else : return False
+			if poly[j].Y &lt;= pt.Y and not isCCW: wn -= 1
+	
+	return wn != 0
 
 poly = IN[0]
 pts = tolist(IN[1])
 
 if 'Polygon' in poly.GetType().ToString():
-	poly_pts = list(poly.Points)
+	poly_pts = poly.Points
 else:
 	poly_pts = [c.StartPoint for c in poly.Curves()]
-poly_pts.append(poly_pts[0])
 
 OUT = [containment(poly_pts, p) for p in pts]</Script>
     </PythonNodeModels.PythonNode>
@@ -60,6 +62,6 @@ OUT = [containment(poly_pts, p) for p in pts]</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-10062.7490642583" eyeY="30492.9939825549" eyeZ="2271.27042843189" lookX="-64.7177058851903" lookY="-36764.3785461091" lookZ="-4071.61904790531" upX="-0.0150538502871487" upY="0.320613007539673" upZ="-0.94709065764966" />
+    <Camera Name="Background Preview" eyeX="-63.2311973571777" eyeY="346.191467285156" eyeZ="-44.4725952148438" lookX="-0.563557207584381" lookY="-318.875335693359" lookZ="-39.8298377990723" upX="-0.0133362133055925" upY="0.333806872367859" upZ="-0.942547142505646" />
   </Cameras>
 </Workspace>

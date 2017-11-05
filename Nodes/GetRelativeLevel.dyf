@@ -1,0 +1,66 @@
+<Workspace Version="1.2.1.3083" X="453.304959927533" Y="136.641650719153" zoom="1.74331992875497" Name="Springs.GetRelativeLevel" Description="Select the level closest to the input height from the list of input levels" ID="86acedc1-4921-4079-9237-52ed6e303ba3" Category="Springs.Revit.Utility">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="63294923-bb10-41ee-a42f-7fda0dd44eb4" type="PythonNodeModels.PythonNode" nickname="Python Script" x="278.680908865482" y="4.01532724116748" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+from operator import itemgetter
+from itertools import repeat
+
+def key_fn(x, itemgetter=itemgetter): return abs(itemgetter(1)(x) )
+
+heights, elevs, names, belowOnly = IN
+
+def closestLevel(z, belowOnly=False, elevs=elevs, namaes=names, key_fn=key_fn):
+	if z is not None:
+		if belowOnly:
+			elevs = [e for e in elevs if e &lt; z]
+		if elevs:
+			i, _ = min(enumerate(z - e for e in elevs), key=key_fn)
+			return names[i]
+		return
+
+OUT = map(closestLevel, heights, repeat(belowOnly, len(heights) ) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="67c24294-6e7b-4c52-ae19-f3bd0ea475a0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="1.72085453192892" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="zHeight:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a03b0c39-3795-4b7d-b8d9-111cd7265b70" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-0.486220447289043" y="62.9665399352649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="elevations:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="c2814957-9be4-483b-a687-2b50973a1faa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0.486220447289043" y="122.043316292218" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="levels:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="1f39ffc7-484b-4781-a52e-86940550863c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="180.973074841778" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="belowOnly:bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a681571a-6ce2-4056-91f8-781196436b66" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="442.411054581523" y="3.44170906385784" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="level" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="63294923-bb10-41ee-a42f-7fda0dd44eb4" start_index="0" end="a681571a-6ce2-4056-91f8-781196436b66" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="67c24294-6e7b-4c52-ae19-f3bd0ea475a0" start_index="0" end="63294923-bb10-41ee-a42f-7fda0dd44eb4" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a03b0c39-3795-4b7d-b8d9-111cd7265b70" start_index="0" end="63294923-bb10-41ee-a42f-7fda0dd44eb4" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c2814957-9be4-483b-a687-2b50973a1faa" start_index="0" end="63294923-bb10-41ee-a42f-7fda0dd44eb4" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1f39ffc7-484b-4781-a52e-86940550863c" start_index="0" end="63294923-bb10-41ee-a42f-7fda0dd44eb4" end_index="3" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="201093.869050889" eyeY="78260.4806074659" eyeZ="-223076.842382104" lookX="-10177.7750619532" lookY="-8517.14107106972" lookZ="29244.060403222" upX="-0.0172023854360416" upY="0.998629473989683" upZ="0.0494280412839657" />
+  </Cameras>
+</Workspace>

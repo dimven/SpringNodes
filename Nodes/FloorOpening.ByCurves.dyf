@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="135.630256836723" Y="154.670134606384" zoom="1.13758205229474" Name="Springs.FloorOpening.ByCurves" Description="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." ID="7032b3a2-159c-479f-8139-ff559e155ecc" Category="Springs.Revit.Opening">
+<Workspace Version="1.3.1.1736" X="135.630256836723" Y="154.670134606384" zoom="1.13758205229474" ScaleFactor="1" Name="Springs.FloorOpening.ByCurves" Description="Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves." ID="7032b3a2-159c-479f-8139-ff559e155ecc" Category="Springs.Revit.Opening">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="08386b5d-a7cd-4089-9db9-aa0d26f7fb79" type="PythonNodeModels.PythonNode" nickname="Python Script" x="189.815155433563" y="-4.13004992656373" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
@@ -27,15 +27,12 @@ def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
-
-flr = UnwrapElement(tolist(IN[0]))
+flr = UnwrapElement(tolist(IN[0]) )
 hole = UnwrapElement(IN[1])
 
 openings = []
 newhl = []
+
 if not any(hasattr(h,"__iter__") for h in hole):
 	hole = [hole]
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -58,7 +55,7 @@ else:
 		except:
 			openings.append(None)
 TransactionManager.Instance.TransactionTaskDone()
-OUT = output1(openings)</Script>
+OUT = openings</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="bb64368f-2a68-47ec-95e7-ad20e3da1242" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="44.7857308328682" y="-0.727861240233327" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="host:var[]" />
@@ -80,6 +77,6 @@ OUT = output1(openings)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="81.9612025848931" eyeY="60.6141246867221" eyeZ="62.2681174153678" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

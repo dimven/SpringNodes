@@ -1,7 +1,10 @@
-<Workspace Version="1.0.0.1180" X="121.600023453145" Y="83.480649892069" zoom="1.27771698410772" Name="Springs.AreaPlan.ByLevelName" Description="Creates an area plan at the designated levels. Each new view needs a name. An area scheme must first be activated before it can be used. To activate a scheme, place one view of that type in the project(you can then delete it).  If a view with the same scheme and name exists, you'll get a null instead." ID="1e945ccb-531f-4888-9a76-fc0125ed5c63" Category="Springs.Revit.Views">
+<Workspace Version="1.3.1.1736" X="121.600023453145" Y="83.480649892069" zoom="1.27771698410772" ScaleFactor="1" Name="Springs.AreaPlan.ByLevelName" Description="Creates an area plan at the designated levels. Each new view needs a name. An area scheme must first be activated before it can be used. To activate a scheme, place one view of that type in the project(you can then delete it).  If a view with the same scheme and name exists, you'll get a null instead." ID="1e945ccb-531f-4888-9a76-fc0125ed5c63" Category="Springs.Revit.Views">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="2cd73597-6cbc-4f6d-bd28-1ad2855dfa57" type="PythonNodeModels.PythonNode" nickname="Python Script" x="183.631624957056" y="-1.25223349137627" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
       <Script>import clr
 
 clr.AddReference('RevitServices')
@@ -19,9 +22,7 @@ from Autodesk.Revit.DB import *
 def tolist(obj1):
 	if hasattr(obj1,'__iter__') : return obj1
 	else : return [obj1]
-def output1(l1):
-	if len(l1) == 1 : return l1[0]
-	else : return l1
+
 def first(obj1):
 	if hasattr(obj1,'__iter__'): return obj1[0]
 	else: return obj1
@@ -50,16 +51,15 @@ for f in fec3:
 		break
 
 if as1 != None:
-	out1 = []
+	OUT = []
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	for l, n in zip(lvls, names):
 		if n not in plan_names:
 			v1 = ViewPlan.CreateAreaPlan(doc, as1, l.Id)
 			v1.Name = n
-			out1.append(v1.ToDSType(False) )
-		else : out1.append(None) #could use fail_str but filtering nulls is easier
+			OUT.append(v1.ToDSType(False) )
+		else : OUT.append(None) #could use fail_str but filtering nulls is easier
 	TransactionManager.Instance.TransactionTaskDone()
-	OUT = output1(out1)
 
 else : OUT = 'Area scheme with that name not found.'</Script>
     </PythonNodeModels.PythonNode>
@@ -73,6 +73,7 @@ else : OUT = 'Area scheme with that name not found.'</Script>
       <Symbol value="schemeName:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="efd15a33-a001-4068-a222-5a85577f459f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="338.35121926751" y="-1.25223349137627" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="AreaPlan" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -86,6 +87,6 @@ else : OUT = 'Area scheme with that name not found.'</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="81.9612025848931" eyeY="60.6141246867221" eyeZ="62.2681174153678" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

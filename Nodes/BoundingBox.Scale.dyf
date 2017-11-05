@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="318.120821849936" Y="143.896891929735" zoom="1.24844365397223" Name="Springs.BoundingBox.Scale" Description="Scales the bounding box in three dimensions according to it's center." ID="92e695d2-fa2d-4b57-83f5-0f8db42e28f3" Category="Springs.Geometry">
+<Workspace Version="1.3.2.2480" X="171.536741260426" Y="260.147652026152" zoom="1.13758205229474" ScaleFactor="1" Name="Springs.BoundingBox.Scale" Description="Scales the bounding box in three dimensions according to it's center." ID="92e695d2-fa2d-4b57-83f5-0f8db42e28f3" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point.ByCoordinates" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -13,35 +13,40 @@
     <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="f93313c6-3615-4e5f-9605-003c8c890c5e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="bbScale(bb1,xA,yA,zA);" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="a6c1cf88-61e5-4858-95f2-e1568332cdb3" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="242.939085561355" y="111.731078281298" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def ptAvr(pts:var[]){&#xA;return = Point.ByCoordinates(&#xA;Math.Average(pts.X),&#xA;Math.Average(pts.Y),&#xA;Math.Average(pts.Z));&#xA;}&#xA;&#xA;def bbScale(bb1,xA,yA,zA){&#xA;cs1=bb1.ContextCoordinateSystem;&#xA;min = bb1.MinPoint;&#xA;max = bb1.MaxPoint;&#xA;cent = ptAvr({min,max});&#xA;pl1 = Plane.ByOriginNormal&#xA;(cent, Vector.ZAxis());&#xA;min1 = min.Scale(pl1,xA,yA,zA);&#xA;max1 = max.Scale(pl1,xA,yA,zA);&#xA;return = BoundingBox.&#xA;ByCornersCoordinateSystem&#xA;(min1,max1,cs1);&#xA;};" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="35d74eec-575d-46bf-bcce-5a89c77ea0c1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-34.0354313102316" y="-23.8248019171622" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="35d74eec-575d-46bf-bcce-5a89c77ea0c1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-131.083163534067" y="-51.5527254096865" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="boundingBox:BoundingBox" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="71a4e77f-cec3-4604-b459-9f1e4ac8ef0c" type="Dynamo.Nodes.Output" nickname="Output" x="537.293416844831" y="-2.91732268373414" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="71a4e77f-cec3-4604-b459-9f1e4ac8ef0c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="573.838555709323" y="-11.5833770181858" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="boundingBox" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="1ee89d2a-cef5-44cb-8750-b83d728849a6" type="Dynamo.Nodes.Symbol" nickname="Input" x="-32.0169690705834" y="32.6677497659274" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="1ee89d2a-cef5-44cb-8750-b83d728849a6" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-129.064701294419" y="4.93982627340307" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="xAmmount:double = 1" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="7732a400-99d1-4050-a435-a568e84da488" type="Dynamo.Nodes.Symbol" nickname="Input" x="-31.9520074094333" y="99.3449127056737" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7732a400-99d1-4050-a435-a568e84da488" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-128.999739633268" y="71.6169892131494" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="yAmmount:double = 1" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="8ef4f100-8a2f-4dcf-88fd-c2e49500ed7e" type="Dynamo.Nodes.Symbol" nickname="Input" x="-35.079959486237" y="162.829161907466" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8ef4f100-8a2f-4dcf-88fd-c2e49500ed7e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-132.127691710072" y="135.101238414942" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="zAmmount:double = 1" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="165.57239909089" y="-14.8041693957235" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="a = bb1.MinPoint;&#xA;b = bb1.MaxPoint;&#xA;mid = Point.ByCoordinates(&#xA;  (a.X + b.X) / 2,&#xA;  (a.Y + b.Y) / 2,&#xA;  (a.Z + b.Z) / 2);&#xA;pl1 = Plane.ByOriginNormal(&#xA;  mid, Vector.ZAxis() );&#xA;a1 = a.Scale(pl1, xA, yA, zA);&#xA;b1 = b.Scale(pl1, xA, yA, zA);&#xA;bb2 = BoundingBox.ByCorners(a1, b1);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="f93313c6-3615-4e5f-9605-003c8c890c5e" start_index="0" end="71a4e77f-cec3-4604-b459-9f1e4ac8ef0c" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="35d74eec-575d-46bf-bcce-5a89c77ea0c1" start_index="0" end="f93313c6-3615-4e5f-9605-003c8c890c5e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="1ee89d2a-cef5-44cb-8750-b83d728849a6" start_index="0" end="f93313c6-3615-4e5f-9605-003c8c890c5e" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="7732a400-99d1-4050-a435-a568e84da488" start_index="0" end="f93313c6-3615-4e5f-9605-003c8c890c5e" end_index="2" portType="0" />
-    <Dynamo.Models.ConnectorModel start="8ef4f100-8a2f-4dcf-88fd-c2e49500ed7e" start_index="0" end="f93313c6-3615-4e5f-9605-003c8c890c5e" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="35d74eec-575d-46bf-bcce-5a89c77ea0c1" start_index="0" end="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1ee89d2a-cef5-44cb-8750-b83d728849a6" start_index="0" end="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7732a400-99d1-4050-a435-a568e84da488" start_index="0" end="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8ef4f100-8a2f-4dcf-88fd-c2e49500ed7e" start_index="0" end="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2b7e31fb-d0c4-4257-ad5c-ae40f07bcbed" start_index="6" end="71a4e77f-cec3-4604-b459-9f1e4ac8ef0c" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-4844.87978164742" eyeY="4644.04397143909" eyeZ="13927.2240266387" lookX="5752.93152457308" lookY="-6876.98094289097" lookZ="-18816.9912321053" />
+    <Camera Name="Background Preview" eyeX="5.16785901660415" eyeY="17.1857864352672" eyeZ="11.8635649947714" lookX="-0.167859016604153" lookY="-17.1857864352672" lookZ="-11.8635649947714" upX="-0.00964871154219384" upY="0.731353701619171" upZ="-0.681930103084996" />
   </Cameras>
 </Workspace>

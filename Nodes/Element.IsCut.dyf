@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="-376.09990427469" Y="126.339947297391" zoom="1.63719728218044" Name="Springs.Element.IsCut" Description="Tests if the element is being cut by any void instances. If any cuts exist all cutting elements will be provided." ID="a530754f-4351-4bdd-81aa-d47d7555fef1" Category="Springs.Revit.Element">
+<Workspace Version="1.3.1.1736" X="-376.09990427469" Y="126.339947297391" zoom="1.63719728218044" ScaleFactor="1" Name="Springs.Element.IsCut" Description="Tests if the element is being cut by any void instances. If any cuts exist all cutting elements will be provided." ID="a530754f-4351-4bdd-81aa-d47d7555fef1" Category="Springs.Revit.Element">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -9,6 +9,7 @@
   </NamespaceResolutionMap>
   <Elements>
     <PythonNodeModels.PythonNode guid="9a7feba5-1d12-475e-98ba-3aa3316ee6c6" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
       <Script>import clr
 
 clr.AddReference("RevitServices")
@@ -26,10 +27,6 @@ clr.ImportExtensions(Revit.Elements)
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 elements = UnwrapElement(tolist(IN[0]))
 out1 = []
@@ -54,16 +51,20 @@ for i in xrange(len(elements)):
 		out1.append(False)
 		cutters.append([])		
 
-OUT = output1(out1), cutters</Script>
+OUT = out1, cutters</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e1633339-921a-4d6b-93ce-c6cb9d488141" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="99.2" y="2.8421709430404E-14" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="element:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="eff4c465-83e3-4fa5-a836-26007c97b05f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="551.310468348329" y="-8.28656884476153" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="bool" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="409d4548-4854-4381-8e91-69fce2b7cbd8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="390.742296820078" y="0.362175540042585" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="409d4548-4854-4381-8e91-69fce2b7cbd8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="390.742296820078" y="0.362175540042585" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="067394bc-ce51-4677-a883-1297ef52f059" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="552.628280733945" y="51.0552676588813" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="cutter" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
@@ -77,6 +78,6 @@ OUT = output1(out1), cutters</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

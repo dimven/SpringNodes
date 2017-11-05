@@ -1,0 +1,75 @@
+<Workspace Version="1.2.1.3083" X="39.6396735599774" Y="208.105252093235" zoom="2.05668026833428" Name="Springs.Polygon.3DArea" Description="Returns the planar area of the input polygon(s) in euclidean space. Not accurate for self-intersecting polys." ID="356b7cef-58d4-4713-abc0-8867c17ca0d9" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Line.ByBestFitThroughPoints" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="IndexGroup" resolvedName="Autodesk.DesignScript.Geometry.IndexGroup" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DesignScript.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math.Log" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="CoordinateSystem" resolvedName="Autodesk.DesignScript.Geometry.CoordinateSystem" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Polygon" resolvedName="Autodesk.DesignScript.Geometry.Polygon" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="f815be78-8d1d-4070-b144-1e3ecb1e7df5" type="PythonNodeModels.PythonNode" nickname="Python Script" x="168.314964855444" y="-2.91732268373414" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+from math import sqrt
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import Vector
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+polys = tolist(IN[0])
+OUT = []
+for p in polys:
+	t1 = p.GetType().ToString()
+	if 'Polygon' in t1:
+		pts = p.Points
+	elif 'PolyCurve' in t1:
+		pts = [c.StartPoint for c in p.Curves()]
+	else:
+		area.append(None)
+		continue
+	total = Vector.ByCoordinates(0,0,0)
+	vec = [p.AsVector() for p in pts]
+	l1 = len(pts)
+	for i in xrange(l1):
+		j = i + 1
+		if j == l1:
+			j = 0
+		prod = vec[i].Cross(vec[j])
+		total = total.Add(prod)
+	OUT.append(abs(sqrt(total.Dot(total) ) / 2.0) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7d9b97c8-1c1d-4288-9d2d-95320fcbc8ed" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="polygon:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="726b8dfc-1aa8-428a-9bf4-d12113342279" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="324.958667730455" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="area" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="f815be78-8d1d-4070-b144-1e3ecb1e7df5" start_index="0" end="726b8dfc-1aa8-428a-9bf4-d12113342279" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7d9b97c8-1c1d-4288-9d2d-95320fcbc8ed" start_index="0" end="f815be78-8d1d-4070-b144-1e3ecb1e7df5" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

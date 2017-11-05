@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="-74.295680997215" Y="191.02743097562" zoom="2.49400635960208" Name="Springs.Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform CS can be used to get the exact location of the elements in the host file. If an error occurs or the linked document is unloaded, an error will be returned in the elements output and the appropriate transform will be a null. You can use those nulls to filter out the errors." ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="Springs.Revit.Collectors">
+<Workspace Version="1.3.1.1736" X="71.8237785060537" Y="197.761659149575" zoom="1.79400970938056" ScaleFactor="1" Name="Springs.Collector.LinkedInstanceElements" Description="Extract elements by category from the selected linked instances. The transform CS can be used to get the exact location of the elements in the host file. If an error occurs or the linked document is unloaded, an error will be returned in the elements output and the appropriate transform will be a null. You can use those nulls to filter out the errors." ID="f9c65be3-fdc3-4f02-bbec-effc6056df12" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
@@ -28,14 +28,11 @@ from Autodesk.Revit.DB import FilteredElementCollector, RevitLinkType
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 links = UnwrapElement(tolist(IN[0]) )
 cat1 = UnwrapElement(IN[1])
 elements, transforms = [], []
-
+OUT = elements, transforms
 for link in links:
 	try:
 		if RevitLinkType.IsLoaded(doc, link.GetTypeId() ):
@@ -48,14 +45,13 @@ for link in links:
 			transforms.append(None)
 	except Exception, ex:
 		elements.append(str(ex) )
-		transforms.append(None)
-OUT = output1(elements), output1(transforms)</Script>
+		transforms.append(None)</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f3246400-4185-4769-b996-369fa96e6042" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="18.1866905393678" y="-13.7133509273831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="LinkInstance:var[]" />
+      <Symbol value="linkInstance:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5efc1764-2e33-4182-b564-c8454a714c31" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="28.1841553837043" y="43.5316487553731" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="category:Category" />
+      <Symbol value="category:var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="66772f0d-8f8d-4145-805e-d49dd692712b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="537.428376638417" y="-41.9772371497245" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <PortInfo index="0" default="False" />
@@ -83,4 +79,7 @@ OUT = output1(elements), output1(transforms)</Script>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

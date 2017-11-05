@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="76.6677151371248" Y="94.0012513920946" zoom="1.40972876398001" Name="Springs.List.MergeByBoolMask" Description="Merge two lists by a boolean mask list. The true count in the mask should be the same as the length of the true list and vice versa for the false list." ID="c018f3a9-1a3e-4393-9a23-ed97ab89f2a6" Category="Springs.Core.List">
+<Workspace Version="1.3.2.2480" X="76.6677151371248" Y="94.0012513920946" zoom="1.40972876398001" ScaleFactor="1" Name="Springs.List.MergeByBoolMask" Description="Merge two lists by a boolean mask list. The true count in the mask should be the same as the length of the true list and vice versa for the false list." ID="c018f3a9-1a3e-4393-9a23-ed97ab89f2a6" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -18,19 +18,20 @@
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
       <PortInfo index="2" default="False" />
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 def tolist(obj1):
 	if hasattr(obj1,'__iter__'): return obj1
 	else: return [obj1]
 
 t1 = tolist(IN[0])
-l1 = tolist(IN[1])
-l2 = tolist(IN[2])
+l1 = list(reversed(tolist(IN[1]) ) )
+l2 = list(reversed(tolist(IN[2]) ) )
 
-try: OUT = [l1.pop(0) if i else l2.pop(0) for i in t1]
-except: OUT = 'List mismatch.'</Script>
+try: OUT = [l1.pop() if i else l2.pop() for i in t1]
+except Exception as e: OUT = str(e)</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="e7845a99-1011-4db6-8ad5-8761c4f793a1" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="401.904221782307" y="1.68199207920333" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <PortInfo index="0" default="False" />

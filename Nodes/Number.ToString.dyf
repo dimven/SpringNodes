@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="-470.240952989215" Y="235.420532198835" zoom="2.39761521627344" Name="Springs.Number.ToString" Description="Converts the input number(s) to string. You can optionally limit the number of digits." ID="7138be89-af7b-4232-b938-e63a5fe78240" Category="Springs.Core.String.Actions">
+<Workspace Version="1.3.1.1736" X="-470.240952989215" Y="235.420532198835" zoom="2.39761521627344" ScaleFactor="1" Name="Springs.Number.ToString" Description="Converts the input number(s) to string. You can optionally limit the number of digits." ID="7138be89-af7b-4232-b938-e63a5fe78240" Category="Springs.Core.String.Actions">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="1c749d7d-f264-4830-ac7e-ac1e93d0733a" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
@@ -12,10 +12,6 @@ def tolist(x):
 	if hasattr(x,'__iter__'): return x
 	else : return [x]
 
-def output(x):
-	if len(x) == 1: return x[0]
-	else : return x
-
 def n2s(n, digits=IN[1]):
 	if digits is not None:
 		n = round(n, digits)
@@ -26,7 +22,7 @@ def n2s(n, digits=IN[1]):
 
 nums = tolist(IN[0])
 
-OUT = output(map(n2s, nums) )</Script>
+OUT = map(n2s, nums)</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6d4ccc9b-61ee-4dcc-a99c-4054269280e4" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="124.518967099307" y="0.470459652501432" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="num:var[]" />

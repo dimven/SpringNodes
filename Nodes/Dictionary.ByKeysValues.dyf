@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="298.719037465737" Y="166.395939625744" zoom="1.47618023926362" ScaleFactor="1" Name="Springs.Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="Springs.Core.List.Create">
+<Workspace Version="1.3.1.1736" X="298.719037465737" Y="166.395939625744" zoom="1.47618023926362" ScaleFactor="1" Name="Springs.Dictionary.ByKeysValues" Description="Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)&#xD;&#xA;The search keys list will provide the corresponding value to the input key." ID="f73b43c1-353a-4b03-a337-7e2fb6c7250c" Category="Springs.Core.List.Create">
   <NamespaceResolutionMap />
   <Elements>
     <PythonNodeModels.PythonNode guid="0d81ea21-c6ff-4bb1-9771-d92c39b76bfa" type="PythonNodeModels.PythonNode" nickname="Python Script" x="175.122051117491" y="39.3838562304109" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
@@ -9,7 +9,6 @@
       <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
-
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
@@ -22,8 +21,7 @@ elements = tolist(IN[1])
 searchVals = tolist(IN[2])
 
 dict1 = dict(zip(keys,elements) )
-OUT = [dict1.get(sv, IN[3]) for sv in searchVals]
-#del(dict1)</Script>
+OUT = [dict1.get(sv, IN[3]) for sv in searchVals]</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3cad9a23-eee6-4193-a3e7-479546624fa2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="10.1622970369172" y="-0.737482626484493" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="keys:var[]" />

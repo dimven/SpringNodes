@@ -18,6 +18,19 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.1.0 051017
+- Most of the python nodes are set up to automatically promote their input to a list. The original idea behind this was to elliminate cases where we're starting multiple script scopes for a list of inputs. The scripts had a defined "output" function that could incorrectly demote the output to a singleton. For consistency reasons, the output functio has been removed and all affected nodes will always return a list. I realize this might break some existing workflows and apologise in advance, hopefully the added consistency will pay off in the long term. For graphs where you always worked with a singleton, add a List.FirstItem at the ned. And if you have any graphs where you worked with both single items and lists and wanted to preserve the old functionality, try using the newly added "RankOutput" node.
+- Most of the design script nodes had a DS function inside even tho they took a single item as an input. That did not benefit us in any way and the additional function calls affected performance negatively (DS functions have a high cost in the Dynamo VM) and their names leaked into the main graph and were poluting the function lookup table. That lead to name clashes and undesired results. All DS nodes have been cleaned up and simplified.
+- A few rarely used nodes have been depreciated (instance and type collectors). Check out the [depreciated page](https://github.com/dimven/SpringNodes/wiki/Depreciated-and-Changed-nodes-throughout-versions)
+- I've added a few new additions, nothing major:
+	- PolyCurve.ArcChamfer: similar to the chamfer node but tapers the curves with a variable radius arc instead of a line
+	- PolyCurve.Fillet+ : a way to fillet both the CW and CCW sides of a polycurve.
+	- BoundingBox.2dRectangle: a simple way to get a 2d rectangle from an element's boundign box
+	- Polygon.3dArea: a numeric calculation to get the area of non intersecting polys in euclidean space
+	- ViewInstance.ByPoint: similar in functionality with the Clockwork node but handles lists in a different way
+	- RankOutput: a utility node to correctly rank puthon nodes' output based on their input
+- Finally updated the node documentation on GitHub! :D
+
 #### 121.1.1 170917
 - Polygon.IsRectangular will tell you if any four points are square or rectangular.
 - FamilyInstance.ByGeometry subcategory tweaks; now existing subcategories are assigned as expected

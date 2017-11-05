@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
+<Workspace Version="1.3.1.1736" X="-13.0706922006215" Y="134.812825236355" zoom="1.27771698410772" ScaleFactor="1" Name="Springs.Element.SetLocation" Description="Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements." ID="bac5c146-7610-4c0b-a9b1-7a7aeb13bb2b" Category="Springs.Revit.Element">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="61e46993-03f6-4a2e-9726-c414ed48bb4e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="62.4336804095385" y="-2.05223349137634" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -38,10 +38,6 @@ FrU = StructuralFramingUtils
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 elements = UnwrapElement(tolist(IN[0]))
 newloc = UnwrapElement(tolist(IN[1]))
@@ -84,7 +80,7 @@ for i in xrange(len(elements)):
 		out1.append(None)
 TransactionManager.Instance.TransactionTaskDone()
 
-OUT = output1(out1)</Script>
+OUT = out1</Script>
     </PythonNodeModels.PythonNode>
   </Elements>
   <Connectors>
@@ -96,6 +92,6 @@ OUT = output1(out1)</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

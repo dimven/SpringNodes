@@ -1,67 +1,98 @@
-<Workspace Version="0.8.2.2392" X="-93.3605595500001" Y="86.9722673" zoom="1.545620359375" Name="Springs.SelectLinkedElements(ordered)" Description="Select the linked instance first. Then select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node." ID="b1c08346-4bd4-4548-bce5-c6504f7a9586" Category="Springs.Revit.Selection">
+<Workspace Version="1.3.2.2480" X="11.4775961617833" Y="219.074703674344" zoom="1.25584483561315" ScaleFactor="1" Name="Springs.SelectLinkedElements(ordered)" Description="Select the linked instance first. Then select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node." ID="b1c08346-4bd4-4548-bce5-c6504f7a9586" Category="Springs.Revit.Selection">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" type="PythonNodeModels.PythonNode" nickname="Python Script" x="242.833509566804" y="-7.96276714799535" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 #inspired by Troy Gates https://forums.autodesk.com/t5/revit-api/revit-api-selected-element-set-order/td-p/5597203
 
 import clr
 
 clr.AddReference("RevitAPIUI")
-from  Autodesk.Revit.UI import *
+from Autodesk.Revit.UI import *
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import RevitLinkInstance 
 
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
-uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
+uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
 
 sel1 = uidoc.Selection
 obt1 = Selection.ObjectType.Element
 obt2 = Selection.ObjectType.LinkedElement
-out1 = []
+picked = []
 
-TaskDialog.Show("Spring Nodes", "First select a link instance. Then pick elements from that instance in the desired order. Hit ESC to stop picking.")
+if IN[0]:
+	TaskDialog.Show("Spring Nodes", "First select a link instance. Then pick elements from that instance in the desired order. Hit ESC to stop picking.")
+
 msg1 = 'Pick elements in the desired order, hit ESC to stop picking.'
 
 li_ref = sel1.PickObject(obt1, "Select a link instance first.")
-Link1 = doc.GetElement(li_ref.ElementId)
-LinkDoc = Link1.GetLinkDocument()
-
-flag = True
-while flag:
-	try:
-		el1 = sel1.PickObject(obt2, msg1).LinkedElementId
-		out1.append(el1)
-	except : flag = False
-out1 = [LinkDoc.GetElement(el).ToDSType(True) for el in out1]
-OUT = output1(out1)</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Output guid="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" type="Dynamo.Nodes.Output" nickname="Output" x="407.4" y="-1.59999999999999" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+link1 = doc.GetElement(li_ref.ElementId)
+if isinstance(link1, RevitLinkInstance):
+	linkDoc = link1.GetLinkDocument()
+	
+	flag = True
+	while flag:
+		try:
+			el1 = sel1.PickObject(obt2, msg1).LinkedElementId
+			if el1.IntegerValue != -1:
+				picked.append(el1)
+		except : flag = False
+	
+	elems = []
+	for p in picked:
+		el1 = linkDoc.GetElement(p)
+		if el1 is not None:
+			elems.append(el1.ToDSType(True) )
+	
+	tf1 = link1.GetTotalTransform().ToCoordinateSystem(True)
+	OUT = elems, tf1
+	
+else:
+	OUT = 'Failed to pick a link instance', None</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="522.063846931133" y="-9.56276714799534" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="elements" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="b35a0403-2326-4cb4-a402-59dc25ead61f" type="Dynamo.Nodes.Symbol" nickname="Input" x="36.4" y="0.400000000000034" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d0f256dd-28ae-4821-abc4-62a5077bff18" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="27.6090102893257" y="-5.87713158838466" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="dialog:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="39990508-5a89-4ff6-afe7-b8395751b1f8" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="389.869685017984" y="-4.40533176875093" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="612f5e6d-8c7b-4648-b61f-a78e441b2a09" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="522.913126115607" y="62.189722152991" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="transform" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="eb7a123a-9c80-4f38-80b4-ed34ef6fbca2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="20.1109217847056" y="62.6344015753965" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="refresh:bool = true" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" start_index="0" end="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="b35a0403-2326-4cb4-a402-59dc25ead61f" start_index="0" end="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" start_index="0" end="39990508-5a89-4ff6-afe7-b8395751b1f8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d0f256dd-28ae-4821-abc4-62a5077bff18" start_index="0" end="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="39990508-5a89-4ff6-afe7-b8395751b1f8" start_index="0" end="17bdbe00-d164-40d5-aeae-1e5ec6b90ba0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="39990508-5a89-4ff6-afe7-b8395751b1f8" start_index="1" end="612f5e6d-8c7b-4648-b61f-a78e441b2a09" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb7a123a-9c80-4f38-80b4-ed34ef6fbca2" start_index="0" end="c4b63f8c-7540-4aa4-bd74-78cebaf2fa14" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-7717.35546875" eyeY="10465.021484375" eyeZ="6683.43603515625" lookX="712.438537597656" lookY="-9433.8134765625" lookZ="-7398.95703125" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

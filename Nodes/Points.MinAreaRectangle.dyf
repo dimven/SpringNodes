@@ -1,0 +1,168 @@
+<Workspace Version="1.3.2.2480" X="-105.741616684786" Y="150.661209535187" zoom="2.05668026833428" ScaleFactor="1" Name="Springs.Points.MinAreaRectangle" Description="Computes the minimum area rectangle in xy space for a set of points using a linear time algorithm" ID="d2aa533e-de28-4383-93ed-0ebbbdfb2596" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fbe0df27-759c-4ea5-99fa-4f0fc3734a75" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="403.511359084488" y="2.58485604730785" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="x[0];&#xA;x[1];&#xA;x[2];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <PythonNodeModels.PythonNode guid="eb762905-9a95-4f5e-9a1c-1dc34fdb05c9" type="PythonNodeModels.PythonNode" nickname="Python Script" x="247.082677316266" y="1.45866134186707" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import Point, Vector, Rectangle
+from math import sqrt
+from operator import itemgetter
+
+_pts, elev = IN
+
+def hull(_pts):
+	def pCrs(o, a, b):
+		return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+	pts = sorted( (p.X, p.Y) for p in _pts)
+	pLen = len(pts)
+	if pLen &lt; 4 : return pts
+	else:
+		lower, upper = [], []
+		
+		for i in xrange(pLen):
+			j = pLen - 1 - i
+			while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0:
+				lower.pop()
+			lower.append(pts[i])
+			while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0:
+				upper.pop()
+			upper.append(pts[j])
+		
+		lower.pop()
+		upper.pop()
+		lower.extend(upper)
+		return lower
+
+# http://eprints.cs.vt.edu/archive/00000869/01/CS81017-R.pdf
+
+def scalar(k, i, j):
+	return k[0] * (i[1] - j[1]) + k[1] * (j[0] - i[0]) + j[1] * i[0] - i[1] * j[0]
+
+def pDist(a, b, sqrt=sqrt):
+	return sqrt( (a[0] - b[0])**2 + (a[1] - b[1])**2)
+
+def linDist(a, b, p):
+	line_dist = pDist(a, b)
+	if line_dist == 0:
+		return pDist(p, a)
+	
+	t = ( (p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1]) ) / line_dist**2
+	
+	cp = ( (b[0] - a[0]) * t + a[0], (b[1] - a[1]) * t + a[1])
+	d1 = pDist(p, cp)
+	return cp, d1
+
+def indexer(end, position=0, start=0, step=1):
+	i = position - step
+	while True:
+		i += step
+		if i &gt;= end:
+			i = start
+		yield i
+
+def highSearch(pts, iPt, jPt, j, it1=None, k=None, m=None,
+			   indexer=indexer, scalar=scalar):
+	if it1 is None:
+		it1 = indexer(len(pts), j)
+		k, m = it1.next(), it1.next()
+	Sa = scalar(pts[k], iPt, jPt)
+	Sb = scalar(pts[m], iPt, jPt)
+	while Sa &lt; Sb:
+		k, m = m, it1.next()
+		Sa = scalar(pts[k], iPt, jPt)
+		Sb = scalar(pts[m], iPt, jPt)
+	return k, m
+
+pts = hull(_pts)
+
+OUT = []
+highPts, closePts, areas, dists = [], [], [], []
+lnPts = len(pts)
+
+it1 = indexer(lnPts, 2)
+k, m = it1.next(), it1.next()
+
+for i in xrange(lnPts):
+	j = (i + 1) % lnPts
+
+	k, m = highSearch(pts, pts[i], pts[j], j+1, it1, k, m)
+	
+	highPts.append(pts[k])
+	cp, l1 = linDist(pts[i], pts[j], pts[k])
+	closePts.append(cp)
+	
+	n, _ = highSearch(pts, pts[k], cp, j)
+	_, l2a = linDist(pts[k], cp, pts[n])
+		
+	q, _ = highSearch(pts, cp, pts[k], m)
+	_, l2b = linDist(cp, pts[k], pts[q])
+	
+	areas.append(l1 * (l2a + l2b) )
+	dists.append( (l2a, l2b) )
+
+ix, _ = min(enumerate(areas), key=itemgetter(1) )
+d1, d2 = dists[ix]
+_a, _b = closePts[ix], highPts[ix]
+a = Point.ByCoordinates(_a[0], _a[1], elev)
+b = Point.ByCoordinates(_b[0], _b[1], elev)
+
+_v = Vector.ByTwoPoints(a, b)
+v = Vector.ByCoordinates(-_v.Y, _v.X, 0).Normalized()
+p1 = a.Add(v.Scale(d2) )
+p2 = a.Subtract(v.Scale(d1) )
+p3 = b.Subtract(v.Scale(d1) )
+p4 = b.Add(v.Scale(d2) )
+
+OUT = (Rectangle.ByCornerPoints(p1, p2, p3, p4), 
+90 - v.AngleAboutAxis(Vector.XAxis(), Vector.ZAxis() ),
+[Point.ByCoordinates(p[0], p[1], elev) for p in pts])</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="cead9564-2552-47a4-9314-92af32935b33" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-42.787399361434" y="2.43110223644511" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="points:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ce003ae7-dd73-4a24-b461-59bad7d55c37" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-42.3011789141451" y="60.5354376988198" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="elevation: double = 0" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="8d3e374a-932b-4f84-9649-02d81c9fe87c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="546.631438956482" y="-4.86220447289023" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="rectangle" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b3ccc33e-a91c-4e4b-88b4-5c03898e01c6" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="549.062541192927" y="54.2145718840625" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="angle" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a8360714-7faf-4d75-812e-0bef3341351e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="549.625537997169" y="115.05708945634" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="hullPoints" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="fbe0df27-759c-4ea5-99fa-4f0fc3734a75" start_index="0" end="8d3e374a-932b-4f84-9649-02d81c9fe87c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fbe0df27-759c-4ea5-99fa-4f0fc3734a75" start_index="1" end="b3ccc33e-a91c-4e4b-88b4-5c03898e01c6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fbe0df27-759c-4ea5-99fa-4f0fc3734a75" start_index="2" end="a8360714-7faf-4d75-812e-0bef3341351e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb762905-9a95-4f5e-9a1c-1dc34fdb05c9" start_index="0" end="fbe0df27-759c-4ea5-99fa-4f0fc3734a75" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="cead9564-2552-47a4-9314-92af32935b33" start_index="0" end="eb762905-9a95-4f5e-9a1c-1dc34fdb05c9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ce003ae7-dd73-4a24-b461-59bad7d55c37" start_index="0" end="eb762905-9a95-4f5e-9a1c-1dc34fdb05c9" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-107.674027466461" eyeY="223.853733671663" eyeZ="195.987142266119" lookX="21.9298737183392" lookY="-187.959066547919" lookZ="-146.922670911733" upX="0.0935034407232007" upY="0.773840287468559" upZ="-0.626441168294413" />
+  </Cameras>
+</Workspace>

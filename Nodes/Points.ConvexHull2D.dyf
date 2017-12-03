@@ -1,4 +1,4 @@
-<Workspace Version="1.1.0.2094" X="139.971711667902" Y="219.671776615113" zoom="2.37004060791359" Name="Springs.Points.ConvexHull2D" Description="Computes the XY convex hull of a given set of points based on the monotone chain algorithm." ID="f3262378-975c-40f8-bf70-5867e7837b75" Category="Springs.Geometry">
+<Workspace Version="1.3.2.2480" X="139.971711667902" Y="219.671776615113" zoom="2.37004060791359" ScaleFactor="1" Name="Springs.Points.ConvexHull2D" Description="Computes the XY convex hull of a given set of points based on the monotone chain algorithm." ID="f3262378-975c-40f8-bf70-5867e7837b75" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
@@ -12,23 +12,26 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="59b13e3d-6975-44b9-b83b-3cc04fddfe77" type="PythonNodeModels.PythonNode" nickname="Python Script" x="154.700792331351" y="-0.486220447289043" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+    <PythonNodeModels.PythonNode guid="59b13e3d-6975-44b9-b83b-3cc04fddfe77" type="PythonNodeModels.PythonNode" nickname="Python Script" x="154.700792331351" y="-0.0642867484903604" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>import clr
 clr.AddReference('ProtoGeometry')
-from Autodesk.DesignScript.Geometry import *
+from Autodesk.DesignScript.Geometry import Point
 
-def ps1(p): return p.X
-def ps2(p): return p.Y
-pts = sorted(sorted(IN[0], key = ps1), key = ps2)
+from itertools import chain
+
+pts = sorted( (p.X, p.Y) for p in IN[0])
 elev = IN[1]
 
 def pCrs(o, a, b):
-	return (a.X - o.X) * (b.Y - o.Y) - (a.Y - o.Y) * (b.X - o.X)
+	return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
 pLen = len(pts)
-if pLen &lt;= 1 : OUT = pts
+if pLen &lt; 4 : OUT = pts
 else:
 	lower, upper = [], []
+	
 	for i in xrange(pLen):
 		j = pLen - 1 - i
 		while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0:
@@ -37,13 +40,17 @@ else:
 		while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0:
 			upper.pop()
 		upper.append(pts[j])
-	pts2 = lower[:-1] + upper[:-1]
-	OUT = [Point.ByCoordinates(p.X, p.Y, elev) for p in pts2]</Script>
+	
+	lower.pop()
+	upper.pop()
+	
+	OUT = [Point.ByCoordinates(p[0], p[1], elev) for p in chain(lower, upper) ]</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="061ebfe0-b233-4f86-b4d8-5b125cd57a70" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0.421933698798682" y="-0.421933698798654" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="points:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="cbdb1810-f723-4503-aa78-edbeaca4b18f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="298.702763576848" y="-0.972440894578028" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="points" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="69da2bf8-f129-4e7b-8de3-3710e4151a2e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-64.6713244716982" y="58.8179002894765" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
@@ -59,6 +66,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
+    <Camera Name="Background Preview" eyeX="29133.3009840831" eyeY="27015.6269778734" eyeZ="-46501.218363764" lookX="-36582.5457423298" lookY="-35045.7669785189" lookZ="34486.469160198" upX="-0.278457852385092" upY="0.923879563657861" upZ="0.262502987175513" />
   </Cameras>
 </Workspace>

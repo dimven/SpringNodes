@@ -18,6 +18,15 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.0 031217
+- Some additions to the package:
+	- Points.MinAreaRectangle builds up on the convex hull node and finds a rotated rectangle with the smallest point, that would fit all the points using a linear time algorithm
+	- Quads.ByPointMatrix builds a list of quad points from nested lists of points
+	- String.ReplaceIllegalChars is useful when you want to strip non-os characters from room and view names.
+	- ToolkitMesh.Merge can be used to group many toolkit meshes into a single entity.
+- The Revit selection nodes were revised and now include a linked transform
+- Minor regression fixes.
+
 #### 132.1.0 051017
 - Most of the python nodes are set up to automatically promote their input to a list. The original idea behind this was to elliminate cases where we're starting multiple script scopes for a list of inputs. The scripts had a defined "output" function that could incorrectly demote the output to a singleton. For consistency reasons, the output functio has been removed and all affected nodes will always return a list. I realize this might break some existing workflows and apologise in advance, hopefully the added consistency will pay off in the long term. For graphs where you always worked with a singleton, add a List.FirstItem at the ned. And if you have any graphs where you worked with both single items and lists and wanted to preserve the old functionality, try using the newly added "RankOutput" node.
 - Most of the design script nodes had a DS function inside even tho they took a single item as an input. That did not benefit us in any way and the additional function calls affected performance negatively (DS functions have a high cost in the Dynamo VM) and their names leaked into the main graph and were poluting the function lookup table. That lead to name clashes and undesired results. All DS nodes have been cleaned up and simplified.

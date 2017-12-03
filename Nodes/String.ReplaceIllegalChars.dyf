@@ -1,0 +1,53 @@
+<Workspace Version="1.2.2.373" X="472.817434082642" Y="68.7038319688007" zoom="2.05668026833428" Name="Springs.String.ReplaceIllegalChars" Description="Replaces all characters in a string that are found in a commonly known list of illegal characters" ID="34eef110-e702-4d22-990f-b48bffe95519" Category="Springs.Core.String">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="92dc2334-e6fa-4dc7-aeec-867d43255dfb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="197.001971245497" y="2.43110223644511" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+from itertools import imap, repeat
+import System
+badChars = set(System.IO.Path.GetInvalidFileNameChars() )
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+def fixName(n, rep="", badChars=badChars):
+	n1 = (c if c not in badChars else rep for c in iter(n) )
+	return ''.join(n1)
+
+names = tolist(IN[0])
+replacement = str(IN[1])
+
+OUT = map(fixName, imap(str, names), repeat(replacement, len(names) ) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9d09b0d2-e23f-45fa-a21b-47f0dd8306ef" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-84.60235782829" y="3.40354313102316" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="str:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4db6d6c5-5f58-425e-b229-d55cc76b5b5e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-86.5472396174462" y="59.0767763569527" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="replacement: string = &quot;_&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="ae3825ae-ca2e-4072-aa23-7019b15f97b7" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="357.53543769882" y="4.3759840256012" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="str" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="92dc2334-e6fa-4dc7-aeec-867d43255dfb" start_index="0" end="ae3825ae-ca2e-4072-aa23-7019b15f97b7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9d09b0d2-e23f-45fa-a21b-47f0dd8306ef" start_index="0" end="92dc2334-e6fa-4dc7-aeec-867d43255dfb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4db6d6c5-5f58-425e-b229-d55cc76b5b5e" start_index="0" end="92dc2334-e6fa-4dc7-aeec-867d43255dfb" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-16701.0184555185" eyeY="211256.099077098" eyeZ="541187.27355722" lookX="-65555.0377189498" lookY="-424967.94892733" lookZ="-477903.916968314" upX="-0.065885332498755" upY="0.874619722366333" upZ="-0.480311871388331" />
+  </Cameras>
+</Workspace>

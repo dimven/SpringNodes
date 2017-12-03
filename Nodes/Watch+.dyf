@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="393.143974240344" Y="124.500579776336" zoom="1.70391682455499" ScaleFactor="1" Name="Springs.Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="Springs.Core.View.Query">
+<Workspace Version="1.3.2.2480" X="154.143974240344" Y="134.500579776336" zoom="1.70391682455499" ScaleFactor="1" Name="Springs.Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="Springs.Core.View.Query">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -22,45 +22,43 @@ from System.Windows.Forms import *
 from cStringIO import StringIO
 
 str_file = StringIO()
-GCL = []
-GCint = -1
-
-def isElem(el1):
-	return hasattr(el1, "Id")
+size1 = [30, 23] #height, width
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
+
+def write_str(str1, GCL, str_file=str_file, size1=size1):
+	ln1 = len(str1)
+	if ln1 &gt; size1[1]:
+		size1[1] = ln1
 	
-def isList(obj1):
-	return hasattr(obj1,"__iter__")
+	str_file.write("%s%s\n" % ("".join(GCL), str1) )
 
-def write_str(str1, str_file=str_file, GCL=GCL):
-	str_file.write(''.join([j for j in GCL]))
-	str_file.write(str1)
-
-def list2str(l1, writeInd, GCL=GCL):
-	global GCint, height1
+def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1):
+	if GCL is None:
+		GCL = []
 	GCint += 1
-	GCL.insert(GCint,"")
-	for i in xrange(len(l1) ):
-		GCL[GCint] = "[%i] " % i if writeInd else " "
-		if isElem(l1[i]):
-			write_str("%s        %i\n" % (l1[i].ToString(), l1[i].Id) )
-		elif isList(l1[i]) and not l1[i]:
-			write_str("Empty List\n")
-		elif isList(l1[i]):
-			list2str(l1[i], writeInd)
-		elif l1[i] is None:
-			write_str("null\n")
+	GCL.append(None)
+	for i, x in enumerate(l1):
+		GCL[GCint] = "[%i] " % i if writeInd else "  "
+		if hasattr(x, "Id"): #is element
+			write_str("%s        %i" % (x.ToString(), x.Id), GCL)
+		elif hasattr(x, "__iter__"):
+			if not x:
+				write_str("Empty List", GCL)
+			else:
+				list2str(x, writeInd, GCL, GCint, size1)
+		elif x is None:
+			write_str("null", GCL)
 		else:
-			write_str("%s\n" % l1[i].ToString())
-		height1 += 24
+			write_str(x.ToString(), GCL)
+		size1[0] += 19
 	GCL.pop(GCint)
 	GCint -= 1
 
 class WatchBox(Form):
-	def __init__(self):
+	def __init__(self, t1):
 		self.Text = "SpringNodes: Expandable Watch Window"
 		self.BackColor = Color.FromArgb(40,40,40)
 		self.ControlBox = False
@@ -68,6 +66,7 @@ class WatchBox(Form):
 		self.FormBorderStyle = FormBorderStyle.Sizable
 		self.StartPosition = FormStartPosition.CenterScreen
 		self.Resize += self.resize1
+		self.text1 = None
 
 		self.button1 = Button()
 		self.button1.Text = 'Close'
@@ -85,6 +84,7 @@ class WatchBox(Form):
 		self.box1.BackColor = Color.FromArgb(53,53,53)
 		self.box1.ForeColor = Color.FromArgb(234,234,234)
 		self.box1.DetectUrls = True
+		self.box1.Text = t1
 		self.Controls.Add(self.box1)
 
 	def adjust_controls(self, height1, width1):
@@ -106,28 +106,23 @@ class WatchBox(Form):
 		self.box1.Height = self.Height - 80
 		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
 	
-	def setTxt(self, t1):
-		self.box1.Text = t1
-		self.Refresh()
-			
 	def save(self, sender, event):
 		self.text1 = self.box1.Text
 		self.Close()
 
-if IN[0] == None: l1 = []
-else: l1 = tolist(IN[0])
-
-height1 = 30
+l1 = [] if IN[0] is None else tolist(IN[0])
 list2str(l1, IN[1])
 str_content = str_file.getvalue()
-width1 = max([len(i) for i in str_content.split('\n')])
-form = WatchBox()
-form.adjust_controls(height1, width1)
-form.setTxt(str_content)
+str_file.close()
+
+width1 = 100
+form = WatchBox(str_content)
+form.adjust_controls(*size1)
+
 Application.Run(form)
 OUT = form.text1
 Application.Exit()
-str_file.close()</Script>
+form.Dispose()</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-188.182429664202" y="-2.95353589159062" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="input" />
@@ -153,6 +148,6 @@ str_file.close()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-38.0509095614525" eyeY="176.4728046373" eyeZ="-27.5389554370625" lookX="12.1350341297129" lookY="-172.993471480734" lookZ="-2.22952286682241" upX="-0.973236232151557" upY="0.144356194193024" upZ="0.178808931854951" />
   </Cameras>
 </Workspace>

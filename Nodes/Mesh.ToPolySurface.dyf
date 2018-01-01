@@ -4,8 +4,10 @@
     <PythonNodeModels.PythonNode guid="774a37af-9038-419d-81a1-d74c0608d122" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
 import clr
 from System.Threading import Thread, ThreadStart
 from operator import itemgetter
@@ -14,48 +16,59 @@ clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 
 def tolist(obj1):
-	if hasattr(obj1,'__iter__'): return obj1
-	else: return [obj1]
+	if hasattr(obj1,'__iter__'):
+		return obj1
+	else:
+		return [obj1]
 
 def chop1(l1, n):
 	return [l1[x:x+n] for x in xrange(0, len(l1), n)]
 
 def mesh2ps(topo, f_chop = chop1, itemgetter=itemgetter, 
-			f_ps1 = PolySurface.ByJoinedSurfaces):
+			f_ps1 = PolySurface.ByJoinedSurfaces,
+			f_sf1 = Surface.ByPerimeterPoints):
+	
+	NUMTHREADS = 4
 	vp = topo.VertexPositions
 	ptslist = [itemgetter(i.A, i.B, i.C)(vp) for i in topo.FaceIndices]
-	len1 = int(round(len(ptslist) ) ) / 4 + 1
-	surf = [None, None, None, None]
+	len1 = len(ptslist) / NUMTHREADS + 1
 
-	def ps_generator(i, ptslist,
-					 chop1=chop1,
+	def ps_generator(ptslist, chop1=chop1,
 					 f_ps1 = PolySurface.ByJoinedSurfaces,
 					 f_sf1 = Surface.ByPerimeterPoints):
-		sflist = [f_sf1(pts) for pts in ptslist[i] ]
+		
+		sflist = map(f_sf1, ptslist)
 		while len(sflist) &gt; 10 :
-			sflist = chop1(sflist, 10)
-			sflist = [f_ps1(sf1) for sf1 in sflist]
-		surf[i] = sflist
-		return
-	if len(ptslist) &gt; 7 :
+			sflist = map(f_ps1, chop1(sflist, 10) )
+		return sflist
+	
+	if len(ptslist) &gt; 10 :
 		ptslist = f_chop(ptslist, len1)
-		def threaded_ps0(): return ps_generator(0, ptslist)
-		def threaded_ps1(): return ps_generator(1, ptslist)
-		def threaded_ps2(): return ps_generator(2, ptslist)
-		def threaded_ps3(): return ps_generator(3, ptslist)
-		threads = (Thread(ThreadStart(threaded_ps0) ),
-				   Thread(ThreadStart(threaded_ps1) ),
-				   Thread(ThreadStart(threaded_ps2) ),
-				   Thread(ThreadStart(threaded_ps3) ) )
-		for t in threads: t.Start()
-		for t in threads: t.Join()
-		return f_ps1(surf[0] + surf[1] + surf[2] + surf[3])
+		
+		class Worker(object):
+			__slots__ = 'fn', 'args', 'result'
+			def __init__(self, fn, args):
+				self.fn = fn
+				self.args = args
+				self.result = None
+			def __call__(self):
+				self.result = self.fn(*self.args)
+		
+		workers, tasks = [], []
+		for p in ptslist:
+			w = Worker(ps_generator, (p,) )
+			t = Thread(ThreadStart(w) )
+			workers.append(w)
+			tasks.append(t)
+			t.Start()
+
+		for t in tasks: t.Join()
+		return f_ps1(i for w in workers for i in w.result)
 	else:
-		ps_generator(0, (ptslist, ) )
-		return  f_ps1(surf[0])
+		return  f_ps1(ps_generator(ptslist) )
 		
 meshes = tolist(IN[0])
-OUT = map(mesh2ps,meshes)
+OUT = map(mesh2ps, meshes)
 if IN[1]:
 	OUT = PolySurface.ByJoinedSurfaces(OUT)</Script>
     </PythonNodeModels.PythonNode>
@@ -79,6 +92,6 @@ if IN[1]:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-204766.042814089" eyeY="70376.2463422901" eyeZ="42229.617746135" lookX="155191.964689089" lookY="-70376.2463422901" lookZ="-34435.4375703537" upX="0.194634132309097" upY="0.97992470713778" upZ="-0.0431872315398022" />
   </Cameras>
 </Workspace>

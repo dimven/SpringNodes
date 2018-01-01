@@ -18,6 +18,11 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.1 010118
+- Geometry/Point.BoxedDistanceTo is a quick way to numerically get the distance between the bounding box representations of two geometrical objects.
+- Doc.CopyFromViewToView is useful when you need to copy over view-based elements such as tags, detail items, etc.
+- Mesh.ToPolysurface refactored for readability and stability. This might have a slight negative effect on performance
+
 #### 132.2.0 031217
 - Some additions to the package:
 	- Points.MinAreaRectangle builds up on the convex hull node and finds a rotated rectangle with the smallest point, that would fit all the points using a linear time algorithm

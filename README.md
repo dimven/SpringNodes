@@ -18,6 +18,14 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.2 180218
+- The ElementsInView and LinkedInstanceElements collectors now use multi-category filters and return combined results. To revert to the old behaviour, apply a List.Chop(numbers=1) to the list of categories.
+- The List.Randomise&Divide node's seed input now produces identical result for the same seeds.
+- New nodes:
+	- dsString.FromList converts a list of basic objects (numbers, strings, booleans, nulls) to a string that you can paste into a code block node. (use Clockwork's Clipboard.SendTo node to be able to paste it)
+	- Voronoi2d.ByPoints is a simple workaround for the built in tessellation package when workigng with a set of planar points
+	- List.FirstLast is a simple utility node to get just the head and tail of the list.
+
 #### 132.2.1 010118
 - Geometry/Point.BoxedDistanceTo is a quick way to numerically get the distance between the bounding box representations of two geometrical objects.
 - Doc.CopyFromViewToView is useful when you need to copy over view-based elements such as tags, detail items, etc.

@@ -1,0 +1,44 @@
+<Workspace Version="1.3.2.2480" X="85" Y="115" zoom="1" ScaleFactor="1" Name="Springs.Voronoi2D.ByPoints" Description="Create a voronoi tessellation of a set of planar points. The cell lines will be culled to the bounding extent of the points." ID="8e0daeeb-d9c7-444d-8c26-03f0b4dfa0a4" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Delaunay" resolvedName="Tessellation.Delaunay" assemblyName="Tessellation.dll" />
+    <ClassMap partialName="Autodesk.Surface.ByPerimeterPoints" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Surface.ByPerimeterPoints" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Voronoi" resolvedName="Tessellation.Voronoi" assemblyName="Tessellation.dll" />
+    <ClassMap partialName="Autodesk.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1f2c77e7-c4b5-4fe5-addd-b922b70d0047" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="bb = BoundingBox.ByGeometry(pts);&#xA;a0 = bb.MinPoint;&#xA;b0 = bb.MaxPoint;&#xA;x = a0.DistanceTo(b0) * 0.1;&#xA;v1 = Autodesk.Vector.ByCoordinates(x, x, 0);&#xA;a = a0.Subtract(v1);&#xA;b = b0.Add(v1);&#xA;f1 = Autodesk.Surface.ByPerimeterPoints({&#xA;  Point.ByCoordinates(a.X, a.Y),&#xA;  Point.ByCoordinates(b.X, a.Y),&#xA;  Point.ByCoordinates(b.X, b.Y),&#xA;  Point.ByCoordinates(a.X, b.Y)});&#xA;uv1 = f1.UVParameterAtPoint(pts);&#xA;ln0 = Voronoi.ByParametersOnSurface(uv1, f1);&#xA;mask = ln0.StartPoint.DoesIntersect(f1) &amp;&amp;&#xA;  ln0.EndPoint.DoesIntersect(f1);&#xA;ln1 = List.FilterByBoolMask(ln0, mask)[&quot;in&quot;];&#xA;ln2 = Flatten(List.FilterByBoolMask(ln0, mask)[&quot;out&quot;].&#xA;  Intersect(f1) );&#xA;List.Join({ln1, ln2});" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3e105614-70c3-4ffd-8139-df796d59e0b8" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="92" y="-5" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="points:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="46c77c1e-cc8a-4a87-a200-78f4daccf531" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="883" y="9" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="lines" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="1f2c77e7-c4b5-4fe5-addd-b922b70d0047" start_index="13" end="46c77c1e-cc8a-4a87-a200-78f4daccf531" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3e105614-70c3-4ffd-8139-df796d59e0b8" start_index="0" end="1f2c77e7-c4b5-4fe5-addd-b922b70d0047" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

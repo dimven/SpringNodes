@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="154.975816697483" Y="208.052586513277" zoom="1.66537098414077" ScaleFactor="1" Name="List.FirstLast" Description="Simple utility node to get both the first and last items of a list as separate outputs. This avoids the unnecessary sublist when using the List.Deconstruct node." ID="9460ceb4-b013-4122-941d-053f8c674019" Category="Springs.Core.List">
+<Workspace Version="1.3.2.2480" X="154.975816697483" Y="208.052586513277" zoom="1.66537098414077" ScaleFactor="1" Name="Springs.List.FirstLast" Description="Simple utility node to get both the first and last items of a list as separate outputs. This avoids the unnecessary sublist when using the List.Deconstruct node." ID="9460ceb4-b013-4122-941d-053f8c674019" Category="Springs.Core.List">
   <NamespaceResolutionMap>
     <ClassMap partialName="DSCore.Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />

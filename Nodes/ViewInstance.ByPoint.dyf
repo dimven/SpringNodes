@@ -1,4 +1,4 @@
-<Workspace Version="1.3.1.1736" X="111.375162059612" Y="121.587300427128" zoom="1.78359936238281" ScaleFactor="1" Name="ViewInstance.ByPoint" Description="Places a view hosted family instance at a given point in the view (e.g. a detail component, 2d annotation)." ID="e2913a86-189d-49b7-b162-aff744bc796a" Category="Springs.Revit.FamilyInstance">
+<Workspace Version="1.3.1.1736" X="111.375162059612" Y="121.587300427128" zoom="1.78359936238281" ScaleFactor="1" Name="Springs.ViewInstance.ByPoint" Description="Places a view hosted family instance at a given point in the view (e.g. a detail component, 2d annotation)." ID="e2913a86-189d-49b7-b162-aff744bc796a" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap>
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />

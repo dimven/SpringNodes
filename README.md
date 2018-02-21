@@ -18,6 +18,12 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.3 210218
+-New nodes:
+	- List.ItemAtIndex+ is a just a basic custom node wrapper around the built-in design script sintax. Unlike the built-in GetItemAtIndex node, it works with negative indices.
+	- Element.SetParameterToNone is useful when you need to set parameters such as View Template, Phase Demolished or Top Constraint to None / Unconstrained
+	- BatchInstances.ByPointsLevels is similar to the built in node, however it uses the faster batch placement api method and can optionally avoid the element tracking mechanism, thus place instances on each run. Be sure to use manual run mode in such cases.
+	
 #### 132.2.2 180218
 - The ElementsInView and LinkedInstanceElements collectors now use multi-category filters and return combined results. To revert to the old behaviour, apply a List.Chop(numbers=1) to the list of categories.
 - The List.Randomise&Divide node's seed input now produces identical result for the same seeds.

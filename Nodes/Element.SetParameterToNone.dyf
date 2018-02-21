@@ -1,0 +1,66 @@
+<Workspace Version="1.3.1.1736" X="210.256702297938" Y="115.379803785776" zoom="1.78359936238281" ScaleFactor="1" Name="Springs.Element.SetParameterToNone" Description="Used to set parameters such as View Template, Phase Demolished or Top Constraint to None / Unconstrained." ID="4017f896-ca4f-4e35-af34-1dfc9f237ba4" Category="Springs.Revit.Element">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="bf2acf68-6d80-42aa-a023-f1a69c416111" type="PythonNodeModels.PythonNode" nickname="Python Script" x="194.49426138629" y="-0.560664026401128" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2018, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import ElementId
+
+clr.AddReference('RevitServices')
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+inv = ElementId.InvalidElementId
+
+items = tolist(IN[0])
+param = IN[1]
+OUT = []
+
+TransactionManager.Instance.EnsureInTransaction(doc)
+for i in items:
+	itm = None
+	par = i.InternalElement.LookupParameter(param)
+	if par is not None:
+		try:
+			par.Set(inv)
+			itm = i
+		except:
+			pass
+	OUT.append(itm)
+TransactionManager.Instance.TransactionTaskDone()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a471bfa6-244b-4d8b-bd6b-7811d26d1824" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="element:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0247f755-6353-4da2-b617-b62b851b8f7a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-1.1213280528022" y="60.2937557758224" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="paramName:string" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bd731119-cc22-43f6-8efd-27b172e9425d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="367.703716171839" y="-2.24265610560444" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="element" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="bf2acf68-6d80-42aa-a023-f1a69c416111" start_index="0" end="bd731119-cc22-43f6-8efd-27b172e9425d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a471bfa6-244b-4d8b-bd6b-7811d26d1824" start_index="0" end="bf2acf68-6d80-42aa-a023-f1a69c416111" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0247f755-6353-4da2-b617-b62b851b8f7a" start_index="0" end="bf2acf68-6d80-42aa-a023-f1a69c416111" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

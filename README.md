@@ -18,8 +18,16 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.4 030318
+- The ErrorReport.Parse and InterferenceCheck.Parse nodes got refactored and will now return integers instead of strings, when the "fetch elements" input is set to false or if the element is not found.
+- A few new springlets:
+	- Wall.IsCurtainWall is a simple node that quickly checks if a wall instance is a curtan wall
+	- (Toolkit)Mesh.BoundingBox can be used to extract the bounding box representation of either a built in mesh or a toolkit mesh.
+	- Geometry.DifferenciateDisplay is a basic CN wrapper around the built in Color Range node, used to quickly paint geometries or lists of geometries into easily distinguishable colours. 
+	- Surface.TrimWithLoopsFix is my attemt at a workaround for issue #8600 in the Dynamo repo. It might fail with concave cutouts.
+
 #### 132.2.3 210218
--New nodes:
+- New nodes:
 	- List.ItemAtIndex+ is a just a basic custom node wrapper around the built-in design script sintax. Unlike the built-in GetItemAtIndex node, it works with negative indices.
 	- Element.SetParameterToNone is useful when you need to set parameters such as View Template, Phase Demolished or Top Constraint to None / Unconstrained
 	- BatchInstances.ByPointsLevels is similar to the built in node, however it uses the faster batch placement api method and can optionally avoid the element tracking mechanism, thus place instances on each run. Be sure to use manual run mode in such cases.

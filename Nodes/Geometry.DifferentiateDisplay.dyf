@@ -1,0 +1,33 @@
+<Workspace Version="1.3.2.2480" X="168" Y="136" zoom="1" ScaleFactor="1" Name="Springs.Geometry.DifferentiateDisplay" Description="Paints the input geometry using the default color range. Also works well with lists of geometry." ID="6cbfc1f2-91d9-4d42-856a-ed68431e462c" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Autodesk.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="ColorRange1D" resolvedName="DSCore.ColorRange1D" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="ColorRange2D" resolvedName="DSCore.ColorRange2D" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Display" resolvedName="Display.Display" assemblyName="Display.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="eb314a7b-4221-4d55-82b5-fa073dd698a2" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="118" y="2" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="dcr = ColorRange1D.Default();&#xA;col = ColorRange1D.GetColorAtParameter&#xA;  (dcr, 0..1..#(Count(geo)));&#xA;Display.ByGeometryColor(geo, col);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9dac9098-aa34-4fdf-b2a9-89cbce811e3c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geo" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="77591f76-37bd-4fe6-8433-9957a97155fd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="520" y="50" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="displayGeo" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb314a7b-4221-4d55-82b5-fa073dd698a2" start_index="2" end="77591f76-37bd-4fe6-8433-9957a97155fd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9dac9098-aa34-4fdf-b2a9-89cbce811e3c" start_index="0" end="eb314a7b-4221-4d55-82b5-fa073dd698a2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-2663.5849609375" eyeY="21391.724609375" eyeZ="4232.2529296875" lookX="-242.221817016602" lookY="-24903.556640625" lookZ="-5753.724609375" upX="-0.0379952043294907" upY="0.428935170173645" upZ="-0.902535796165466" />
+  </Cameras>
+</Workspace>

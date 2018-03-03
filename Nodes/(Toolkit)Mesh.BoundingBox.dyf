@@ -1,0 +1,47 @@
+<Workspace Version="1.3.2.2480" X="187.086707840227" Y="110.439728755254" zoom="1.78359936238281" ScaleFactor="1" Name="Springs.(Toolkit)Mesh.BoundingBox" Description="Get the bounding box of a mesh. Works with both built-in meshes and toolkit meshes" ID="5e15cf82-0053-49f8-be46-054217321813" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="646fb8a9-fbf5-4f22-870a-f5bf7420b989" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2018, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import BoundingBox, Point, Mesh
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+meshes = tolist(IN[0])
+OUT = []
+
+for m in meshes:
+	if isinstance(m, Mesh):
+		co = zip(*((v.X, v.Y, v.Z) for v in m.VertexPositions))
+	else:
+		co = zip(*((v.X, v.Y, v.Z) for v in m.Vertices()))
+
+	OUT.append(BoundingBox.ByCorners(Point.ByCoordinates(*map(min, co)), Point.ByCoordinates(*map(max, co))))</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6a631d3a-83ee-474d-ad60-5452ee75d310" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="95.8735485145898" y="0.560664026401099" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="mesh:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="60a689ae-4e24-4939-883d-7703cea58af9" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="410.874846204724" y="1.12132805280223" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="boundingBox" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="646fb8a9-fbf5-4f22-870a-f5bf7420b989" start_index="0" end="60a689ae-4e24-4939-883d-7703cea58af9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6a631d3a-83ee-474d-ad60-5452ee75d310" start_index="0" end="646fb8a9-fbf5-4f22-870a-f5bf7420b989" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-0.894723138596569" eyeY="0.278599602402816" eyeZ="-0.47677681982706" lookX="0.877646589623233" lookY="-0.133684300547407" lookZ="0.40347502964569" upX="-0.071286829264792" upY="0.996917356616254" upZ="-0.0327722459357236" />
+  </Cameras>
+</Workspace>

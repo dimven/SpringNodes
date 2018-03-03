@@ -1,0 +1,36 @@
+<Workspace Version="1.3.2.2480" X="-413.209577045781" Y="152.252833156094" zoom="1.78359936238281" ScaleFactor="1" Name="Springs.Wall.IsCurtainWall" Description="Returns true if the wall is a curtain wall." ID="1e205815-6fb3-471a-9276-a942d3cfd25e" Category="Springs.Revit.Wall">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="f0b0250e-a905-4598-a508-ff5db33a2f05" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2018, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+walls = UnwrapElement(tolist(IN[0]))
+
+OUT = [getattr(w, 'CurtainGrid', None) is not None for w in walls]</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5130dbf9-285a-485c-8fbc-ae1fe2a71c35" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="104.283508910606" y="-0.560664026401113" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="wall:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="efd57a4f-18d7-4134-876a-3ba0636d48cd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="399.661565676702" y="-0.560664026401099" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="bool" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="f0b0250e-a905-4598-a508-ff5db33a2f05" start_index="0" end="efd57a4f-18d7-4134-876a-3ba0636d48cd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5130dbf9-285a-485c-8fbc-ae1fe2a71c35" start_index="0" end="f0b0250e-a905-4598-a508-ff5db33a2f05" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="180259.164030552" eyeY="461633.298324551" eyeZ="-27778.6882929811" lookX="-69730.8194688649" lookY="-17986.2406152781" lookZ="7711.45016008941" upX="-0.0346880259217712" upY="0.999390827019101" upZ="0.00383610841067264" />
+  </Cameras>
+</Workspace>

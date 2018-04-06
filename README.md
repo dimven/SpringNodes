@@ -18,6 +18,14 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.5 060418
+-  Three new goodies:
+	- Element.MeshGeometry reads an element's geometry and converts it to either a Dynamo mesh or a toolkit mesh representation
+	- PolyCurve.Points is a quick and simple way to get the end points of all the segments in a polycurve. Checks if the PC is closed.
+	- Collector.AllElementTypesOf works with either categories or revit classes and gets all type elements.
+- BoundingBox.2dRectangle has an extra elevation input
+- ViewInstance.ByPoint has an extra track input
+
 #### 132.2.4 030318
 - The ErrorReport.Parse and InterferenceCheck.Parse nodes got refactored and will now return integers instead of strings, when the "fetch elements" input is set to false or if the element is not found.
 - A few new springlets:

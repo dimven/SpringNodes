@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="0.319473171162997" Y="226.495401346001" zoom="1.51051845643135" ScaleFactor="1" Name="Springs.ErrorReport.Parse" Description="Process a Revit error report (HTML file) and extract the error types, all affected elements and the total number of errors. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="f7974021-f210-460d-84f1-a9665d99dbe2" Category="Springs.Revit.Utility">
+<Workspace Version="1.3.1.1736" X="0.319473171162997" Y="226.495401346001" zoom="1.51051845643135" ScaleFactor="1" Name="Springs.ErrorReport.Parse" Description="Process a Revit error report (HTML file) and extract the error types, all affected elements and the total number of errors. If you are executing from a document different than the one the error report belongs to, be sure to set &quot;fetch_elements&quot; to false." ID="f7974021-f210-460d-84f1-a9665d99dbe2" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap />
   <Elements>
     <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="f545012d-4a88-45cf-82bc-9d8a9cc173ff" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="391.527350939437" y="3.19470722770575" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];&#xA;res[2];&#xA;res[3];" ShouldFocus="false">
@@ -63,7 +63,11 @@ for data in report_data:
 			errors.append(d.strip())
 			isError = False
 			continue
-		id = int(filter(str.isdigit, d.rsplit(" : ", 1)[-1]))
+		id = filter(str.isdigit, d.rsplit(" : ", 1)[-1])
+		if id.isdigit():
+			id = int(id)
+		else:
+			continue
 		if fetch_elements:
 			id = getElement(id)
 		ids.append(id)

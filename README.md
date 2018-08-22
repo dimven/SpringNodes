@@ -18,6 +18,10 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.8 220818
+- This is the final release targeting Dynamo 1.3x
+- Minor bugfixes in the directshape translate/transform nodes for work in later versions of Revit.
+
 #### 132.2.7 050718
 - New nodes:
     - Element.GetParameterUnitValue gets the united value of the parameter. Good for MEP parameters. Should hopefully be fixed in Dynamo 2.0
@@ -35,7 +39,7 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 - BoundingBox.2dRectangle has an extra elevation input
 - ViewInstance.ByPoint has an extra track input
 
-#### 132.2.4
+#### 132.2.4 030318
 - The ErrorReport.Parse and InterferenceCheck.Parse nodes got refactored and will now return integers instead of strings, when the "fetch elements" input is set to false or if the element is not found.
 - A few new springlets:
 	- Wall.IsCurtainWall is a simple node that quickly checks if a wall instance is a curtan wall

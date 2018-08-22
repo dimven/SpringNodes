@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="-21.1479519998463" Y="305.889516762583" zoom="1.78359936238281" Name="Springs.Doc.CopyFromLinkInstance" Description="The node will use the total transformation of the link instance to copy the input elements into the local document." ID="1747bc42-6b08-4141-8861-99eb7bbf23cc" Category="Springs.Revit.Document">
+<Workspace Version="1.3.2.2480" X="-157.147951999846" Y="301.889516762583" zoom="1.78359936238281" ScaleFactor="1" Name="Springs.Doc.CopyFromLinkInstance" Description="The node will use the total transformation of the link instance to copy the input elements into the local document." ID="1747bc42-6b08-4141-8861-99eb7bbf23cc" Category="Springs.Revit.Document">
   <NamespaceResolutionMap>
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -47,8 +47,11 @@ for e in elements:
 TransactionManager.Instance.EnsureInTransaction(doc)
 copy = ElementTransformUtils.CopyElements(linkDoc, eId, doc, tf1, None)
 TransactionManager.Instance.TransactionTaskDone()
-
-OUT = [doc.GetElement(i).ToDSType(False) for i in copy]</Script>
+OUT = []
+for i in copy:
+	e = doc.GetElement(i)
+	if e is not None:
+		OUT.append(e.ToDSType(False))</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f4f315aa-a3f3-4844-972f-fbd19f21fdee" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="LinkInstance:var" />
@@ -70,6 +73,6 @@ OUT = [doc.GetElement(i).ToDSType(False) for i in copy]</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-32753.822265625" eyeY="23993.158203125" eyeZ="236293.15625" lookX="136315.96875" lookY="-46676.24609375" lookZ="-130770.8671875" upX="0.018890118226409" upY="0.999657332897186" upZ="-0.0181217007339001" />
+    <Camera Name="Background Preview" eyeX="1.18528652191162" eyeY="11.6558542251587" eyeZ="14.2142906188965" lookX="0.224225118756294" lookY="-10.7076253890991" lookZ="-18.6352005004883" upX="0.00361793325282633" upY="0.953716933727264" upZ="-0.300684034824371" />
   </Cameras>
 </Workspace>

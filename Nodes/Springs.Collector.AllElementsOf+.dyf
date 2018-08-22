@@ -1,0 +1,68 @@
+<Workspace Version="1.3.2.2480" X="-90.7377825611751" Y="67.4588707654889" zoom="1.24844365397223" ScaleFactor="1" Name="Springs.Collector.AllElementsOf+" Description="Works with either categories or types and uses multi-filters to get multiple groups with a single query. Can be applied as a function. No ties to the Document.Changed event." ID="7d3ca630-06c1-46fc-8418-497561f36003" Category="Springs.Revit.Collectors">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="d6924dfb-1900-4c05-98af-8f53e8c7f03c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="239.2682160564" y="18.2440327041205" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="true" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>import System
+import clr
+clr.AddReference('RevitAPI')
+import Autodesk.Revit.DB as DB
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference('RevitNodes')
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+from System.Collections.Generic import List
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+x = UnwrapElement(tolist(IN[0]))
+
+fec = DB.FilteredElementCollector(doc).WhereElementIsNotElementType()
+if isinstance(x[0], DB.Category):
+	catId = List[DB.ElementId](c.Id for c in x)
+	filter = DB.ElementMulticategoryFilter(catId)
+	
+elif isinstance(x[0], DB.ElementType):
+	types = List[System.Type](t.GetType() for t in x)
+	filter = DB.ElementMulticlassFilter(types)
+else:
+	types = List[System.Type](x)
+	filter = DB.ElementMulticlassFilter(types)
+
+fec.WherePasses(filter)
+OUT = [e.ToDSType(1) for e in fec]
+fec.Dispose()
+filter.Dispose()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2e07bbf6-a1a3-4fbf-be66-7568151ea26d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="401.616791349585" y="28.7036355565375" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="elements" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0a9a68ee-cee1-4f14-9610-0ff3c326077f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-8.76501079913612" y="9.4393088552916" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CategoryOrType: var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6a2b2903-3353-4a02-95c5-95b8d737ab70" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-8.84967602591792" y="70.3343412526998" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="d6924dfb-1900-4c05-98af-8f53e8c7f03c" start_index="0" end="2e07bbf6-a1a3-4fbf-be66-7568151ea26d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0a9a68ee-cee1-4f14-9610-0ff3c326077f" start_index="0" end="d6924dfb-1900-4c05-98af-8f53e8c7f03c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6a2b2903-3353-4a02-95c5-95b8d737ab70" start_index="0" end="d6924dfb-1900-4c05-98af-8f53e8c7f03c" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

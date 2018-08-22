@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="43.881872277536" Y="219.005056751657" zoom="1.83541648937758" Name="Springs.Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="Springs.Core.Object.Actions">
+<Workspace Version="1.3.2.2480" X="594.881872277536" Y="160.005056751657" zoom="1.83541648937758" ScaleFactor="1" Name="Springs.Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="Springs.Core.Object.Actions">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -60,6 +60,6 @@ for e, n in izip(elements, optNames):
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="159863.251856919" eyeY="174402.596893119" eyeZ="57137.6336053386" lookX="-29756.885786361" lookY="-66413.9657023495" lookZ="-203711.399854892" upX="-0.0138535246299323" upY="0.995396159396204" upZ="-0.0948392857713233" />
+    <Camera Name="Background Preview" eyeX="-2104.53564453125" eyeY="67997.1796875" eyeZ="-130311.21875" lookX="-44947.921875" lookY="-38629.7890625" lookZ="102933.78125" upX="-0.0459953770041466" upY="0.993372678756714" upZ="0.10533257573843" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="36.6925" Y="217.0775" zoom="1.1575" ScaleFactor="1" Name="Springs.Collector.AllElementTypesOf" Description="Works with either categories, element types or revit classed . Can be applied as a function. No ties to the Document.Changed event." ID="b1b51409-ea2b-4410-a242-b4b8607f7fd7" Category="Springs.Revit.Collectors">
+<Workspace Version="1.3.2.2480" X="77.6925" Y="206.0775" zoom="1.1575" ScaleFactor="1" Name="Springs.Collector.AllElementTypesOf" Description="Works with either categories, element types or revit classes and uses multi-filters to get multiple groups with a single query. Can be applied as a function. No ties to the Document.Changed event." ID="b1b51409-ea2b-4410-a242-b4b8607f7fd7" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap>
     <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
@@ -12,7 +12,7 @@
       <Script>import System
 import clr
 clr.AddReference('RevitAPI')
-from Autodesk.Revit.DB import FilteredElementCollector, Category, ElementType
+import Autodesk.Revit.DB as DB
 
 clr.AddReference("RevitServices")
 import RevitServices
@@ -23,23 +23,35 @@ clr.AddReference('RevitNodes')
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
-x = UnwrapElement(IN[0])
+from System.Collections.Generic import List
 
-fec = FilteredElementCollector(doc).WhereElementIsElementType()
-if isinstance(x, Category):
-	fec.OfCategoryId(x.Id)
-elif isinstance(x, ElementType):
-	fec.OfClass(x.GetType())
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+x = UnwrapElement(tolist(IN[0]))
+
+fec = DB.FilteredElementCollector(doc).WhereElementIsElementType()
+if isinstance(x[0], DB.Category):
+	catId = List[DB.ElementId](c.Id for c in x)
+	filter = DB.ElementMulticategoryFilter(catId)
+	
+elif isinstance(x[0], DB.ElementType):
+	types = List[System.Type](t.GetType() for t in x)
+	filter = DB.ElementMulticlassFilter(types)
 else:
-	fec.OfClass(x)
+	types = List[System.Type](x)
+	filter = DB.ElementMulticlassFilter(types)
 
+fec.WherePasses(filter)
 OUT = [e.ToDSType(1) for e in fec]
-fec.Dispose()</Script>
+fec.Dispose()
+filter.Dispose()</Script>
     </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24e5b173-434a-491a-a9ce-eedeec53b9cc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-33" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="CategoryOrElemType:var" />
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24e5b173-434a-491a-a9ce-eedeec53b9cc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-30.4082073434125" y="2.59179265658747" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CategoryOrElemType:var[]" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2cef3e51-731f-4dcb-a63b-5d89e0ab43aa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="2" y="68" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2cef3e51-731f-4dcb-a63b-5d89e0ab43aa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-29.9654427645788" y="67.1360691144708" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="refresh:bool=true" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
     <Dynamo.Graph.Nodes.CustomNodes.Output guid="8ea97715-1848-4e75-b291-9e68d35ef7e8" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="449.863930885529" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
@@ -56,6 +68,6 @@ fec.Dispose()</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-30.9162520997466" eyeY="47.6994456683673" eyeZ="41.8088307088667" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

@@ -18,6 +18,15 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 132.2.7 050718
+- New nodes:
+    - Element.GetParameterUnitValue gets the united value of the parameter. Good for MEP parameters. Should hopefully be fixed in Dynamo 2.0
+    - Collector.AllElementsOf+ uses a python script instead of the built in methods. That way we can aggregate multiple types/categories into one query
+    - String.RightSplitOnce is a utility node to simplify the handling of strings
+    - TextNote.ByPoint similar to the built in node and to the ex Clockwork node but handles more views and has the option to dis-associate the text element
+- Most collector nodes have been revised to aggregate multiple categories into a single query.
+- Some bugfixes.
+
 #### 132.2.5 060418
 -  Three new goodies:
 	- Element.MeshGeometry reads an element's geometry and converts it to either a Dynamo mesh or a toolkit mesh representation
@@ -26,7 +35,7 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 - BoundingBox.2dRectangle has an extra elevation input
 - ViewInstance.ByPoint has an extra track input
 
-#### 132.2.4 030318
+#### 132.2.4
 - The ErrorReport.Parse and InterferenceCheck.Parse nodes got refactored and will now return integers instead of strings, when the "fetch elements" input is set to false or if the element is not found.
 - A few new springlets:
 	- Wall.IsCurtainWall is a simple node that quickly checks if a wall instance is a curtan wall

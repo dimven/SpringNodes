@@ -1,4 +1,4 @@
-<Workspace Version="1.2.1.3083" X="453.304959927533" Y="136.641650719153" zoom="1.74331992875497" Name="Springs.GetRelativeLevel" Description="Select the level closest to the input height from the list of input levels" ID="86acedc1-4921-4079-9237-52ed6e303ba3" Category="Springs.Revit.Utility">
+<Workspace Version="1.3.2.2480" X="453.304959927533" Y="136.641650719153" zoom="1.74331992875497" ScaleFactor="1" Name="Springs.GetRelativeLevel" Description="Select the level closest to the input height from the list of input levels" ID="86acedc1-4921-4079-9237-52ed6e303ba3" Category="Springs.Revit.Utility">
   <NamespaceResolutionMap>
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
@@ -6,32 +6,28 @@
     <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <PythonNodeModels.PythonNode guid="63294923-bb10-41ee-a42f-7fda0dd44eb4" type="PythonNodeModels.PythonNode" nickname="Python Script" x="278.680908865482" y="4.01532724116748" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
+    <PythonNodeModels.PythonNode guid="63294923-bb10-41ee-a42f-7fda0dd44eb4" type="PythonNodeModels.PythonNode" nickname="Python Script" x="278.680908865482" y="3.44170906385784" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
       <PortInfo index="0" default="False" />
       <PortInfo index="1" default="False" />
       <PortInfo index="2" default="False" />
       <PortInfo index="3" default="False" />
-      <Script># Copyright(c) 2017, Dimitar Venkov
+      <Script># Copyright(c) 2018, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
 
-from operator import itemgetter
-from itertools import repeat
-
-def key_fn(x, itemgetter=itemgetter): return abs(itemgetter(1)(x) )
+from itertools import izip
 
 heights, elevs, names, belowOnly = IN
+BIG_VAL = float('inf')
 
-def closestLevel(z, belowOnly=False, elevs=elevs, namaes=names, key_fn=key_fn):
-	if z is not None:
-		if belowOnly:
-			elevs = [e for e in elevs if e &lt; z]
-		if elevs:
-			i, _ = min(enumerate(z - e for e in elevs), key=key_fn)
-			return names[i]
-		return
+def evalHeight(e, belowOnly=belowOnly):
+	if belowOnly:
+		if e &gt; z:
+			return BIG_VAL
+	return abs(z - e)
 
-OUT = map(closestLevel, heights, repeat(belowOnly, len(heights) ) )</Script>
+lvl_dict = dict(izip(map(int,elevs), names))
+OUT = [lvl_dict[min(lvl_dict, key=evalHeight)] for z in heights]</Script>
     </PythonNodeModels.PythonNode>
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="67c24294-6e7b-4c52-ae19-f3bd0ea475a0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="1.72085453192892" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="zHeight:var[]" />
@@ -61,6 +57,6 @@ OUT = map(closestLevel, heights, repeat(belowOnly, len(heights) ) )</Script>
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="201093.869050889" eyeY="78260.4806074659" eyeZ="-223076.842382104" lookX="-10177.7750619532" lookY="-8517.14107106972" lookZ="29244.060403222" upX="-0.0172023854360416" upY="0.998629473989683" upZ="0.0494280412839657" />
+    <Camera Name="Background Preview" eyeX="-36555.27734375" eyeY="12205.77734375" eyeZ="-33330.23828125" lookX="15394.3037109375" lookY="-10407.5703125" lookZ="16329.966796875" upX="0.148467481136322" upY="0.976296007633209" upZ="0.157491311430931" />
   </Cameras>
 </Workspace>

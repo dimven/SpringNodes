@@ -34,10 +34,10 @@ else:
 	
 	for i in xrange(pLen):
 		j = pLen - 1 - i
-		while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0:
+		while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0.000001:
 			lower.pop()
 		lower.append(pts[i])
-		while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0:
+		while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0.000001:
 			upper.pop()
 		upper.append(pts[j])
 	
@@ -66,6 +66,6 @@ else:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="29133.3009840831" eyeY="27015.6269778734" eyeZ="-46501.218363764" lookX="-36582.5457423298" lookY="-35045.7669785189" lookZ="34486.469160198" upX="-0.278457852385092" upY="0.923879563657861" upZ="0.262502987175513" />
+    <Camera Name="Background Preview" eyeX="-79326.3404835722" eyeY="20342.0635527164" eyeZ="52911.0827450261" lookX="-2.29037387877179" lookY="-6085.09625292239" lookZ="-12.5901362238874" upX="-0.174742083749757" upY="0.216439557844984" upZ="-0.960530682019644" />
   </Cameras>
 </Workspace>

@@ -1,4 +1,4 @@
-<Workspace Version="1.3.2.2480" X="180.825" Y="170.78" zoom="1.1575" ScaleFactor="1" Name="Springs.Collector.AllElementsOf" Description="Works with either categories or types and uses the built in collecotor functions. Can be applied as a function. No ties to the Document.Changed event." ID="354b9db1-4f8c-4cda-b2e5-757d8028d8d6" Category="Springs.Revit.Collectors">
+<Workspace Version="1.3.2.2480" X="81.825" Y="174.78" zoom="1.1575" ScaleFactor="1" Name="Springs.Collector.AllElementsOf" Description="Depreciated, use the Springs.Collector.AllElementsOf+ version instead.&#xD;&#xA;&#xD;&#xA;Works with either categories or types and uses the built in collecotor functions. Can be applied as a function. No ties to the Document.Changed event." ID="354b9db1-4f8c-4cda-b2e5-757d8028d8d6" Category="Springs._Depreciated">
   <NamespaceResolutionMap>
     <ClassMap partialName="Point.ByCoordinates" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
@@ -28,7 +28,7 @@
     <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6242af6b-95de-4320-8b7a-de50a0ffe821" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="4.31965442764567" y="-3.45572354211663" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="CategoryOrType: var" />
     </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4be01959-c3b7-45b1-b393-bedce9267bbe" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="864.211663066955" y="-7.77537796976242" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4be01959-c3b7-45b1-b393-bedce9267bbe" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="866.803455723543" y="1.72786177105831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <PortInfo index="0" default="False" />
       <Symbol value="elements" />
     </Dynamo.Graph.Nodes.CustomNodes.Output>
@@ -43,4 +43,7 @@
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

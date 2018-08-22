@@ -36,10 +36,10 @@ def hull(_pts):
 		
 		for i in xrange(pLen):
 			j = pLen - 1 - i
-			while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0:
+			while len(lower) &gt;= 2 and pCrs(lower[-2], lower[-1], pts[i]) &lt;= 0.000001:
 				lower.pop()
 			lower.append(pts[i])
-			while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0:
+			while len(upper) &gt;= 2 and pCrs(upper[-2], upper[-1], pts[j]) &lt;= 0.000001:
 				upper.pop()
 			upper.append(pts[j])
 		
@@ -59,7 +59,7 @@ def pDist(a, b, sqrt=sqrt):
 def linDist(a, b, p):
 	line_dist = pDist(a, b)
 	if line_dist == 0:
-		return pDist(p, a)
+		return a, pDist(p, a)
 	
 	t = ( (p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1]) ) / line_dist**2
 	
@@ -163,6 +163,6 @@ OUT = (Rectangle.ByCornerPoints(p1, p2, p3, p4),
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="Background Preview" eyeX="-107.674027466461" eyeY="223.853733671663" eyeZ="195.987142266119" lookX="21.9298737183392" lookY="-187.959066547919" lookZ="-146.922670911733" upX="0.0935034407232007" upY="0.773840287468559" upZ="-0.626441168294413" />
+    <Camera Name="Background Preview" eyeX="120629.423268" eyeY="71818.0648807671" eyeZ="10268.4293859008" lookX="-6212.56221120838" lookY="-56672.3974396866" lookZ="-37893.7766947873" upX="-0.111366753193238" upY="0.72537434139852" upZ="-0.67928601817015" />
   </Cameras>
 </Workspace>

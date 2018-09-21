@@ -1,0 +1,41 @@
+<Workspace Version="0.8.2.2392" X="27.5077862650799" Y="125.182512438366" zoom="0.69990909121839" Name="ClosedCurve.Offset+" Description="Offsets a curve both ways and correctly differenciates the external and internal offset. If an offset goes beyond the curve's bounds, the result will fail and a null value will be appended instead. Also works for convex curves like arcs." ID="8342e5b0-fb37-4302-9941-964d3b67265c" Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.Object" resolvedName="DSCore.Object" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Curve.Length" resolvedName="Autodesk.DesignScript.Geometry.Curve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="6f981e6b-40cf-4268-bb67-d373406c3360" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="425.422367664581" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="off1 = offset1(c, dist);&#xA;off1[0];&#xA;off1[1];" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="0ba263c3-96c9-48e0-b7db-857096dfc76f" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="424.799523176886" y="88.7911888451376" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def offset1(c,dist){&#xA;return = [Imperative]{&#xA;	c1_fail = false;&#xA;	c2_fail = false;&#xA;	rev = 0;&#xA;	c1 = c.Offset(dist);&#xA;	c2 = c.Offset(-dist);&#xA;	if (c1 == null){&#xA;		c1 = c;&#xA;		c1_fail = true;&#xA;	}&#xA;	if (c2 == null){&#xA;		c2 = c;&#xA;		c2_fail = true;&#xA;	}&#xA;	out1 = {c1,c2};&#xA;	if (c1.Length &gt; c2.Length){&#xA;		out1 = {c2,c1};&#xA;		rev = 1;&#xA;	}&#xA;	if (c1_fail){&#xA;	out1[0-rev] = null;&#xA;	}&#xA;	if (c2_fail){&#xA;	out1[1-rev] = null;&#xA;	}&#xA;	return = out1;&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="aa1b9551-34bc-4a84-84b9-1653ff2ad30d" type="Dynamo.Nodes.Symbol" nickname="Input" x="288.641109825427" y="-2.96802695155519" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="curve:var" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="08331144-db4d-4f45-9b6b-7b49cf61abc9" type="Dynamo.Nodes.Symbol" nickname="Input" x="243.726199050672" y="59.7906982183294" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="distance:double" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="cf29285e-ce70-413e-9aa8-a0bcc3a82aa7" type="Dynamo.Nodes.Output" nickname="Output" x="732.836144610945" y="12.5074394617893" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="internal offset" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Output guid="45c19cc9-f17f-4929-a0c2-af19277969fc" type="Dynamo.Nodes.Output" nickname="Output" x="732.428985351547" y="72.9074394617894" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="external offset" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="6f981e6b-40cf-4268-bb67-d373406c3360" start_index="1" end="cf29285e-ce70-413e-9aa8-a0bcc3a82aa7" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6f981e6b-40cf-4268-bb67-d373406c3360" start_index="2" end="45c19cc9-f17f-4929-a0c2-af19277969fc" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="aa1b9551-34bc-4a84-84b9-1653ff2ad30d" start_index="0" end="6f981e6b-40cf-4268-bb67-d373406c3360" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="08331144-db4d-4f45-9b6b-7b49cf61abc9" start_index="0" end="6f981e6b-40cf-4268-bb67-d373406c3360" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="-9.61698071603241" eyeY="99.2378666257198" eyeZ="-13.4074139218735" lookX="-0.0297618154893371" lookY="-87.9742998732535" lookZ="-8.52609746144586" />
+  </Cameras>
+</Workspace>

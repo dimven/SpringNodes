@@ -1,16 +1,16 @@
-<Workspace Version="0.8.2.2392" X="5.33671832813508" Y="110.172757972737" zoom="2.26511812821294" Name="Sheet.Views+" Description="Extracts all views and schedules (minus the revision schedule) placed on the input sheet (or sheets).&#xD;&#xA;Will be depreciated once the bult in node works with all plan types." ID="e2ff8708-6cd5-46d2-ab03-bbfbf75964e4" Category="SpringNodes.Revit.Views">
+<Workspace Version="1.3.1.1736" X="-200.451664516203" Y="7.44775048137922" zoom="4" ScaleFactor="1" Name="Springs.Sheet.Views+" Description="Extracts all views and schedules (minus the revision schedule) placed on the input sheet (or sheets).&#xD;&#xA;Will be depreciated once the bult in node works with all plan types." ID="d0f1130e-18a9-4600-b9f5-5d8730d99cba" Category="Springs.Revit.Views">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="69385820-2399-4ede-bdb2-8234cad8914e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="123.6" y="0.799999999999983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <PythonNodeModels.PythonNode guid="69385820-2399-4ede-bdb2-8234cad8914e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="123.6" y="0.799999999999983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
-#schedule section inspired by Clockwork
+
 import clr
 
 clr.AddReference("RevitServices")
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -23,46 +23,53 @@ def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
-
 sheets = UnwrapElement(tolist(IN[0]))
 sheet_views, sheets_scheds = [], []
 rev_str = "&lt;Revision Schedule&gt;"
+sched_dict = dict()
+fec1 = FilteredElementCollector(doc).OfClass(ScheduleSheetInstance)
+for s in fec1:
+	if rev_str not in s.Name:
+		key = s.OwnerViewId.IntegerValue
+		if key not in sched_dict:
+			sched_dict[key] = [s]
+		else:
+			sched_dict[key].append(s)
 
-for i in xrange(len(sheets)):
-	if app.VersionName == "Autodesk Revit 2014":
-		viewports = [doc.GetElement(v1) for v1 in sheets[i].GetAllViewports()]
-		views = [doc.GetElement(v1.ViewId) for v1 in viewports]
-	else:
-		viewsid = sheets[i].GetAllPlacedViews()
-		views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
+for i in xrange(len(sheets) ):
+	viewsid = sheets[i].GetAllPlacedViews()
+	views = [doc.GetElement(v).ToDSType(True) for v in viewsid]
 	sheet_views.append(views)
-	fec1 = FilteredElementCollector(doc, sheets[i].Id).OfClass(ScheduleSheetInstance)
-	scheds = [doc.GetElement(i.ScheduleId) for i in fec1 if rev_str not in i.Name]
+	s_id = sheets[i].Id.IntegerValue
+	scheds = sched_dict[s_id] if s_id in sched_dict else []
 	sheets_scheds.append(scheds)
-
-OUT = output1(sheet_views), output1(sheets_scheds)</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="sheet(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" type="Dynamo.Nodes.Output" nickname="Output" x="389.052475913393" y="-24.6131189783483" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+OUT = sheet_views, sheets_scheds</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-26.8418672045012" y="1.7659123160856" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="sheet: var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="389.052475913393" y="-24.6131189783483" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="view(s)" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="263.642680558776" y="6.45792068110116" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="o[0];&#xA;o[1];" ShouldFocus="false" />
-    <Dynamo.Nodes.Output guid="3561f338-fae5-44c2-9ee0-5537963dcaa0" type="Dynamo.Nodes.Output" nickname="Output" x="391.288406513814" y="33.3220693301947" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="263.642680558776" y="6.45792068110116" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="o[0];&#xA;o[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3561f338-fae5-44c2-9ee0-5537963dcaa0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="391.288406513814" y="33.3220693301947" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="schedule(s)" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="69385820-2399-4ede-bdb2-8234cad8914e" start_index="0" end="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" start_index="0" end="69385820-2399-4ede-bdb2-8234cad8914e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" start_index="0" end="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" start_index="1" end="3561f338-fae5-44c2-9ee0-5537963dcaa0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="69385820-2399-4ede-bdb2-8234cad8914e" start_index="0" end="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b96658de-7b6b-44de-9e6b-4d055d2a1a1d" start_index="0" end="69385820-2399-4ede-bdb2-8234cad8914e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" start_index="0" end="54fd61a2-567d-4aa1-93a6-5204e68d5f2e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="60466e07-1201-4fc8-8f6b-20ad7e3e9d7d" start_index="1" end="3561f338-fae5-44c2-9ee0-5537963dcaa0" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="81.9612025848931" eyeY="60.6141246867221" eyeZ="62.2681174153678" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
 </Workspace>

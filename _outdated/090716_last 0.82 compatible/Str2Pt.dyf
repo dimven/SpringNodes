@@ -1,0 +1,34 @@
+<Workspace Version="0.8.2.2392" X="-66.5553375" Y="177.47075" zoom="1.33823125" Name="Str2Pt" Description="De-serilize a Revit parameter string into a geometric point." ID="cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5" Category="SpringNodes.Geometry.Serialization">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Wall" resolvedName="Revit.Elements.Wall" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Transaction" resolvedName="Revit.Transaction.Transaction" assemblyName="RevitNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="db0b20dd-5f28-47fe-a313-93a95fd186c6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def Rvt2Pt(par)&#xA;{&#xA;par1 = String.ToNumber(String.Split(par,&quot;,&quot;));&#xA;return = Point.ByCoordinates(par1[0],par1[1],par1[2]);&#xA;};&#xA;Rvt2Pt(str);" ShouldFocus="false" />
+    <Dynamo.Nodes.Output guid="be095e65-8058-4bd6-a817-10d6351a544a" type="Dynamo.Nodes.Output" nickname="Output" x="814.076859847653" y="82.1980505985045" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="point(s)" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" type="Dynamo.Nodes.Symbol" nickname="Input" x="134.679422932322" y="-3.2086195864878" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="str:var" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="db0b20dd-5f28-47fe-a313-93a95fd186c6" start_index="0" end="be095e65-8058-4bd6-a817-10d6351a544a" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" start_index="0" end="db0b20dd-5f28-47fe-a313-93a95fd186c6" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

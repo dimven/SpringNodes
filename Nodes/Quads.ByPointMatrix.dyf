@@ -1,0 +1,52 @@
+<Workspace Version="1.3.2.2480" X="95.3043876791202" Y="38.3315092778099" zoom="1.27771698410772" ScaleFactor="1" Name="Springs.Quads.ByPointMatrix" Description="Creates a CCW or CW list of quad pairs from a rectangular nested list of points." ID="3a9e5c1b-8e61-481e-9d3d-07053a5f4b45" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Line.ByBestFitThroughPoints" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="IndexGroup" resolvedName="Autodesk.DesignScript.Geometry.IndexGroup" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DesignScript.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math.Log" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="CoordinateSystem" resolvedName="Autodesk.DesignScript.Geometry.CoordinateSystem" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Polygon" resolvedName="Autodesk.DesignScript.Geometry.Polygon" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math.lo" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List.Crea" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="32783bb5-111c-44f1-9f93-ca29b7e1a337" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="pts;&#xA;ccw;&#xA;outp = [Imperative]{&#xA;quads = {};&#xA;u = Count(pts) - 2;&#xA;v = Count(pts[0]) - 2;&#xA;u1 = u + 1;&#xA;for (i in 0..u)&#xA;{&#xA;	for (j in 0..v)&#xA;	{&#xA;		n = u1 * j + i;&#xA;		if (ccw)&#xA;		{&#xA;			quads[n] = {pts[i][j],&#xA;						pts[i][j+1],&#xA;						pts[i+1][j+1],&#xA;						pts[i+1][j]};&#xA;		}&#xA;		else&#xA;		{&#xA;			quads[n] = {pts[i][j],&#xA;						pts[i+1][j],&#xA;						pts[i+1][j+1],&#xA;						pts[i][j+1]};&#xA;		}&#xA;	}&#xA;}&#xA;return = quads;&#xA;};" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e908788f-8fb0-4721-b8f9-1f105e64f8bf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="20.7368088055181" y="-4.11293317567264" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="points:var[][]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="dd63dc95-8fb8-43b6-b1cc-6d5549a638b6" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="19.9337277509575" y="64.2094547855489" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CCW : bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="de3e261c-abff-4f2d-b53b-e81527ed9d47" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="663.143539339583" y="30.3530766196141" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="quads" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="32783bb5-111c-44f1-9f93-ca29b7e1a337" start_index="2" end="de3e261c-abff-4f2d-b53b-e81527ed9d47" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e908788f-8fb0-4721-b8f9-1f105e64f8bf" start_index="0" end="32783bb5-111c-44f1-9f93-ca29b7e1a337" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="dd63dc95-8fb8-43b6-b1cc-6d5549a638b6" start_index="0" end="32783bb5-111c-44f1-9f93-ca29b7e1a337" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="1555.67072252384" eyeY="-0.120085845842908" eyeZ="247.621348886197" lookX="-151.96634834708" lookY="-136.172089730069" lookZ="-17.2858134153259" upX="-0.486246890059679" upY="0.872069377088148" upZ="-0.0553094422857056" />
+  </Cameras>
+</Workspace>

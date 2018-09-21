@@ -1,0 +1,31 @@
+<Workspace Version="1.2.1.3083" X="122.4" Y="52.8" zoom="1" ScaleFactor="1" Name="Springs.Geometry.ReadTag" Description="Design script geometry can store a &lt;string, object&gt; dictionary for the duration of the active graph. If no parameter with the active name is found, a null value will be returned instead." ID="aa90266c-e750-4268-935e-ca22c36a22ce" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Geometry" resolvedName="Autodesk.DesignScript.Geometry.Geometry" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="df691c7c-6161-49b2-a9f0-091a58648726" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script>OUT = IN[0].Tags.LookupTag(IN[1])</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6db6f575-74f3-4cfa-acbe-5e25e5eee7fa" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:Geometry" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="44a03e24-6659-46e6-a2c3-ce961aaa193a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="24" y="64.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="tagName:string" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="acbfc1c0-a533-4dcd-a095-9809b1e26fba" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="428.2" y="-0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="value" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="df691c7c-6161-49b2-a9f0-091a58648726" start_index="0" end="acbfc1c0-a533-4dcd-a095-9809b1e26fba" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6db6f575-74f3-4cfa-acbe-5e25e5eee7fa" start_index="0" end="df691c7c-6161-49b2-a9f0-091a58648726" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="44a03e24-6659-46e6-a2c3-ce961aaa193a" start_index="0" end="df691c7c-6161-49b2-a9f0-091a58648726" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

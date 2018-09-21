@@ -1,0 +1,33 @@
+<Workspace Version="1.3.2.2480" X="372.148590294276" Y="129.055890132289" zoom="1.33823125" ScaleFactor="1" Name="Springs.Point.BoxedDistanceTo" Description="Computes the minimal distance between a point and the axis-aligned bounding boxe of a geometry element. Works directly with a bounding box input for the geometry." ID="15ada6e6-830f-4ae4-b705-f17f7df568c6" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.Object" resolvedName="DSCore.Object" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="391d6c90-8f52-4306-8741-5898428c37c5" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="167.801949401495" y="-30.637455223079" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="s2 = DSCore.Object.Type(g2);&#xA;t2 = String.Contains(s2, &quot;BoundingBox&quot;);&#xA;b = t2 ? g2 : BoundingBox.ByGeometry(g2);&#xA;bm = b.MinPoint;&#xA;bM = b.MaxPoint;&#xA;ap = {a.X, a.Y, a.Z};&#xA;bmin = {bm.X, bm.Y, bm.Z};&#xA;bmax = {bM.X, bM.Y, bM.Z};&#xA;dist = [Imperative]{&#xA;sqDist = 0;&#xA;for (i in GetKeys(ap) )&#xA;{&#xA;	if (ap[i] &lt; bmin[i])&#xA;	{&#xA;		d = ap[i] - bmin[i];&#xA;		sqDist = sqDist + d * d;&#xA;	}&#xA;	elseif (ap[i] &gt; bmax[i])&#xA;	{&#xA;		d = ap[i] - bmax[i];&#xA;		sqDist = sqDist + d * d;&#xA;	}&#xA;}&#xA;return = Math.Sqrt(sqDist);&#xA;};" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7190d424-a1bb-442b-9928-91a3a54e9886" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-14.1978451033781" y="-44.2863014146471" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="point:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="081044bc-40da-4b1b-aaaa-6b104d5ed773" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="642.285479434141" y="-15.69235511426" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="distance" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="68f9db7e-a5de-4546-92a1-f96155e19345" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-16.6486406964417" y="17.7582349836771" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="391d6c90-8f52-4306-8741-5898428c37c5" start_index="8" end="081044bc-40da-4b1b-aaaa-6b104d5ed773" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7190d424-a1bb-442b-9928-91a3a54e9886" start_index="0" end="391d6c90-8f52-4306-8741-5898428c37c5" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="68f9db7e-a5de-4546-92a1-f96155e19345" start_index="0" end="391d6c90-8f52-4306-8741-5898428c37c5" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

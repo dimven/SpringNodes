@@ -1,62 +1,92 @@
-<Workspace Version="0.8.2.2392" X="-67.9305882850724" Y="219.836148340256" zoom="1.92101320430154" Name="Collector.ElementsInView" Description="Selects all elements visible in the input view." ID="b5bdff96-365e-44a7-af60-1cf3936c4b36" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="1.3.2.2480" X="85.992772892219" Y="207.756611773401" zoom="1.62766375666706" ScaleFactor="1" Name="Springs.Collector.ElementsInView" Description="Selects all elements visible in the input view." ID="b5bdff96-365e-44a7-af60-1cf3936c4b36" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" type="PythonNodeModels.PythonNode" nickname="Python Script" x="259.215662595275" y="30.1076912147001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script># Copyright(c) 2018, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 import clr
 
 clr.AddReference("RevitServices")
-import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitAPI")
-from Autodesk.Revit.DB import FilteredElementCollector
+from Autodesk.Revit.DB import FilteredElementCollector, ElementMulticategoryFilter, ElementId
 
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
+from System.Collections.Generic import List
+
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
-views = UnwrapElement(tolist(IN[0]))
-elements = []
+views = UnwrapElement(tolist(IN[0]) )
+cat = UnwrapElement(IN[1])
+OUT = []
 
-for i in xrange(len(views)):
-	fec = FilteredElementCollector(doc, views[i].Id).WhereElementIsNotElementType().GetElementIterator()
-	fec.Reset()
-	view_el = []
-	while fec.MoveNext():
-		view_el.append(fec.Current.ToDSType(True))
-	elements.append(view_el)
-OUT = output1(elements)</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Output guid="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" type="Dynamo.Nodes.Output" nickname="Output" x="402.464885808708" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="element(s)" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="552eab9b-8333-42d4-9d3a-afe5928c2d4b" type="Dynamo.Nodes.Symbol" nickname="Input" x="137.128431684578" y="1.08047524780022" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="view(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="79e7a498-ca8d-4741-bab2-f803ed22952d" type="Dynamo.Nodes.Symbol" nickname="Input" x="37.0329158429464" y="63.8069449123469" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+ueWrapper = None
+wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()
+for w in wrappers:
+	if w.ToString().startswith("Revit.Elements.UnknownElement"):
+		ueWrapper = w
+		break
+
+if cat is not None:
+	catId = List[ElementId]()
+	for c in tolist(cat):
+		catId.Add(c.Id)
+	catFil = ElementMulticategoryFilter(catId)
+else:
+	catFil = None
+
+for v in views:
+	fec = FilteredElementCollector(doc, v.Id).WhereElementIsNotElementType()
+	if catFil is not None:
+		fec = fec.WherePasses(catFil)
+	viewEl = []
+	for e in fec:
+		try:
+			viewEl.append(e.ToDSType(True) )
+		except:
+			if ueWrapper:
+				viewEl.append(ueWrapper.Invoke(None, (e, True) ) )
+	OUT.append(viewEl)
+	fec.Dispose()
+if catFil is not None:
+	catFil.Dispose()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="409.819196669608" y="30.4406120891186" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="elements" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="552eab9b-8333-42d4-9d3a-afe5928c2d4b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-23.4663928737709" y="-0.293562884699298" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="view:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="79e7a498-ca8d-4741-bab2-f803ed22952d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-26.4023600387249" y="63.1925674059953" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="category:var[] = null" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2740782b-610f-4dda-9701-5a30b80e2ad0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-25.6630293132252" y="127.242120271322" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="refresh:bool = true" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" start_index="0" end="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="552eab9b-8333-42d4-9d3a-afe5928c2d4b" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="79e7a498-ca8d-4741-bab2-f803ed22952d" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" start_index="0" end="9b4fce8f-07d7-4c34-aee2-a2ebd75460eb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="552eab9b-8333-42d4-9d3a-afe5928c2d4b" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="79e7a498-ca8d-4741-bab2-f803ed22952d" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2740782b-610f-4dda-9701-5a30b80e2ad0" start_index="0" end="73ecd3f5-0bbc-420b-93a8-bf519b6c8b50" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="17.0665245056152" eyeY="63.2038345336914" eyeZ="-45.2703590393066" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="130826.03125" eyeY="7004.34130859375" eyeZ="320512.0625" lookX="-124409.5546875" lookY="-65890.03125" lookZ="-235857.640625" upX="-0.0122128967195749" upY="0.999657332897186" upZ="-0.0231533441692591" />
   </Cameras>
 </Workspace>

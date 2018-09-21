@@ -1,0 +1,29 @@
+<Workspace Version="0.8.2.2392" X="288.742056359613" Y="57.8390571392021" zoom="0.852765925581498" Name="Fraction2Feet" Description="Converts a fractioned feet /inch string value into a decimal foot value." ID="1ef61c6d-ec1d-4a1f-b421-9ad87e5ca736" Category="SpringNodes.Misc">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List.Scan" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math.Round" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="04db11f6-1400-4197-b895-3580fc9c631e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="491.784821429401" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="frac2ft(s1);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="0c0bd3f8-e201-43b5-b05e-6a25c4aa628e" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="385.008269303386" y="70.9490607399966" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def frac2ft(s1){&#xA;n1 = 0;&#xA;n2 = 0;&#xA;n3 = 0;&#xA;n4 = 0;&#xA;	return = [Imperative]&#xA;	{&#xA;		s0 = null;&#xA;		if(String.Contains(s1,&quot;'&quot;,true))&#xA;		{&#xA;			s0 = String.Split(s1,{&quot;'&quot;});&#xA;			n1 = String.ToNumber(s0[0]);&#xA;			s1 = s0[1];&#xA;		}&#xA;		if(String.Contains(s1,&quot; &quot;,true))&#xA;		{&#xA;			s0 = String.Split(s1,{&quot; &quot;});&#xA;			n2 = String.ToNumber(s0[0])/12;&#xA;			s1 = s0[1];&#xA;		}&#xA;		if(String.Contains(s1,&quot;/&quot;,true))&#xA;		{&#xA;			s0 = String.Split(s1,{&quot;/&quot;});&#xA;			n3 = String.ToNumber(s0[0]);&#xA;			n4 = String.ToNumber(&#xA;			String.Split(s0[1],{&quot;\&quot;&quot;})[0]);&#xA;		}&#xA;		elseif(!String.Contains(s1,&quot;/&quot;,true))&#xA;		{&#xA;			n2 = String.ToNumber(&#xA;			String.Split(s1,{&quot;\&quot;&quot;})[0])/12;&#xA;		}&#xA;		n5 = 0;&#xA;		if (n3 != 0 &amp;&amp; n4 != 0)&#xA;		{&#xA;			n5 = (n3/n4)/12;&#xA;		}&#xA;		return = n1 + n2 + n5;&#xA;	}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="8eacd47b-a743-4b20-8336-86e61f08b6d7" type="Dynamo.Nodes.Symbol" nickname="Input" x="333.256720090775" y="0.437172552378437" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="fraction:var" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="57cbf9da-5ecd-4db3-ac39-c0f722de232e" type="Dynamo.Nodes.Output" nickname="Output" x="703.503611926161" y="-2.07343412526998" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="number" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="04db11f6-1400-4197-b895-3580fc9c631e" start_index="0" end="57cbf9da-5ecd-4db3-ac39-c0f722de232e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="8eacd47b-a743-4b20-8336-86e61f08b6d7" start_index="0" end="04db11f6-1400-4197-b895-3580fc9c631e" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

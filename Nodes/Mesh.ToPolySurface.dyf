@@ -1,0 +1,97 @@
+<Workspace Version="1.3.1.1736" X="-90.0987335424144" Y="171.830059122888" zoom="1.96524455617686" ScaleFactor="1" Name="Springs.Mesh.ToPolySurface" Description="Converts a Dynamo mesh to a polysurface. Uses multithreading - optimized for 4 cores." ID="098af804-e737-4150-82b8-ef3bafda7248" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="774a37af-9038-419d-81a1-d74c0608d122" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+from System.Threading import Thread, ThreadStart
+from operator import itemgetter
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'):
+		return obj1
+	else:
+		return [obj1]
+
+def chop1(l1, n):
+	return [l1[x:x+n] for x in xrange(0, len(l1), n)]
+
+def mesh2ps(topo, f_chop = chop1, itemgetter=itemgetter, 
+			f_ps1 = PolySurface.ByJoinedSurfaces,
+			f_sf1 = Surface.ByPerimeterPoints):
+	
+	NUMTHREADS = 4
+	vp = topo.VertexPositions
+	ptslist = [itemgetter(i.A, i.B, i.C)(vp) for i in topo.FaceIndices]
+	len1 = len(ptslist) / NUMTHREADS + 1
+
+	def ps_generator(ptslist, chop1=chop1,
+					 f_ps1 = PolySurface.ByJoinedSurfaces,
+					 f_sf1 = Surface.ByPerimeterPoints):
+		
+		sflist = map(f_sf1, ptslist)
+		while len(sflist) &gt; 10 :
+			sflist = map(f_ps1, chop1(sflist, 10) )
+		return sflist
+	
+	if len(ptslist) &gt; 10 :
+		ptslist = f_chop(ptslist, len1)
+		
+		class Worker(object):
+			__slots__ = 'fn', 'args', 'result'
+			def __init__(self, fn, args):
+				self.fn = fn
+				self.args = args
+				self.result = None
+			def __call__(self):
+				self.result = self.fn(*self.args)
+		
+		workers, tasks = [], []
+		for p in ptslist:
+			w = Worker(ps_generator, (p,) )
+			t = Thread(ThreadStart(w) )
+			workers.append(w)
+			tasks.append(t)
+			t.Start()
+
+		for t in tasks: t.Join()
+		return f_ps1(i for w in workers for i in w.result)
+	else:
+		return  f_ps1(ps_generator(ptslist) )
+		
+meshes = tolist(IN[0])
+OUT = map(mesh2ps, meshes)
+if IN[1]:
+	OUT = PolySurface.ByJoinedSurfaces(OUT)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="78634f4b-14ef-479c-bc52-b6e49c04a6e3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="102.224484744322" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="mesh:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="715d68da-de03-4f26-a687-f3f8bcf4baa1" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="392.402031599546" y="-1.19560800870553" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="PolySurface" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e8dd5572-5198-46ad-87f9-a1f78747eca2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-5.67419059742718" y="73.0476459185152" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="mergeAll : bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="774a37af-9038-419d-81a1-d74c0608d122" start_index="0" end="715d68da-de03-4f26-a687-f3f8bcf4baa1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="78634f4b-14ef-479c-bc52-b6e49c04a6e3" start_index="0" end="774a37af-9038-419d-81a1-d74c0608d122" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e8dd5572-5198-46ad-87f9-a1f78747eca2" start_index="0" end="774a37af-9038-419d-81a1-d74c0608d122" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-204766.042814089" eyeY="70376.2463422901" eyeZ="42229.617746135" lookX="155191.964689089" lookY="-70376.2463422901" lookZ="-34435.4375703537" upX="0.194634132309097" upY="0.97992470713778" upZ="-0.0431872315398022" />
+  </Cameras>
+</Workspace>

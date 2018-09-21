@@ -1,0 +1,30 @@
+<Workspace Version="1.3.1.1736" X="218.4" Y="71.2" zoom="1" ScaleFactor="1" Name="Springs.RankOutput" Description="Modifies the output of a node based on the type of the original input." ID="945872ee-e788-42a9-b04b-0fd47571fc4e" Category="Springs.Core.Object">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="6ebab6f7-8ce4-4b5b-b1db-726b3e16b5e4" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="187.6" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="inp;&#xA;outp;&#xA;outp_ = [Imperative]{&#xA;if (Rank(inp) == 0){return = outp[0];&#xA;}&#xA;return = outp;&#xA;};" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b9d558de-f99c-498d-8577-51c193c1d6c3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="64.0000000000001" y="-4.79999999999998" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="input" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="17e76649-a16c-4006-911d-53e0ba18801d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="64.8000000000002" y="53.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="output" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="74c0d3a7-fc02-4411-8d12-750653d2a116" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="586.6" y="28.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="output" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="6ebab6f7-8ce4-4b5b-b1db-726b3e16b5e4" start_index="2" end="74c0d3a7-fc02-4411-8d12-750653d2a116" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b9d558de-f99c-498d-8577-51c193c1d6c3" start_index="0" end="6ebab6f7-8ce4-4b5b-b1db-726b3e16b5e4" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="17e76649-a16c-4006-911d-53e0ba18801d" start_index="0" end="6ebab6f7-8ce4-4b5b-b1db-726b3e16b5e4" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

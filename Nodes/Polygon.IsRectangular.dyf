@@ -1,0 +1,65 @@
+<Workspace Version="1.2.1.3083" X="155.826823410382" Y="245.990139026745" zoom="2.49400635960208" Name="Polygon.IsRectangular" Description="Determines if a polygon (or a polycurve) is rectangular or square. If you want to differenciate between square and rectangular polys, use the XOR output." ID="9336e01f-c9ab-475b-ad3c-927b537d84a0" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="48b98f7a-f0e7-4acb-8cdd-0bc5412a935a" type="PythonNodeModels.PythonNode" nickname="Python Script" x="167.574744308977" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+from itertools import imap
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+def isSq(pts):
+	def _dist(a, b):
+		return round( (a.X - b.X)**2 + (a.Y - b.Y)**2  + (a.Z - b.Z)**2, 5)
+	isSquare, isRect = False, False
+	ln1 = len(pts)
+	if len(pts) != 4:
+		return isSquare, isRect, isSquare ^ isRect
+	a, b, c, d = pts
+	ab, ac, bc, bd = map(_dist, (a,a,b,b), (b,c,c,d) )
+	if ac == bd:
+		isSquare = ab == bc
+		isRect = True if isSquare else ab == _dist(c, d)
+	return isSquare, isRect, isSquare ^ isRect
+
+def getPts(p):
+	return p.Points if 'Polygon' in p.GetType().ToString() else [c.StartPoint for c in p.Curves()]
+
+polys = tolist(IN[0])
+OUT = zip(*map(isSq, imap(getPts, polys) ) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4fb00944-bc1f-44e3-b958-261e77c7922d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="4.21933698798659" y="0.421933698798668" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="poly:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3bb5b8d4-05a3-4d84-8e2b-22846b6234f8" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="514.631816167111" y="-1.66775486829023" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="isSquare" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="fa4ee496-3165-4156-b012-2d8b7fd1334e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="515.12720038156" y="55.8073561589767" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="isRectangle" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="200c42f1-d182-4142-aad9-db20fa748eb4" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="317.157003970051" y="3.94478496498252" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];&#xA;r[2];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="c81c977e-86c3-4abf-8959-002be33cbac8" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="515.931538704735" y="114.238681349525" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="XOR" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="48b98f7a-f0e7-4acb-8cdd-0bc5412a935a" start_index="0" end="200c42f1-d182-4142-aad9-db20fa748eb4" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4fb00944-bc1f-44e3-b958-261e77c7922d" start_index="0" end="48b98f7a-f0e7-4acb-8cdd-0bc5412a935a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="200c42f1-d182-4142-aad9-db20fa748eb4" start_index="0" end="3bb5b8d4-05a3-4d84-8e2b-22846b6234f8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="200c42f1-d182-4142-aad9-db20fa748eb4" start_index="1" end="fa4ee496-3165-4156-b012-2d8b7fd1334e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="200c42f1-d182-4142-aad9-db20fa748eb4" start_index="2" end="c81c977e-86c3-4abf-8959-002be33cbac8" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

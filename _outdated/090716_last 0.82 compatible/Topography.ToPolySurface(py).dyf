@@ -1,0 +1,59 @@
+<Workspace Version="0.8.2.2392" X="117.254524128242" Y="229.794455244859" zoom="1.47618023926361" Name="Topography.ToPolySurface(py)" Description="Python implementation that should boost performance by 5-10%. Optimized algorithm for converting topographies into polysurfaces. Tested with topographies containing up to 40 000 points. &#xD;&#xA;Warning conversions of such mangitudes consume a lot of resources and are sub-optimal. Ensure that you have at least 8GB of ram and plenty of patience before attempting such a conversion, otherwise your Dynamo and Revit instances may crash." ID="d268bb85-50f6-4835-bbb9-7c9319db032a" Category="SpringNodes.Revit.Topography">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Topography" resolvedName="Revit.Elements.Topography" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="61dd9d6c-cbd0-49e8-a1d0-b7bc45e03430" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+import clr
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+	
+def output1(l1):
+	if len(l1) == 1: return l1[0]
+	else: return l1
+
+def chop1(l1, n):
+	return [l1[x:x+n] for x in xrange(0, len(l1), n)]
+
+def mesh2ps(topo, f_ps1 = PolySurface.ByJoinedSurfaces,
+f_sf1 = Surface.ByPerimeterPoints, f_chop = chop1):
+	vp = topo.VertexPositions
+	fi = topo.FaceIndices
+	xr1 = xrange(len(fi) )
+	ind = [(fi[i].A, fi[i].B, fi[i].C) for i in xr1]
+	ptslist = [ map(vp.__getitem__, ind[i]) for i in xr1]
+	sflist = [f_sf1(pts) for pts in ptslist]
+	while len(sflist) &gt; 10 :
+		sflist = f_chop(sflist,10)
+		sflist = [f_ps1(sf1) for sf1 in sflist]
+	return f_ps1(sflist)
+
+topo = [t.Mesh for t in tolist(IN[0])]
+OUT = output1(map(mesh2ps,topo) )</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Output guid="608b56c8-8f5a-4672-a122-a9432d2b9da1" type="Dynamo.Nodes.Output" nickname="Output" x="422.570884902872" y="0.074899137392773" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="polysurface" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Symbol guid="5c7aaf41-10ae-425b-94e3-e4fb3d5259f5" type="Dynamo.Nodes.Symbol" nickname="Input" x="9.76248079258971" y="-1.11328534670787" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="topography" />
+    </Dynamo.Nodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="61dd9d6c-cbd0-49e8-a1d0-b7bc45e03430" start_index="0" end="608b56c8-8f5a-4672-a122-a9432d2b9da1" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5c7aaf41-10ae-425b-94e3-e4fb3d5259f5" start_index="0" end="61dd9d6c-cbd0-49e8-a1d0-b7bc45e03430" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="202177.515625" eyeY="381408.3125" eyeZ="171392.984375" lookX="-114945.6796875" lookY="-359524.71875" lookZ="-164159.453125" />
+  </Cameras>
+</Workspace>

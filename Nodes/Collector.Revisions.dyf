@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-16.7550982911112" Y="222.716360462913" zoom="1.15121620485268" Name="Collector.Revisions" Description="Collects all revision clouds from a specific date." ID="db9982b0-99c8-41b0-942d-70c2e355c330" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="-16.7550982911112" Y="222.716360462913" zoom="1.15121620485268" Name="Springs.Collector.Revisions" Description="Collects all revision clouds from a specific date." ID="db9982b0-99c8-41b0-942d-70c2e355c330" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
     <DSIronPythonNode.PythonNode guid="cf70f36c-7e14-423a-ae1d-3985068be490" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="232.351988237078" y="-1.3898345013348" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">

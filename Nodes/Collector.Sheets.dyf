@@ -1,8 +1,8 @@
-<Workspace Version="0.8.2.2392" X="131.674480456184" Y="186.746483941112" zoom="1.55469255719439" Name="Collector.Sheets" Description="Search for sheets by either their name or their number. Use a false boolean switch to search by number." ID="a652302d-7105-4008-bcad-1ad0c483e40d" Category="SpringNodes.Revit.Collectors">
+<Workspace Version="0.8.2.2392" X="283.147979390816" Y="340.237103105991" zoom="1.97667628894292" Name="Springs.Collector.Sheets" Description="Search for sheets by either their name or their number. Use a false boolean switch to search by number." ID="a652302d-7105-4008-bcad-1ad0c483e40d" Category="Springs.Revit.Collectors">
   <NamespaceResolutionMap />
   <Elements>
-    <Dynamo.Nodes.Symbol guid="9c5784e0-fd0a-4e8e-89cd-1ae1bbc067fb" type="Dynamo.Nodes.Symbol" nickname="Input" x="54.7072485874253" y="-6.68609040783726" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="name(s)/number(s)" />
+    <Dynamo.Nodes.Symbol guid="9c5784e0-fd0a-4e8e-89cd-1ae1bbc067fb" type="Dynamo.Nodes.Symbol" nickname="Input" x="70.0287970773075" y="-2.68224987602811" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="searchFor:var[]" />
     </Dynamo.Nodes.Symbol>
     <Dynamo.Nodes.Output guid="30959af0-c8ee-43fe-ac2c-23606ae3daf7" type="Dynamo.Nodes.Output" nickname="Output" x="535.7241419483" y="-4.46584342604746" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
       <Symbol value="exact match" />
@@ -33,8 +33,7 @@ def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-fn = tolist(IN[0])
-fn = [str(n) for n in fn]
+fn = map(str,tolist(IN[0]) )
 NameNumber = IN[1]
 result, similar, names = [], [], []
 
@@ -75,6 +74,6 @@ if len(result) == 0 and len(similar) == 0:
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="14.7358922981754" eyeY="30.3503387225143" eyeZ="-10.0862310206897" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="background_preview" eyeX="-4.65494186956428" eyeY="166.892195670601" eyeZ="-7.67752116203953" lookX="21.0815143248684" lookY="-74.0552386559833" lookZ="-68.9545263311066" />
   </Cameras>
 </Workspace>

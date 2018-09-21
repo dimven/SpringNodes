@@ -1,7 +1,19 @@
-<Workspace Version="0.8.2.2392" X="204.772096447084" Y="146.948751447084" zoom="1.33823125" Name="List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="SpringNodes.BETA">
+<Workspace Version="1.1.0.2094" X="624.574550704673" Y="118.090316795777" zoom="1.30764135636719" Name="Springs.List.DragDropReorder" Description="Press and hold on an item to move it up or down the list. To confirm and close the window, select &quot;Save Order&quot;. The optional names input will override the object representation." ID="747d5ee1-bd7c-4ae8-adee-863ef266d10a" Category="Springs.Core.List">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="59955ff9-1bf7-4403-8a08-2bf5da484df7" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="94.8" y="-0.799999999999997" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2f075382-60e4-4c49-b32c-1890c588ec72" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="list" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3239d12f-549a-4561-bbda-03ae1d9a797b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-148.255064287282" y="59.2131759738834" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="names:var[]..[] = null" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="ac638096-2824-4fb0-80ec-84febe0a6a67" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="245.62415595212" y="52.6067523830429" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="list" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-534.529721044958" y="118.84823014587" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="customMsg : string = &quot;Reorder the items by dragging &amp; dropping them.&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <PythonNodeModels.PythonNode guid="a327464c-53b0-414a-8d32-e09d7989b757" type="PythonNodeModels.PythonNode" nickname="Python Script" x="104.636551831319" y="49.8054791000554" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -32,10 +44,10 @@ class NameWrap(Object):
 		return self.name
 
 class DragDrop(Form):
-	def __init__(self):
+	def __init__(self, cm1):
 		self.Text = "SpringNodes: Drag and Drop Reorder"
 		self.Width = 367
-		self.Height = n + 82
+		self.Height = n + 110
 		self.ControlBox = False
 		self.TopMost = True
 		self.BackColor = Color.FromArgb(40,40,40)
@@ -44,8 +56,16 @@ class DragDrop(Form):
 		self.FormClosing += self.DisableForceClose
 		self.SafeToClose = False
 		
+		self.label = Label()
+		self.label.Text = cm1
+		self.label.Location = Point(5, 5)
+		self.label.ForeColor = Color.FromArgb(234,234,234)
+		self.label.Font = Font("Calibri", 10)
+		self.label.AutoSize = True
+		self.Controls.Add(self.label)
+		
 		self.box1 = ListBox()
-		self.box1.Location = Point(5,7)
+		self.box1.Location = Point(5,32)
 		self.box1.Width = 350
 		self.box1.Height = n
 		self.box1.BackColor = Color.FromArgb(53,53,53)
@@ -64,7 +84,7 @@ class DragDrop(Form):
 		self.button1.Width = 200
 		self.button1.ForeColor = Color.FromArgb(234,234,234)
 		self.button1.Font = Font("Calibri", 10)
-		self.button1.Location = Point(80, n + 12)
+		self.button1.Location = Point(80, n + 35)
 		self.button1.Click += self.save
 		self.Controls.Add(self.button1)
 	
@@ -94,7 +114,7 @@ class DragDrop(Form):
 
 def EnableDrop():
 	def thread_proc():
-		form = DragDrop()
+		form = DragDrop(IN[2])
 		form.add_range(l1_arr)
 		Application.Run(form)
 		global out1 
@@ -121,30 +141,22 @@ l1_arr = Array[Object](l1)
 out1 = None
 EnableDrop()
 OUT = [i.obj for i in out1]</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="2f075382-60e4-4c49-b32c-1890c588ec72" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="list" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3239d12f-549a-4561-bbda-03ae1d9a797b" type="Dynamo.Nodes.Symbol" nickname="Input" x="-148.255064287282" y="59.2131759738834" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="names:var[]..[] = null" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="ac638096-2824-4fb0-80ec-84febe0a6a67" type="Dynamo.Nodes.Output" nickname="Output" x="252.2" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="list" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" type="Dynamo.Nodes.Symbol" nickname="Input" x="-109.539949800966" y="126.759527587564" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b5bc2d8a-61ae-48a6-aeb3-156e8195dcea" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-109.81307524173" y="187.410199883552" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="59955ff9-1bf7-4403-8a08-2bf5da484df7" start_index="0" end="ac638096-2824-4fb0-80ec-84febe0a6a67" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="2f075382-60e4-4c49-b32c-1890c588ec72" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3239d12f-549a-4561-bbda-03ae1d9a797b" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" start_index="0" end="59955ff9-1bf7-4403-8a08-2bf5da484df7" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2f075382-60e4-4c49-b32c-1890c588ec72" start_index="0" end="a327464c-53b0-414a-8d32-e09d7989b757" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3239d12f-549a-4561-bbda-03ae1d9a797b" start_index="0" end="a327464c-53b0-414a-8d32-e09d7989b757" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="20231d80-bad9-4bd1-a7d7-2f9644ed6a6c" start_index="0" end="a327464c-53b0-414a-8d32-e09d7989b757" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a327464c-53b0-414a-8d32-e09d7989b757" start_index="0" end="ac638096-2824-4fb0-80ec-84febe0a6a67" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b5bc2d8a-61ae-48a6-aeb3-156e8195dcea" start_index="0" end="a327464c-53b0-414a-8d32-e09d7989b757" end_index="3" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

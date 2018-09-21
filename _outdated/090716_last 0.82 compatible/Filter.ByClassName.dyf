@@ -1,0 +1,61 @@
+<Workspace Version="0.8.2.2392" X="61.6639102077711" Y="257.9528269813" zoom="1.92101320430154" Name="Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="SpringNodes.Core">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"): return obj1
+	else: return [obj1]
+
+in1,out1 = [],[]
+
+elements = tolist(IN[0])
+filter = map(str.lower, map(str,tolist(IN[1]) ) )
+for i in xrange(len(elements)):
+	try : n1 = elements[i].GetType().ToString().lower()
+	except : n1 = "null"
+	if any(f in n1 for f in filter):
+		in1.append(elements[i])
+	else:
+		out1.append(elements[i])
+	
+OUT = in1, out1</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="b21adbd0-37a4-41a4-abba-8ad300250e67" type="Dynamo.Nodes.Symbol" nickname="Input" x="48.8" y="-18.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="object(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="5c95f402-378c-4745-919b-90ab22f488d9" type="Dynamo.Nodes.Symbol" nickname="Input" x="50.9890200217638" y="42.2109799782362" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Class name(s)" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="32719160-cc7a-44c4-a73b-62e0ab6658e9" type="Dynamo.Nodes.Output" nickname="Output" x="540.004407706101" y="-16.7321971827076" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="in" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.Output guid="1160bc54-24f9-4445-8c27-522ca7dc720c" type="Dynamo.Nodes.Output" nickname="Output" x="543.45240468303" y="42.9282106199048" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="out" />
+    </Dynamo.Nodes.Output>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="25642c9d-46be-4e05-8ddf-03155b298049" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="399.009770197473" y="4.53169755559588" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="f[0];&#xA;f[1];" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" start_index="0" end="25642c9d-46be-4e05-8ddf-03155b298049" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="b21adbd0-37a4-41a4-abba-8ad300250e67" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="5c95f402-378c-4745-919b-90ab22f488d9" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="25642c9d-46be-4e05-8ddf-03155b298049" start_index="0" end="32719160-cc7a-44c4-a73b-62e0ab6658e9" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="25642c9d-46be-4e05-8ddf-03155b298049" start_index="1" end="1160bc54-24f9-4445-8c27-522ca7dc720c" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="909.813415527344" eyeY="9690.240234375" eyeZ="-932.905700683594" lookX="103.202018737793" lookY="-7911.1083984375" lookZ="-1553.78100585938" />
+  </Cameras>
+</Workspace>

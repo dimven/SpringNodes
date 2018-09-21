@@ -1,0 +1,44 @@
+<Workspace Version="1.3.2.2480" X="154.975816697483" Y="208.052586513277" zoom="1.66537098414077" ScaleFactor="1" Name="Springs.List.FirstLast" Description="Simple utility node to get both the first and last items of a list as separate outputs. This avoids the unnecessary sublist when using the List.Deconstruct node." ID="9460ceb4-b013-4122-941d-053f8c674019" Category="Springs.Core.List">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="DSCore.Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="CoordinateSystem.Identity" resolvedName="Autodesk.DesignScript.Geometry.CoordinateSystem" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="CoordinateSystem" resolvedName="Autodesk.DesignScript.Geometry.CoordinateSystem" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="e82d2d34-060b-42c7-b796-125bd6678735" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.FirstItem" x="203.645048705031" y="-0.646989407155814" isVisible="false" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.FirstItem@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="f4f534af-f219-492e-85fa-2009cc3dfe05" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.LastItem" x="210.194319559529" y="96.4014368292507" isVisible="false" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.LastItem@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6f248cf6-53fb-411d-95b7-f46e89724531" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="11.6923319273499" y="47.9702613266209" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="list : var[]..[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="47c8eb70-fa37-4d23-91f6-b9b4b795aad9" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="382.141796914495" y="-0.388013264891669" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="first" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="095b5052-f344-4d59-99fa-f229bd57cfef" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="387.291219673819" y="96.9830855065932" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="last" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="e82d2d34-060b-42c7-b796-125bd6678735" start_index="0" end="47c8eb70-fa37-4d23-91f6-b9b4b795aad9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f4f534af-f219-492e-85fa-2009cc3dfe05" start_index="0" end="095b5052-f344-4d59-99fa-f229bd57cfef" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6f248cf6-53fb-411d-95b7-f46e89724531" start_index="0" end="e82d2d34-060b-42c7-b796-125bd6678735" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6f248cf6-53fb-411d-95b7-f46e89724531" start_index="0" end="f4f534af-f219-492e-85fa-2009cc3dfe05" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

@@ -1,0 +1,39 @@
+<Workspace Version="1.3.2.2480" X="361.846222824473" Y="305.426767410088" zoom="1.10476425630303" ScaleFactor="1" Name="Springs.Geometry.DifferentiateDisplay" Description="Paints the input geometry using the default color range. Also works well with lists of geometry." ID="6cbfc1f2-91d9-4d42-856a-ed68431e462c" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Autodesk.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="ColorRange1D" resolvedName="DSCore.ColorRange1D" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="ColorRange2D" resolvedName="DSCore.ColorRange2D" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Display" resolvedName="Display.Display" assemblyName="Display.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="eb314a7b-4221-4d55-82b5-fa073dd698a2" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="128.998819921649" y="-11.5867775502722" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def col1(x){&#xA;r = Math.Random(0, 255);&#xA;g = Math.Random(0, 255);&#xA;b = Math.Random(0, 255);&#xA;return = DSCore.Color.ByARGB(255, r, g, b);&#xA;};&#xA;&#xA;rand;&#xA;col = [Imperative]{&#xA;if (rand)&#xA;{&#xA;	return = col1(GetKeys(geo));&#xA;}&#xA;else&#xA;{&#xA;	dcr = ColorRange1D.Default();&#xA;	return = ColorRange1D.GetColorAtParameter&#xA;	  (dcr, 0..1..#(Count(geo)));&#xA;}&#xA;}&#xA;&#xA;Display.ByGeometryColor(geo, col);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9dac9098-aa34-4fdf-b2a9-89cbce811e3c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-163.041330603267" y="1.29397881431163" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geo:var[]..[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="77591f76-37bd-4fe6-8433-9957a97155fd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="661.016030028307" y="-11.7221747597396" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="displayGeo" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24e2f34d-8e0d-4767-8aeb-a89f799ea131" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-162.612767134976" y="58.8193644293493" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="randomCol: bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="eb314a7b-4221-4d55-82b5-fa073dd698a2" start_index="2" end="77591f76-37bd-4fe6-8433-9957a97155fd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9dac9098-aa34-4fdf-b2a9-89cbce811e3c" start_index="0" end="eb314a7b-4221-4d55-82b5-fa073dd698a2" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="24e2f34d-8e0d-4767-8aeb-a89f799ea131" start_index="0" end="eb314a7b-4221-4d55-82b5-fa073dd698a2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="946.632972251091" eyeY="2467.41985216297" eyeZ="-548.217487691797" lookX="-640.223208080822" lookY="-2604.44185463076" lookZ="24.7138404852094" upX="-0.896590591624883" upY="0.44150582817617" upZ="0.0346101510267281" />
+  </Cameras>
+</Workspace>

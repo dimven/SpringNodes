@@ -1,0 +1,42 @@
+<Workspace Version="1.3.2.2480" X="-96.7529999999999" Y="199.328" zoom="1.1575" ScaleFactor="1" Name="Springs.Geometry.Extents" Description="Gets the dimensions of the geometry's bounding box." ID="ffe00c3f-aef8-46f1-a72c-92ece348130e" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox.MinPoint" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox.MaxPoint" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.Object" resolvedName="DSCore.Object" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="eda21534-87a1-4daa-bfef-f33510f2d8ee" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250.727861771058" y="1.40820734341253" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="s1 = DSCore.Object.Type(g);&#xA;t1 = String.Contains(s1, &quot;BoundingBox&quot;);&#xA;bb = t1 ? g : BoundingBox.ByGeometry(g);&#xA;min = bb.MinPoint;&#xA;max = bb.MaxPoint;&#xA;w = Math.Abs(min.X - max.X);&#xA;l = Math.Abs(min.Y - max.Y);&#xA;h = Math.Abs(min.Z - max.Z);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7b5c9be5-09ba-4c12-aa93-e4bb29f3104c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="91" y="-2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2722c97f-a590-4f5d-ba74-ebaf31654bd0" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="725.695464362851" y="0.239740820734312" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="width" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="9631374f-606b-41a2-8f33-5d81288ce094" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="723.695464362851" y="58.2397408207343" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="length" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2955bc6c-ee36-4d4a-91e1-0125861e8853" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="726.695464362851" y="118.239740820734" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="height" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="eda21534-87a1-4daa-bfef-f33510f2d8ee" start_index="5" end="2722c97f-a590-4f5d-ba74-ebaf31654bd0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eda21534-87a1-4daa-bfef-f33510f2d8ee" start_index="6" end="9631374f-606b-41a2-8f33-5d81288ce094" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eda21534-87a1-4daa-bfef-f33510f2d8ee" start_index="7" end="2955bc6c-ee36-4d4a-91e1-0125861e8853" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7b5c9be5-09ba-4c12-aa93-e4bb29f3104c" start_index="0" end="eda21534-87a1-4daa-bfef-f33510f2d8ee" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="57.7320451465499" eyeY="150.33596972982" eyeZ="-3.27398268602556" lookX="-2.25576081222619" lookY="-111.630552477237" lookZ="-55.9048631580217" upX="-0.0313323376999715" upY="0.629320391049845" upZ="-0.776514088747361" />
+  </Cameras>
+</Workspace>

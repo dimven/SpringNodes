@@ -1,0 +1,58 @@
+<Workspace Version="1.2.1.3083" X="62.8320000000001" Y="158.48" zoom="1.1575" ScaleFactor="1" Name="Springs.Geometry.WriteTag" Description="Design script geometry can store a &lt;string, object&gt; dictionary for the duration of the active graph. You can store a name/value pair and retrieve it further down the graph." ID="476ac991-5e03-4d90-85a1-97d294bb4371" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Geometry" resolvedName="Autodesk.DesignScript.Geometry.Geometry" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="8427a833-874c-41cf-9d6c-e944c5d4deab" type="PythonNodeModels.PythonNode" nickname="Python Script" x="249.308855291577" y="49.0712742980562" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <Script>geo, par, val,override = IN
+setPreviously = False
+try:
+	tags = geo.Tags
+	if tags.LookupTag(par) is None or override:
+		tags.AddTag(par, val)
+except ValueError:
+	setPreviously = True
+OUT = IN[0], setPreviously</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6b62193d-c00c-4969-9a15-5303ce480cbe" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="522.370194384449" y="38.0129589632829" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="geometry" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="68235e69-9100-4d46-b586-2443294b0cf3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="5.1714902807775" y="2.55377969762426" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry: Geometry" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="d70edd92-653a-43d5-b41b-3a8ad826dd5d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-0.35766738660908" y="62.6833693304536" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="tagName: string" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="85795922-b1ae-4719-9b23-8ca5037ecbcb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="1.47127429805616" y="123.784881209503" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="value: var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="57115945-ee63-4278-9f7d-e399d3e5ac8b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="1.63714902807777" y="187.97494600432" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="override: bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="1fde527c-664b-4b54-8009-ec141f369f57" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="522.024190064795" y="96.5831533477322" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="setPreviously" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="7270fb35-2582-43e2-a736-64ff4eaf4be9" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="391.557235421166" y="51.1058315334773" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="8427a833-874c-41cf-9d6c-e944c5d4deab" start_index="0" end="7270fb35-2582-43e2-a736-64ff4eaf4be9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="68235e69-9100-4d46-b586-2443294b0cf3" start_index="0" end="8427a833-874c-41cf-9d6c-e944c5d4deab" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d70edd92-653a-43d5-b41b-3a8ad826dd5d" start_index="0" end="8427a833-874c-41cf-9d6c-e944c5d4deab" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="85795922-b1ae-4719-9b23-8ca5037ecbcb" start_index="0" end="8427a833-874c-41cf-9d6c-e944c5d4deab" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="57115945-ee63-4278-9f7d-e399d3e5ac8b" start_index="0" end="8427a833-874c-41cf-9d6c-e944c5d4deab" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7270fb35-2582-43e2-a736-64ff4eaf4be9" start_index="0" end="6b62193d-c00c-4969-9a15-5303ce480cbe" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7270fb35-2582-43e2-a736-64ff4eaf4be9" start_index="1" end="1fde527c-664b-4b54-8009-ec141f369f57" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

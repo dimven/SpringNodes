@@ -1,0 +1,83 @@
+<Workspace Version="1.3.0.875" X="205.782690915104" Y="31.0655430372891" zoom="0.674831658426865" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="36c99e5a-c075-4ea3-9a0f-b9dbad947dde" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Doc.ActiveView" x="-174.779477350724" y="63.7610625609079" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="True" />
+      <ID value="58849545-7510-4baf-99da-98c0b1e184fd" />
+      <Name value="Springs.Doc.ActiveView" />
+      <Description value="Selects the current document's active view. Supports more view types than the built-in option.&#xD;&#xA;Will be depreciated once the bult in node works with all plan types." />
+      <Inputs>
+        <Input value="refresh" />
+      </Inputs>
+      <Outputs>
+        <Output value="view" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="556fa387-de76-444f-92bc-c6651f607ee8" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Collector.ElementsInView" x="42.0205226492757" y="65.361062560908" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="True" />
+      <PortInfo index="2" default="True" />
+      <ID value="b5bdff96-365e-44a7-af60-1cf3936c4b36" />
+      <Name value="Springs.Collector.ElementsInView" />
+      <Description value="Selects all elements visible in the input view." />
+      <Inputs>
+        <Input value="view" />
+        <Input value="category" />
+        <Input value="refresh" />
+      </Inputs>
+      <Outputs>
+        <Output value="element(s)" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="f72784a8-426f-4cf6-b692-9909718e7b2f" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Filter.ByCategoryName" x="333.196140488373" y="167.855353358369" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="716c02a6-0e71-4f0b-be6f-741da177180a" />
+      <Name value="Springs.Filter.ByCategoryName" />
+      <Description value="Filters the input elements by their category name. You can input multiple category names." />
+      <Inputs>
+        <Input value="element" />
+        <Input value="categoryName" />
+      </Inputs>
+      <Outputs>
+        <Output value="in" />
+        <Output value="out" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d64ac0b4-2c19-4f9d-9287-0e6a5446f2da" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="179.742420870347" y="226.088264140168" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="&quot;tags&quot;;&#xA;&quot;lines&quot;;" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="e3de60a2-6e94-41e4-ab6f-a6ba879af392" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Filter.ByCategoryName" x="580.343635907826" y="216.071022743533" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="716c02a6-0e71-4f0b-be6f-741da177180a" />
+      <Name value="Springs.Filter.ByCategoryName" />
+      <Description value="Filters the input elements by their category name. You can input multiple category names." />
+      <Inputs>
+        <Input value="element" />
+        <Input value="categoryName" />
+      </Inputs>
+      <Outputs>
+        <Output value="in" />
+        <Output value="out" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="c23b0d38-b819-4937-9720-1adfb48c97c3" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Element.GetLocation" x="839.049712642164" y="217.142238561103" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="RevitNodes.dll" function="Revit.Elements.Element.GetLocation">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="36c99e5a-c075-4ea3-9a0f-b9dbad947dde" start_index="0" end="556fa387-de76-444f-92bc-c6651f607ee8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="556fa387-de76-444f-92bc-c6651f607ee8" start_index="0" end="f72784a8-426f-4cf6-b692-9909718e7b2f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f72784a8-426f-4cf6-b692-9909718e7b2f" start_index="1" end="e3de60a2-6e94-41e4-ab6f-a6ba879af392" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d64ac0b4-2c19-4f9d-9287-0e6a5446f2da" start_index="0" end="f72784a8-426f-4cf6-b692-9909718e7b2f" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d64ac0b4-2c19-4f9d-9287-0e6a5446f2da" start_index="1" end="e3de60a2-6e94-41e4-ab6f-a6ba879af392" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e3de60a2-6e94-41e4-ab6f-a6ba879af392" start_index="0" end="c23b0d38-b819-4937-9720-1adfb48c97c3" end_index="0" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Graph.Notes.NoteModel guid="4d5933b6-2dc3-4047-8623-8ee3d5ca054e" text="You'll need springs 121.0.1" x="-71.4671104806914" y="4.71535799467443" />
+  </Notes>
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

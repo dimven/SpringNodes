@@ -1,0 +1,59 @@
+<Workspace Version="1.2.1.3083" X="23.3125" Y="206.7075" zoom="1.1575" Name="Springs.Element.Unjoin" Description="Unjoins the element(s) in the second list from the primary input element." ID="9c7d571d-14e2-4d8e-a38e-9d4678f56c60" Category="Springs.Revit.Element">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="75a26f09-89eb-4279-b274-34e38a5a83b0" type="PythonNodeModels.PythonNode" nickname="Python Script" x="213.714902807775" y="1.72786177105831" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+from System.Collections.Generic import *
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+def singleton(x):
+	if hasattr(x,'__iter__'): return x[0]
+	else : return x
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+floor = UnwrapElement(singleton(IN[0]) )
+beams = UnwrapElement(tolist(IN[1]) )
+
+OUT = 0
+TransactionManager.Instance.EnsureInTransaction(doc)
+for b in beams:
+	if JoinGeometryUtils.AreElementsJoined(doc, floor, b):
+		JoinGeometryUtils.UnjoinGeometry(doc, floor, b)
+		OUT += 1
+TransactionManager.Instance.TransactionTaskDone()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7140af3a-2d41-45ef-a11a-d16c81387ed0" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="firstElement:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="eae400e9-2235-403c-aa3a-f2363943229b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-26.7818574514039" y="63.6069114470842" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="secondElement:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="dec9e163-e4c6-4f55-b0f7-5dd70e156b25" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="368.382289416847" y="0.863930885529157" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="unjoinCount" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="75a26f09-89eb-4279-b274-34e38a5a83b0" start_index="0" end="dec9e163-e4c6-4f55-b0f7-5dd70e156b25" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7140af3a-2d41-45ef-a11a-d16c81387ed0" start_index="0" end="75a26f09-89eb-4279-b274-34e38a5a83b0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eae400e9-2235-403c-aa3a-f2363943229b" start_index="0" end="75a26f09-89eb-4279-b274-34e38a5a83b0" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

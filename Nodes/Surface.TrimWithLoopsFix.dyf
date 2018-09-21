@@ -1,0 +1,59 @@
+<Workspace Version="1.3.2.2480" X="435.945" Y="143.33" zoom="1.1575" ScaleFactor="1" Name="Springs.Surface.TrimWithLoopsFix" Description="A temporary replacement for the broken built-in node. For best results, make sure the loops are convex." ID="3d24c821-bde0-4bc2-9895-8c329fc9ecdc" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Solid" resolvedName="Autodesk.DesignScript.Geometry.Solid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="b2344a2c-87fd-45b4-a955-b38047c7ee02" type="PythonNodeModels.PythonNode" nickname="Python Script" x="196.436285097192" y="-0.863930885529157" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2018, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import Point
+
+surf, trims = IN
+original = True
+for t in trims:
+	bb = t.BoundingBox
+	a, b = bb.MinPoint, bb.MaxPoint
+	c = Point.ByCoordinates((a.X + b.X)/2, (a.Y + b.Y)/2, (a.Z + b.Z)/2)
+	temp = surf.Trim(t, c)[0]
+	if original:
+		original = False
+	else:
+		surf.Dispose()
+	surf = temp
+OUT = surf</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4f99e6c1-2d4d-4616-a814-9600f3c188e3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="surf:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="86a6e7ae-7ec3-4fce-b137-7be80012ce9a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-0.863930885529157" y="59.2872570194384" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="loops:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4342083a-f233-46f0-b9b6-c4656651742c" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="356.55939524838" y="-0.863930885529157" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="surface" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="b2344a2c-87fd-45b4-a955-b38047c7ee02" start_index="0" end="4342083a-f233-46f0-b9b6-c4656651742c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4f99e6c1-2d4d-4616-a814-9600f3c188e3" start_index="0" end="b2344a2c-87fd-45b4-a955-b38047c7ee02" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="86a6e7ae-7ec3-4fce-b137-7be80012ce9a" start_index="0" end="b2344a2c-87fd-45b4-a955-b38047c7ee02" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

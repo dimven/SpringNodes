@@ -1,0 +1,55 @@
+<Workspace Version="1.2.1.3083" X="-232.513723517398" Y="21.3182315636243" zoom="3.14224078322401" Name="Springs.Polygon.2DArea" Description="Returns the planar area of the input polygon(s). Not accurate for self-intersecting polys." ID="5a4e31de-51f3-49ed-bbc1-9415ac2bb15e" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="ae69638f-7222-40b2-a6ab-2d4c382c53eb" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+#https://stackoverflow.com/questions/2432428/is-there-any-algorithm-for-calculating-area-of-a-shape-given-co-ordinates-that-d
+
+polys = tolist(IN[0])
+OUT = []
+for p in polys:
+	t1 = p.GetType().ToString()
+	if 'Polygon' in t1:
+		pts = p.Points
+	elif 'PolyCurve' in t1:
+		pts = [c.StartPoint for c in p.Curves()]
+	else:
+		area.append(None)
+		continue
+	a = 0
+	l1 = len(pts)
+	for i in xrange(l1):
+		j = i + 1
+		if j == l1:
+			j = 0
+		a += pts[i].X * pts[j].Y
+		a -=  pts[i].Y * pts[j].X
+	OUT.append(abs(a/2.0) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="05a38e93-d40b-486e-b2b8-d89495235b0e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="79.1915034358726" y="-1.55277457717396" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="polygon:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="0c29e890-8ffa-43e8-8619-c7d37372a4dd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="415.309325405071" y="-0.517591525724669" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="area" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="ae69638f-7222-40b2-a6ab-2d4c382c53eb" start_index="0" end="0c29e890-8ffa-43e8-8619-c7d37372a4dd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="05a38e93-d40b-486e-b2b8-d89495235b0e" start_index="0" end="ae69638f-7222-40b2-a6ab-2d4c382c53eb" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

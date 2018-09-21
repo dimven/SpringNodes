@@ -1,0 +1,32 @@
+<Workspace Version="0.8.2.2392" X="153.893274133504" Y="202.085535676558" zoom="1.48486197725882" Name="CurveLoop.Simplify" Description="Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line." ID="b255f316-935c-41a1-abe7-386417b84b6f" Category="SpringNodes.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="NurbsCurve" resolvedName="Autodesk.DesignScript.Geometry.NurbsCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="427.05715120177" y="14.2337669574281" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="merge1(lines);" ShouldFocus="false" />
+    <Dynamo.Nodes.CodeBlockNodeModel guid="fc000ed1-173a-4d0f-98c0-e661694f10ed" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="82.025554691118" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def isLine(c1){&#xA;return = c1.Length == Line.ByBestFitThroughPoints&#xA;(c1.PointAtParameter({0,1})).Length;&#xA;};&#xA;def cVec(c1){&#xA;return = Vector.ByTwoPoints(c1.StartPoint,c1.EndPoint);&#xA;};&#xA;def cPts(c1){&#xA;return =c1.PointAtParameter({0,1});&#xA;};&#xA;&#xA;def merge1(lines:var[]){&#xA;return = [Imperative]{&#xA;lines = PolyCurve.ByJoinedCurves(lines).Curves();&#xA;i = 0;&#xA;out1 = {};&#xA;while (i &lt; Count(lines))&#xA;{&#xA;	pts = cPts(lines[i]);&#xA;	while (isLine(lines[i+1]) &amp;&amp; cVec(lines[i])&#xA;	.AngleBetween(cVec(lines[i+1])) &lt; 0.0001)&#xA;	{&#xA;		pts = List.Join({pts, cPts(lines[i+1])});&#xA;		i = i + 1;&#xA;	}&#xA;	if (Count(pts) == 2)&#xA;	{&#xA;		out1 = List.Join({out1,lines[i]});&#xA;		i = i + 1;&#xA;	}&#xA;	else&#xA;	{&#xA;		out1 = List.Join({out1,Line.ByBestFitThroughPoints(pts)});&#xA;		i = i + 1;&#xA;	}&#xA;}&#xA;return = out1;&#xA;}&#xA;};" ShouldFocus="false" />
+    <Dynamo.Nodes.Symbol guid="cc212e84-7ffb-4951-a0c1-d3539e102f8d" type="Dynamo.Nodes.Symbol" nickname="Input" x="232.579068038483" y="8.41510865672046" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="curveLoop:var[]" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="72be7d9a-98cb-4ec0-a420-86265389c8a8" type="Dynamo.Nodes.Output" nickname="Output" x="667.78747445289" y="9.05785170018152" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="curve loop" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" start_index="0" end="72be7d9a-98cb-4ec0-a420-86265389c8a8" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="cc212e84-7ffb-4951-a0c1-d3539e102f8d" start_index="0" end="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

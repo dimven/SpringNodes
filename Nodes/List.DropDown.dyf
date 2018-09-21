@@ -1,7 +1,7 @@
-<Workspace Version="0.8.2.2392" X="239.627147497823" Y="146.381384257819" zoom="1.545620359375" Name="List.DropDown" Description="Selects one list item by a drop-down combo box. The optional names input will override the object representation." ID="a4a2f0a2-ccd6-4307-921d-241ffb37010f" Category="SpringNodes.Lists">
+<Workspace Version="1.1.0.2094" X="402.027147497823" Y="163.181384257819" zoom="1.545620359375" Name="Springs.List.DropDown" Description="Selects one list item by a drop-down combo box. The optional names input will override the object representation." ID="a4a2f0a2-ccd6-4307-921d-241ffb37010f" Category="Springs.Core.List">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="191.12396394882" y="-3.23494703577913" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+    <PythonNodeModels.PythonNode guid="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" type="PythonNodeModels.PythonNode" nickname="Python Script" x="197.723255901809" y="41.1485262951103" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="4">
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -21,28 +21,36 @@ def hasInd(l1, i):
 	try: l1[i] ; return True
 	except: return False
 
-class NameWrap():
+class NameWrap(Object):
 	def __init__(self, obj1, name1 = None):
 		self.obj = obj1
 		if obj1 == None: name1 = "null"
 		if name1 == None and obj1 != None: self.name = obj1.ToString()
 		else: self.name = name1
-	def __str__(self):
+	def ToString(self):
 		return self.name
 
 class DropDownForm(Form):
-	def __init__(self):
+	def __init__(self, cm1):
 		self.Text = "SpringNodes: Drop-Down Selection"
 		self.Width = 368
-		self.Height = 112
+		self.Height = 142
 		self.BackColor = Color.FromArgb(40,40,40)
 		self.ControlBox = False
 		self.TopMost = True
 		self.FormBorderStyle = FormBorderStyle.FixedDialog
 		self.StartPosition = FormStartPosition.CenterScreen
 		
+		self.label = Label()
+		self.label.Text = cm1
+		self.label.Location = Point(5, 5)
+		self.label.ForeColor = Color.FromArgb(234,234,234)
+		self.label.Font = Font("Calibri", 10)
+		self.label.AutoSize = True
+		self.Controls.Add(self.label)
+		
 		self.combo1 = ComboBox()
-		self.combo1.Location = Point(5, 5)
+		self.combo1.Location = Point(5, 31)
 		self.combo1.Width = 350
 		self.combo1.BackColor = Color.FromArgb(53,53,53)
 		self.combo1.ForeColor = Color.FromArgb(234,234,234)
@@ -54,7 +62,7 @@ class DropDownForm(Form):
 		self.button1.Text = 'Select'
 		self.button1.AutoSize = True
 		self.button1.Width = 350
-		self.button1.Location = Point(6, 42)
+		self.button1.Location = Point(6, 72)
 		self.button1.ForeColor = Color.FromArgb(234,234,234)
 		self.button1.Font = Font("Calibri", 10)
 		self.button1.Click += self.save
@@ -80,36 +88,40 @@ for i in xrange(len(l1)):
 	if hasInd(names, i): name1 = names[i]
 	l1[i] = NameWrap(l1[i], name1)
 l1_arr = Array[Object](l1)
-form = DropDownForm()
+form = DropDownForm(IN[2])
 form.add_range(l1_arr)
 Application.Run(form)
 if l1: OUT = form.output1.obj
 else: OUT = []
 Application.Exit()</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="87248bdf-1582-44a5-b04b-2bcefdbafada" type="Dynamo.Nodes.Symbol" nickname="Input" x="33.6434491721027" y="1.94096822146744" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="87248bdf-1582-44a5-b04b-2bcefdbafada" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="72.9804051271766" y="8.66965805588802" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="list" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="b66f9a1f-c545-4c73-8e68-085748976f56" type="Dynamo.Nodes.Symbol" nickname="Input" x="-75.438964874369" y="67.0559580026236" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b66f9a1f-c545-4c73-8e68-085748976f56" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-75.438964874369" y="67.0559580026236" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="names:var[]..[] = null" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="96320da1-6aec-4a8e-b6c9-48ceba7828b7" type="Dynamo.Nodes.Output" nickname="Output" x="359.715461812497" y="-2.58795762862329" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="96320da1-6aec-4a8e-b6c9-48ceba7828b7" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="339.011800783511" y="46.5832373152192" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
       <Symbol value="selection" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="3389dcb6-9a97-4872-9055-bedb602f7dc9" type="Dynamo.Nodes.Symbol" nickname="Input" x="-28.0605412842846" y="129.575686630393" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3389dcb6-9a97-4872-9055-bedb602f7dc9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-338.615456719079" y="129.058095104668" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="customMsg : string = &quot;Choose an item and press Select&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f0f693f6-61d6-4f97-b160-23cd9a720477" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-36.9795600484231" y="187.359868008293" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" start_index="0" end="96320da1-6aec-4a8e-b6c9-48ceba7828b7" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="87248bdf-1582-44a5-b04b-2bcefdbafada" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="b66f9a1f-c545-4c73-8e68-085748976f56" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3389dcb6-9a97-4872-9055-bedb602f7dc9" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" start_index="0" end="96320da1-6aec-4a8e-b6c9-48ceba7828b7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="87248bdf-1582-44a5-b04b-2bcefdbafada" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b66f9a1f-c545-4c73-8e68-085748976f56" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3389dcb6-9a97-4872-9055-bedb602f7dc9" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f0f693f6-61d6-4f97-b160-23cd9a720477" start_index="0" end="f40e0841-365e-4ed6-a5d5-1b99fcc6a501" end_index="3" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="110.594947814941" eyeY="205.909820556641" eyeZ="-176.049072265625" lookX="-6.42372941970825" lookY="-238.832733154297" lookZ="64.4785232543945" upX="0.0990167707204819" upY="-0.0488497689366341" upZ="-0.99388599395752" />
   </Cameras>
 </Workspace>

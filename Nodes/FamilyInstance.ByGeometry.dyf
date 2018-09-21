@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-91.8958241932121" Y="-14.7811286274263" zoom="1.20599887869949" Name="FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="SpringNodes.Revit.FamilyInstances">
+<Workspace Version="1.3.1.1736" X="259.400187921041" Y="157.042783848514" zoom="1.21316139457394" ScaleFactor="1" Name="Springs.FamilyInstance.ByGeometry" Description="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." ID="ecdb3729-0de2-4c50-bdca-28fe881027a2" Category="Springs.Revit.FamilyInstance">
   <NamespaceResolutionMap>
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -13,7 +13,14 @@
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="1cc92fa8-a1b1-4217-a336-0a638867f39c" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="182.849918308689" y="89.4464077087041" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="7">
+    <PythonNodeModels.PythonNode guid="1cc92fa8-a1b1-4217-a336-0a638867f39c" type="PythonNodeModels.PythonNode" nickname="Python Script" x="193.874021205893" y="98.5069454669779" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="7">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="False" />
+      <PortInfo index="4" default="False" />
+      <PortInfo index="5" default="False" />
+      <PortInfo index="6" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -25,36 +32,31 @@ from itertools import repeat
 
 pf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)
 import sys
-sys.path.append("%s\IronPython 2.7\Lib" %pf_path)
+sys.path.append('%s\IronPython 2.7\Lib' %pf_path)
 import traceback
 
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 from Autodesk.DesignScript.Geometry import Point as DynPoint
 
-clr.AddReference("RevitServices")
+clr.AddReference('RevitServices')
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
-clr.AddReference("RevitAPI")
+clr.AddReference('RevitAPI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Structure import StructuralType
 
-clr.AddReference("RevitNodes")
+clr.AddReference('RevitNodes')
 import Revit
 clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
+	if hasattr(obj1,'__iter__'): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 def PadLists(lists):
 	len1 = len(lists[0])
@@ -81,34 +83,36 @@ material = tolist(IN[4])
 isVoid = tolist(IN[5])
 subcat = tolist(IN[6])
 
-isRvt2014 = False
-if app.VersionName == "Autodesk Revit 2014": isRvt2014 = True
 units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
-acceptable_views = ("ThreeD", "FloorPlan", "EngineeringPlan", "CeilingPlan", "Elevation", "Section")
-origin = XYZ(0,0,0)
+acceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')
+origin = XYZ.Zero
 str_typ = StructuralType.NonStructural
+t1 = TransactionManager.Instance
+temp_path = System.IO.Path.GetTempPath()
+invalid_chars = System.IO.Path.GetInvalidFileNameChars()
+satOpt = SATImportOptions()
+satOpt.Placement = ImportPlacement.Origin
+satOpt.Unit = ImportUnit.Foot
+opt1 = Options()
+opt1.ComputeReferences = True
+SaveAsOpt = SaveAsOptions()
+SaveAsOpt.OverwriteExistingFile = True
 
 def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
-	enable_mat = True
-	if mat1 == None: enable_mat = False
-	enable_subcat = True
-	if subcat1 == None: enable_subcat = False
-	t1 = TransactionManager.Instance
-	TransactionManager.ForceCloseTransaction(t1)
-	famdoc = doc.Application.NewFamilyDocument(fam_path)
-	message = None
-	temp_path = System.IO.Path.GetTempPath()
-	sat_path = "%s%s.sat" % (temp_path, name1)
 	try:
+		enable_mat = False if mat1 is None else True
+		enable_subcat = False if subcat1 is None else True
+		if any( (c in name1 for c in invalid_chars) ):
+			raise Exception('Family name contains invalid characters')
+		TransactionManager.ForceCloseTransaction(t1)
+		famdoc = doc.Application.NewFamilyDocument(fam_path)
+		sat_path = '%s%s.sat' % (temp_path, name1)
 		if factor != 1:
 			s1 = s1.Scale(factor)
 		vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry(s1).MinPoint, DynPoint.Origin())
 		s1 = s1.Translate(vec1)
 		sat1 = Geometry.ExportToSAT(s1, sat_path)
-		satOpt = SATImportOptions()
-		satOpt.Placement = ImportPlacement.Origin
-		satOpt.Unit = ImportUnit.Foot
 		view_fec = FilteredElementCollector(famdoc).OfClass(View)
 		view1 = None
 		for v in view_fec:
@@ -117,8 +121,6 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 				break
 		t1.EnsureInTransaction(famdoc)
 		satId = famdoc.Import(sat1, satOpt, view1)
-		opt1 = Options()
-		opt1.ComputeReferences = True
 		el1 = famdoc.GetElement(satId)
 		geom1 = el1.get_Geometry(opt1)
 		enum = geom1.GetEnumerator()
@@ -128,64 +130,54 @@ def NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):
 		enum2.MoveNext()
 		s1 = enum2.Current
 		famdoc.Delete(satId)
-		TransactionManager.ForceCloseTransaction(t1)
 		System.IO.File.Delete(sat_path)
-	except:
-		message = (traceback.format_exc(),"")
-		pass
-	if message == None:
-		try:
-			save_path = "%s%s.rfa" % (temp_path, name1)
-			SaveAsOpt = SaveAsOptions()
-			SaveAsOpt.OverwriteExistingFile = True
-			t1.EnsureInTransaction(famdoc)
-			try: #set the category
-				fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
-				famdoc.OwnerFamily.FamilyCategory = fam_cat
-			except: pass
-			s2 = FreeFormElement.Create(famdoc,s1)
-			if isVoid1:
-				void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING)
-				void_par.Set(1)
-				void_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS)
-				void_par2.Set(1)
-			else: #voids do not have a material values or a sub-cateogry
-				if enable_mat:
-					try:
-						mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
-						for m in mat_fec:
-							if m.Name == mat1:
-								fam_mat = m
-								break
-						mat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM)
-						mat_par.Set(fam_mat.Id)
-					except: pass
-				if enable_subcat: #create and assign the sub-category:
-					try:
-						current_fam_cat = famdoc.OwnerFamily.FamilyCategory
+
+		save_path = '%s%s.rfa' % (temp_path, name1)
+		try: #set the category
+			fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)
+			famdoc.OwnerFamily.FamilyCategory = fam_cat
+		except: pass
+		s2 = FreeFormElement.Create(famdoc,s1)
+		if isVoid1:
+			void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)
+			void_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)
+		else: #voids do not have a material values or a sub-cateogry
+			if enable_mat:
+				try:
+					mat_fec = FilteredElementCollector(famdoc).OfClass(Material)
+					for m in mat_fec:
+						if m.Name == mat1:
+							fam_mat = m
+							break
+					mat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)
+				except: pass
+			if enable_subcat: #create and assign the sub-category:
+				try:
+					current_fam_cat = famdoc.OwnerFamily.FamilyCategory
+					fam_cat_subs = current_fam_cat.SubCategories
+					if fam_cat_subs.Contains(subcat1):
+						new_subcat = fam_cat_subs[subcat1]
+					else:
 						new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)
-						s2.Subcategory = new_subcat
-					except: pass
-			TransactionManager.ForceCloseTransaction(t1)
-			famdoc.SaveAs(save_path, SaveAsOpt)
-			family1 =  famdoc.LoadFamily(doc, FamOpt1())
-			famdoc.Close(False)
-			System.IO.File.Delete(save_path)
-			if isRvt2014: symbols = family1.Symbols.GetEnumerator()
-			else: symbols = family1.GetFamilySymbolIds().GetEnumerator()
-			symbols.MoveNext()
-			if isRvt2014: symbol1 = symbols.Current
-			else: symbol1 = doc.GetElement(symbols.Current)
-			t1.EnsureInTransaction(doc)
-			if not symbol1.IsActive: symbol1.Activate()
-			inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
-			ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz())
-			TransactionManager.ForceCloseTransaction(t1)
-			return inst1.ToDSType(False), family1.ToDSType(False)
-		except:
-			message = (traceback.format_exc(),"")
-			return message
-	else : return message
+					s2.Subcategory = new_subcat
+				except: pass
+		TransactionManager.ForceCloseTransaction(t1)
+		famdoc.SaveAs(save_path, SaveAsOpt)
+		family1 = famdoc.LoadFamily(doc, FamOpt1() )
+		famdoc.Close(False)
+		System.IO.File.Delete(save_path)
+		symbols = family1.GetFamilySymbolIds().GetEnumerator()
+		symbols.MoveNext()
+		symbol1 = doc.GetElement(symbols.Current)
+		t1.EnsureInTransaction(doc)
+		if not symbol1.IsActive: symbol1.Activate()
+		inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)
+		ElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz() )
+		TransactionManager.ForceCloseTransaction(t1)
+		return inst1.ToDSType(False), family1.ToDSType(False)
+		
+	except:
+		return traceback.format_exc(),''
 
 if len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):
 	return1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)
@@ -193,54 +185,61 @@ elif len(geom) == len(names):
 	padded = PadLists([geom, category, isVoid, material,subcat])
 	p_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]
 	return1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)
-else : return1 = [("Make sure that each geometry\nobject has a unique family name.", "")]
-OUT = output1([i[0] for i in return1]), output1([i[1] for i in return1])</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="7971abd8-ecd2-4e2f-a28e-52027545f3f6" type="Dynamo.Nodes.Symbol" nickname="Input" x="-1.65837633460887" y="4.14594083652204" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="geometry" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="487f0411-0bdf-4764-973d-cae73f53aff1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-99.7981966993975" y="60.8071883130345" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="family template path" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5923b814-be99-4137-acdd-60f1a8177b72" type="Dynamo.Nodes.Symbol" nickname="Input" x="-26.3748249854466" y="116.615631877648" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="family name" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3ab55325-8be4-4940-8341-2396cfdb6443" type="Dynamo.Nodes.Symbol" nickname="Input" x="-396.83584583572" y="173.183175444531" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="category:var[]..[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="325026ea-de93-449a-9cff-bea72f2165f3" type="Dynamo.Nodes.Output" nickname="Output" x="498.765809942973" y="90.9852909680996" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+else : return1 = [('Make sure that each geometry\nobject has a unique family name.', '')]
+OUT = [i[0] for i in return1], [i[1] for i in return1]
+satOpt.Dispose()
+opt1.Dispose()
+SaveAsOpt.Dispose()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="7971abd8-ecd2-4e2f-a28e-52027545f3f6" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-30.8885079751855" y="2.71239964797083" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="487f0411-0bdf-4764-973d-cae73f53aff1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-96.8885079751855" y="61.096959630846" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="familyTemplatePath:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5923b814-be99-4137-acdd-60f1a8177b72" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-47.8885079751855" y="119.481519613721" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="familyName:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3ab55325-8be4-4940-8341-2396cfdb6443" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-344.888507975185" y="177.866079596596" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="category:var[] = Category.ByName(&quot;OST_GenericModel&quot;)" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="325026ea-de93-449a-9cff-bea72f2165f3" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="481.34169886937" y="97.2579709545968" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="instance" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="aff75132-a345-4885-beee-fdf45692a2f1" type="Dynamo.Nodes.Symbol" nickname="Input" x="-182.995245650377" y="233.637899759458" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="material_name:var[]..[] = null" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5340671d-e4f1-4bcc-946d-d88da17a3e84" type="Dynamo.Nodes.Symbol" nickname="Input" x="-134.881300376477" y="299.334729396258" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="isVoid:var[]..[] = false" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" type="Dynamo.Nodes.Output" nickname="Output" x="500.899534345504" y="151.629918962473" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="aff75132-a345-4885-beee-fdf45692a2f1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-121.888507975185" y="236.250639579471" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="materialName:var[] = null" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5340671d-e4f1-4bcc-946d-d88da17a3e84" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-80.8885079751855" y="294.635199562346" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="isVoid:var[] = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="482.081494386012" y="156.508670063082" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="family" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="335.512132008526" y="94.5418609815984" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" type="Dynamo.Nodes.Symbol" nickname="Input" x="-208.431945567261" y="362.505382996381" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="subcategory_name:var[]..[] = null" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="334.118203122638" y="101.51150541104" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-146.888507975185" y="353.019759545222" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="subcategoryName:var[] = null" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="1cc92fa8-a1b1-4217-a336-0a638867f39c" start_index="0" end="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="7971abd8-ecd2-4e2f-a28e-52027545f3f6" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="487f0411-0bdf-4764-973d-cae73f53aff1" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="5923b814-be99-4137-acdd-60f1a8177b72" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="2" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3ab55325-8be4-4940-8341-2396cfdb6443" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="3" portType="0" />
-    <Dynamo.Models.ConnectorModel start="aff75132-a345-4885-beee-fdf45692a2f1" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="4" portType="0" />
-    <Dynamo.Models.ConnectorModel start="5340671d-e4f1-4bcc-946d-d88da17a3e84" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="5" portType="0" />
-    <Dynamo.Models.ConnectorModel start="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" start_index="0" end="325026ea-de93-449a-9cff-bea72f2165f3" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" start_index="1" end="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="6" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1cc92fa8-a1b1-4217-a336-0a638867f39c" start_index="0" end="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="7971abd8-ecd2-4e2f-a28e-52027545f3f6" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="487f0411-0bdf-4764-973d-cae73f53aff1" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5923b814-be99-4137-acdd-60f1a8177b72" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3ab55325-8be4-4940-8341-2396cfdb6443" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="aff75132-a345-4885-beee-fdf45692a2f1" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="4" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5340671d-e4f1-4bcc-946d-d88da17a3e84" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="5" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" start_index="0" end="325026ea-de93-449a-9cff-bea72f2165f3" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fba20a1f-96ab-4c49-b5cc-89d6e5b024aa" start_index="1" end="e35db8a4-f8ae-40de-ae1c-df5ba7ae6bb5" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9934ac47-c94d-4bb1-8e0d-a2ae0a86a302" start_index="0" end="1cc92fa8-a1b1-4217-a336-0a638867f39c" end_index="6" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12423.662109375" eyeY="9805.43359375" eyeZ="-11469.51171875" lookX="-9823.8232421875" lookY="-3917.966796875" lookZ="11583.8544921875" />
+    <Camera Name="Background Preview" eyeX="81.9612025848931" eyeY="60.6141246867221" eyeZ="62.2681174153678" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

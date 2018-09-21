@@ -1,4 +1,4 @@
-<Workspace Version="0.8.1.1942" X="-66.5553375" Y="177.47075" zoom="1.33823125" Name="Str2Pt" ID="cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5" Description="De-serilize a Revit parameter string into a geometric point." Category="SpringNodes.Geometry.Serialization">
+<Workspace Version="1.3.2.2480" X="-87.0507437200893" Y="258.228266026126" zoom="1.703916824555" ScaleFactor="1" Name="Springs.Str2Pt" Description="De-serilize a Revit parameter string into a geometric point." ID="cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5" Category="Springs.Geometry.Serialization">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
     <ClassMap partialName="String" resolvedName="DSCore.String" assemblyName="DSCoreNodes.dll" />
@@ -13,18 +13,30 @@
     <ClassMap partialName="Category" resolvedName="Revit.Elements.Category" assemblyName="RevitNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="db0b20dd-5f28-47fe-a313-93a95fd186c6" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" CodeText="def Rvt2Pt(par)&#xA;{&#xA;par1 = String.ToNumber(String.Split(par,&quot;,&quot;));&#xA;return = Point.ByCoordinates(par1[0],par1[1],par1[2]);&#xA;};&#xA;Rvt2Pt(str);" ShouldFocus="false" />
-    <Dynamo.Nodes.Output guid="be095e65-8058-4bd6-a817-10d6351a544a" type="Dynamo.Nodes.Output" nickname="Output" x="814.076859847653" y="82.1980505985045" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="point(s)" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" type="Dynamo.Nodes.Symbol" nickname="Input" x="147.382758024818" y="-2.46136458104687" isVisible="true" isUpstreamVisible="true" lacing="Disabled">
-      <Symbol value="str" />
-    </Dynamo.Nodes.Symbol>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="db0b20dd-5f28-47fe-a313-93a95fd186c6" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="par;&#xA;s1;&#xA;par1 = String.ToNumber(String.Split(par,s1));&#xA;pt = Point.ByCoordinates(par1[0],par1[1],par1[2]);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="be095e65-8058-4bd6-a817-10d6351a544a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="757.736081579282" y="48.158830394697" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="point" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="134.679422932322" y="-3.2086195864878" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="str:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="27950288-cdd3-44c6-9eb1-ba19b47473fb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="3.04101670578709" y="56.0057120113204" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="separator: string = &quot;,&quot;" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="db0b20dd-5f28-47fe-a313-93a95fd186c6" start_index="0" end="be095e65-8058-4bd6-a817-10d6351a544a" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" start_index="0" end="db0b20dd-5f28-47fe-a313-93a95fd186c6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="db0b20dd-5f28-47fe-a313-93a95fd186c6" start_index="3" end="be095e65-8058-4bd6-a817-10d6351a544a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f22100dd-d5d2-4f01-9ab7-3aa2460518c7" start_index="0" end="db0b20dd-5f28-47fe-a313-93a95fd186c6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27950288-cdd3-44c6-9eb1-ba19b47473fb" start_index="0" end="db0b20dd-5f28-47fe-a313-93a95fd186c6" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="55.5282192569884" eyeY="195.783824846012" eyeZ="-51.2844799379119" lookX="-0.858967644938325" lookY="-87.9430536372463" lookZ="-60.7081984053477" upX="-0.00964871154219384" upY="0.731353701619171" upZ="-0.681930103084996" />
+  </Cameras>
 </Workspace>

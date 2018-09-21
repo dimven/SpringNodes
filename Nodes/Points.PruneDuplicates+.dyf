@@ -1,0 +1,46 @@
+<Workspace Version="1.1.0.2094" X="421.440589331896" Y="148.670224382741" zoom="2.05668026833428" Name="Springs.Points.PruneDuplicates+" Description="An alternative to the built in node, that performs faster at the price of loosing the order of the points. All floating point valies are rounded to the nearest 4 decimal points. You can optionally remove duplicate Z values by setting &quot;keepDuplicateZ&quot; to false." ID="eebb86da-9ffb-4f28-bac6-256ff38ff8eb" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="d6eab51a-d8c9-4223-853e-6304a236739e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="165.883862618999" y="-0.486220447289043" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <Script>import clr
+from itertools import groupby
+from operator import itemgetter
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import Point
+
+def p2t(p) : return round(p.X,4), round(p.Y,4), round(p.Z,4)
+
+pts = map(p2t, IN[0])
+unique_pts = set(pts)
+if not IN[1]:
+	same_z = [(i[:2],i[-1]) for i in unique_pts]
+	same_z.sort(key = itemgetter(0) )
+	unique_pts = []
+	for k, g in groupby(same_z, itemgetter(0) ):
+		coord = list(k)
+		coord.append(max([i[-1] for i in g]) )
+		unique_pts.append(coord)
+OUT = [Point.ByCoordinates(*i) for i in unique_pts]</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b31b6c7e-981f-4eac-9a55-48ab77d213c9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="points: var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ddddf47f-e528-4dea-8138-03d8518bbe7e" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-123.013773164123" y="60.0492172515308" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="keepDuplicateZ : bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="e7af524e-db42-4737-9377-16ed3f860827" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="309.399613417206" y="0.486220447289014" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="points" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="d6eab51a-d8c9-4223-853e-6304a236739e" start_index="0" end="e7af524e-db42-4737-9377-16ed3f860827" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b31b6c7e-981f-4eac-9a55-48ab77d213c9" start_index="0" end="d6eab51a-d8c9-4223-853e-6304a236739e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ddddf47f-e528-4dea-8138-03d8518bbe7e" start_index="0" end="d6eab51a-d8c9-4223-853e-6304a236739e" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="317688.875" eyeY="539573.6875" eyeZ="378656.90625" lookX="-321007.625" lookY="-445359.6875" lookZ="-461686.65625" upX="-0.250251144170761" upY="0.898794054985046" upZ="-0.35992169380188" />
+  </Cameras>
+</Workspace>

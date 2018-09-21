@@ -1,7 +1,9 @@
-<Workspace Version="0.8.2.2392" X="19.8027856748884" Y="227.924679060115" zoom="1.3231529419852" Name="Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="SpringNodes.Revit.Forms">
+<Workspace Version="1.3.1.1736" X="190.728074781441" Y="108.135444080877" zoom="2.34389712846662" ScaleFactor="1" Name="Springs.Form.ByGeometry" Description="Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default." ID="268c3e45-41fa-4d94-a91c-1a45a41b45aa" Category="Springs.Revit.Form">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="249.717208630228" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <PythonNodeModels.PythonNode guid="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" type="PythonNodeModels.PythonNode" nickname="Python Script" x="249.717208630228" y="0.755770529822257" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 import clr
@@ -23,7 +25,6 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
-app = DocumentManager.Instance.CurrentUIApplication.Application
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -36,10 +37,6 @@ from Autodesk.Revit.DB import *
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 def PadLists(lists):
 	len1 = len(lists[0])
@@ -104,35 +101,36 @@ factor = UnitUtils.ConvertToInternalUnits(1,units)
 if doc.IsFamilyDocument:
 	if len(geom) == len(isVoid):
 		TransactionManager.Instance.EnsureInTransaction(doc)
-		OUT = output1(map(NewForm, geom, isVoid))
+		OUT = map(NewForm, geom, isVoid)
 		TransactionManager.Instance.TransactionTaskDone()
 	else:
 		padded = PadLists([geom,isVoid])
 		p_isVoid = padded[1]
 		TransactionManager.Instance.EnsureInTransaction(doc)
-		OUT = output1(map(NewForm, geom, p_isVoid))
+		OUT = map(NewForm, geom, p_isVoid)
 		TransactionManager.Instance.TransactionTaskDone()
 else : OUT = "Forms can only exist in family documents"</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="eae70b5f-0692-4372-ab80-d18a7b1f5adb" type="Dynamo.Nodes.Symbol" nickname="Input" x="127.34323536274" y="0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="geometry" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="6b741902-d5d8-4efe-b621-e8d7fb813375" type="Dynamo.Nodes.Output" nickname="Output" x="419.171854779899" y="-0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="eae70b5f-0692-4372-ab80-d18a7b1f5adb" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="75.9508393348282" y="-1.69369341215707" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry: var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="6b741902-d5d8-4efe-b621-e8d7fb813375" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="419.171854779899" y="-0.57361817730964" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="Form" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Symbol guid="f6688745-2d9a-436b-8ce6-8f61c0f2b25f" type="Dynamo.Nodes.Symbol" nickname="Input" x="1.74932482264768" y="62.7646438888043" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="isVoid:var[]..[] = false" />
-    </Dynamo.Nodes.Symbol>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="f6688745-2d9a-436b-8ce6-8f61c0f2b25f" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="22.2280392751892" y="63.6179236576602" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="isVoid: var[] = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" start_index="0" end="6b741902-d5d8-4efe-b621-e8d7fb813375" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="eae70b5f-0692-4372-ab80-d18a7b1f5adb" start_index="0" end="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="f6688745-2d9a-436b-8ce6-8f61c0f2b25f" start_index="0" end="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" start_index="0" end="6b741902-d5d8-4efe-b621-e8d7fb813375" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="eae70b5f-0692-4372-ab80-d18a7b1f5adb" start_index="0" end="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f6688745-2d9a-436b-8ce6-8f61c0f2b25f" start_index="0" end="5b20d6d5-cea0-41c5-bfc5-69ce2f727abf" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-12642.265625" eyeY="6014.31982421875" eyeZ="7649.9677734375" lookX="12656.1630859375" lookY="-3189.5947265625" lookZ="-8861.94140625" />
+    <Camera Name="Background Preview" eyeX="81.9612025848931" eyeY="60.6141246867221" eyeZ="62.2681174153678" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

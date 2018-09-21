@@ -1,0 +1,67 @@
+<Workspace Version="1.2.1.3083" X="87.0663234703666" Y="163.234582923735" zoom="1.51051845643135" Name="Springs.Polygon.ContainmentTest+" Description="A less accurate method that should perform faster than the built-in node for large data sets." ID="4e62fd9c-a775-4f8e-a440-2ee029abd122" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Polygon" resolvedName="Autodesk.DesignScript.Geometry.Polygon" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <PythonNodeModels.PythonNode guid="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" type="PythonNodeModels.PythonNode" nickname="Python Script" x="253.310121752377" y="4.63417045332747" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+def tolist(obj1):
+	if hasattr(obj1,'__iter__'): return obj1
+	else: return [obj1]
+
+def containment(poly, pt):
+	def testCCW(A,B,C): return (B.X - A.X) * (C.Y - A.Y) &gt; (B.Y - A.Y) * (C.X - A.X)
+	
+	wn = 0
+	ln1 = len(poly)
+	for i in xrange(ln1):
+		j = (i+1) % ln1
+		isCCW = testCCW(poly[i], poly[j], pt)
+		if poly[i].Y &lt;= pt.Y:
+			if poly[j].Y &gt; pt.Y and isCCW: wn += 1
+		else:
+			if poly[j].Y &lt;= pt.Y and not isCCW: wn -= 1
+	
+	return wn != 0
+
+poly = IN[0]
+pts = tolist(IN[1])
+
+if 'Polygon' in poly.GetType().ToString():
+	poly_pts = poly.Points
+else:
+	poly_pts = [c.StartPoint for c in poly.Curves()]
+
+OUT = [containment(poly_pts, p) for p in pts]</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="97a72249-7ac3-4884-9147-2c99e1196f17" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="401.334246765775" y="4.63417045332752" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="bool" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ff7b71dc-31f7-4db1-a05b-218f769eac93" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="88.0372102176575" y="1.59784306034387" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="polygon:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="76c1b705-a0f8-451d-a5f7-a44fd59d893d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="80.7926977484724" y="64.7927214817361" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="points:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" start_index="0" end="97a72249-7ac3-4884-9147-2c99e1196f17" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ff7b71dc-31f7-4db1-a05b-218f769eac93" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="76c1b705-a0f8-451d-a5f7-a44fd59d893d" start_index="0" end="45edc1cf-9035-4bcc-b57b-c7f05652dc5b" end_index="1" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-63.2311973571777" eyeY="346.191467285156" eyeZ="-44.4725952148438" lookX="-0.563557207584381" lookY="-318.875335693359" lookZ="-39.8298377990723" upX="-0.0133362133055925" upY="0.333806872367859" upZ="-0.942547142505646" />
+  </Cameras>
+</Workspace>

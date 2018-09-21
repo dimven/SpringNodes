@@ -1,7 +1,9 @@
-<Workspace Version="0.8.2.2392" X="10.4" Y="98.4" zoom="1" Name="DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="SpringNodes.Revit.DirectShape">
+<Workspace Version="1.3.2.2480" X="-648.793609287779" Y="190.885295621425" zoom="2.05668026833428" ScaleFactor="1" Name="Springs.DirectShape.Translate" Description="Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy" ID="bcea7793-3a55-4695-87b4-309ecb7fd500" Category="Springs.Revit.DirectShape">
   <NamespaceResolutionMap />
   <Elements>
-    <DSIronPythonNode.PythonNode guid="ed190f5b-44d3-48ea-a62a-8b384a18b745" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="456.912369917016" y="-20" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
+    <PythonNodeModels.PythonNode guid="ed190f5b-44d3-48ea-a62a-8b384a18b745" type="PythonNodeModels.PythonNode" nickname="Python Script" x="456.912369917016" y="-20" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
       <Script>#Copyright(c) 2016, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 
@@ -12,6 +14,8 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+isRvt2017 = int(app.VersionNumber) &gt; 2016
 
 clr.AddReference("RevitNodes")
 import Revit
@@ -24,10 +28,6 @@ from Autodesk.Revit.DB import *
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return out1[0]
-	else: return l1
 
 dsTyped, vecs = UnwrapElement(IN[0]), tolist(IN[1])
 
@@ -43,34 +43,38 @@ if not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeI
 
 def CopyDS(transf):
 	try:
-		ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, "Dynamo","spring nodes")
+		if isRvt2017:
+			ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf)
+		else:
+			ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, "Dynamo","spring nodes")
 		ds1.SetTypeId(TypeId)
 		return ds1.ToDSType(False)
 	except: return None
 	
 TransactionManager.Instance.EnsureInTransaction(doc)
-OUT = output1(map(CopyDS, transforms))
+OUT = map(CopyDS, transforms)
 TransactionManager.Instance.TransactionTaskDone()</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="4ca4c19b-307b-45f1-a336-f33ffb32fafc" type="Dynamo.Nodes.Symbol" nickname="Input" x="281.2" y="-17.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="direct shape" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="a7b9689e-da66-46e8-aa2e-9c8fde08e6cf" type="Dynamo.Nodes.Symbol" nickname="Input" x="301.2" y="48.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="vector(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="eedcb694-4715-4797-aeed-b620d370055f" type="Dynamo.Nodes.Output" nickname="Output" x="615.6" y="-18.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="direct shape(s)" />
-    </Dynamo.Nodes.Output>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4ca4c19b-307b-45f1-a336-f33ffb32fafc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="281.2" y="-17.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="directShape:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a7b9689e-da66-46e8-aa2e-9c8fde08e6cf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="301.2" y="48.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="vector:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="eedcb694-4715-4797-aeed-b620d370055f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="615.6" y="-18.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="directShape" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="ed190f5b-44d3-48ea-a62a-8b384a18b745" start_index="0" end="eedcb694-4715-4797-aeed-b620d370055f" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="4ca4c19b-307b-45f1-a336-f33ffb32fafc" start_index="0" end="ed190f5b-44d3-48ea-a62a-8b384a18b745" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="a7b9689e-da66-46e8-aa2e-9c8fde08e6cf" start_index="0" end="ed190f5b-44d3-48ea-a62a-8b384a18b745" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ed190f5b-44d3-48ea-a62a-8b384a18b745" start_index="0" end="eedcb694-4715-4797-aeed-b620d370055f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4ca4c19b-307b-45f1-a336-f33ffb32fafc" start_index="0" end="ed190f5b-44d3-48ea-a62a-8b384a18b745" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a7b9689e-da66-46e8-aa2e-9c8fde08e6cf" start_index="0" end="ed190f5b-44d3-48ea-a62a-8b384a18b745" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="12128.1162109375" eyeY="129059.2109375" eyeZ="-13137.69140625" lookX="-882.235534667969" lookY="-88887.96875" lookZ="-28073.16015625" />
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

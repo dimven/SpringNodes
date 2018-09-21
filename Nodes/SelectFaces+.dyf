@@ -1,0 +1,72 @@
+<Workspace Version="1.1.0.2094" X="-8.06999999999982" Y="136.88" zoom="1.1575" Name="Springs.SelectFaces+" Description="Select multiple faces from inside the Revit UI. Be sure to press &quot;Finish&quot; once done. Unlike the built-in node, face references of instances will be added sucessfully and you'l get the pick points. You can use a Boolean toggle to refresh your selection." ID="66f270da-7ab3-4eaf-81ba-e883ce0fee3f" Category="Springs.Revit.Selection">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="d91fd478-3db9-43e0-9a5e-5ef3dc4fde29" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="414.515992982646" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];" ShouldFocus="false" />
+    <PythonNodeModels.PythonNode guid="69492464-0321-4cb1-8b10-13c3de2324ef" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0.643272896364337" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference("RevitAPIUI")
+from  Autodesk.Revit.UI import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+
+def output1(x):
+	if len(x) == 1: return x[0]
+	else : return x
+
+surfaces, gpoints = [], []
+sel1 = uidoc.Selection
+ot1 = Selection.ObjectType.Face
+ref_list = sel1.PickObjects(ot1, "Select the faces and press Finish.")
+for ref in ref_list:
+	el1 = doc.GetElement(ref.ElementId)
+	sf0 = el1.GetGeometryObjectFromReference(ref)
+	if isinstance(el1, FamilyInstance):
+		tf1 = el1.GetTransform().ToCoordinateSystem()
+		sf1 = sf0.Convert(ref, tf1)
+	else:
+		sf1 = sf0.ToProtoType(True)
+	for i in sf1: i.Tags.AddTag("RevitFaceReference", ref)
+	surfaces.append(output1(sf1) )
+	gpoints.append(ref.GlobalPoint.ToPoint(True) )
+
+OUT = output1(surfaces), output1(gpoints)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e960c9b4-434f-4d94-b196-defa4081d6bd" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="19.2" y="4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a6385fb7-46c2-4ffe-8358-6c2f4eda4102" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="565.179059937289" y="-0.691144708423309" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="faces" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="76407cbb-e7c9-45ff-9e13-fb62efcacdd1" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="563.003681967527" y="64.9244060475162" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="pickPoints" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="d91fd478-3db9-43e0-9a5e-5ef3dc4fde29" start_index="0" end="a6385fb7-46c2-4ffe-8358-6c2f4eda4102" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d91fd478-3db9-43e0-9a5e-5ef3dc4fde29" start_index="1" end="76407cbb-e7c9-45ff-9e13-fb62efcacdd1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="69492464-0321-4cb1-8b10-13c3de2324ef" start_index="0" end="d91fd478-3db9-43e0-9a5e-5ef3dc4fde29" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e960c9b4-434f-4d94-b196-defa4081d6bd" start_index="0" end="69492464-0321-4cb1-8b10-13c3de2324ef" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-6386.11339214563" eyeY="1433.70718300088" eyeZ="779.842019507564" lookX="-304.95797388708" lookY="-1846.56344885514" lookZ="-6441.21912655852" upX="-0.00296947586343972" upY="0.998026728428269" upZ="-0.0627202643159097" />
+  </Cameras>
+</Workspace>

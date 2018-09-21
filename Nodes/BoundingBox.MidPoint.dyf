@@ -1,0 +1,31 @@
+<Workspace Version="1.3.2.2480" X="-51.5249644173419" Y="298.339342348057" zoom="1.79400970938055" ScaleFactor="1" Name="Springs.BoundingBox.MidPoint" Description="Fetches the mid point of the bounding box." ID="74b59bed-610f-4fc1-a3b7-8b69fd6fb160" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="b34fc205-a812-48af-a27a-fb28b6679f91" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="289.503519128146" y="-1.85239653609521" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="a = bb1.MinPoint;&#xA;b = bb1.MaxPoint;&#xA;pt = Point.ByCoordinates(&#xA;  (a.X + b.X) / 2,&#xA;  (a.Y + b.Y) / 2,&#xA;  (a.Z + b.Z) / 2);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7a308835-0ca5-404f-8111-8e8b4053c99a" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="589.463402498948" y="29.5160411555558" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="point" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="a6b9731d-45da-427e-9e1e-4cfa445f7154" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="48.1892543960068" y="-8.30844816367064" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="boundingBox:BoundingBox" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="b34fc205-a812-48af-a27a-fb28b6679f91" start_index="2" end="7a308835-0ca5-404f-8111-8e8b4053c99a" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a6b9731d-45da-427e-9e1e-4cfa445f7154" start_index="0" end="b34fc205-a812-48af-a27a-fb28b6679f91" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="5.16785901660415" eyeY="17.1857864352672" eyeZ="11.8635649947714" lookX="-0.167859016604153" lookY="-17.1857864352672" lookZ="-11.8635649947714" upX="-0.00964871154219384" upY="0.731353701619171" upZ="-0.681930103084996" />
+  </Cameras>
+</Workspace>

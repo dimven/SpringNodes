@@ -1,0 +1,85 @@
+<Workspace Version="0.8.2.2392" X="104.8" Y="104.8" zoom="1" Name="ViewSet.ByViewsName" Description="Creates a set of views(or sheets) for printing. If the set exists, set Overwrite to true to replace it." ID="e4edfc7e-fba0-4a8b-ab28-ff16692710b2" Category="SpringNodes.Revit.Views">
+  <NamespaceResolutionMap />
+  <Elements>
+    <DSIronPythonNode.PythonNode guid="f404bea1-281a-496d-bb41-f364a0b8c16e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="3">
+      <Script>#Copyright(c) 2015, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+#code inspired by Harry Mattison
+#https://boostyourbim.wordpress.com
+
+import clr
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+doc = DocumentManager.Instance.CurrentDBDocument
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+def tolist(obj1):
+	if hasattr(obj1,"__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+views = UnwrapElement(tolist(IN[0]))
+name1 = str(IN[1])
+overwrite = IN[2]
+vs_exists = None
+
+fec = FilteredElementCollector(doc).OfClass(ViewSheetSet).GetElementIterator()
+fec.Reset()
+for f in fec:
+	if f.Name == name1:
+		vs_exists = f
+		break
+if vs_exists != None and overwrite:
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	doc.Delete(vs_exists.Id)
+	TransactionManager.Instance.TransactionTaskDone()
+	vs_exists = None
+elif vs_exists != None and not overwrite:
+	OUT = "There's a ViewSet with the same name.\nSet Overwrite to true to continue."
+if vs_exists == None:
+	vs1 = ViewSet()
+	for v in views: (vs1.Insert(v))
+	printMan = doc.PrintManager
+	printMan.PrintRange = PrintRange.Select
+	viewSS = printMan.ViewSheetSetting
+	try:
+		TransactionManager.Instance.EnsureInTransaction(doc)
+		viewSS.CurrentViewSheetSet.Views = vs1
+		viewSS.SaveAs(name1)
+		TransactionManager.Instance.TransactionTaskDone()
+		OUT = "ViewSet created with %s views inside." %len(views)
+	except:
+		OUT = "The ViewSet could not be created"</Script>
+    </DSIronPythonNode.PythonNode>
+    <Dynamo.Nodes.Symbol guid="dea39b45-c1e8-4169-b637-16def36587d8" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="views" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="db2a6155-03ae-4ef5-a30f-5fb96f4f73e7" type="Dynamo.Nodes.Symbol" nickname="Input" x="-0.800000000000011" y="62.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="set name" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Symbol guid="6e9ad46e-d238-419a-b92c-b844af2b4c5e" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="123.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+      <Symbol value="Overwrite:bool = false" />
+    </Dynamo.Nodes.Symbol>
+    <Dynamo.Nodes.Output guid="735f552e-41cd-4c7e-b3c5-9199e59dbbc2" type="Dynamo.Nodes.Output" nickname="Output" x="401" y="0.800000000000011" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+      <Symbol value="result" />
+    </Dynamo.Nodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Models.ConnectorModel start="f404bea1-281a-496d-bb41-f364a0b8c16e" start_index="0" end="735f552e-41cd-4c7e-b3c5-9199e59dbbc2" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="dea39b45-c1e8-4169-b637-16def36587d8" start_index="0" end="f404bea1-281a-496d-bb41-f364a0b8c16e" end_index="0" portType="0" />
+    <Dynamo.Models.ConnectorModel start="db2a6155-03ae-4ef5-a30f-5fb96f4f73e7" start_index="0" end="f404bea1-281a-496d-bb41-f364a0b8c16e" end_index="1" portType="0" />
+    <Dynamo.Models.ConnectorModel start="6e9ad46e-d238-419a-b92c-b844af2b4c5e" start_index="0" end="f404bea1-281a-496d-bb41-f364a0b8c16e" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

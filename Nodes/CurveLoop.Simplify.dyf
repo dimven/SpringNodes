@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="259.307865919235" Y="187.498282120705" zoom="0.658674852158215" Name="CurveLoop.Simplify" Description="Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line." ID="b255f316-935c-41a1-abe7-386417b84b6f" Category="SpringNodes.Geometry">
+<Workspace Version="1.3.2.2480" X="242.442147589978" Y="49.2213855862452" zoom="0.446685793067653" ScaleFactor="1" Name="Springs.CurveLoop.Simplify" Description="Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line." ID="b255f316-935c-41a1-abe7-386417b84b6f" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,25 +8,28 @@
     <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="427.05715120177" y="14.2337669574281" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="merge1(lines);" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="fc000ed1-173a-4d0f-98c0-e661694f10ed" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="82.025554691118" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="def isLine(c1){&#xA;return = c1.Length == Line.ByBestFitThroughPoints&#xA;(c1.PointAtParameter({0,1})).Length;&#xA;};&#xA;def cVec(c1){&#xA;return = Vector.ByTwoPoints(c1.StartPoint,c1.EndPoint);&#xA;};&#xA;def cPts(c1){&#xA;return =c1.PointAtParameter({0,1});&#xA;};&#xA;&#xA;def merge1(lines:var[]){&#xA;return = [Imperative]{&#xA;lines = PolyCurve.ByJoinedCurves(lines).Curves();&#xA;i = 0;&#xA;out1 = {};&#xA;while (i &lt; Count(lines))&#xA;{&#xA;	pts = cPts(lines[i]);&#xA;	while (isLine(lines[i+1]) &amp;&amp; cVec(lines[i])&#xA;	.AngleBetween(cVec(lines[i+1])) &lt; 0.0001)&#xA;	{&#xA;		pts = List.Join({pts, cPts(lines[i+1])});&#xA;		i = i + 1;&#xA;	}&#xA;	if (Count(pts) == 2)&#xA;	{&#xA;		out1 = List.Join({out1,lines[i]});&#xA;		i = i + 1;&#xA;	}&#xA;	else&#xA;	{&#xA;		out1 = List.Join({out1,Line.ByBestFitThroughPoints(pts)});&#xA;		i = i + 1;&#xA;	}&#xA;}&#xA;return = out1;&#xA;}&#xA;};" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="cc212e84-7ffb-4951-a0c1-d3539e102f8d" type="Dynamo.Nodes.Symbol" nickname="Input" x="273.029529819757" y="12.9397881431164" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="curve loop" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="72be7d9a-98cb-4ec0-a420-86265389c8a8" type="Dynamo.Nodes.Output" nickname="Output" x="667.78747445289" y="9.05785170018152" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="curve loop" />
-    </Dynamo.Nodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="fc000ed1-173a-4d0f-98c0-e661694f10ed" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="300.127966099044" y="88.7229604717442" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def _isLine(c){&#xA;return = Math.Abs(c.Length - c.StartPoint.&#xA;  DistanceTo(c.EndPoint) ) &lt;= 0.0001;&#xA;};&#xA;&#xA;def _isParal(a, b){&#xA;v1 = Vector.ByTwoPoints(a.StartPoint,&#xA;  a.EndPoint).Normalized();&#xA;v2 = Vector.ByTwoPoints(b.StartPoint,&#xA;  b.EndPoint).Normalized();&#xA;return = Math.Abs(v1.Dot(v2) ) &gt;= 0.9999;&#xA;};&#xA;&#xA;def _shiftIndices(x:var[], i){&#xA;return = DSCore.List.ShiftIndices(x, i);&#xA;};&#xA;&#xA;curves;&#xA;simplified = [Imperative]{&#xA;i = 0;&#xA;j = 0;&#xA;len1 = Count(curves) - 1;&#xA;outp = {};&#xA;isClosed = curves[-1].EndPoint.&#xA;  IsAlmostEqualTo(curves[0].StartPoint);&#xA;&#xA;//find a corner;&#xA;if (isClosed)&#xA;{&#xA;	shift = 0;&#xA;	for (k in GetKeys(curves) )&#xA;	{&#xA;		if (!_isParal(curves[k-1], curves[k]) )&#xA;		{&#xA;			break;&#xA;		}&#xA;		shift = shift - 1;&#xA;	}&#xA;	curves = _shiftIndices(curves, shift);&#xA;}&#xA;&#xA;//skip initial non lines&#xA;while (!_isLine(curves[i]) &amp;&amp; i &lt; len1)&#xA;	{&#xA;		outp[j] = curves[i];&#xA;		j = j + 1;&#xA;		i = i + 1;&#xA;	}&#xA;&#xA;while (i &lt; len1)&#xA;{&#xA;	sP = curves[i].StartPoint;&#xA;	eP = null;&#xA;	while (_isLine(curves[i+1]) &amp;&amp;&#xA;	  _isParal(curves[i], curves[i+1]) )&#xA;	{&#xA;		eP = curves[i+1].EndPoint;&#xA;		i = i + 1;&#xA;	}&#xA;&#xA;	if (eP == null)&#xA;	{&#xA;		outp[j] = curves[i];&#xA;	}&#xA;	else&#xA;	{&#xA;		outp[j] = Line.ByStartPointEndPoint(sP, eP);&#xA;	}&#xA;	i = i + 1;&#xA;	j = j + 1;&#xA;}&#xA;&#xA;if (i == len1)&#xA;{&#xA;	outp[j] = curves[-1];&#xA;}&#xA;&#xA;return = outp;&#xA;};" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="cc212e84-7ffb-4951-a0c1-d3539e102f8d" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="53.9113874892162" y="81.0732987467556" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="curveLoop: var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="72be7d9a-98cb-4ec0-a420-86265389c8a8" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="799.012496205538" y="77.6996038258261" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="curveLoop" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" start_index="0" end="72be7d9a-98cb-4ec0-a420-86265389c8a8" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="cc212e84-7ffb-4951-a0c1-d3539e102f8d" start_index="0" end="7c14cbfb-dca8-4824-b7fb-1dde6aa201bb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fc000ed1-173a-4d0f-98c0-e661694f10ed" start_index="1" end="72be7d9a-98cb-4ec0-a420-86265389c8a8" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="cc212e84-7ffb-4951-a0c1-d3539e102f8d" start_index="0" end="fc000ed1-173a-4d0f-98c0-e661694f10ed" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="1718.2500941347" eyeY="12893.7421189439" eyeZ="6930.09331732238" lookX="-1.35006744130806E-05" lookY="-13884.0323725664" lookZ="-1836.64695472459" />
+    <Camera Name="Background Preview" eyeX="8.40369019082416" eyeY="33.3262346765448" eyeZ="12.6180544379622" lookX="-5.8335390036541" lookY="-34.7052048586733" lookZ="-11.2971312701017" upX="-0.386960159741397" upY="0.537299608346827" upZ="-0.749380387816005" />
   </Cameras>
 </Workspace>

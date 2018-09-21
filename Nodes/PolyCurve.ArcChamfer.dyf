@@ -1,0 +1,46 @@
+<Workspace Version="1.3.2.2480" X="81.1668878181018" Y="95.2380772294163" zoom="1.10476425630303" ScaleFactor="1" Name="Springs.PolyCurve.ArcChamfer" Description="Symmetrically chamfers the corners of the polycurve by the designated distance and close with tangent arcs." ID="7f83a5f5-62e6-4d50-ad72-59f45c0431ff" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.DateTime.List" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.DateTime" resolvedName="DSCore.DateTime" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Arc" resolvedName="Autodesk.DesignScript.Geometry.Arc" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="36ab9ecd-2e40-4811-a587-c73c370f6dc9" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="253.234947035779" y="-3.88193644293494" isVisible="false" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="c = pc.Curves();&#xA;isClosed = pc.IsClosed;&#xA;d2 = c.Length - d1;&#xA;spt = c.PointAtSegmentLength(d1);&#xA;spar = c.ParameterAtPoint(spt);&#xA;ept = c.PointAtSegmentLength(d2);&#xA;epar = c.ParameterAtPoint(ept);&#xA;spar[0] = isClosed ? spar[0] : 0;&#xA;epar[-1] = isClosed ? epar[-1] : 1;&#xA;c1 = c.TrimByParameter(spar, epar);&#xA;pt2 = DSCore.List.ShiftIndices(ept, 1);&#xA;v0 = c1.TangentAtParameter(0);&#xA;v1 = flip ? v0.Reverse() : v0;&#xA;c2 = Arc.ByStartPointEndPointStartTangent(&#xA;  spt, pt2, v1);&#xA;drop = isClosed ? 0 : 1;&#xA;c2f = DSCore.List.DropItems(c2, drop);&#xA;c3 = PolyCurve.ByJoinedCurves(&#xA;  Flatten(List.Transpose({c1, c2f}) ) );" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e63e9ea5-7ff1-48f1-b74c-403b8e4256ba" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-25.8795762862329" y="-1.94096822146747" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="polycurve:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="67b458c4-ca76-464c-a78e-2f2fee5eac5a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-25.2325868790771" y="58.1275041838733" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="distance:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="0574d8f6-b861-40be-9ee4-631d1458fc4a" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-25.2325868790771" y="116.901997774902" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="flip:bool = false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="e1a402f6-e73e-4456-896f-30fcfc02781e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="700.297519049365" y="-7.76387288586986" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="polycurve" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="36ab9ecd-2e40-4811-a587-c73c370f6dc9" start_index="16" end="e1a402f6-e73e-4456-896f-30fcfc02781e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e63e9ea5-7ff1-48f1-b74c-403b8e4256ba" start_index="0" end="36ab9ecd-2e40-4811-a587-c73c370f6dc9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="67b458c4-ca76-464c-a78e-2f2fee5eac5a" start_index="0" end="36ab9ecd-2e40-4811-a587-c73c370f6dc9" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0574d8f6-b861-40be-9ee4-631d1458fc4a" start_index="0" end="36ab9ecd-2e40-4811-a587-c73c370f6dc9" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="3.24655767327976" eyeY="22.5007411435454" eyeZ="-5.23581814892131" lookX="-4.50251246857738" lookY="-19.6359887388751" lookZ="3.75276750538504" upX="-0.671852022177569" upY="0.484809620246377" upZ="0.559977224905243" />
+  </Cameras>
+</Workspace>

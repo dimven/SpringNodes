@@ -1,0 +1,81 @@
+<Workspace Version="1.3.2.2480" X="-472.044929434135" Y="229.287591470119" zoom="2.33041206914125" ScaleFactor="1" Name="Springs.SelectLinkedFace" Description="Select the linked instance first, followed by the face. The face will be transformed to the host file's coordinate system. If your selection fails, just press escape.&#xD;&#xA;To refresh the node, connect a boolean switch node." ID="6e98ce37-6cea-4a42-8e2d-7737e6c918ca" Category="Springs.Revit.Selection">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+import clr
+
+clr.AddReference("RevitAPIUI")
+from  Autodesk.Revit.UI import *
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+doc = DocumentManager.Instance.CurrentDBDocument
+uidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import RevitLinkInstance, FamilyInstance
+
+def output1(x):
+	if len(x) == 1: return x[0]
+	else : return x
+
+sel1 = uidoc.Selection
+ot1 = Selection.ObjectType.Element
+ot2 = Selection.ObjectType.PointOnElement
+li_ref = sel1.PickObject(ot1, "Select a link instance first.")
+link1 = doc.GetElement(li_ref.ElementId)
+if isinstance(link1, RevitLinkInstance):
+	tf1 = link1.GetTotalTransform()
+	face_ref = sel1.PickObject(ot2, "Pick a face.")
+	linkDoc = link1.GetLinkDocument()
+	el1 = linkDoc.GetElement(face_ref.LinkedElementId)
+	face_ref2 = face_ref.CreateReferenceInLink()
+	sf0 = el1.GetGeometryObjectFromReference(face_ref2)
+	if isinstance(el1, FamilyInstance):
+		tf1 *= el1.GetTotalTransform()
+	sf1 = sf0.Convert(face_ref2, tf1.ToCoordinateSystem(True) )
+	for s in sf1:	
+		s.Tags.AddTag("RevitFaceReference", face_ref)
+	OUT = output1(sf1), face_ref.GlobalPoint.ToPoint(True)
+else:
+	OUT = "Failed to pick a link instance.", None</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2e81ce6f-7bb8-41f6-806e-3eac7cd56ffe" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="513.11894478594" y="0.388917924901861" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="surface" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="9cb024b8-6ae8-4fd3-8238-48c39c3fc9fe" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="28.3999999999999" y="0.84928152849362" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="refresh:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bbe23ae2-ddb9-45cf-b0f2-1f68326b4eab" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="512.125345171774" y="58.5795886558496" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="pickPoint" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="0f72439e-d3c2-4771-a566-a2b39257cc45" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="393.955993421285" y="3.07785215230703" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" start_index="0" end="0f72439e-d3c2-4771-a566-a2b39257cc45" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="9cb024b8-6ae8-4fd3-8238-48c39c3fc9fe" start_index="0" end="de16a2b0-9e43-4e14-ad23-1cf031d3a2d2" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0f72439e-d3c2-4771-a566-a2b39257cc45" start_index="0" end="2e81ce6f-7bb8-41f6-806e-3eac7cd56ffe" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0f72439e-d3c2-4771-a566-a2b39257cc45" start_index="1" end="bbe23ae2-ddb9-45cf-b0f2-1f68326b4eab" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-9875.33453111244" eyeY="9914.82241628527" eyeZ="3938.25986976857" lookX="12974.5771915623" lookY="-8629.72346658331" lookZ="-9887.78405885316" upX="0.212550990139561" upY="0.963630453208654" upZ="-0.161982796122417" />
+  </Cameras>
+</Workspace>

@@ -1,0 +1,34 @@
+<Workspace Version="1.3.2.2480" X="-3.33352637423741" Y="174.602865012609" zoom="1.51051845643135" ScaleFactor="1" Name="Springs.Mesh.ToToolkitMesh" Description="Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first." ID="d992f1f9-a78e-4864-b50f-92973fe214fe" Category="Springs.Geometry">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Surface" resolvedName="Autodesk.DesignScript.Geometry.Surface" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Dynamo.Mesh" resolvedName="Autodesk.Dynamo.MeshToolkit.Mesh" assemblyName="MeshToolkit.dll" />
+    <ClassMap partialName="Autodesk.Dynamo.MeshToolkit.Mesh" resolvedName="Autodesk.Dynamo.MeshToolkit.Mesh" assemblyName="MeshToolkit.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="8a64e7b6-3c9a-4300-95b0-ffd7e4ca42c2" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="162" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="vp = m1.VertexPositions;&#xA;fi = m1.FaceIndices;&#xA;fi2 = Flatten(DSCore.List.Transpose({fi.A,fi.B,fi.C}));&#xA;tkMesh = Dynamo.Mesh.ByVerticesAndIndices(vp,fi2);" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="24c2dfa7-f176-46b2-bb37-7aa1e79bdf8b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="13.7652422144299" y="-3.82367839289719" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="mesh:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="bc38c9e5-2075-4882-bca1-29a4c1deb11f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="704.313718567543" y="3.4910883270462" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="tkMesh" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="8a64e7b6-3c9a-4300-95b0-ffd7e4ca42c2" start_index="3" end="bc38c9e5-2075-4882-bca1-29a4c1deb11f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="24c2dfa7-f176-46b2-bb37-7aa1e79bdf8b" start_index="0" end="8a64e7b6-3c9a-4300-95b0-ffd7e4ca42c2" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="20.0219940535043" eyeY="76.5345580597319" eyeZ="-139.528688375286" lookX="-26.7492878031145" lookY="2.3711608733513" lookZ="58.1855579156103" upX="0.104583351967225" upY="0.96814764037812" upZ="-0.227491689785814" />
+  </Cameras>
+</Workspace>

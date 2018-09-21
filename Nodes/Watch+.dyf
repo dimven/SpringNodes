@@ -1,13 +1,17 @@
-<Workspace Version="0.8.2.2392" X="332" Y="114.4" zoom="1" Name="Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="SpringNodes.BETA">
+<Workspace Version="1.3.2.2480" X="154.143974240344" Y="134.500579776336" zoom="1.70391682455499" ScaleFactor="1" Name="Springs.Watch+" Description="This node that serializes the input information and presents it in a resizable text window." ID="46a3a667-ec7a-49ed-8675-ed77333ecd8e" Category="Springs.Core.View.Query">
   <NamespaceResolutionMap>
     <ClassMap partialName="Rectangle" resolvedName="Autodesk.DesignScript.Geometry.Rectangle" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="112.4" y="-3.20000000000002" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="118.307071783181" y="-1.09033150600672" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 import clr
 
@@ -17,42 +21,44 @@ from System.Drawing import Point, Color, Font
 from System.Windows.Forms import *
 from cStringIO import StringIO
 
-def isElem(el1):
-	return hasattr(el1, "Id")
+str_file = StringIO()
+size1 = [30, 23] #height, width
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
+
+def write_str(str1, GCL, str_file=str_file, size1=size1):
+	ln1 = len(str1)
+	if ln1 &gt; size1[1]:
+		size1[1] = ln1
 	
-def isList(obj1):
-	return hasattr(obj1,"__iter__")
+	str_file.write("%s%s\n" % ("".join(GCL), str1) )
 
-def write_str(str1):
-	str_file.write(''.join([j for j in GCL]))
-	str_file.write(str1)
-
-GCL = []
-GCint = -1
-def list2str(l1):
-	global GCint, height1
+def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1):
+	if GCL is None:
+		GCL = []
 	GCint += 1
-	GCL.insert(GCint,"")
-	for i in xrange(len(l1)):
-		GCL[GCint] = "[%s] " % i
-		if isElem(l1[i]):
-			write_str("%s        %s\n" % (l1[i].ToString(), l1[i].Id.ToString()) )
-		elif isList(l1[i]) and not l1[i]:
-			write_str("Empty List\n")
-		elif isList(l1[i]):
-			list2str(l1[i])
+	GCL.append(None)
+	for i, x in enumerate(l1):
+		GCL[GCint] = "[%i] " % i if writeInd else "  "
+		if hasattr(x, "Id"): #is element
+			write_str("%s        %i" % (x.ToString(), x.Id), GCL)
+		elif hasattr(x, "__iter__"):
+			if not x:
+				write_str("Empty List", GCL)
+			else:
+				list2str(x, writeInd, GCL, GCint, size1)
+		elif x is None:
+			write_str("null", GCL)
 		else:
-			write_str("%s\n" % l1[i].ToString())
-		height1 += 24
+			write_str(x.ToString(), GCL)
+		size1[0] += 19
 	GCL.pop(GCint)
 	GCint -= 1
 
 class WatchBox(Form):
-	def __init__(self):
+	def __init__(self, t1):
 		self.Text = "SpringNodes: Expandable Watch Window"
 		self.BackColor = Color.FromArgb(40,40,40)
 		self.ControlBox = False
@@ -60,6 +66,7 @@ class WatchBox(Form):
 		self.FormBorderStyle = FormBorderStyle.Sizable
 		self.StartPosition = FormStartPosition.CenterScreen
 		self.Resize += self.resize1
+		self.text1 = None
 
 		self.button1 = Button()
 		self.button1.Text = 'Close'
@@ -77,6 +84,7 @@ class WatchBox(Form):
 		self.box1.BackColor = Color.FromArgb(53,53,53)
 		self.box1.ForeColor = Color.FromArgb(234,234,234)
 		self.box1.DetectUrls = True
+		self.box1.Text = t1
 		self.Controls.Add(self.box1)
 
 	def adjust_controls(self, height1, width1):
@@ -98,48 +106,48 @@ class WatchBox(Form):
 		self.box1.Height = self.Height - 80
 		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
 	
-	def setTxt(self, t1):
-		self.box1.Text = t1
-		self.Refresh()
-			
 	def save(self, sender, event):
 		self.text1 = self.box1.Text
 		self.Close()
 
-if IN[0] == None: l1 = []
-else: l1 = tolist(IN[0])
-height1 = 30
-str_file = StringIO()
-list2str(l1)
+l1 = [] if IN[0] is None else tolist(IN[0])
+list2str(l1, IN[1])
 str_content = str_file.getvalue()
-width1 = max([len(i) for i in str_content.split('\n')])
-form = WatchBox()
-form.adjust_controls(height1, width1)
-form.setTxt(str_content)
+str_file.close()
+
+width1 = 100
+form = WatchBox(str_content)
+form.adjust_controls(*size1)
+
 Application.Run(form)
 OUT = form.text1
 Application.Exit()
-str_file.close()</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Nodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+form.Dispose()</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-188.182429664202" y="-2.95353589159062" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="input" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="3d9e94be-75a4-45b4-902f-61a2019e1f73" type="Dynamo.Nodes.Symbol" nickname="Input" x="-98.4000000000001" y="56.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3d9e94be-75a4-45b4-902f-61a2019e1f73" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-189.53767894051" y="53.8683978072081" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="addIndexes:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="43a77d27-3a16-4650-9710-85700cd25a9e" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="267.065801096396" y="-1.33679561441611" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="str" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="602ac5b7-dc57-4f63-9c6b-00c98cf0ff0c" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-188.673644496303" y="112.686298096685" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="reset:bool = true" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="43a77d27-3a16-4650-9710-85700cd25a9e" type="Dynamo.Nodes.Output" nickname="Output" x="265.8" y="-6.40000000000001" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" start_index="0" end="43a77d27-3a16-4650-9710-85700cd25a9e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="3d9e94be-75a4-45b4-902f-61a2019e1f73" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" start_index="0" end="43a77d27-3a16-4650-9710-85700cd25a9e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="00aa72d1-0667-491b-ad7c-e6cb1e4634ba" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3d9e94be-75a4-45b4-902f-61a2019e1f73" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="602ac5b7-dc57-4f63-9c6b-00c98cf0ff0c" start_index="0" end="c476cd36-861f-4dd5-a4e9-c36fc7bfbf1e" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="88893.586205709" eyeY="214015.021294737" eyeZ="-57465.6266532865" lookX="-59741.3018769405" lookY="-63440.8361036451" lookZ="-68724.5062854868" />
+    <Camera Name="Background Preview" eyeX="-38.0509095614525" eyeY="176.4728046373" eyeZ="-27.5389554370625" lookX="12.1350341297129" lookY="-172.993471480734" lookZ="-2.22952286682241" upX="-0.973236232151557" upY="0.144356194193024" upZ="0.178808931854951" />
   </Cameras>
 </Workspace>

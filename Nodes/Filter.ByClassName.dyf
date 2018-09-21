@@ -1,63 +1,65 @@
-<Workspace Version="0.8.2.2392" X="9.88802245453783" Y="149.765750169588" zoom="0.803321593462598" Name="Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="SpringNodes.Core">
+<Workspace Version="1.3.2.2480" X="594.881872277536" Y="160.005056751657" zoom="1.83541648937758" ScaleFactor="1" Name="Springs.Filter.ByClassName" Description="Filters a list of objects by the object's class name. Note that Dynamo elements belong to different classes than their Revit counterparts. Use the Object.Class node to check an object's class." ID="3760b286-a8de-438d-9238-c6755dc9c862" Category="Springs.Core.Object.Actions">
   <NamespaceResolutionMap>
     <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="2">
-      <Script>#Copyright(c) 2016, Dimitar Venkov
+    <PythonNodeModels.PythonNode guid="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" type="PythonNodeModels.PythonNode" nickname="Python Script" x="247.820658132283" y="10.3518738716591" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
 
 import clr
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
+from itertools import izip, imap, repeat
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
 
-in1,out1 = [],[]
-
+OUT = []
 elements = tolist(IN[0])
-filter = tolist(IN[1])
-for i in xrange(len(elements)):
-	try:
-		n1 = elements[i].GetType().ToString().lower()
-	except:
-		n1 = "null"
-	if any(f.lower() in n1 for f in filter):
-		in1.append(elements[i])
+optNames = IN[1]
+filter = set(imap(str.lower, imap(str, tolist(IN[2]) ) ) )
+
+useOptNames = optNames is not None and len(elements) == len(tolist(optNames) )
+if useOptNames:
+	optNames = map(str.lower, imap(str, tolist(optNames) ) )
+else:
+	optNames = repeat("", len(elements) )
+
+for e, n in izip(elements, optNames):
+	if useOptNames:
+		n1 = n
 	else:
-		out1.append(elements[i])
-	
-OUT = in1, out1</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="b21adbd0-37a4-41a4-abba-8ad300250e67" type="Dynamo.Nodes.Symbol" nickname="Input" x="48.8" y="-18.4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="object(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="5c95f402-378c-4745-919b-90ab22f488d9" type="Dynamo.Nodes.Symbol" nickname="Input" x="50.9890200217638" y="42.2109799782362" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="Class name(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="32719160-cc7a-44c4-a73b-62e0ab6658e9" type="Dynamo.Nodes.Output" nickname="Output" x="540.004407706101" y="-16.7321971827076" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="in" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Output guid="1160bc54-24f9-4445-8c27-522ca7dc720c" type="Dynamo.Nodes.Output" nickname="Output" x="543.45240468303" y="42.9282106199048" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="out" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="25642c9d-46be-4e05-8ddf-03155b298049" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="399.009770197473" y="4.53169755559588" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="f[0];&#xA;f[1];" ShouldFocus="false" />
+		n1 = object.GetType(e).ToString().lower() if e is not None else "null"
+	OUT.append(any(f in n1 for f in filter) )</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b21adbd0-37a4-41a4-abba-8ad300250e67" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-85.2295248646388" y="-9.13779706219981" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="object:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="5c95f402-378c-4745-919b-90ab22f488d9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-86.474439037725" y="48.7490055813893" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="optionalName:var[] = null" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="32719160-cc7a-44c4-a73b-62e0ab6658e9" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="398.89202177138" y="13.2337534984108" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="bool" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="b00f8f05-ff77-4dd6-bdbd-5a3e9c778f85" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="-86.2633332606589" y="110.349462663296" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="className:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" start_index="0" end="25642c9d-46be-4e05-8ddf-03155b298049" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="b21adbd0-37a4-41a4-abba-8ad300250e67" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="5c95f402-378c-4745-919b-90ab22f488d9" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="1" portType="0" />
-    <Dynamo.Models.ConnectorModel start="25642c9d-46be-4e05-8ddf-03155b298049" start_index="0" end="32719160-cc7a-44c4-a73b-62e0ab6658e9" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="25642c9d-46be-4e05-8ddf-03155b298049" start_index="1" end="1160bc54-24f9-4445-8c27-522ca7dc720c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" start_index="0" end="32719160-cc7a-44c4-a73b-62e0ab6658e9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b21adbd0-37a4-41a4-abba-8ad300250e67" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="5c95f402-378c-4745-919b-90ab22f488d9" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b00f8f05-ff77-4dd6-bdbd-5a3e9c778f85" start_index="0" end="2779a9f7-9d61-4e85-b0c8-81c5d13d21d6" end_index="2" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="-2104.53564453125" eyeY="67997.1796875" eyeZ="-130311.21875" lookX="-44947.921875" lookY="-38629.7890625" lookZ="102933.78125" upX="-0.0459953770041466" upY="0.993372678756714" upZ="0.10533257573843" />
   </Cameras>
 </Workspace>

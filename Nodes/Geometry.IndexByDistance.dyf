@@ -1,0 +1,72 @@
+<Workspace Version="1.2.1.3083" X="-169.6" Y="-39.8" zoom="1" Name="Springs.Geometry.IndexByDistance" Description="Provides the index of the closest or farthest geometry. Should prove faster than getting the geometry and finding its index in two separate operations." ID="4855b539-d193-401c-8ca2-71555bb332cd" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="d56932a5-86c3-4f39-a79d-91979c300e92" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="826.032995258711" y="271.081992079203" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="index" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <PythonNodeModels.PythonNode guid="ab81a7b8-d742-48cf-8705-de29d6bd825e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="553" y="284.681992079203" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script># Copyright(c) 2017, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+# www.badmonkeys.net
+
+from operator import lt, gt
+from sys import maxsize
+
+def tolist(x):
+	if hasattr(x,'__iter__'): return x
+	else : return [x]
+
+geom = tolist(IN[0])
+other = tolist(IN[1])
+isClosest = IN[2]
+
+_fn = lt if isClosest else gt
+_base = maxsize if isClosest else -maxsize
+inds, dists = [], []
+OUT = inds, dists
+
+for g in geom:
+	d = _base
+	ind, i = 0, 0
+	for o in other:
+		d1 = g.DistanceTo(o)
+		if _fn(d1, d):
+			d = d1
+			ind = i
+		i += 1
+	inds.append(ind)
+	dists.append(d)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="906662e2-171e-4434-a00d-fdd829b686c9" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="303" y="283" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="geometry:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="136059bd-a031-4329-b6f3-346954cb7b97" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="303.560664026401" y="342.17242772302" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="other:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="544e95a1-17c1-4ea3-ab08-d5390c8968d2" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="303.121328052802" y="406.026847525243" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="isClosest:bool = true" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="b8727907-8ed9-47fd-901b-325ee53a5e06" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="704.8" y="291.2" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="r[0];&#xA;r[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="2597e498-aadf-4322-a99d-a21886e90b04" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="822.832995258711" y="327.081992079203" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="distance" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="ab81a7b8-d742-48cf-8705-de29d6bd825e" start_index="0" end="b8727907-8ed9-47fd-901b-325ee53a5e06" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="906662e2-171e-4434-a00d-fdd829b686c9" start_index="0" end="ab81a7b8-d742-48cf-8705-de29d6bd825e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="136059bd-a031-4329-b6f3-346954cb7b97" start_index="0" end="ab81a7b8-d742-48cf-8705-de29d6bd825e" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="544e95a1-17c1-4ea3-ab08-d5390c8968d2" start_index="0" end="ab81a7b8-d742-48cf-8705-de29d6bd825e" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b8727907-8ed9-47fd-901b-325ee53a5e06" start_index="0" end="d56932a5-86c3-4f39-a79d-91979c300e92" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b8727907-8ed9-47fd-901b-325ee53a5e06" start_index="1" end="2597e498-aadf-4322-a99d-a21886e90b04" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

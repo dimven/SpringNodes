@@ -1,4 +1,4 @@
-<Workspace Version="0.8.2.2392" X="-559.815990286653" Y="54.0518802397455" zoom="3.14224078322401" Name="Element.IsCutting" Description="Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided." ID="88c455c9-dee7-4336-8e35-382e0b86018a" Category="SpringNodes.Revit.VoidCuts">
+<Workspace Version="1.3.1.1736" X="-239.242482710279" Y="163.828626744123" zoom="2.22719516868277" ScaleFactor="1" Name="Springs.Element.IsCutting" Description="Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided." ID="88c455c9-dee7-4336-8e35-382e0b86018a" Category="Springs.Revit.Element">
   <NamespaceResolutionMap>
     <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
     <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
@@ -8,7 +8,8 @@
     <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <DSIronPythonNode.PythonNode guid="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" type="DSIronPythonNode.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" inputcount="1">
+    <PythonNodeModels.PythonNode guid="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
       <Script>import clr
 
 clr.AddReference("RevitServices")
@@ -26,10 +27,6 @@ clr.ImportExtensions(Revit.Elements)
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
 	else: return [obj1]
-
-def output1(l1):
-	if len(l1) == 1: return l1[0]
-	else: return l1
 
 elements = UnwrapElement(tolist(IN[0]))
 out1 = []
@@ -51,29 +48,33 @@ for i in xrange(len(elements)):
 		out1.append(False)
 		cut_el.append([])		
 
-OUT = output1(out1), cut_el</Script>
-    </DSIronPythonNode.PythonNode>
-    <Dynamo.Nodes.Symbol guid="8bca541f-0b8e-4e8a-8ab5-2a94135be152" type="Dynamo.Nodes.Symbol" nickname="Input" x="96.8" y="-3.20000000000005" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="element(s)" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="7e6e460e-cf0d-4d96-913a-7d488ebdf429" type="Dynamo.Nodes.Output" nickname="Output" x="576.968171528251" y="-7.60000000000005" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+OUT = out1, cut_el</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8bca541f-0b8e-4e8a-8ab5-2a94135be152" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="96.8" y="-3.20000000000005" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="element:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7e6e460e-cf0d-4d96-913a-7d488ebdf429" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="547.219336193912" y="-2.57101069623292" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="bool" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.Output guid="3a19e448-8901-4aa1-8698-ea3975b79998" type="Dynamo.Nodes.Output" nickname="Output" x="563.885983913867" y="54.1418365036428" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
-      <Symbol value="cut elements" />
-    </Dynamo.Nodes.Output>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="e23369ce-7f52-4cc7-889f-ae12d8306ac1" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="402" y="3.4487443848041" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="res[0];&#xA;res[1];" ShouldFocus="false" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3a19e448-8901-4aa1-8698-ea3975b79998" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="545.697825757344" y="54.7225636142849" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="cutElements" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e23369ce-7f52-4cc7-889f-ae12d8306ac1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="402" y="3.4487443848041" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" start_index="0" end="e23369ce-7f52-4cc7-889f-ae12d8306ac1" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="8bca541f-0b8e-4e8a-8ab5-2a94135be152" start_index="0" end="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="0" end="7e6e460e-cf0d-4d96-913a-7d488ebdf429" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="1" end="3a19e448-8901-4aa1-8698-ea3975b79998" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" start_index="0" end="e23369ce-7f52-4cc7-889f-ae12d8306ac1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8bca541f-0b8e-4e8a-8ab5-2a94135be152" start_index="0" end="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="0" end="7e6e460e-cf0d-4d96-913a-7d488ebdf429" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="1" end="3a19e448-8901-4aa1-8698-ea3975b79998" end_index="0" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
   </Cameras>
 </Workspace>

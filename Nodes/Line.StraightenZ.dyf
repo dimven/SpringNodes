@@ -1,29 +1,32 @@
-<Workspace Version="0.8.2.2392" X="-16.4881938818991" Y="6.16689584918402" zoom="1.130842140625" Name="Line.StraightenZ" Description="Checks a line's end points for irregularities in  the Z axis and corrects them if they are at or below the specified margin. The default margin is 1/2000 of the curve length, which is conservative." ID="ee989d34-a224-4217-967b-6b42dafd005e" Category="SpringNodes.Geometry">
+<Workspace Version="1.3.2.2480" X="53.8542462902103" Y="-297.701947319076" zoom="1.51051845643135" ScaleFactor="1" Name="Springs.Line.StraightenZ" Description="Checks a line's end points for irregularities in  the Z axis and corrects them if they are at or below the specified margin. The default margin is 1/5000 of the curve length, which is conservative." ID="ee989d34-a224-4217-967b-6b42dafd005e" Category="Springs.Geometry">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
   <Elements>
-    <Dynamo.Nodes.CodeBlockNodeModel guid="8dfd24e4-c284-4129-a4bb-3006265c6583" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="316.551703220916" y="363.518989389354" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="straightenZ(c,x);" ShouldFocus="false" />
-    <Dynamo.Nodes.CodeBlockNodeModel guid="4a477d19-6902-40a5-8904-cb31baba93d4" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="242.403560830861" y="7.59643916913944" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" CodeText="def straightenZ(c, x){&#xA;margin = c.Length / x;&#xA;cS = c.StartPoint;&#xA;cE = c.EndPoint;&#xA;dZ = Math.Abs(cS.Z - cE.Z);&#xA;return = [Imperative]&#xA;{&#xA;	if (dZ &lt;= margin){&#xA;		return = Line.ByStartPointEndPoint(&#xA;		cS,Point.ByCoordinates(cE.X, cE.Y, cS.Z));&#xA;	}&#xA;	else{&#xA;		return = c;&#xA;	}&#xA;}&#xA;};" ShouldFocus="false" />
-    <Dynamo.Nodes.Symbol guid="bbfe1380-fbd4-42c5-bce6-554cbed2d8cd" type="Dynamo.Nodes.Symbol" nickname="Input" x="108.8" y="312.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
-      <Symbol value="line" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Symbol guid="fd3fc27f-662f-4043-81d9-576b620c25b3" type="Dynamo.Nodes.Symbol" nickname="Input" x="-40.8" y="382.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True">
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="4a477d19-6902-40a5-8904-cb31baba93d4" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="283.449070560333" y="356.483271869652" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="straightened = [Imperative]{&#xA;margin = c.Length / x;&#xA;cS = c.StartPoint;&#xA;cE = c.EndPoint;&#xA;dZ = Math.Abs(cS.Z - cE.Z);&#xA;if (dZ &lt;= margin)&#xA;{&#xA;	return = Line.ByStartPointEndPoint(&#xA;	cS,Point.ByCoordinates(cE.X, cE.Y, cS.Z));&#xA;}&#xA;else&#xA;{&#xA;	return = c;&#xA;}&#xA;};" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="bbfe1380-fbd4-42c5-bce6-554cbed2d8cd" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="145.273645276534" y="356.797356582051" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="line:var" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="fd3fc27f-662f-4043-81d9-576b620c25b3" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="28.8371688006907" y="417.963974883365" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
       <Symbol value="margin : double = 5000" />
-    </Dynamo.Nodes.Symbol>
-    <Dynamo.Nodes.Output guid="3f612da1-3c37-4921-8cbc-e7bd4707a8ae" type="Dynamo.Nodes.Output" nickname="Output" x="560.988130563798" y="360.830860534125" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False">
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3f612da1-3c37-4921-8cbc-e7bd4707a8ae" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="749.003046098799" y="356.196690080798" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
       <Symbol value="line" />
-    </Dynamo.Nodes.Output>
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
   </Elements>
   <Connectors>
-    <Dynamo.Models.ConnectorModel start="8dfd24e4-c284-4129-a4bb-3006265c6583" start_index="0" end="3f612da1-3c37-4921-8cbc-e7bd4707a8ae" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="bbfe1380-fbd4-42c5-bce6-554cbed2d8cd" start_index="0" end="8dfd24e4-c284-4129-a4bb-3006265c6583" end_index="0" portType="0" />
-    <Dynamo.Models.ConnectorModel start="fd3fc27f-662f-4043-81d9-576b620c25b3" start_index="0" end="8dfd24e4-c284-4129-a4bb-3006265c6583" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4a477d19-6902-40a5-8904-cb31baba93d4" start_index="0" end="3f612da1-3c37-4921-8cbc-e7bd4707a8ae" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="bbfe1380-fbd4-42c5-bce6-554cbed2d8cd" start_index="0" end="4a477d19-6902-40a5-8904-cb31baba93d4" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fd3fc27f-662f-4043-81d9-576b620c25b3" start_index="0" end="4a477d19-6902-40a5-8904-cb31baba93d4" end_index="1" portType="0" />
   </Connectors>
   <Notes />
   <Annotations />
   <Presets />
   <Cameras>
-    <Camera Name="background_preview" eyeX="-15.9647314041585" eyeY="94.0950247588229" eyeZ="16.6057160559724" lookX="-29.9120031368789" lookY="-29.9120031368789" lookZ="-29.9120031368789" />
+    <Camera Name="Background Preview" eyeX="52.2858643174948" eyeY="18.6475903080488" eyeZ="-122.337225404452" lookX="-26.7492878031145" lookY="2.3711608733513" lookZ="58.1855579156103" upX="0.104583351967225" upY="0.96814764037812" upZ="-0.227491689785814" />
   </Cameras>
 </Workspace>

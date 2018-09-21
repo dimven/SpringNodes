@@ -1,0 +1,109 @@
+<Workspace Version="1.1.0.2094" X="98.4000000000001" Y="34.4" zoom="1" Name="Springs.LineLoop.Merge" Description="Attempts to join lines into a single chain of joined curves. The node returns the new lines as a chain and with the original order. The success outputs returns the success of the execution as a true/false boolean." ID="7f4c4e1d-2393-4151-a71b-5880332ca202" Category="Springs.Geometry">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="844355ab-8442-4d1a-bade-e512e1932fbc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="56.8" y="166" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="lines:var[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3b56e680-3907-4a31-b83e-b5e669362883" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="6.39999999999998" y="244.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="margin:double = 100" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="15a522fd-3434-44b8-b9c2-c28a4cc20adf" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="490.6" y="129.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="lines" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <PythonNodeModels.PythonNode guid="061c8703-4952-42d0-95d8-20cd8dda4280" type="PythonNodeModels.PythonNode" nickname="Python Script" x="219.6" y="167.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <Script>#Copyright(c) 2016, Dimitar Venkov
+# @5devene, dimitar.ven@gmail.com
+
+import clr
+
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+curves = IN[0]
+margin = IN[1]
+original = curves[:]
+
+def OrderCurves(cl0,cl1):
+	def switch1(i, j, cl0 = cl0, cl1 = cl1):
+		cl0[i],cl0[j] = cl0[j],cl0[i]
+		cl1[i],cl1[j] = cl1[j],cl1[i]
+
+	_ln = len(cl1)
+	xr1 =  xrange(_ln)
+	int_test = [[cl1[i].DoesIntersect(cl1[j])\
+	for j in xr1 if j != i] for i in xr1]
+	countT = map(sum, int_test)
+	if 0 not in countT:
+		if 1 in countT and countT[0] != 1 :
+			switch1(0, countT.index(1) )
+		for i in xrange(_ln - 1):
+			k = i + 1
+			if cl1[i].DoesIntersect(cl1[k]) : pass
+			else :
+				try:
+					int_test = [cl1[i].DoesIntersect(cl1[j])\
+					for j in xrange(k, _ln)]
+					switch1(k, k + int_test.index(True) )
+				except : pass
+	return cl0, cl1
+
+def ClosedCase(cl0,cl1):
+	pts = [cl1[i-1].Intersect(cl1[i])[0] for i in xrange(len(cl1) )]
+	return PolyCurve.ByPoints(pts,True).Curves()
+
+def OpenCase(cl0,cl1):
+	def FarPt(l1, p1):
+		pts = (l1.StartPoint,l1.EndPoint)
+		return max(pts, key = p1.DistanceTo)
+
+	pts = [cl1[i].Intersect(cl1[i+1])[0] for i in xrange(len(cl1) -1)]
+	pts.append(FarPt(cl0[-1],pts[-1]))
+	pts.insert(0,FarPt(cl0[0],pts[0]))
+	return PolyCurve.ByPoints(pts).Curves()
+
+def joinCurves(cl0,th1):
+	len1 = len(cl0)
+	if len1 &lt; 2 : return cl0, False
+	else:
+		cl1 = [c.ExtendStart(th1).ExtendEnd(th1) for c in cl0]
+		cl0, cl1 = OrderCurves(cl0,cl1)
+		_fn = ClosedCase if cl1[0].DoesIntersect(cl1[-1]) and len1 &gt; 2 else OpenCase
+		try : return _fn(cl0,cl1), True
+		except : return cl0, False
+
+def ReorderCurves(orig, new):
+	reordered, new = [], list(new)
+	app1, pop1, PaP = reordered.append, new.pop, Curve.PointAtParameter
+	for i in xrange(len(orig) ):
+		p1 = PaP(orig[i],0.5)
+		p2 = [PaP(new[j],0.5) for j in xrange(len(new) )]
+		ind1 = p2.index(min(p2, key = p1.DistanceTo) )
+		app1(pop1(ind1) )
+	return reordered
+
+out1 = joinCurves(curves, margin)
+OUT = out1[0], ReorderCurves(original,out1[0]), out1[1]</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="38219699-d535-481e-9207-d9f9f530d95d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="358.6" y="174.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="o[0];&#xA;o[1];&#xA;o[2];" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="278b6c93-928a-4d0b-a32c-f049d95b421f" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="488.2" y="184.8" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="ordered" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="0ddd6a09-c9e6-4351-bb4d-9eda975a48df" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="492.6" y="239.6" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <Symbol value="success" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="844355ab-8442-4d1a-bade-e512e1932fbc" start_index="0" end="061c8703-4952-42d0-95d8-20cd8dda4280" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3b56e680-3907-4a31-b83e-b5e669362883" start_index="0" end="061c8703-4952-42d0-95d8-20cd8dda4280" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="061c8703-4952-42d0-95d8-20cd8dda4280" start_index="0" end="38219699-d535-481e-9207-d9f9f530d95d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="38219699-d535-481e-9207-d9f9f530d95d" start_index="0" end="15a522fd-3434-44b8-b9c2-c28a4cc20adf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="38219699-d535-481e-9207-d9f9f530d95d" start_index="1" end="278b6c93-928a-4d0b-a32c-f049d95b421f" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="38219699-d535-481e-9207-d9f9f530d95d" start_index="2" end="0ddd6a09-c9e6-4351-bb4d-9eda975a48df" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="7191.5638982534" eyeY="82115.3271070615" eyeZ="-76767.062973007" lookX="34.2995394157797" lookY="-21431.2615507996" lookZ="514.959910630598" upX="-0.0652380001863528" upY="0.190808995684465" upZ="-0.979456971060573" />
+  </Cameras>
+</Workspace>

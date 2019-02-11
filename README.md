@@ -22,7 +22,7 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 - This is the first release targeting Dynamo 2.0. As such a lot of nodes have been re-categorised, some have been renamed and some removed. Please refer to the [following sheet](https://docs.google.com/spreadsheets/d/1fof74UeaJvW7fLbkjDRdscQVybkG8vaw7vvIp7BywaY/edit?usp=sharing) for details (nodes that were removed are marked in red, likewise any changes are highlighted in yellow).
 - Line.XYOffset is a new node to offset a line in the XY plane. Sometimes Dynamo offsets those vertically and this node attempts to solve that.
 - Minor bugfixes to the feet & fraction nodes, improvements to the BrepDS node.
-- I'm slowly adding [tests](https://github.com/dimven/SpringNodes/tree/master/_tests) for all nodes. Most of the non-Revit related nodes are finished.
+- I'm slowly adding [tests](https://github.com/dimven/SpringNodes/tree/master/_tests) for all nodes. Most of the non-Revit related nodes are finished. Tests are a great way to learn how something is meant to work and see its expected results.
 
 #### 132.2.8 220818
 - This is the final release targeting Dynamo 1.3x

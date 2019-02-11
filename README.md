@@ -19,7 +19,7 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 ### CHANGE LOG
 ------
 #### 202.1.0 110219
-- This is the first release targeting Dynamo 2.0. As such a lot of nodes have been re-categorised, some have been renamed and some removed. Please refer to the following excel sheet for details (nodes that were removed are marked in red, likewise any changes are highlighted in yellow).
+- This is the first release targeting Dynamo 2.0. As such a lot of nodes have been re-categorised, some have been renamed and some removed. Please refer to the [following sheet](https://docs.google.com/spreadsheets/d/1fof74UeaJvW7fLbkjDRdscQVybkG8vaw7vvIp7BywaY/edit?usp=sharing) for details (nodes that were removed are marked in red, likewise any changes are highlighted in yellow).
 - Line.XYOffset is a new node to offset a line in the XY plane. Sometimes Dynamo offsets those vertically and this node attempts to solve that.
 - Minor bugfixes to the fet & fraction nodes, improvements to the BrepDS node.
 - I'm slowly adding tests for all nodes. Most of the non-Revit related nodes are finished.

@@ -1,34 +1,236 @@
-<Workspace Version="1.1.0.2094" X="36.885649756402" Y="188.037195874594" zoom="0.674831658426865" Name="Springs.List.EveryOther" Description="Useful for when you want to combine an item on the list with every other item on the list. For example in list {1,2,3} , &quot;2&quot; will be paired up only with &quot;1&quot; and &quot;3&quot; and will not be paired up with itself." ID="8b57c43c-4e2e-47af-876a-bd8f1c12ce46" Category="Springs.Core.List">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="cfcd0d95-a227-4e8d-8bd5-0973861ea206" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="436.675557859269" y="23.170569379734" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="__Map(fn1,GetKeys(l1));" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="3cb015ce-733f-4fcf-903e-13788ce4df4c" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.RemoveItemAtIndex" x="238.732942741101" y="-33.2223391065001" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.RemoveItemAtIndex@var[]..[],int[]">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="08f2e14c-ddae-47a6-855b-ef2aa385d614" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="73.2320697479872" y="37.2929345238881" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="list:var[]..[]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="717.978811111141" y="18.5730919492832" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="lists" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="cfcd0d95-a227-4e8d-8bd5-0973861ea206" start_index="0" end="4b1b6ad3-ce7c-4889-8548-abf286ac1f92" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="3cb015ce-733f-4fcf-903e-13788ce4df4c" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="cfcd0d95-a227-4e8d-8bd5-0973861ea206" end_index="1" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="08f2e14c-ddae-47a6-855b-ef2aa385d614" start_index="0" end="3cb015ce-733f-4fcf-903e-13788ce4df4c" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "8b57c43c-4e2e-47af-876a-bd8f1c12ce46",
+  "IsCustomNode": true,
+  "Category": "Springs.Actions",
+  "Description": "Useful for when you want to combine an item on the list with every other item on the list. For example in list {1,2,3} , \"2\" will be paired up only with \"1\" and \"3\" and will not be paired up with itself.",
+  "Name": "ꟿ List.EveryOther",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "__Map(fn1,GetKeys(l1));",
+      "Id": "cfcd0d95a2274e8d8bd50973861ea206",
+      "Inputs": [
+        {
+          "Id": "2dc1427878074ab489abb718b9338900",
+          "Name": "fn1",
+          "Description": "fn1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6578d654adf8440e84a6ecb1008856af",
+          "Name": "l1",
+          "Description": "l1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cd2a9951a74b40b58daf062ae1cf8172",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.RemoveItemAtIndex@var[]..[],int[]",
+      "Id": "3cb015ce733f4fcf903e13788ce4df4c",
+      "Inputs": [
+        {
+          "Id": "e77caffa6cb44c4cb21a398730d9bf35",
+          "Name": "list",
+          "Description": "List to remove an item or items from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4ff25cd945b64308a24bd3d243a0f541",
+          "Name": "indices",
+          "Description": "Index or indices of the item(s) to be removed.\n\nint[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "59b4089b5b5d4d0bb418f64f3812b439",
+          "Name": "list",
+          "Description": "List with items removed.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Removes an item from the given list at the specified index.\n\nList.RemoveItemAtIndex (list: var[]..[], indices: int[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "list",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "08f2e14cddae47a6855bef2aa385d614",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1fd782050f8140d19a925fe59a1f3fa4",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "lists",
+      "Id": "4b1b6ad3ce7c48898548abf286ac1f92",
+      "Inputs": [
+        {
+          "Id": "3e31ce7a75b74a8e9b06d355d23aeb91",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "cd2a9951a74b40b58daf062ae1cf8172",
+      "End": "3e31ce7a75b74a8e9b06d355d23aeb91",
+      "Id": "1ef431c9ef164c2d94dd3811bb420069"
+    },
+    {
+      "Start": "59b4089b5b5d4d0bb418f64f3812b439",
+      "End": "2dc1427878074ab489abb718b9338900",
+      "Id": "02f912a7be444e2896fc97cabb12d6d7"
+    },
+    {
+      "Start": "1fd782050f8140d19a925fe59a1f3fa4",
+      "End": "6578d654adf8440e84a6ecb1008856af",
+      "Id": "e1f2228516414f7cbaf37d552c5841c6"
+    },
+    {
+      "Start": "1fd782050f8140d19a925fe59a1f3fa4",
+      "End": "e77caffa6cb44c4cb21a398730d9bf35",
+      "Id": "83da0426eda14f92b5e76eb50fbd8778"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "Id": "cfcd0d95a2274e8d8bd50973861ea206",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 436.675557859269,
+        "Y": 23.170569379734
+      },
+      {
+        "Id": "3cb015ce733f4fcf903e13788ce4df4c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "List.RemoveItemAtIndex",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 238.732942741101,
+        "Y": -33.2223391065001
+      },
+      {
+        "Id": "08f2e14cddae47a6855bef2aa385d614",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Input",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 73.2320697479872,
+        "Y": 37.2929345238881
+      },
+      {
+        "Id": "4b1b6ad3ce7c48898548abf286ac1f92",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Output",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 717.978811111141,
+        "Y": 18.5730919492832
+      }
+    ],
+    "Annotations": [],
+    "X": 36.885649756402,
+    "Y": 188.037195874594,
+    "Zoom": 0.674831658426865
+  }
+}

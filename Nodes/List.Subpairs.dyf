@@ -1,28 +1,172 @@
-<Workspace Version="1.2.1.3083" X="-294.854" Y="192.678" zoom="1.1575" ScaleFactor="1" Name="Springs.List.Subpairs" Description="Pair up each list item with the next one and drop the list item." ID="e457a7aa-33e4-401d-9abc-f7a9ea925cad" Category="Springs.Core.List">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1a838be4-f2a1-40d9-92fc-3a5048ccd977" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="DSCore.List.DropItems(DSCore.&#xA;List.Sublists(l1,0..1,1),-1);" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4e645eca-1467-463d-a294-8d50197829dc" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="73.6" y="-4" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="list:var[]..[]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="a5d42d32-34dc-45a7-97f9-b799877f1713" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="575.377537796976" y="-8.29373650107988" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="lists" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="1a838be4-f2a1-40d9-92fc-3a5048ccd977" start_index="0" end="a5d42d32-34dc-45a7-97f9-b799877f1713" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="4e645eca-1467-463d-a294-8d50197829dc" start_index="0" end="1a838be4-f2a1-40d9-92fc-3a5048ccd977" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Background Preview" eyeX="13.4373041798721" eyeY="99.6964800421176" eyeZ="39.3309208553611" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "e457a7aa-33e4-401d-9abc-f7a9ea925cad",
+  "IsCustomNode": true,
+  "Category": "Springs.Actions",
+  "Description": "Pair up each list item with the next one and drop the list item.",
+  "Name": "ꟿ List.Subpairs",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "DSCore.List.DropItems(DSCore.\nList.Sublists(l1,0..1,1),-1);",
+      "Id": "1a838be4f2a140d992fc3a5048ccd977",
+      "Inputs": [
+        {
+          "Id": "e664e47bcd9540c98c6b4398507b4dd0",
+          "Name": "l1",
+          "Description": "l1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2e8297c845534f919c354f50f0cc4aa4",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "list",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "4e645eca1467463da2948d50197829dc",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "288746e135774bfca0e81ac982763e75",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "lists",
+      "Id": "a5d42d3234dc45a797f9b799877f1713",
+      "Inputs": [
+        {
+          "Id": "123e5e50b51b487a89aeeb669f974167",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2e8297c845534f919c354f50f0cc4aa4",
+      "End": "123e5e50b51b487a89aeeb669f974167",
+      "Id": "aa455c71577e45e3b900c6f634d64883"
+    },
+    {
+      "Start": "288746e135774bfca0e81ac982763e75",
+      "End": "e664e47bcd9540c98c6b4398507b4dd0",
+      "Id": "92f8cac51f434b3b9df20a209b07d613"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 13.437304496765137,
+      "EyeY": 99.696479797363281,
+      "EyeZ": 39.3309211730957,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "Id": "1a838be4f2a140d992fc3a5048ccd977",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "4e645eca1467463da2948d50197829dc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Input",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 73.6,
+        "Y": -4.0
+      },
+      {
+        "Id": "a5d42d3234dc45a797f9b799877f1713",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Output",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 575.377537796976,
+        "Y": -8.29373650107988
+      }
+    ],
+    "Annotations": [],
+    "X": -294.854,
+    "Y": 192.678,
+    "Zoom": 1.1575
+  }
+}

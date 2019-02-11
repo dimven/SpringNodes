@@ -1,80 +1,279 @@
-<Workspace Version="1.3.1.1736" X="-239.242482710279" Y="163.828626744123" zoom="2.22719516868277" ScaleFactor="1" Name="Springs.Element.IsCutting" Description="Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided." ID="88c455c9-dee7-4336-8e35-382e0b86018a" Category="Springs.Revit.Element">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="Cuboid" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Cuboid.ByLengths" resolvedName="Autodesk.DesignScript.Geometry.Cuboid" assemblyName="ProtoGeometry.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <PythonNodeModels.PythonNode guid="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" type="PythonNodeModels.PythonNode" nickname="Python Script" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
-      <PortInfo index="0" default="False" />
-      <Script>import clr
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-doc = DocumentManager.Instance.CurrentDBDocument
-
-clr.AddReference("RevitAPI")
-from Autodesk.Revit.DB import *
-
-clr.AddReference("RevitNodes")
-import Revit
-clr.ImportExtensions(Revit.Elements)
-
-def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
-	else: return [obj1]
-
-elements = UnwrapElement(tolist(IN[0]))
-out1 = []
-cut_el = []
-
-cutU = InstanceVoidCutUtils
-for i in xrange(len(elements)):
-	try:
-		if cutU.IsVoidInstanceCuttingElement(elements[i]):
-			cut1 = cutU.GetElementsBeingCut(elements[i])
-			if cut1.Count != 0:
-				cut1 = [doc.GetElement(id).ToDSType(True) for id in cut1]
-			out1.append(True)
-			cut_el.append(cut1)
-		else:
-			out1.append(False)
-			cut_el.append([])
-	except:
-		out1.append(False)
-		cut_el.append([])		
-
-OUT = out1, cut_el</Script>
-    </PythonNodeModels.PythonNode>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="8bca541f-0b8e-4e8a-8ab5-2a94135be152" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="96.8" y="-3.20000000000005" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="element:var[]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7e6e460e-cf0d-4d96-913a-7d488ebdf429" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="547.219336193912" y="-2.57101069623292" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="bool" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="3a19e448-8901-4aa1-8698-ea3975b79998" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="545.697825757344" y="54.7225636142849" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="cutElements" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="e23369ce-7f52-4cc7-889f-ae12d8306ac1" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="402" y="3.4487443848041" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="res[0];&#xA;res[1];" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" start_index="0" end="e23369ce-7f52-4cc7-889f-ae12d8306ac1" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="8bca541f-0b8e-4e8a-8ab5-2a94135be152" start_index="0" end="de8ccb08-8948-4810-baf1-f4a8a7e88f4e" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="0" end="7e6e460e-cf0d-4d96-913a-7d488ebdf429" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e23369ce-7f52-4cc7-889f-ae12d8306ac1" start_index="1" end="3a19e448-8901-4aa1-8698-ea3975b79998" end_index="0" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Background Preview" eyeX="28.1210126766283" eyeY="51.1483487654114" eyeZ="53.2504072098136" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "88c455c9-dee7-4336-8e35-382e0b86018a",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Query",
+  "Description": "Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided.",
+  "Name": "ꟿ Element.IsCutting",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Cuboid": {
+        "Key": "Autodesk.DesignScript.Geometry.Cuboid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Sphere": {
+        "Key": "Autodesk.DesignScript.Geometry.Sphere",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Cuboid.ByLengths": {
+        "Key": "Autodesk.DesignScript.Geometry.Cuboid",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = UnwrapElement(tolist(IN[0]))\r\nout1 = []\r\ncut_el = []\r\n\r\ncutU = InstanceVoidCutUtils\r\nfor i in xrange(len(elements)):\r\n\ttry:\r\n\t\tif cutU.IsVoidInstanceCuttingElement(elements[i]):\r\n\t\t\tcut1 = cutU.GetElementsBeingCut(elements[i])\r\n\t\t\tif cut1.Count != 0:\r\n\t\t\t\tcut1 = [doc.GetElement(id).ToDSType(True) for id in cut1]\r\n\t\t\tout1.append(True)\r\n\t\t\tcut_el.append(cut1)\r\n\t\telse:\r\n\t\t\tout1.append(False)\r\n\t\t\tcut_el.append([])\r\n\texcept:\r\n\t\tout1.append(False)\r\n\t\tcut_el.append([])\t\t\r\n\r\nOUT = out1, cut_el",
+      "VariableInputPorts": true,
+      "Id": "de8ccb0889484810baf1f4a8a7e88f4e",
+      "Inputs": [
+        {
+          "Id": "ba9c7117de814ad9b8785ad725a8b42e",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "655f99f1611845d285beaada7df6ea1c",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "element",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "8bca541f0b8e4e8a8ab52a94135be152",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "59d273cb3f2c49c18d093537b24ae86a",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "bool",
+      "Id": "7e6e460ecf0d4d96913a7d488ebdf429",
+      "Inputs": [
+        {
+          "Id": "a6f39acdec644ab9999b758e7c0d203c",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "cutElements",
+      "Id": "3a19e44889014aa18698ea3975b79998",
+      "Inputs": [
+        {
+          "Id": "921f383adc5547628f21884a32b4e4a5",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "res[0];\nres[1];",
+      "Id": "e23369ce7f524cc7889fae12d8306ac1",
+      "Inputs": [
+        {
+          "Id": "1be88af355db44fea5ea193bf3ee83bd",
+          "Name": "res",
+          "Description": "res",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bf5b2612d02d4dd8baa9d1e214e5574d",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "366e277d17d8453bad993f818a76af10",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "655f99f1611845d285beaada7df6ea1c",
+      "End": "1be88af355db44fea5ea193bf3ee83bd",
+      "Id": "2d0710d5cf354973b8fd302067498a69"
+    },
+    {
+      "Start": "59d273cb3f2c49c18d093537b24ae86a",
+      "End": "ba9c7117de814ad9b8785ad725a8b42e",
+      "Id": "f69eafd7a578449085c174645a270c2c"
+    },
+    {
+      "Start": "bf5b2612d02d4dd8baa9d1e214e5574d",
+      "End": "a6f39acdec644ab9999b758e7c0d203c",
+      "Id": "c00c9197c5d0490e855032b88924aba8"
+    },
+    {
+      "Start": "366e277d17d8453bad993f818a76af10",
+      "End": "921f383adc5547628f21884a32b4e4a5",
+      "Id": "17ff8a6a2edc4f6c9088632a291fc34f"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 28.121011734008789,
+      "EyeY": 51.148349761962891,
+      "EyeZ": 53.250408172607422,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "Id": "de8ccb0889484810baf1f4a8a7e88f4e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "8bca541f0b8e4e8a8ab52a94135be152",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Input",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 96.8,
+        "Y": -3.20000000000005
+      },
+      {
+        "Id": "7e6e460ecf0d4d96913a7d488ebdf429",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Output",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 547.219336193912,
+        "Y": -2.57101069623292
+      },
+      {
+        "Id": "3a19e44889014aa18698ea3975b79998",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Output",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 545.697825757344,
+        "Y": 54.7225636142849
+      },
+      {
+        "Id": "e23369ce7f524cc7889fae12d8306ac1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 402.0,
+        "Y": 3.4487443848041
+      }
+    ],
+    "Annotations": [],
+    "X": -239.242482710279,
+    "Y": 163.828626744123,
+    "Zoom": 2.22719516868277
+  }
+}

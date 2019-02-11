@@ -1,52 +1,316 @@
-<Workspace Version="1.3.2.2480" X="95.3043876791202" Y="38.3315092778099" zoom="1.27771698410772" ScaleFactor="1" Name="Springs.Quads.ByPointMatrix" Description="Creates a CCW or CW list of quad pairs from a rectangular nested list of points." ID="3a9e5c1b-8e61-481e-9d3d-07053a5f4b45" Category="Springs.Geometry">
-  <NamespaceResolutionMap>
-    <ClassMap partialName="Color" resolvedName="DSCore.Color" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Vector" resolvedName="Autodesk.DesignScript.Geometry.Vector" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="DSCore.List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Math.PI" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="Line.ByBestFitThroughPoints" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Plane" resolvedName="Autodesk.DesignScript.Geometry.Plane" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="BoundingBox" resolvedName="Autodesk.DesignScript.Geometry.BoundingBox" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="IndexGroup" resolvedName="Autodesk.DesignScript.Geometry.IndexGroup" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="DesignScript.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Autodesk.DesignScript.Geometry.Mesh" resolvedName="Autodesk.DesignScript.Geometry.Mesh" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="PolyCurve" resolvedName="Autodesk.DesignScript.Geometry.PolyCurve" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Math.Log" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="CoordinateSystem" resolvedName="Autodesk.DesignScript.Geometry.CoordinateSystem" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Polygon" resolvedName="Autodesk.DesignScript.Geometry.Polygon" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
-    <ClassMap partialName="Math.lo" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
-    <ClassMap partialName="List.Crea" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
-  </NamespaceResolutionMap>
-  <Elements>
-    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="32783bb5-111c-44f1-9f93-ca29b7e1a337" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="pts;&#xA;ccw;&#xA;outp = [Imperative]{&#xA;quads = {};&#xA;u = Count(pts) - 2;&#xA;v = Count(pts[0]) - 2;&#xA;u1 = u + 1;&#xA;for (i in 0..u)&#xA;{&#xA;	for (j in 0..v)&#xA;	{&#xA;		n = u1 * j + i;&#xA;		if (ccw)&#xA;		{&#xA;			quads[n] = {pts[i][j],&#xA;						pts[i][j+1],&#xA;						pts[i+1][j+1],&#xA;						pts[i+1][j]};&#xA;		}&#xA;		else&#xA;		{&#xA;			quads[n] = {pts[i][j],&#xA;						pts[i+1][j],&#xA;						pts[i+1][j+1],&#xA;						pts[i][j+1]};&#xA;		}&#xA;	}&#xA;}&#xA;return = quads;&#xA;};" ShouldFocus="false">
-      <PortInfo index="0" default="False" />
-      <PortInfo index="1" default="False" />
-    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="e908788f-8fb0-4721-b8f9-1f105e64f8bf" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="20.7368088055181" y="-4.11293317567264" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="points:var[][]" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="dd63dc95-8fb8-43b6-b1cc-6d5549a638b6" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="19.9337277509575" y="64.2094547855489" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
-      <Symbol value="CCW : bool = true" />
-    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
-    <Dynamo.Graph.Nodes.CustomNodes.Output guid="de3e261c-abff-4f2d-b53b-e81527ed9d47" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="663.143539339583" y="30.3530766196141" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
-      <PortInfo index="0" default="False" />
-      <Symbol value="quads" />
-    </Dynamo.Graph.Nodes.CustomNodes.Output>
-  </Elements>
-  <Connectors>
-    <Dynamo.Graph.Connectors.ConnectorModel start="32783bb5-111c-44f1-9f93-ca29b7e1a337" start_index="2" end="de3e261c-abff-4f2d-b53b-e81527ed9d47" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="e908788f-8fb0-4721-b8f9-1f105e64f8bf" start_index="0" end="32783bb5-111c-44f1-9f93-ca29b7e1a337" end_index="0" portType="0" />
-    <Dynamo.Graph.Connectors.ConnectorModel start="dd63dc95-8fb8-43b6-b1cc-6d5549a638b6" start_index="0" end="32783bb5-111c-44f1-9f93-ca29b7e1a337" end_index="1" portType="0" />
-  </Connectors>
-  <Notes />
-  <Annotations />
-  <Presets />
-  <Cameras>
-    <Camera Name="Background Preview" eyeX="1555.67072252384" eyeY="-0.120085845842908" eyeZ="247.621348886197" lookX="-151.96634834708" lookY="-136.172089730069" lookZ="-17.2858134153259" upX="-0.486246890059679" upY="0.872069377088148" upZ="-0.0553094422857056" />
-  </Cameras>
-</Workspace>
+{
+  "Uuid": "3a9e5c1b-8e61-481e-9d3d-07053a5f4b45",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Creates a CCW or CW list of quad pairs from a rectangular nested list of points.",
+  "Name": "ꟿ Quads.ByPointMatrix",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Color": {
+        "Key": "DSCore.Color",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Math.PI": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Line.ByBestFitThroughPoints": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "IndexGroup": {
+        "Key": "Autodesk.DesignScript.Geometry.IndexGroup",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DesignScript.Mesh": {
+        "Key": "Autodesk.DesignScript.Geometry.Mesh",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Mesh": {
+        "Key": "Autodesk.DesignScript.Geometry.Mesh",
+        "Value": "ProtoGeometry.dll"
+      },
+      "PolyCurve": {
+        "Key": "Autodesk.DesignScript.Geometry.PolyCurve",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Math.Log": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "CoordinateSystem": {
+        "Key": "Autodesk.DesignScript.Geometry.CoordinateSystem",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Polygon": {
+        "Key": "Autodesk.DesignScript.Geometry.Polygon",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Circle": {
+        "Key": "Autodesk.DesignScript.Geometry.Circle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Math.lo": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "List.Crea": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "pts;\nccw;\noutp = [Imperative]{\nquads = [];\nu = Count(pts) - 2;\nv = Count(pts[0]) - 2;\nu1 = u + 1;\nfor (i in 0..u)\n{\n\tfor (j in 0..v)\n\t{\n\t\tn = u1 * j + i;\n\t\tif (ccw)\n\t\t{\n\t\t\tquads[n] = [pts[i][j],\n\t\t\t\t\t\tpts[i][j+1],\n\t\t\t\t\t\tpts[i+1][j+1],\n\t\t\t\t\t\tpts[i+1][j]];\n\t\t}\n\t\telse\n\t\t{\n\t\t\tquads[n] = [pts[i][j],\n\t\t\t\t\t\tpts[i+1][j],\n\t\t\t\t\t\tpts[i+1][j+1],\n\t\t\t\t\t\tpts[i][j+1]];\n\t\t}\n\t}\n}\nreturn = quads;\n};",
+      "Id": "32783bb5111c44f19f93ca29b7e1a337",
+      "Inputs": [
+        {
+          "Id": "58f9328aecbc4613a84f119a15bd81d2",
+          "Name": "pts",
+          "Description": "pts",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "659122c4b81543ae97aab5027719a267",
+          "Name": "ccw",
+          "Description": "ccw",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f1ba7cb8f13e4efe8aee0f127c3cf1cd",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "05ce440dd37d481eaae7536ec46b5675",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f5ca191caebd41ae86d27b93040582be",
+          "Name": "",
+          "Description": "outp",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "points",
+        "TypeName": "var",
+        "TypeRank": 2,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "e908788f8fb04721b8f91f105e64f8bf",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ddb3186192db4d63a4c5a0a0a24d3c78",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "CCW",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "true",
+        "Description": ""
+      },
+      "Id": "dd63dc958fb843b6b1cc6d5549a638b6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c70e7b1b87864769bb159175b9f8aeda",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "NodeType": "OutputNode",
+      "ElementResolver": null,
+      "Symbol": "quads",
+      "Id": "de3e261cabff4f2db53be81527ed9d47",
+      "Inputs": [
+        {
+          "Id": "5dc9c84dc4ea43bab3416abce1e31aee",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f5ca191caebd41ae86d27b93040582be",
+      "End": "5dc9c84dc4ea43bab3416abce1e31aee",
+      "Id": "f6d802dd7f244dde9ad7042a1fc4f0e4"
+    },
+    {
+      "Start": "ddb3186192db4d63a4c5a0a0a24d3c78",
+      "End": "58f9328aecbc4613a84f119a15bd81d2",
+      "Id": "df1d84233f514ecfb70ff8206e87ad93"
+    },
+    {
+      "Start": "c70e7b1b87864769bb159175b9f8aeda",
+      "End": "659122c4b81543ae97aab5027719a267",
+      "Id": "2dda0cd3bba44b269e87e102c123df3d"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 1555.6707763671875,
+      "EyeY": -0.12008584290742874,
+      "EyeZ": 247.62135314941406,
+      "LookX": -151.96635437011719,
+      "LookY": -136.17208862304688,
+      "LookZ": -17.28581428527832,
+      "UpX": -0.48624688386917114,
+      "UpY": 0.87206935882568359,
+      "UpZ": -0.055309440940618515
+    },
+    "NodeViews": [
+      {
+        "Id": "32783bb5111c44f19f93ca29b7e1a337",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Code Block",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 250.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "e908788f8fb04721b8f91f105e64f8bf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Input",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 20.7368088055181,
+        "Y": -4.11293317567264
+      },
+      {
+        "Id": "dd63dc958fb843b6b1cc6d5549a638b6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Input",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 19.9337277509575,
+        "Y": 64.2094547855489
+      },
+      {
+        "Id": "de3e261cabff4f2db53be81527ed9d47",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Output",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 663.143539339583,
+        "Y": 30.3530766196141
+      }
+    ],
+    "Annotations": [],
+    "X": 95.3043876791202,
+    "Y": 38.3315092778099,
+    "Zoom": 1.27771698410772
+  }
+}

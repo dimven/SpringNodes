@@ -59,7 +59,7 @@ class WatchBox(Form):
 
 		self.button1 = Button()
 		self.button1.Text = 'Close'
-		self.button1.Font = Font("Calibri", 10)
+		self.button1.Font = Font(IN[3], 10)
 		self.button1.AutoSize = True
 		self.button1.Width = 200
 		self.button1.ForeColor = Color.FromArgb(234,234,234)
@@ -69,7 +69,7 @@ class WatchBox(Form):
 		self.box1 = RichTextBox()
 		self.box1.Multiline = True
 		self.box1.Location = Point(5, 5)
-		self.box1.Font = Font("Calibri", 12)
+		self.box1.Font = Font(IN[3], 12)
 		self.box1.BackColor = Color.FromArgb(53,53,53)
 		self.box1.ForeColor = Color.FromArgb(234,234,234)
 		self.box1.DetectUrls = True

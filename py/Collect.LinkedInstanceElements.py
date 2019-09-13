@@ -1,4 +1,4 @@
-# Copyright(c) 2018, Dimitar Venkov
+# Copyright(c) 2019, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
 
@@ -15,8 +15,10 @@ doc = DocumentManager.Instance.CurrentDBDocument
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import FilteredElementCollector, RevitLinkType, ElementMulticategoryFilter, ElementId
+import Autodesk.Revit.DB as DB
 
 from System.Collections.Generic import List
+import System
 
 def tolist(obj1):
 	if hasattr(obj1,"__iter__"): return obj1
@@ -38,9 +40,18 @@ for link in links:
 	try:
 		if RevitLinkType.IsLoaded(doc, link.GetTypeId() ):
 			linkDoc = link.GetLinkDocument()
-			catId = List[ElementId](c.Id for c in cats)
-			catFil = ElementMulticategoryFilter(catId)
-			fec = FilteredElementCollector(linkDoc).WhereElementIsNotElementType().WherePasses(catFil)
+			
+			if isinstance(cats[0], DB.Category):
+				catId = List[DB.ElementId](c.Id for c in cats)
+				filter = DB.ElementMulticategoryFilter(catId)
+			elif isinstance(cats[0], DB.ElementType):
+				types = List[System.Type](t.GetType() for t in cats)
+				filter = DB.ElementMulticlassFilter(types)
+			else:
+				types = List[System.Type](cats)
+				filter = DB.ElementMulticlassFilter(types)
+			
+			fec = FilteredElementCollector(linkDoc).WhereElementIsNotElementType().WherePasses(filter)
 			linkEls = []
 			for e in fec:
 				try:
@@ -51,7 +62,7 @@ for link in links:
 			elements.append(linkEls)
 			transforms.append(link.GetTotalTransform().ToCoordinateSystem(1) )
 			fec.Dispose()
-			catFil.Dispose()
+			filter.Dispose()
 		else:
 			elements.append('Linked document is unloaded')
 			transforms.append(None)

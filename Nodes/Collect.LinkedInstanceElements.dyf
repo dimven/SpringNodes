@@ -18,7 +18,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import FilteredElementCollector, RevitLinkType, ElementMulticategoryFilter, ElementId\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nlinks = UnwrapElement(tolist(IN[0]) )\r\ncats = UnwrapElement(tolist(IN[1]) )\r\nelements, transforms = [], []\r\nOUT = elements, transforms\r\n\r\nueWrapper = None\r\nwrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\nfor w in wrappers:\r\n\tif w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n\t\tueWrapper = w\r\n\t\tbreak\r\n\r\nfor link in links:\r\n\ttry:\r\n\t\tif RevitLinkType.IsLoaded(doc, link.GetTypeId() ):\r\n\t\t\tlinkDoc = link.GetLinkDocument()\r\n\t\t\tcatId = List[ElementId](c.Id for c in cats)\r\n\t\t\tcatFil = ElementMulticategoryFilter(catId)\r\n\t\t\tfec = FilteredElementCollector(linkDoc).WhereElementIsNotElementType().WherePasses(catFil)\r\n\t\t\tlinkEls = []\r\n\t\t\tfor e in fec:\r\n\t\t\t\ttry:\r\n\t\t\t\t\tlinkEls.append(e.ToDSType(True) )\r\n\t\t\t\texcept:\r\n\t\t\t\t\tif ueWrapper:\r\n\t\t\t\t\t\tlinkEls.append(ueWrapper.Invoke(None, (e, True) ) )\r\n\t\t\telements.append(linkEls)\r\n\t\t\ttransforms.append(link.GetTotalTransform().ToCoordinateSystem(1) )\r\n\t\t\tfec.Dispose()\r\n\t\t\tcatFil.Dispose()\r\n\t\telse:\r\n\t\t\telements.append('Linked document is unloaded')\r\n\t\t\ttransforms.append(None)\r\n\texcept Exception, ex:\r\n\t\telements.append(str(ex) )\r\n\t\ttransforms.append(None)",
+      "Code": "# Copyright(c) 2019, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import FilteredElementCollector, RevitLinkType, ElementMulticategoryFilter, ElementId\r\nimport Autodesk.Revit.DB as DB\r\n\r\nfrom System.Collections.Generic import List\r\nimport System\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nlinks = UnwrapElement(tolist(IN[0]) )\r\ncats = UnwrapElement(tolist(IN[1]) )\r\nelements, transforms = [], []\r\nOUT = elements, transforms\r\n\r\nueWrapper = None\r\nwrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\nfor w in wrappers:\r\n\tif w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n\t\tueWrapper = w\r\n\t\tbreak\r\n\r\nfor link in links:\r\n\ttry:\r\n\t\tif RevitLinkType.IsLoaded(doc, link.GetTypeId() ):\r\n\t\t\tlinkDoc = link.GetLinkDocument()\r\n\t\t\t\r\n\t\t\tif isinstance(cats[0], DB.Category):\r\n\t\t\t\tcatId = List[DB.ElementId](c.Id for c in cats)\r\n\t\t\t\tfilter = DB.ElementMulticategoryFilter(catId)\r\n\t\t\telif isinstance(cats[0], DB.ElementType):\r\n\t\t\t\ttypes = List[System.Type](t.GetType() for t in cats)\r\n\t\t\t\tfilter = DB.ElementMulticlassFilter(types)\r\n\t\t\telse:\r\n\t\t\t\ttypes = List[System.Type](cats)\r\n\t\t\t\tfilter = DB.ElementMulticlassFilter(types)\r\n\t\t\t\r\n\t\t\tfec = FilteredElementCollector(linkDoc).WhereElementIsNotElementType().WherePasses(filter)\r\n\t\t\tlinkEls = []\r\n\t\t\tfor e in fec:\r\n\t\t\t\ttry:\r\n\t\t\t\t\tlinkEls.append(e.ToDSType(True) )\r\n\t\t\t\texcept:\r\n\t\t\t\t\tif ueWrapper:\r\n\t\t\t\t\t\tlinkEls.append(ueWrapper.Invoke(None, (e, True) ) )\r\n\t\t\telements.append(linkEls)\r\n\t\t\ttransforms.append(link.GetTotalTransform().ToCoordinateSystem(1) )\r\n\t\t\tfec.Dispose()\r\n\t\t\tfilter.Dispose()\r\n\t\telse:\r\n\t\t\telements.append('Linked document is unloaded')\r\n\t\t\ttransforms.append(None)\r\n\texcept Exception, ex:\r\n\t\telements.append(str(ex) )\r\n\t\ttransforms.append(None)",
       "VariableInputPorts": true,
       "Id": "4d05e529d54145389713ca203784c5bc",
       "Inputs": [
@@ -94,7 +94,7 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
       "NodeType": "InputNode",
       "Parameter": {
-        "Name": "category",
+        "Name": "CategoryOrType",
         "TypeName": "var",
         "TypeRank": 1,
         "DefaultValue": null,
@@ -119,7 +119,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
       "NodeType": "OutputNode",
-      "ElementResolver": null,
       "Symbol": "elements",
       "Id": "66772f0d8f8d4145805ed49dd692712b",
       "Inputs": [
@@ -179,7 +178,6 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
       "NodeType": "OutputNode",
-      "ElementResolver": null,
       "Symbol": "transform",
       "Id": "0ca5e986503d476187b483ab1ceb25c1",
       "Inputs": [
@@ -263,7 +261,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.0.3.8810",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -281,73 +279,73 @@
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "4d05e529d54145389713ca203784c5bc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 249.07893826968,
         "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "f324640041854769b996369fa96e6042",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 3.13660476847046,
-        "Y": -15.9429932638123
+        "X": -5.1529508044089454,
+        "Y": -15.942993263812298
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "5efc17642e334182b564c8454a714c31",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2.54326851476809,
-        "Y": 42.9742381712658
+        "X": -5.7462870581113172,
+        "Y": 42.974238171265796
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "66772f0d8f8d4145805ed49dd692712b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 537.428376638417,
         "Y": -41.9772371497245
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "6fcb4bbeced24f009a08d26207cc6f67",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 386.338434323298,
         "Y": 3.63219009912015
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "0ca5e986503d476187b483ab1ceb25c1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 536.10962206069,
         "Y": 16.8270727404909
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "4857ef3742d44b92bdc7c3b190ff44dc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2.74213742972327,
+        "X": -5.5474181431561362,
         "Y": 101.489815823935
       }
     ],

@@ -60,7 +60,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import *\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import RevitLinkInstance, Transform \r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nsel1 = uidoc.Selection\r\not1 = Selection.ObjectType.Element\r\not2 = Selection.ObjectType.LinkedElement\r\nli_ref = sel1.PickObject(ot1, \"Select a link instance first.\")\r\nlink1 = doc.GetElement(li_ref.ElementId)\r\nif isinstance(link1, RevitLinkInstance):\r\n\tel_ref = sel1.PickObject(ot2, \"Pick a linked element.\")\r\n\tLinkDoc = link1.GetLinkDocument()\r\n\ttf1 = link1.GetTotalTransform().ToCoordinateSystem(True)\r\n\tOUT = LinkDoc.GetElement(el_ref.LinkedElementId).ToDSType(True), tf1\r\nelse:\r\n\tOUT = link1, Transform.Identity.ToCoordinateSystem(True)",
+      "Code": "# Copyright(c) 2019, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import Selection\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import RevitLinkInstance, Transform \r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nsel1 = uidoc.Selection\r\not = Selection.ObjectType.LinkedElement\r\nel_ref = sel1.PickObject(ot, \"Pick a linked element.\")\r\nlinkInst = doc.GetElement(el_ref.ElementId)\r\nlinkDoc = linkInst.GetLinkDocument()\r\nlinkEl = linkDoc.GetElement(el_ref.LinkedElementId).ToDSType(1)\r\ntf1 = linkInst.GetTotalTransform().ToCoordinateSystem(1)\r\nOUT = linkEl, tf1",
       "VariableInputPorts": true,
       "Id": "4d84601c19ba4b069bf0318406c41c43",
       "Inputs": [
@@ -247,8 +247,8 @@
       }
     ],
     "Annotations": [],
-    "X": -68.5541521300105,
-    "Y": 128.421128200597,
-    "Zoom": 2.45236268152479
+    "X": -803.94666013091648,
+    "Y": 19.608218428046598,
+    "Zoom": 4.0
   }
 }

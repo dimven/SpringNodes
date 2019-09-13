@@ -18,6 +18,12 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 203.1.0 130919
+- New node: `List.MinIndex` is useful for when your list consists of FP values
+- `Collect.LinkedInstanceElements` now works with API types too
+- `Mesh.ToPolySurface` will be single-threaded by default to improve stability. You can manually override that and specify the number of threads
+- The `SelectLinkedElement` node will not ask you to first pick a linked instance any more
+
 #### 202.1.1 250219
 - Added new utility nodes:
     - Utility.GetData/SetData can be an effective way to reduce the amount of wires in your graph

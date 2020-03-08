@@ -18,6 +18,23 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+#### 203.2.0 090320
+- New nodes:
+    - Application.OpenViews lists all the views currently open in the Revit UI.
+    - BoundingBox.ScaleByDistance scales the bb by fixed distances.
+    - Collect.View3DTemplates outputs all 3d view templates as unknown elements (we can't return them as view elements due to dynamo limitations).
+    - FilePath.CanWriteTo checks if we can write to a specified file path.
+    - FilledRegion.ByCurves+ allows us to create regions with multiple curve loops.
+    - Line.IsInPlane checks if a line lies in a given plane.
+    - List.SubpairsWrapped adds the first element to the end (wraps the list) and pairs the items as usual.
+    - Math.Median calculate a median value from a list of numbers.
+    - Mesh.VolumeArea gets the volume and the area of a mesh; works with both built in meshes and toolkit meshes based on math from geometry3sharp.\r\n\r\nNote that if triangles don't define closed region, volume is probably nonsense.
+    - RevitLinkType.IsLoaded checks if a rvt link is loaded.
+    - Surface.OuterPerimeterCurves returns only the outer perimeter of a surface, dropping any inner openings.
+    - TkMesh.Flatten sets the Z coordinate of each vertex of the mesh to the desired value.
+    - TkMesh.Thicken will thicken a surface mesh in the provided direction and by the supplied distance.
+- Minor fixes to the Collect.Sheets/Views nodes due to api changes.
+
 #### 203.1.0 130919
 - New node: `List.MinIndex` is useful for when your list consists of FP values
 - `Collect.LinkedInstanceElements` now works with API types too

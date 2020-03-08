@@ -1,14 +1,14 @@
 {
-  "Uuid": "e457a7aa-33e4-401d-9abc-f7a9ea925cad",
+  "Uuid": "58fab5b5-131a-486d-af3d-b476493f4268",
   "IsCustomNode": true,
   "Category": "Springs.Actions",
-  "Description": "Pair up each list item with the next one.",
-  "Name": "ꟿ List.Subpairs",
+  "Description": "Wrap the list and pair up each list item with the next one.",
+  "Name": "ꟿ List.SubpairsWrapped",
   "ElementResolver": {
     "ResolutionMap": {
-      "List": {
-        "Key": "DSCore.List",
-        "Value": "DSCoreNodes.dll"
+      "PolyCurve": {
+        "Key": "Autodesk.DesignScript.Geometry.PolyCurve",
+        "Value": "ProtoGeometry.dll"
       },
       "DSCore.List": {
         "Key": "DSCore.List",
@@ -22,11 +22,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "DSCore.List.DropItems(DSCore.\nList.Sublists(l1,0..1,1),-1);",
-      "Id": "1a838be4f2a140d992fc3a5048ccd977",
+      "Code": "DSCore.List.DropItems(DSCore.\n  List.Sublists(List.AddItemToEnd(l1[0],\n  l1),0..1,1),-1);",
+      "Id": "2c5efa3783b84ac7bc1ecdc9deeb755a",
       "Inputs": [
         {
-          "Id": "e664e47bcd9540c98c6b4398507b4dd0",
+          "Id": "9ced07828b8f472b977a0887e4e0aed3",
           "Name": "l1",
           "Description": "l1",
           "UsingDefaultValue": false,
@@ -37,7 +37,7 @@
       ],
       "Outputs": [
         {
-          "Id": "2e8297c845534f919c354f50f0cc4aa4",
+          "Id": "c8c2b019f20f41bbb5803cac9089fb97",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -59,11 +59,11 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "4e645eca1467463da2948d50197829dc",
+      "Id": "097ce8e999be425c8f348ae598c944ea",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "288746e135774bfca0e81ac982763e75",
+          "Id": "d00237b58e9f46e1b194ffee55136614",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -80,10 +80,10 @@
       "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "lists",
-      "Id": "a5d42d3234dc45a797f9b799877f1713",
+      "Id": "05472ebe7f734c8e97f0b4d5ac6b2285",
       "Inputs": [
         {
-          "Id": "123e5e50b51b487a89aeeb669f974167",
+          "Id": "da4277e33a1e43239d02e578bbaae2b7",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -99,14 +99,14 @@
   ],
   "Connectors": [
     {
-      "Start": "2e8297c845534f919c354f50f0cc4aa4",
-      "End": "123e5e50b51b487a89aeeb669f974167",
-      "Id": "aa455c71577e45e3b900c6f634d64883"
+      "Start": "c8c2b019f20f41bbb5803cac9089fb97",
+      "End": "da4277e33a1e43239d02e578bbaae2b7",
+      "Id": "aba5f20678a849d09f6e3c1c52d44114"
     },
     {
-      "Start": "288746e135774bfca0e81ac982763e75",
-      "End": "e664e47bcd9540c98c6b4398507b4dd0",
-      "Id": "92f8cac51f434b3b9df20a209b07d613"
+      "Start": "d00237b58e9f46e1b194ffee55136614",
+      "End": "9ced07828b8f472b977a0887e4e0aed3",
+      "Id": "8aa1df2d36434a28974c4b4c278531a6"
     }
   ],
   "Dependencies": [],
@@ -121,51 +121,51 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -67957.802410128148,
-      "EyeY": 68610.274882289348,
-      "EyeZ": 7975.5805986286177,
-      "LookX": -1442.317257231829,
-      "LookY": -66374.189936123323,
-      "LookZ": -24933.828958964223,
-      "UpX": -0.048432605684251361,
-      "UpY": 0.54463903501502664,
-      "UpZ": -0.83727092642975076
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
     "NodeViews": [
       {
-        "Id": "1a838be4f2a140d992fc3a5048ccd977",
+        "Id": "2c5efa3783b84ac7bc1ecdc9deeb755a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Code Block",
         "ShowGeometry": true,
         "Excluded": false,
-        "X": 250.0,
+        "X": 0.0,
         "Y": 0.0
       },
       {
-        "Id": "4e645eca1467463da2948d50197829dc",
+        "Id": "097ce8e999be425c8f348ae598c944ea",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Input",
         "ShowGeometry": true,
         "Excluded": false,
-        "X": 73.6,
-        "Y": -4.0
+        "X": 0.0,
+        "Y": 0.0
       },
       {
-        "Id": "a5d42d3234dc45a797f9b799877f1713",
+        "Id": "05472ebe7f734c8e97f0b4d5ac6b2285",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Name": "Output",
         "ShowGeometry": true,
         "Excluded": false,
-        "X": 575.377537796976,
-        "Y": -8.29373650107988
+        "X": 0.0,
+        "Y": 0.0
       }
     ],
     "Annotations": [],
-    "X": 326.146,
-    "Y": 177.678,
-    "Zoom": 1.1575
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
   }
 }

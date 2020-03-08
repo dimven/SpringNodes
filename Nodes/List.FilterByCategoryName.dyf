@@ -18,7 +18,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nfrom itertools import imap\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = tolist(IN[0])\r\nfilter = map(str.lower, imap(str, tolist(IN[1]) ) )\r\nin1, out1, nulls = [], [], []\r\nOUT = in1, out1, nulls\r\n\r\nfor e in elements:\r\n\tc1 = UnwrapElement(e).Category\r\n\tif c1 is None:\r\n\t\tnulls.append(e)\r\n\telse:\r\n\t\tn1 = c1.Name.lower()\r\n\t\tif any(f in n1 for f in filter):\r\n\t\t\tin1.append(e)\r\n\t\telse:\r\n\t\t\tout1.append(e)",
+      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nfrom itertools import imap\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = tolist(IN[0])\r\nfilter = map(str.lower, imap(str, tolist(IN[1]) ) )\r\nin1, out1, nulls = [], [], []\r\nOUT = in1, out1, nulls\r\n\r\nfor e in elements:\r\n\tif e is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tc1 = UnwrapElement(e).Category\r\n\tif c1 is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tn1 = c1.Name.lower()\r\n\tif any(f in n1 for f in filter):\r\n\t\tin1.append(e)\r\n\telse:\r\n\t\tout1.append(e)",
       "VariableInputPorts": true,
       "Id": "50269127bcc64739a94f81962ad06018",
       "Inputs": [
@@ -258,89 +258,89 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.0.3.8810",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -3964.79833984375,
-      "EyeY": 60563.703125,
-      "EyeZ": -20000.11328125,
-      "LookX": 17.091083526611328,
-      "LookY": -58328.05859375,
-      "LookZ": -3384.060791015625,
-      "UpX": 0.00486200163140893,
-      "UpY": 0.27060043811798096,
-      "UpZ": -0.96267956495285034
+      "EyeX": 4.0357581861602956,
+      "EyeY": 6.5360555451795177,
+      "EyeZ": -15.069940449511726,
+      "LookX": 10.749273305393535,
+      "LookY": -2.9801380363986345,
+      "LookZ": 1.3559227819749111,
+      "UpX": 0.051924487758677425,
+      "UpY": 0.9986295347546712,
+      "UpZ": 0.0065498005208426942
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "50269127bcc64739a94f81962ad06018",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 228.322430317884,
-        "Y": -2.70969621026453
+        "Y": -3.4356050985671232
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "eea797d70d2241579dc9473840764f94",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 50.8133403699846,
         "Y": -2.39121601741101
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "623557ef6c074374947a41398a243667",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 8.2627556783587,
         "Y": 57.5638383745215
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "3face5ce17814605b49ca2aa40d00e0f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 522.206066610267,
         "Y": -14.3862231099043
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "6c035f413fef43d5a6df6f4e580128bd",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 522.923625394882,
         "Y": 41.9859330465029
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "7f8d256e6d7b4b2695f2db5eb728011a",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 376.399320309214,
         "Y": -0.0750276499971996
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "894c4a3af0e64423a1dca6fed762146d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 522.82579455647,
         "Y": 98.8485834275993

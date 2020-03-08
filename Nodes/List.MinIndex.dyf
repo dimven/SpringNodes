@@ -1,9 +1,9 @@
 {
   "Uuid": "1e280588-b4c1-45e4-9f8d-e45cfaa2014d",
   "IsCustomNode": true,
-  "Category": "Springs.List",
-  "Description": "Gets the minimum index of a list. Good for use with loating point values",
-  "Name": "List.MinIndex",
+  "Category": "Springs.Actions",
+  "Description": "Gets the minimum index of a list. Good for use with floating point values",
+  "Name": "ꟿ List.MinIndex",
   "ElementResolver": {
     "ResolutionMap": {
       "Vector": {
@@ -18,7 +18,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "def tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\treturn [x]\r\n\r\ndata = tolist(IN[0])\r\nOUT = min(enumerate(data), key=lambda x: x[1])",
+      "Code": "# Copyright(c) 2019, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\treturn [x]\r\n\r\ndata = tolist(IN[0])\r\nOUT = min(enumerate(data), key=lambda x: x[1])",
       "VariableInputPorts": true,
       "Id": "520388af13dd418fa12795809858b523",
       "Inputs": [
@@ -177,27 +177,26 @@
     }
   ],
   "Dependencies": [],
-  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.0.3.8810",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 6612.9012253736009,
-      "EyeY": 26567.524779818188,
-      "EyeZ": 9273.2348881644211,
-      "LookX": 64.627450960781971,
-      "LookY": -23271.383181854886,
-      "LookZ": -3112.8657393709836,
-      "UpX": 0.019505115189047954,
-      "UpY": 0.34202012265523474,
-      "UpZ": -0.93949017741475993
+      "EyeX": -89.316915750285546,
+      "EyeY": 6.47739654243288,
+      "EyeZ": -34.419253316180246,
+      "LookX": 99.910973069506767,
+      "LookY": -11.208153674299943,
+      "LookZ": 8.1955144410687364,
+      "UpX": -0.10417856184346362,
+      "UpY": 0.99452189536836666,
+      "UpZ": -0.0085455769452275569
     },
     "NodeViews": [
       {
@@ -207,8 +206,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 206.00472031340411,
-        "Y": 1.2939788143116289
+        "X": 0.0,
+        "Y": 0.0
       },
       {
         "ShowGeometry": true,
@@ -227,8 +226,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 578.39788143116459,
-        "Y": -28.467533914856176
+        "X": 0.0,
+        "Y": 0.0
       },
       {
         "ShowGeometry": true,
@@ -237,8 +236,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 405.22904664402404,
-        "Y": 1.5336461634948648
+        "X": 0.0,
+        "Y": 0.0
       },
       {
         "ShowGeometry": true,
@@ -247,13 +246,13 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 578.46517375815426,
-        "Y": 32.292798735960645
+        "X": 0.0,
+        "Y": 0.0
       }
     ],
     "Annotations": [],
-    "X": 187.005471859375,
-    "Y": 97.4954826352469,
-    "Zoom": 1.545620359375
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
   }
 }

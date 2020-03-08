@@ -14,12 +14,17 @@ in1, out1, nulls = [], [], []
 OUT = in1, out1, nulls
 
 for e in elements:
+	if e is None:
+		nulls.append(e)
+		continue
+	
 	c1 = UnwrapElement(e).Category
 	if c1 is None:
 		nulls.append(e)
+		continue
+	
+	n1 = c1.Name.lower()
+	if any(f in n1 for f in filter):
+		in1.append(e)
 	else:
-		n1 = c1.Name.lower()
-		if any(f in n1 for f in filter):
-			in1.append(e)
-		else:
-			out1.append(e)
+		out1.append(e)

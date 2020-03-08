@@ -31,7 +31,7 @@ ft_len = len(famtypes) == 1
 TransactionManager.Instance.EnsureInTransaction(doc)
 for i in xrange(len(newnames) ):
 	j = 0 if ft_len else i
-	n1 = str(newnames[i])
+	n1 = unicode(newnames[i])
 	if n1 in type_dict:
 		OUT.append(type_dict[n1].ToDSType(False) ) #do I want to wrap this?
 	else:

@@ -13,7 +13,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nfn = map(str,tolist(IN[0]) )\r\nIncSchedules = IN[1]\r\nresult, similar, names = [], [], []\r\n\r\nif IncSchedules: exclude = (\"DrawingSheet\")\r\nelse: exclude = (\"DrawingSheet\", \"Schedule\")\r\nfec = FilteredElementCollector(doc).OfClass(View)\r\nfor i in fec:\r\n\tif not i.IsTemplate and not i.ViewType.ToString() in exclude:\r\n\t\tn1 = i.ViewName\r\n\t\tnames.append(n1)\r\n\t\tif any(fn1 == n1 for fn1 in fn):\r\n\t\t\tresult.append(i.ToDSType(True))\r\n\t\telif any(fn1.lower() in n1.lower() for fn1 in fn):\r\n\t\t\tsimilar.append(i.ToDSType(True))\r\nif len(result) > 0:\r\n\tOUT = result,similar\r\nif len(result) == 0 and len(similar) > 0:\r\n\tOUT = \"No exact match found. Check partial below:\", similar\r\nif len(result) == 0 and len(similar) == 0:\r\n\tOUT = \"No match found! Check names below:\", names",
+      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\napp = DocumentManager.Instance.CurrentUIApplication.Application\r\nisRvt2018 = int(app.VersionNumber) < 2019\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nfn = map(str,tolist(IN[0]) )\r\nIncSchedules = IN[1]\r\nresult, similar, names = [], [], []\r\n\r\nif IncSchedules: exclude = (\"DrawingSheet\")\r\nelse: exclude = (\"DrawingSheet\", \"Schedule\")\r\nfec = FilteredElementCollector(doc).OfClass(View)\r\nfor i in fec:\r\n\tif not i.IsTemplate and not i.ViewType.ToString() in exclude:\r\n\t\tn1 = i.ViewName if isRvt2018 else i.Name\r\n\t\tnames.append(n1)\r\n\t\tif any(fn1 == n1 for fn1 in fn):\r\n\t\t\tresult.append(i.ToDSType(True))\r\n\t\telif any(fn1.lower() in n1.lower() for fn1 in fn):\r\n\t\t\tsimilar.append(i.ToDSType(True))\r\nif len(result) > 0:\r\n\tOUT = result,similar\r\nif len(result) == 0 and len(similar) > 0:\r\n\tOUT = \"No exact match found. Check partial below:\", similar\r\nif len(result) == 0 and len(similar) == 0:\r\n\tOUT = \"No match found! Check names below:\", names",
       "VariableInputPorts": true,
       "Id": "9e16e04807e64f309fc0a0aac6f5effb",
       "Inputs": [
@@ -258,7 +258,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.0.3.8810",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -276,79 +276,79 @@
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "9e16e04807e64f309fc0a0aac6f5effb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 250.0,
         "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "9c5784e0fd0a4e8e89cd1ae1bbc067fb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 86.106356232219,
         "Y": 0.13695343495981
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "30959af0c8ee43feac2c23606ae3daf7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 557.518581130832,
         "Y": -14.6309611080824
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "52aafd857ca24f2d9808cf7912e349f2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 407.913304717973,
         "Y": -0.27823047497381
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "3d8be64b21e740748b2ce5c61a7ccc34",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 561.001987052564,
         "Y": 50.264022626588
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "38447c8df9e14e13a9d0b0d489c55d4c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -70.3178152525903,
         "Y": 58.9658593544238
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "cef88f0e700a42a5b18c603cd34af1ac",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 10.8312449286153,
         "Y": 120.018759052882
       }
     ],
     "Annotations": [],
-    "X": 232.566969616671,
-    "Y": 155.532407415005,
+    "X": -154.433030383329,
+    "Y": 87.532407415005,
     "Zoom": 1.72395684352182
   }
 }

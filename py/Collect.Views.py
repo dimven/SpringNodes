@@ -7,6 +7,8 @@ clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+isRvt2018 = int(app.VersionNumber) < 2019
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
@@ -28,7 +30,7 @@ else: exclude = ("DrawingSheet", "Schedule")
 fec = FilteredElementCollector(doc).OfClass(View)
 for i in fec:
 	if not i.IsTemplate and not i.ViewType.ToString() in exclude:
-		n1 = i.ViewName
+		n1 = i.ViewName if isRvt2018 else i.Name
 		names.append(n1)
 		if any(fn1 == n1 for fn1 in fn):
 			result.append(i.ToDSType(True))

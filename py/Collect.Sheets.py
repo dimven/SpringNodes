@@ -7,6 +7,8 @@ clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application
+isRvt2018 = int(app.VersionNumber) < 2019
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
@@ -27,7 +29,7 @@ fec = FilteredElementCollector(doc).OfClass(View)
 ds_type = "DrawingSheet"
 for i in fec:
 	if i.ViewType.ToString() == ds_type:
-		if NameNumber: n1 = i.ViewName
+		if NameNumber: n1 = i.ViewName if isRvt2018 else i.Name
 		else: n1 = i.SheetNumber
 		names.append(n1)
 		if any(fn1 == n1 for fn1 in fn):

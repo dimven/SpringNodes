@@ -18,6 +18,14 @@ Installation is simple - just use Dynamo's built-in package manager and search f
    
 ### CHANGE LOG
 ------
+### 204.1.0 220720
+- New nodes:
+    - List.MaxIndex same as the List.MinIndex.
+    - tkMesh.ByPolygon tessellates a closed polycuve into a mesh using an ear-clipping algorithm. Works best with XY polygons.
+    - tkMesh.DifferentiateDisplay same as the eqivalent geometry node.
+- Quads.ByPointMatrix was converted to python for performance reasons.
+- WatchDialog was tweaked to work with dictionaries.
+
 #### 203.2.0 090320
 - New nodes:
     - Application.OpenViews lists all the views currently open in the Revit UI.
@@ -79,7 +87,7 @@ Installation is simple - just use Dynamo's built-in package manager and search f
 - A few new springlets:
 	- Wall.IsCurtainWall is a simple node that quickly checks if a wall instance is a curtan wall
 	- (Toolkit)Mesh.BoundingBox can be used to extract the bounding box representation of either a built in mesh or a toolkit mesh.
-	- Geometry.DifferenciateDisplay is a basic CN wrapper around the built in Color Range node, used to quickly paint geometries or lists of geometries into easily distinguishable colours. 
+	- Geometry.DifferentiateDisplay is a basic CN wrapper around the built in Color Range node, used to quickly paint geometries or lists of geometries into easily distinguishable colours. 
 	- Surface.TrimWithLoopsFix is my attemt at a workaround for issue #8600 in the Dynamo repo. It might fail with concave cutouts.
 
 #### 132.2.3 210218

@@ -2,7 +2,7 @@
   "Uuid": "43629155-311e-4c61-b15f-5c14be2e02c3",
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
-  "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model.",
+  "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Uses the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model.",
   "Name": "ꟿ BrepShape.ByGeometry",
   "ElementResolver": {
     "ResolutionMap": {

@@ -52,6 +52,7 @@ class DragDrop(Form):
 		self.box1.Location = Point(5,32)
 		self.box1.Width = 350
 		self.box1.Height = n
+		self.box1.HorizontalScrollBar = True
 		self.box1.BackColor = Color.FromArgb(53,53,53)
 		self.box1.ForeColor = Color.FromArgb(234,234,234)
 		self.box1.Font = Font("Calibri", 11)

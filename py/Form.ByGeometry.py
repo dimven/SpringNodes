@@ -90,7 +90,10 @@ for v in view_fec:
 	if str(v.ViewType) in acceptable_views and not v.IsTemplate:
 		view1 = v
 		break
-units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+if int(doc.Application.VersionNumber) > 2021:
+	units = doc.GetUnits().GetFormatOptions(ForgeTypeId("autodesk.spec.aec:length")).GetUnitTypeId()
+else:
+	units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
 factor = UnitUtils.ConvertToInternalUnits(1,units)
 if doc.IsFamilyDocument:
 	if len(geom) == len(isVoid):

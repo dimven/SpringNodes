@@ -18,6 +18,9 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
 
+clr.AddReference('RevitAPI')
+import Autodesk.Revit.DB as DB
+
 def tolist(x):
 	if hasattr(x,'__iter__'): return x
 	return [x]
@@ -39,10 +42,16 @@ for i, p in enumerate(pts):
 	j = 0 if ftp_len else i
 	if not ftype[j].IsActive:
 		ftype[j].Activate()
-	uv1 = host.UVParameterAtPoint(p)
-	dir1 = host.TangentAtUParameter(uv1.U,uv1.V).ToXyz()
+	faceNor = host.NormalAtPoint(p)
+	up = Vector.ZAxis()
+	if abs(faceNor.Dot(up)) > 0.9999: #is horizontal
+		#uv1 = host.UVParameterAtPoint(p)
+		#dir1 = host.TangentAtUParameter(uv1.U,uv1.V).ToXyz()
+		dir1 = DB.XYZ.BasisX
+	else:
+		dir1 = faceNor.Cross(up).ToXyz()
 	try:
 		inst1 = doc.Create.NewFamilyInstance(ref1, p.ToXyz(1), dir1, ftype[j])
 		OUT.append(inst1.ToDSType(False) )
-	except: OUT.append(None)
+	except Exception as ex: OUT.append(str(ex))
 TransactionManager.Instance.TransactionTaskDone()

@@ -13,7 +13,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\nimport System\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nimport sys\r\nsys.path.append(\"%s\\IronPython 2.7\\Lib\" %pf_path)\r\n\r\nfrom sgmllib import SGMLParser\r\nfrom collections import Counter\r\n\r\nclass ReportParser(SGMLParser):\r\n\tdef __init__(self, verbose=0):\r\n\t\tSGMLParser.__init__(self, verbose)\r\n\t\tself.data1 = []\r\n\t\tself.temp_data = []\r\n\tdef handle_data(self, data):\r\n\t\tif data != \"\\n\" and data not in known_errors:\r\n\t\t\tself.temp_data.append(data)\r\n\tdef unknown_starttag(self, tag, attrs):\r\n\t\tif tag == \"tr\":\r\n\t\t\tself.data1.append(self.temp_data)\r\n\t\t\tself.temp_data = []\r\n\r\ninterference_cats = {\"Structural Columns\", \"Air Terminals\", \"Assemblies\", \"Cable Tray Fittings\", \"Cable Tray Runs\", \"Cable Trays\", \"Casework\", \"Ceilings\", \"Columns\", \"Conduit Fittings\", \"Conduit Runs\", \"Conduits\", \"Curtain Panels\", \"Curtain Systems\", \"Curtain Wall Mullions\",\"Doors\", \"Ducts\", \"Duct Accessories\", \"Duct Fittings\", \"Duct Insulations\", \"Duct Linings\", \"Duct Placeholders\", \"Duct Systems\", \"Electrical Circuits\", \"Electrical Equipment\", \"Electrical Fixtures\", \"Fabrication Parts\", \"Flex Ducts\", \"Flex Pipes\", \"Floors\", \"Furniture\", \"Furniture Systems\", \"Generic Models\", \"Gutters\", \"Lighting Devices\", \"Lighting Fixtures\", \"Mass Floors\", \"Mass\", \"Mechanical Equipment\", \"Pads\", \"Parts\", \"Pipe Accessories\", \"Pipe Fittings\", \"Pipe Insulations\", \"Pipe Placeholders\", \"Pipes\", \"Piping Systems\",  \"Plumbing Fixtures\", \"Railings\", \"Ramps\", \"Roofs\", \"Roof Soffits\", \"Shaft Openings\", \"Slab Edges\", \"Specialty Equipment\", \"Sprinklers\", \"Stairs\", \"Structural Connections\", \"Structural Foundations\", \"Structural Framing\", \"Structural Trusses\", \"Wall Sweeps\", \"Walls\", \"Windows\", \"Wires\"}\r\n\r\ndef getElement(i):\r\n\ttry: return doc.GetElement(ElementId(i)).ToDSType(1)\r\n\texcept: return i\r\n\r\ndef fetchCat(items, interference_cats=interference_cats):\r\n\tfor i in items:\r\n\t\tif i in interference_cats:\r\n\t\t\treturn i\r\n\r\nreport1, fetch_elements = IN\r\n\r\nif fetch_elements:\t#imports moved here to be able to process externally\r\n\tclr.AddReference(\"RevitServices\")\r\n\tfrom RevitServices.Persistence import DocumentManager\r\n\tdoc = DocumentManager.Instance.CurrentDBDocument\r\n\tclr.AddReference(\"RevitAPI\")\r\n\tfrom Autodesk.Revit.DB import ElementId\r\n\tclr.AddReference('RevitNodes')\r\n\timport Revit\r\n\tclr.ImportExtensions(Revit.Elements)\r\n\r\nknown_errors = {\"  \", \"td>  \"}\r\nparser = ReportParser()\r\nwith open(report1, 'r') as f:\r\n\tfor line in f:\r\n\t\tparser.feed(line.replace(\"&\", \"\"))\r\nparser.data1.append(parser.temp_data)\r\nreport_data = parser.data1[2:]\r\nparser.close()\r\nparser = None\r\ncases, elements, = [], []\r\nfor d in report_data:\r\n\tleft, right = map(str.strip, d[1].split(\" : \")), map(str.strip, d[2].split(\" : \"))\r\n\tleftId, rightId = int(filter(str.isdigit, left[-1])), int(filter(str.isdigit, right[-1]))\r\n\tif fetch_elements:\r\n\t\tleftId, rightId = getElement(leftId), getElement(rightId)\r\n\telements.append((leftId, rightId))\r\n\t\r\n\tleftCat, rightCat = fetchCat(left), fetchCat(right)\r\n\tcase = \"%s - %s\" % (leftCat, rightCat) if leftCat is not None and rightCat is not None else \"Unidentified\"\r\n\tcases.append(case)\r\n\r\ngroup_cases = Counter(cases).most_common()\r\nunique_cases, sum_cases = zip(*group_cases)\r\nsum_cases = list(sum_cases)\r\nsum_cases.append(\"Total interferences : %s\" % sum(sum_cases) )\r\nOUT = cases, elements, unique_cases, sum_cases",
+      "Code": "import clr\r\nimport System\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nimport sys\r\nsys.path.append(\"%s\\IronPython 2.7\\Lib\" %pf_path)\r\n\r\nfrom sgmllib import SGMLParser\r\nfrom collections import Counter\r\n\r\n\r\nclass ReportParser(SGMLParser):\r\n\tdef __init__(self, verbose=0):\r\n\t\tSGMLParser.__init__(self, verbose)\r\n\t\tself.data1 = []\r\n\t\tself.temp_data = []\r\n\tdef handle_data(self, data):\r\n\t\tif data != \"\\n\" and data not in known_errors:\r\n\t\t\tself.temp_data.append(data)\r\n\tdef unknown_starttag(self, tag, attrs):\r\n\t\tif tag == \"tr\":\r\n\t\t\tself.data1.append(self.temp_data)\r\n\t\t\tself.temp_data = []\r\n\r\ninterference_cats = {\"Structural Columns\", \"Air Terminals\", \"Assemblies\", \"Cable Tray Fittings\", \"Cable Tray Runs\", \"Cable Trays\", \"Casework\", \"Ceilings\", \"Columns\", \"Conduit Fittings\", \"Conduit Runs\", \"Conduits\", \"Curtain Panels\", \"Curtain Systems\", \"Curtain Wall Mullions\",\"Doors\", \"Ducts\", \"Duct Accessories\", \"Duct Fittings\", \"Duct Insulations\", \"Duct Linings\", \"Duct Placeholders\", \"Duct Systems\", \"Electrical Circuits\", \"Electrical Equipment\", \"Electrical Fixtures\", \"Fabrication Parts\", \"Flex Ducts\", \"Flex Pipes\", \"Floors\", \"Furniture\", \"Furniture Systems\", \"Generic Models\", \"Gutters\", \"Lighting Devices\", \"Lighting Fixtures\", \"Mass Floors\", \"Mass\", \"Mechanical Equipment\", \"Pads\", \"Parts\", \"Pipe Accessories\", \"Pipe Fittings\", \"Pipe Insulations\", \"Pipe Placeholders\", \"Pipes\", \"Piping Systems\",  \"Plumbing Fixtures\", \"Railings\", \"Ramps\", \"Roofs\", \"Roof Soffits\", \"Shaft Openings\", \"Slab Edges\", \"Specialty Equipment\", \"Sprinklers\", \"Stairs\", \"Structural Connections\", \"Structural Foundations\", \"Structural Framing\", \"Structural Trusses\", \"Wall Sweeps\", \"Walls\", \"Windows\", \"Wires\"}\r\n\r\ndef getElement(i):\r\n\ttry: return doc.GetElement(ElementId(i)).ToDSType(1)\r\n\texcept: return i\r\n\r\ndef fetchCat(items, interference_cats=interference_cats):\r\n\tfor i in items:\r\n\t\tif i in interference_cats:\r\n\t\t\treturn i\r\n\r\nreport1, fetch_elements = IN\r\n\r\nif fetch_elements:\t#imports moved here to be able to process externally\r\n\tclr.AddReference(\"RevitServices\")\r\n\tfrom RevitServices.Persistence import DocumentManager\r\n\tdoc = DocumentManager.Instance.CurrentDBDocument\r\n\tclr.AddReference(\"RevitAPI\")\r\n\tfrom Autodesk.Revit.DB import ElementId\r\n\tclr.AddReference('RevitNodes')\r\n\timport Revit\r\n\tclr.ImportExtensions(Revit.Elements)\r\n\r\nknown_errors = {\"  \", \"td>  \"}\r\nparser = ReportParser()\r\nwith System.IO.File.OpenText(report1) as f:\r\n\twhile not f.EndOfStream:\r\n\t\tparser.feed(f.ReadLine().replace(\"&\", \"\"))\r\nparser.data1.append(parser.temp_data)\r\nreport_data = parser.data1[2:]\r\nparser.close()\r\nparser = None\r\ncases, elements, = [], []\r\nfor d in report_data:\r\n\tleft, right = map(str.strip, d[1].split(\" : \")), map(str.strip, d[2].split(\" : \"))\r\n\tleftId, rightId = int(filter(str.isdigit, left[-1])), int(filter(str.isdigit, right[-1]))\r\n\tif fetch_elements:\r\n\t\tleftId, rightId = getElement(leftId), getElement(rightId)\r\n\telements.append((leftId, rightId))\r\n\t\r\n\tleftCat, rightCat = fetchCat(left), fetchCat(right)\r\n\tcase = \"%s - %s\" % (leftCat, rightCat) if leftCat is not None and rightCat is not None else \"Unidentified\"\r\n\tcases.append(case)\r\n\r\ngroup_cases = Counter(cases).most_common()\r\nunique_cases, sum_cases = zip(*group_cases)\r\nsum_cases = list(sum_cases)\r\nsum_cases.append(\"Total interferences : %s\" % sum(sum_cases) )\r\nOUT = cases, elements, unique_cases, sum_cases",
       "VariableInputPorts": true,
       "Id": "4eec9315409c40b7a5e29620d45396d0",
       "Inputs": [
@@ -282,13 +282,14 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.6.1.8786",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -306,81 +307,81 @@
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "4eec9315409c40b7a5e29620d45396d0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 250.0,
         "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "ab2d997fb3b34a9594922e0760f69e41",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 553.188179332924,
         "Y": -60.4131168930378
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "3e68dcb7669f41178766f69def7bbd7b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 551.308575251294,
         "Y": -4.56143881585757
       },
       {
+        "ShowGeometry": true,
+        "Name": "Code Block",
         "Id": "db6bc89787f84e9cb6a8499a581be41d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 390.873997154601,
         "Y": 3.89396921238895
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "ad7e0134091f4d5bb87e1fbc45de49c6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 552.898614855276,
         "Y": 51.9736753754345
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "1ba5606169ae429b97e05cdbaefeebe3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 553.367326406458,
         "Y": 108.508789566727
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "a1ae85ebfb64490e8a5a75a7f2efaa1c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 98.1076925431235,
         "Y": -19.1515439126402
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "4bf2ce1915cb412f8d11c2776be574ad",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -49.5442858234158,
         "Y": 40.6739503749328

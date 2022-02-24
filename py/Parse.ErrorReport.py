@@ -38,9 +38,9 @@ if fetch_elements:	#imports moved here to be able to process externally
 
 known_errors = {"  ", "td>  "}
 parser = ReportParser()
-with open(report1, 'r') as f:
-	for line in f:
-		parser.feed(line.replace("&", ""))
+with System.IO.File.OpenText(report1) as f:
+	while not f.EndOfStream:
+		parser.feed(f.ReadLine().replace("&", ""))
 
 parser.data1.append(parser.temp_data)
 report_data = parser.data1[1:]

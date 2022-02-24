@@ -13,7 +13,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\treturn [x]\r\n\r\ndef first(x):\r\n\tif hasattr(x,'__iter__'): return x[0]\r\n\treturn x\r\n\r\nhost = first(IN[0])\r\nftype = UnwrapElement(tolist(IN[1]))\r\npts = tolist(IN[2])\r\n\r\nOUT = []\r\nftp_len = len(ftype) == 1\r\nref1 = host.Tags.LookupTag(\"RevitFaceReference\")\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i, p in enumerate(pts):\r\n\tj = 0 if ftp_len else i\r\n\tif not ftype[j].IsActive:\r\n\t\tftype[j].Activate()\r\n\tuv1 = host.UVParameterAtPoint(p)\r\n\tdir1 = host.TangentAtUParameter(uv1.U,uv1.V).ToXyz()\r\n\ttry:\r\n\t\tinst1 = doc.Create.NewFamilyInstance(ref1, p.ToXyz(1), dir1, ftype[j])\r\n\t\tOUT.append(inst1.ToDSType(False) )\r\n\texcept: OUT.append(None)\r\nTransactionManager.Instance.TransactionTaskDone()",
+      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\treturn [x]\r\n\r\ndef first(x):\r\n\tif hasattr(x,'__iter__'): return x[0]\r\n\treturn x\r\n\r\nhost = first(IN[0])\r\nftype = UnwrapElement(tolist(IN[1]))\r\npts = tolist(IN[2])\r\n\r\nOUT = []\r\nftp_len = len(ftype) == 1\r\nref1 = host.Tags.LookupTag(\"RevitFaceReference\")\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i, p in enumerate(pts):\r\n\tj = 0 if ftp_len else i\r\n\tif not ftype[j].IsActive:\r\n\t\tftype[j].Activate()\r\n\tfaceNor = host.NormalAtPoint(p)\r\n\tup = Vector.ZAxis()\r\n\tif abs(faceNor.Dot(up)) > 0.9999: #is horizontal\r\n\t\t#uv1 = host.UVParameterAtPoint(p)\r\n\t\t#dir1 = host.TangentAtUParameter(uv1.U,uv1.V).ToXyz()\r\n\t\tdir1 = DB.XYZ.BasisX\r\n\telse:\r\n\t\tdir1 = faceNor.Cross(up).ToXyz()\r\n\ttry:\r\n\t\tinst1 = doc.Create.NewFamilyInstance(ref1, p.ToXyz(1), dir1, ftype[j])\r\n\t\tOUT.append(inst1.ToDSType(False) )\r\n\texcept Exception as ex: OUT.append(str(ex))\r\nTransactionManager.Instance.TransactionTaskDone()",
       "VariableInputPorts": true,
       "Id": "f3dc1c3c354d459484adf8edb93132eb",
       "Inputs": [
@@ -182,83 +182,84 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.6.1.8786",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -6.1117828777740426,
-      "EyeY": 12.204431450921915,
-      "EyeZ": -2.6263827574254668,
-      "LookX": 1.1117828777740426,
-      "LookY": -1.2044314509219145,
-      "LookZ": -5.3736172425745332,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": 389.60453969508251,
+      "EyeY": 278.17676127940922,
+      "EyeZ": 299.35278728605323,
+      "LookX": -288.2319996643713,
+      "LookY": -74.373130859447315,
+      "LookZ": -414.54735050675282,
+      "UpX": 0.039821593298859363,
+      "UpY": 0.99756405025987693,
+      "UpZ": 0.057273085619301008
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "f3dc1c3c354d459484adf8edb93132eb",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 247.67083813423883,
         "Y": -5.0465173758153981
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "6f7450c31f8a4990bb886fa98fa6102e",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 37.654783496468781,
         "Y": -5.4347110201089279
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "5ac24cfccb3b4d2ab47dee341520920c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 37.654783496468781,
         "Y": 55.79834231811234
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "f408bec1e3d744e1a03c430338c961c6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 37.654783496468781,
         "Y": 117.03139565633361
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "1858d34cb36e4d5b8f2452fed20a5c1d",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 393.25312581458104,
         "Y": -4.3995279686596085
       }
     ],
     "Annotations": [],
-    "X": -76.181022275,
-    "Y": 97.4219046625,
-    "Zoom": 1.545620359375
+    "X": -71.6557074658125,
+    "Y": 4.6900369881235235,
+    "Zoom": 1.703916824554996
   }
 }

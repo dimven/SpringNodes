@@ -1,4 +1,4 @@
-# Copyright(c) 2017, Dimitar Venkov
+# Copyright(c) 2020, Dimitar Venkov
 # @5devene, dimitar.ven@gmail.com
 # www.badmonkeys.net
 
@@ -24,13 +24,17 @@ def write_str(str1, GCL, str_file=str_file, size1=size1):
 	
 	str_file.write("%s%s\n" % ("".join(GCL), str1) )
 
-def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1):
+def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1, isDict=False):
 	if GCL is None:
 		GCL = []
 	GCint += 1
 	GCL.append(None)
 	for i, x in enumerate(l1):
-		GCL[GCint] = "[%i] " % i if writeInd else "  "
+		if isDict:
+			i, x = x, l1[x]
+			GCL[GCint] = "[%s] " % i if writeInd else "  "
+		else:
+			GCL[GCint] = "[%i] " % i if writeInd else "  "
 		if hasattr(x, "Id"): #is element
 			write_str("%s        %i" % (x.ToString(), x.Id), GCL)
 		elif hasattr(x, "__iter__"):
@@ -38,6 +42,10 @@ def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1):
 				write_str("Empty List", GCL)
 			else:
 				list2str(x, writeInd, GCL, GCint, size1)
+		elif "Dictionary" in x.GetType().ToString():
+			d = x.Components()
+			k, v = d["keys"], d["values"]
+			list2str(dict(zip(k, v)), writeInd, GCL, GCint, size1, True)
 		elif x is None:
 			write_str("null", GCL)
 		else:

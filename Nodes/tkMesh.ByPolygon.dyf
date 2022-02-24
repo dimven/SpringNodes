@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Create",
   "Description": "Converts a closed polygon into a toolkit mesh using an ear-clipping division",
-  "Name": "tkMesh.ByPolygon",
+  "Name": "ꟿ tkMesh.ByPolygon",
   "ElementResolver": {
     "ResolutionMap": {
       "Category": {

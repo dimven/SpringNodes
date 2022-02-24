@@ -60,7 +60,11 @@ material = tolist(IN[4])
 isVoid = tolist(IN[5])
 subcat = tolist(IN[6])
 
-units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+if int(doc.Application.VersionNumber) > 2021:
+	units = doc.GetUnits().GetFormatOptions(ForgeTypeId("autodesk.spec.aec:length")).GetUnitTypeId()
+else:
+	units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+	
 factor = UnitUtils.ConvertToInternalUnits(1,units)
 acceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')
 origin = XYZ.Zero

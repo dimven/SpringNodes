@@ -46,11 +46,11 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "def col1(x){\nr = Math.Random(0, 255);\ng = Math.Random(0, 255);\nb = Math.Random(0, 255);\nreturn = DSCore.Color.ByARGB(255, r, g, b);\n};\n\nrand;\ncol = [Imperative]{\nif (rand)\n{\n\treturn = col1(GetKeys(geo));\n}\nelse\n{\n\tdcr = ColorRange1D.Default();\n\treturn = ColorRange1D.GetColorAtParameter\n\t  (dcr, 0..1..#(Count(geo)));\n}\n}\n\nDisplay.ByGeometryColor(geo, col);",
+      "Code": "def col1(x){\nr = Math.Random(0, 128);\ng = Math.Random(0, 128);\nb = Math.Random(0, 128);\nreturn = DSCore.Color.ByARGB(255, 127+r, 127+g, 127+b);\n};\n\nrand;\ncol = [Imperative]{\nif (rand)\n{\n\treturn = col1(GetKeys(geo));\n}\nelse\n{\n\tdcr = ColorRange1D.Default();\n\treturn = ColorRange1D.GetColorAtParameter\n\t  (dcr, 0..1..#(Count(geo)));\n}\n}\n\nDisplay.ByGeometryColor(geo, col);",
       "Id": "eb314a7b42214d5582b5fa073dd698a2",
       "Inputs": [
         {
-          "Id": "c63b34da587b49b58fc22ec4c9d4dc64",
+          "Id": "0d90ddfe0a704268812fb317208c62d2",
           "Name": "rand",
           "Description": "rand",
           "UsingDefaultValue": false,
@@ -59,7 +59,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3084fe95361748d1995b376eaf4512db",
+          "Id": "e8ec1d230d664af7a50f4bd507233cfc",
           "Name": "geo",
           "Description": "geo",
           "UsingDefaultValue": false,
@@ -70,7 +70,7 @@
       ],
       "Outputs": [
         {
-          "Id": "93be7122a73940da92d1e08f58e75a76",
+          "Id": "a6fd8de37ff4459b8201bc438caf9971",
           "Name": "",
           "Description": "Value of expression at line 8",
           "UsingDefaultValue": false,
@@ -79,7 +79,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6d8572167cd0424ca94e078115d38c67",
+          "Id": "cfe7b7f29e754b648f1385054bd1c91b",
           "Name": "",
           "Description": "col",
           "UsingDefaultValue": false,
@@ -88,7 +88,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b725041f6b784ba8a52226e8e17ac906",
+          "Id": "c04698fdd19247eaa7fcc69c559aee50",
           "Name": "",
           "Description": "Value of expression at line 22",
           "UsingDefaultValue": false,
@@ -176,89 +176,90 @@
   ],
   "Connectors": [
     {
-      "Start": "b725041f6b784ba8a52226e8e17ac906",
+      "Start": "c04698fdd19247eaa7fcc69c559aee50",
       "End": "8b3f91e2f45d489b98b264c06b64a6e1",
-      "Id": "1440c50ee8844c4291d083f14e5d2ea3"
+      "Id": "80c7710ebaa44261a7d72f55da94089a"
     },
     {
       "Start": "880c3f308e8b41eaaeb0ce65ae012509",
-      "End": "3084fe95361748d1995b376eaf4512db",
-      "Id": "4dc92d75e169420e8a335061ff2d619d"
+      "End": "e8ec1d230d664af7a50f4bd507233cfc",
+      "Id": "1c739aeeef8a4ad2a8da6b90b278dd77"
     },
     {
       "Start": "e315e319358440cda93056a911a6685f",
-      "End": "c63b34da587b49b58fc22ec4c9d4dc64",
-      "Id": "9fd047c5008444a2a50f7595f0180b6a"
+      "End": "0d90ddfe0a704268812fb317208c62d2",
+      "Id": "94b28fba6425431297ad50503e14789e"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.3.0.5885",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": 946.63299560546875,
-      "EyeY": 2467.419921875,
-      "EyeZ": -548.21746826171875,
-      "LookX": -640.22320556640625,
-      "LookY": -2604.44189453125,
-      "LookZ": 24.713840484619141,
-      "UpX": -0.89659059047698975,
-      "UpY": 0.44150581955909729,
-      "UpZ": 0.034610152244567871
+      "EyeX": 6159.27400042687,
+      "EyeY": 14875.284623354715,
+      "EyeZ": 10048.159226297934,
+      "LookX": -3404.6499686079624,
+      "LookY": -16088.087595973655,
+      "LookZ": -12876.408737179911,
+      "UpX": -0.15737855128087563,
+      "UpY": 0.788010753606723,
+      "UpZ": -0.59520672358173066
     },
     "NodeViews": [
       {
+        "ShowGeometry": false,
+        "Name": "Code Block",
         "Id": "eb314a7b42214d5582b5fa073dd698a2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
         "Excluded": false,
         "X": 128.998819921649,
         "Y": -11.5867775502722
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "9dac9098aa344fdfb2a989cbce811e3c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -163.041330603267,
         "Y": 1.29397881431163
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "77591f7637bd4fe684339957a97155fd",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 661.016030028307,
         "Y": -11.7221747597396
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "24e2f34d8e0d47678aeba89f799ea131",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -162.612767134976,
         "Y": 58.8193644293493
       }
     ],
     "Annotations": [],
-    "X": 361.846222824473,
-    "Y": 305.426767410088,
+    "X": 468.846222824473,
+    "Y": 231.42676741008802,
     "Zoom": 1.10476425630303
   }
 }

@@ -2,7 +2,7 @@
   "Uuid": "43629155-311e-4c61-b15f-5c14be2e02c3",
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
-  "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Usies the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model.",
+  "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Uses the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model.",
   "Name": "ꟿ BrepShape.ByGeometry",
   "ElementResolver": {
     "ResolutionMap": {
@@ -283,93 +283,92 @@
     }
   ],
   "Dependencies": [],
-  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.0.4.12684",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -8264.2440142947453,
-      "EyeY": 7663.0031624450985,
-      "EyeZ": 9353.37567443318,
-      "LookX": 12284.710096246734,
-      "LookY": -9120.7075452467379,
-      "LookZ": -11580.829377687782,
-      "UpX": 0.20056628060287437,
-      "UpY": 0.96126169593839716,
-      "UpZ": -0.18907437427351637
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "cec336e2b9024c79922eaf8ed9d955ca",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 258.227645314355,
-        "Y": 22.517718596875696
+        "X": 0.0,
+        "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "0543165c297a446faa00426a33395c03",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 62.2867732199499,
-        "Y": -10.3903315060067
+        "X": 0.0,
+        "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "f9efbc94b8b24b81be1df3f2528f3178",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 5.2988118804995,
-        "Y": 47.4318167624141
+        "X": 0.0,
+        "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "5cc3b58467034deaaa866d62948ceb48",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 95.2882700073807,
-        "Y": 104.387193266993
+        "X": 0.0,
+        "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "f27b07651dc644859e97ce7f84370df0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 398.615588042379,
-        "Y": 23.7352505959175
+        "X": 0.0,
+        "Y": 0.0
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "88711c82f5fb43f8bf3f607a9a1603c4",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 3.77986139724089,
-        "Y": 161.086516159817
+        "X": 0.0,
+        "Y": 0.0
       }
     ],
     "Annotations": [],
-    "X": -36.7634813840651,
-    "Y": 58.792442124992,
-    "Zoom": 1.703916824555
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
   }
 }

@@ -58,7 +58,7 @@
       ],
       "Outputs": [],
       "Replication": "Disabled",
-      "Description": "A function output, use with custom nodes"
+      "Description": "Eine Funktionsausgabe zur Verwendung mit benutzerdefinierten Blöcken"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
@@ -84,12 +84,13 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+      "Description": "Ein Funktionsparameter zur Verwendung mit benutzerdefinierten Blöcken.\r\n\r\nSie können den Typ und den Vorgabewert für den Parameter angeben, z. B.\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nimport System\r\nimport sys\r\nfrom System.Collections.Generic import *\r\n\r\nfrom itertools import repeat\r\n\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nsys.path.append(\"%s\\IronPython 2.7\\Lib\" %pf_path)\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\napp = DocumentManager.Instance.CurrentUIApplication.Application\r\nisRvt2017 = int(app.VersionNumber) > 2016\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk.Revit.DB as RVT\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\ndef PadLists(lists):\r\n\tlen1 = len(lists[0])\r\n\tfor i in xrange(1,len(lists)):\r\n\t\tlen2 = len(lists[i])\r\n\t\tif len2 == len1 : continue\r\n\t\telif len2 > len1: lists[i] = lists[i][:len1]\r\n\t\telse : lists[i].extend(repeat(lists[i][-1],len1 - len2))\r\n\treturn lists\r\n\r\ndef NewDS(s1, cat1, name1):\r\n\ttemp_path = System.IO.Path.GetTempPath()\r\n\tsat_path = \"%s%s.sat\"% (temp_path, name1)\r\n\ttry:\r\n\t\tif factor != 1:\r\n\t\t\ts1 = s1.Scale(factor)\r\n\t\tsat1 = Geometry.ExportToSAT(s1, sat_path)\r\n\t\tsatId = doc.Import(sat1, satOpt, view1)\r\n\t\tel1 = doc.GetElement(satId)\r\n\t\tgeom1 = el1.get_Geometry(opt1)\r\n\t\tenum = geom1.GetEnumerator()\r\n\t\tenum.MoveNext()\r\n\t\tgeom2 = enum.Current.GetInstanceGeometry()\r\n\t\tenum2 = geom2.GetEnumerator()\r\n\t\tenum2.MoveNext()\r\n\t\ts1 = enum2.Current\r\n\t\tdoc.Delete(satId)\r\n\t\tSystem.IO.File.Delete(sat_path)\r\n\t\t\r\n\t\tif cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):\r\n\t\t\tcat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)\r\n\t\telse:\r\n\t\t\tcat1Id = cat1.Id\r\n\r\n\t\tif name1 in dst_enum:\r\n\t\t\told_type = dst_enum[name1]\r\n\t\t\told_type.SetShape([s1])\r\n\t\t\tfec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()\r\n\t\t\tinsts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]\r\n\t\t\tif insts:\r\n\t\t\t\tds1 = insts[0]\r\n\t\t\telse:\r\n\t\t\t\tdsLib.AddDefinitionType(name1, old_type.Id)\r\n\t\t\t\tif isRvt2017:\r\n\t\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1)\r\n\t\t\t\telse:\r\n\t\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1, \"Dynamo\", \"spring nodes\")\r\n\t\t\t\tds1.SetTypeId(old_type.Id)\r\n\t\telse:\r\n\t\t\tdsType1 = RVT.DirectShapeType.Create(doc, name1, cat1Id)\r\n\t\t\tdsType1.SetShape([s1])\r\n\t\t\tdsLib.AddDefinitionType(name1, dsType1.Id)\r\n\t\t\tdst_enum[name1] = dsType1\r\n\t\t\tif isRvt2017:\r\n\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1)\r\n\t\t\telse:\r\n\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1, \"Dynamo\", \"spring nodes\")\r\n\t\t\tds1.SetTypeId(dsType1.Id)\r\n\r\n\t\treturn ueWrapper.Invoke(None, (ds1, False) )\r\n\texcept:\r\n\t\treturn traceback.format_exc()\r\n\r\nsolids = tolist(IN[0])\r\ncat = map(UnwrapElement, tolist(IN[1]) )\r\nnames = tolist(IN[2])\r\n\r\nsatOpt = RVT.SATImportOptions()\r\nsatOpt.Placement = RVT.ImportPlacement.Origin\r\nsatOpt.Unit = RVT.ImportUnit.Foot\r\nopt1 = RVT.Options()\r\nopt1.ComputeReferences = True\r\n\r\nacceptable_views = \"ThreeD, FloorPlan, EngineeringPlan, CeilingPlan, Elevation, Section\"\r\nview_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.View)\r\nview1 = None\r\nfor v in view_fec:\r\n\tif v.ViewType.ToString() in acceptable_views and not v.IsTemplate:\r\n\t\tview1 = v\r\n\t\tbreak\r\n\r\nunits = doc.GetUnits().GetFormatOptions(RVT.UnitType.UT_Length).DisplayUnits\r\nfactor = RVT.UnitUtils.ConvertToInternalUnits(1, units)\r\n\r\ndsLib = RVT.DirectShapeLibrary.GetDirectShapeLibrary(doc)\r\ntf1 = RVT.Transform.Identity\r\n\r\ndst_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShapeType)\r\ndst_enum = dict( (RVT.Element.Name.__get__(i), i) for i in dst_fec)\r\n\r\nueWrapper = None\r\nwrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\nfor w in wrappers:\r\n\tif w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n\t\tueWrapper = w\r\n\t\tbreak\r\n\r\nif len(solids) == len(names):\r\n\tif not len(solids) == len(cat):\r\n\t\tpadded = PadLists( (solids, cat) )\r\n\t\tcat = padded[1]\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tOUT = map(NewDS, solids, cat, names)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\nelse :\r\n\tOUT = \"Make sure that each geometry\\nobject has a unique type name.\"\r\nsatOpt.Dispose()\r\nopt1.Dispose()",
+      "Code": "#Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nimport System\r\nimport sys\r\nfrom System.Collections.Generic import *\r\nclr.AddReference(\"System.Core\")\r\nclr.ImportExtensions(System.Linq)\r\n\r\nfrom itertools import repeat\r\n\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nsys.path.append(\"%s\\IronPython 2.7\\Lib\" %pf_path)\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\napp = DocumentManager.Instance.CurrentUIApplication.Application\r\nisRvt2017 = int(app.VersionNumber) > 2016\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk.Revit.DB as RVT\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\ndef PadLists(lists):\r\n\tlen1 = len(lists[0])\r\n\tfor i in xrange(1,len(lists)):\r\n\t\tlen2 = len(lists[i])\r\n\t\tif len2 == len1 : continue\r\n\t\telif len2 > len1: lists[i] = lists[i][:len1]\r\n\t\telse : lists[i].extend(repeat(lists[i][-1],len1 - len2))\r\n\treturn lists\r\n\r\ndef NewDS(s1, cat1, name1):\r\n\ttemp_path = System.IO.Path.GetTempPath()\r\n\tsat_path = \"%s%s.sat\"% (temp_path, name1)\r\n\ttry:\r\n\t\tif factor != 1:\r\n\t\t\ts1 = s1.Scale(factor)\r\n\t\tsat1 = Geometry.ExportToSAT(s1, sat_path)\r\n\t\tsatId = doc.Import(sat1, satOpt, view1)\r\n\t\tel1 = doc.GetElement(satId)\r\n\t\tgeom1 = el1.get_Geometry(opt1)\r\n\t\tenum = geom1.GetEnumerator()\r\n\t\tenum.MoveNext()\r\n\t\tgeom2 = enum.Current.GetInstanceGeometry()\r\n\t\tenum2 = geom2.GetEnumerator()\r\n\t\tenum2.MoveNext()\r\n\t\ts1 = enum2.Current\r\n\t\tdoc.Delete(satId)\r\n\t\tSystem.IO.File.Delete(sat_path)\r\n\t\t\r\n\t\tif cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):\r\n\t\t\tcat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)\r\n\t\telse:\r\n\t\t\tcat1Id = cat1.Id\r\n\r\n\t\tif name1 in dst_enum:\r\n\t\t\told_type = dst_enum[name1]\r\n\t\t\told_type.SetShape([s1])\r\n\t\t\tfec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()\r\n\t\t\tinsts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]\r\n\t\t\tif insts:\r\n\t\t\t\tds1 = insts[0]\r\n\t\t\telse:\r\n\t\t\t\tdsLib.AddDefinitionType(name1, old_type.Id)\r\n\t\t\t\tif isRvt2017:\r\n\t\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1)\r\n\t\t\t\telse:\r\n\t\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1, \"Dynamo\", \"spring nodes\")\r\n\t\t\t\tds1.SetTypeId(old_type.Id)\r\n\t\telse:\r\n\t\t\tdsType1 = RVT.DirectShapeType.Create(doc, name1, cat1Id)\r\n\t\t\tdsType1.SetShape([s1])\r\n\t\t\tdsLib.AddDefinitionType(name1, dsType1.Id)\r\n\t\t\tdst_enum[name1] = dsType1\r\n\t\t\tif isRvt2017:\r\n\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1)\r\n\t\t\telse:\r\n\t\t\t\tds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1, \"Dynamo\", \"spring nodes\")\r\n\t\t\tds1.SetTypeId(dsType1.Id)\r\n\r\n\t\treturn ueWrapper.Invoke(None, (ds1, False) )\r\n\texcept:\r\n\t\treturn traceback.format_exc()\r\n\r\nsolids = tolist(IN[0])\r\ncat = map(UnwrapElement, tolist(IN[1]) )\r\nnames = tolist(IN[2])\r\n\r\nsatOpt = RVT.SATImportOptions()\r\nsatOpt.Placement = RVT.ImportPlacement.Origin\r\nsatOpt.Unit = RVT.ImportUnit.Foot\r\n\r\nopt1 = RVT.Options()\r\nopt1.ComputeReferences = True\r\n\r\nacceptable_views = [RVT.ViewType.Elevation, RVT.ViewType.Section]\r\nclr.AddReference(\"System.Core\")\r\nclr.ImportExtensions(System.Linq)\r\nview_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.View).ToElements()\r\nview1 = view_fec.Where(lambda x: x.ViewType in acceptable_views and not x.IsTemplate).FirstOrDefault()\r\n\r\nif int(doc.Application.VersionNumber) > 2021:\r\n\tunits = doc.GetUnits().GetFormatOptions(RVT.ForgeTypeId(\"autodesk.spec.aec:length\")).GetUnitTypeId()\r\n\tif int(doc.Application.VersionNumber) > 2022: n=1\r\n\telse: n = 0.3048\r\nelse:\r\n\tunits = doc.GetUnits().GetFormatOptions(RVT.UnitType.UT_Length).DisplayUnits\r\n\tn = 1\r\nfactor = RVT.UnitUtils.ConvertToInternalUnits(n, units)\t\r\n\r\ndsLib = RVT.DirectShapeLibrary.GetDirectShapeLibrary(doc)\r\ntf1 = RVT.Transform.Identity\r\n\r\ndst_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShapeType)\r\ndst_enum = dict( (RVT.Element.Name.__get__(i), i) for i in dst_fec)\r\n\r\nueWrapper = None\r\nwrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\nfor w in wrappers:\r\n\tif w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n\t\tueWrapper = w\r\n\t\tbreak\t\t\r\nif len(solids) == len(names):\r\n\tif not len(solids) == len(cat):\r\n\t\tpadded = PadLists( (solids, cat) )\r\n\t\tcat = padded[1]\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\ttempSection = None\r\n\tif not view1:\r\n\t\tbb = RVT.BoundingBoxXYZ()\r\n\t\tbb.Min = RVT.XYZ.Zero\r\n\t\tbb.Max = RVT.XYZ(10,10,10)\r\n\t\tfamily = RVT.FilteredElementCollector(doc).OfClass(RVT.ViewFamilyType).WhereElementIsElementType().ToElements().FirstOrDefault(lambda x: x.ViewFamily == RVT.ViewFamily.Section)\r\n\t\ttempSection = RVT.ViewSection.CreateSection(doc, family.Id, bb)\r\n\t\tview1 = tempSection\r\n\tOUT = map(NewDS, solids, cat, names)\r\n\tif tempSection:\r\n\t\tdoc.Delete(tempSection.Id)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\nelse :\r\n\tOUT = \"Make sure that each geometry\\nobject has a unique type name.\"\r\nsatOpt.Dispose()\r\nopt1.Dispose()",
+      "Engine": "IronPython2",
       "VariableInputPorts": true,
       "Id": "eb1ec0d20ad04b489629b7474c15de33",
       "Inputs": [
@@ -133,7 +134,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Führt ein eingebettetes Python-Skript aus."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
@@ -159,7 +160,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+      "Description": "Ein Funktionsparameter zur Verwendung mit benutzerdefinierten Blöcken.\r\n\r\nSie können den Typ und den Vorgabewert für den Parameter angeben, z. B.\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
@@ -185,7 +186,7 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+      "Description": "Ein Funktionsparameter zur Verwendung mit benutzerdefinierten Blöcken.\r\n\r\nSie können den Typ und den Vorgabewert für den Parameter angeben, z. B.\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
     }
   ],
   "Connectors": [
@@ -211,83 +212,85 @@
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "2.12.1.8246",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 1789.139404296875,
-      "EyeY": 3423.371826171875,
-      "EyeZ": 5129.7431640625,
-      "LookX": 209.18060302734375,
-      "LookY": -2958.109130859375,
-      "LookZ": -5471.5908203125,
-      "UpX": 0.010530008934438229,
-      "UpY": 0.96126168966293335,
-      "UpZ": -0.275436133146286
+      "Name": "Hintergrundvorschau",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
     "NodeViews": [
       {
+        "ShowGeometry": true,
+        "Name": "Output",
         "Id": "378d06943f1443b99ae6930a6781aae0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 332.163250075419,
         "Y": 5.68059893600937
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "a5efe1adc89c4254b3becdc29be8caaa",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 2.81806812397618,
         "Y": -24.8802735669342
       },
       {
+        "ShowGeometry": true,
+        "Name": "Python Script",
         "Id": "eb1ec0d20ad04b489629b7474c15de33",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 186.717213335161,
-        "Y": 8.59725569537729
+        "Y": 8.5972556953772852
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "e97089f6028f4687a3abc93d40734dac",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": -54.2425559950453,
         "Y": 35.7682194880019
       },
       {
+        "ShowGeometry": true,
+        "Name": "Input",
         "Id": "3ab7cee6f39c4d93af658668f4a2a1bc",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
         "X": 36.507473833428,
         "Y": 95.2379162468539
       }
     ],
     "Annotations": [],
-    "X": 405.163835208678,
-    "Y": 211.462261465035,
-    "Zoom": 1.04850666193807
+    "X": 89.882540333387851,
+    "Y": 233.13124043879,
+    "Zoom": 1.1313606400394012
   }
 }

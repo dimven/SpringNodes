@@ -1,0 +1,264 @@
+{
+  "Uuid": "16e97d6d-2081-42f2-a01c-96933317111b",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first.",
+  "Name": "Mesh.ToTkMesh",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Surface": {
+        "Key": "Autodesk.DesignScript.Geometry.Surface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "mesh",
+        "TypeName": "var",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fee22551bb0b4bf09d8046b848aeff1c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c60409d044784358945f081910fcb585",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "6eb1ca3a232f47cd92e1b3a99623f520",
+          "Name": "mesh",
+          "Description": "mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b7115af2dfaa4259b9cc5ecac19acdf4",
+          "Name": "indices",
+          "Description": "indices = mesh.FaceIndices",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "64c321a4de874d0797f656f8254efde5",
+          "Name": "vrtx_positions",
+          "Description": "vrtx_positions = mesh.VertexPositions",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "19ea1a69aa4241eba921f469ebbf0973",
+          "Name": "vrtx_positions_flat",
+          "Description": "vrtx_positions_flat = DSCore.List.Flatten(vrtx_positions, 1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b21e398c9ad64560905b29761619233c",
+          "Name": "indices_flat",
+          "Description": "indices_flat = DSCore.List.Flatten(indices, 2)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "534950e4ab9f452fa721cae001b96a73",
+          "Name": "indices_new_list",
+          "Description": "indices_new_list = [indices_flat.A, indices_flat.B, indices_flat.C]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bf61aa50ca26409c9d57ae94a258dbb4",
+          "Name": "indices_transposed",
+          "Description": "indices_transposed = DSCore.List.Transpose(indices_new_list)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "70bb6249058b4dbbb5106bbc23853cf2",
+          "Name": "tkMesh",
+          "Description": "tkMesh = Autodesk.Dynamo.MeshToolkit.Mesh.ByVerticesAndIndices(vrtx_positions_flat, indices_transposed)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "47737ab4fc8149198097710c95344e16",
+          "Name": "tkMesh_Flat",
+          "Description": "tkMesh_Flat = DSCore.List.Flatten(tkMesh, -1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "indices = mesh.FaceIndices;\n\nvrtx_positions = mesh.VertexPositions;\nvrtx_positions_flat = DSCore.List.Flatten(vrtx_positions, 1);\n\nindices_flat = DSCore.List.Flatten(indices, 2);\nindices_new_list = [indices_flat.A,indices_flat.B,indices_flat.C];\nindices_transposed = DSCore.List.Transpose(indices_new_list);\n\ntkMesh = Dynamo.Mesh.ByVerticesAndIndices(vrtx_positions_flat, indices_transposed);\ntkMesh_Flat = DSCore.List.Flatten(tkMesh, -1);"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "tkMesh",
+      "Id": "222f59234a694f7b8e69b21234c0cbbb",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "c664bc9db2d349239b478ddb509eb7de",
+          "Name": "",
+          "Description": "Output Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fee22551bb0b4bf09d8046b848aeff1c",
+      "End": "6eb1ca3a232f47cd92e1b3a99623f520",
+      "Id": "49812ba2acbd42a3ae779eeb5953182f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "70bb6249058b4dbbb5106bbc23853cf2",
+      "End": "c664bc9db2d349239b478ddb509eb7de",
+      "Id": "20b709f5f7a24cc09d008d2e3321cc6f",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.6.1.9895",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -1.6276273727416992,
+      "EyeY": 19.6348819732666,
+      "EyeZ": 36.345855712890625,
+      "LookX": 8.628253936767578,
+      "LookY": -9.347274780273438,
+      "LookZ": -41.7032356262207,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -857.5734595138458,
+        "Y": 292.77892282011845
+      },
+      {
+        "Id": "c60409d044784358945f081910fcb585",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -464.51489648920074,
+        "Y": 288.146461768502
+      },
+      {
+        "Id": "222f59234a694f7b8e69b21234c0cbbb",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 654.3332030937775,
+        "Y": 431.5627553492952
+      }
+    ],
+    "Annotations": [],
+    "X": 1102.9022382817245,
+    "Y": 153.215563886447,
+    "Zoom": 1.0069333865956762
+  }
+}

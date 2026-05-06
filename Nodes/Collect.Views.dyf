@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Search for views based on naming. You can choose to either include or exclude schedules. Use the sheet collector for sheets.",
-  "Name": "ꟿ Collect.Views",
+  "Name": "Collect.Views",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\napp = DocumentManager.Instance.CurrentUIApplication.Application\r\nisRvt2018 = int(app.VersionNumber) < 2019\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nfn = map(str,tolist(IN[0]) )\r\nIncSchedules = IN[1]\r\nresult, similar, names = [], [], []\r\n\r\nif IncSchedules: exclude = (\"DrawingSheet\")\r\nelse: exclude = (\"DrawingSheet\", \"Schedule\")\r\nfec = FilteredElementCollector(doc).OfClass(View)\r\nfor i in fec:\r\n\tif not i.IsTemplate and not i.ViewType.ToString() in exclude:\r\n\t\tn1 = i.ViewName if isRvt2018 else i.Name\r\n\t\tnames.append(n1)\r\n\t\tif any(fn1 == n1 for fn1 in fn):\r\n\t\t\tresult.append(i.ToDSType(True))\r\n\t\telif any(fn1.lower() in n1.lower() for fn1 in fn):\r\n\t\t\tsimilar.append(i.ToDSType(True))\r\nif len(result) > 0:\r\n\tOUT = result,similar\r\nif len(result) == 0 and len(similar) > 0:\r\n\tOUT = \"No exact match found. Check partial below:\", similar\r\nif len(result) == 0 and len(similar) == 0:\r\n\tOUT = \"No match found! Check names below:\", names",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    fn = list(map(str, tolist(IN[0])))\r\n    IncSchedules = IN[1]\r\n\r\n    result, similar, names = [], [], []\r\n    exclude = (\"DrawingSheet\",) if IncSchedules else (\"DrawingSheet\", \"Schedule\")\r\n\r\n    fec = FilteredElementCollector(doc).OfClass(View)\r\n    for i in fec:\r\n        if not i.IsTemplate and i.ViewType.ToString() not in exclude:\r\n            n1 = i.Name\r\n            names.append(n1)\r\n            if any(fn1 == n1 for fn1 in fn):\r\n                result.append(i.ToDSType(True))\r\n            elif any(fn1.lower() in n1.lower() for fn1 in fn):\r\n                similar.append(i.ToDSType(True))\r\n\r\n    if len(result) > 0:\r\n        OUT = result, similar\r\n    elif len(similar) > 0:\r\n        OUT = \"No exact match found. Check partial below:\", similar\r\n    else:\r\n        OUT = \"No match found! Check names below:\", names\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "9e16e04807e64f309fc0a0aac6f5effb",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "d436204e0e384eca8a6b239d82099a3b",
@@ -57,11 +58,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "name",
         "TypeName": "var",
@@ -70,6 +70,7 @@
         "Description": ""
       },
       "Id": "9c5784e0fd0a4e8e89cd1ae1bbc067fb",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -87,10 +88,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "exact match",
       "Id": "30959af0c8ee43feac2c23606ae3daf7",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2fd3cce1b2c84d9db1109c217099027c",
@@ -108,9 +109,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "v[0];\nv[1];",
       "Id": "52aafd857ca24f2d9808cf7912e349f2",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "e555a94779d943d49e6aebbf1e46bd45",
@@ -125,8 +125,8 @@
       "Outputs": [
         {
           "Id": "3648a48cf4184c99adae79d8d27e87fc",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(v, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -134,8 +134,8 @@
         },
         {
           "Id": "bee3295aaa594a65a50566a4ffa5ccc8",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(v, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -143,14 +143,15 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "v[0];\nv[1];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "partial match",
       "Id": "3d8be64b21e740748b2ce5c61a7ccc34",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "5877bb3e3098402ba7a5997274efd826",
@@ -168,7 +169,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "IncludeSchedules",
         "TypeName": "bool",
@@ -177,6 +177,7 @@
         "Description": ""
       },
       "Id": "38447c8df9e14e13a9d0b0d489c55d4c",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -194,7 +195,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -203,6 +203,7 @@
         "Description": ""
       },
       "Id": "cef88f0e700a42a5b18c603cd34af1ac",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -223,132 +224,141 @@
     {
       "Start": "f21b93b8026e44c5bf27c6b7dd8496d9",
       "End": "e555a94779d943d49e6aebbf1e46bd45",
-      "Id": "37d81e860f29488eaec1924dd0c196d5"
+      "Id": "37d81e860f29488eaec1924dd0c196d5",
+      "IsHidden": "False"
     },
     {
       "Start": "0a221118c0724c04be1c17214f3cc307",
       "End": "d436204e0e384eca8a6b239d82099a3b",
-      "Id": "aa14a04ad8074b08b671d0c8fd37957a"
+      "Id": "aa14a04ad8074b08b671d0c8fd37957a",
+      "IsHidden": "False"
     },
     {
       "Start": "3648a48cf4184c99adae79d8d27e87fc",
       "End": "2fd3cce1b2c84d9db1109c217099027c",
-      "Id": "28a1e84296754c7dbf5dab8c9c4254a1"
+      "Id": "28a1e84296754c7dbf5dab8c9c4254a1",
+      "IsHidden": "False"
     },
     {
       "Start": "bee3295aaa594a65a50566a4ffa5ccc8",
       "End": "5877bb3e3098402ba7a5997274efd826",
-      "Id": "6a0057d2f01b4704bf6c5dbc938094c4"
+      "Id": "6a0057d2f01b4704bf6c5dbc938094c4",
+      "IsHidden": "False"
     },
     {
       "Start": "8d48eb6a748e43a38fbb8480c9940851",
       "End": "f20f13da230141f28856bcbf17eb7cba",
-      "Id": "eb2d10a17be04580aa34853cc8bbd90c"
+      "Id": "88f6af0ddf4e4a97823b8ccdf9f42a6c",
+      "IsHidden": "False"
     },
     {
       "Start": "c4fb0d811df04f7791535184f8660a1b",
       "End": "e3caeb85dbfb489ab55b722839dc6941",
-      "Id": "cc021f2e61004aaea25e7b7a8865b860"
+      "Id": "cc021f2e61004aaea25e7b7a8865b860",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "9e16e04807e64f309fc0a0aac6f5effb",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.0,
-        "Y": 0.0
+        "Y": -0.3867072828255118
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "9c5784e0fd0a4e8e89cd1ae1bbc067fb",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 86.106356232219,
-        "Y": 0.13695343495981
+        "ShowGeometry": true,
+        "X": -0.3073971461206071,
+        "Y": -125.16298896363276
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "30959af0c8ee43feac2c23606ae3daf7",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 557.518581130832,
-        "Y": -14.6309611080824
-      },
-      {
-        "ShowGeometry": true,
-        "Name": "Code Block",
-        "Id": "52aafd857ca24f2d9808cf7912e349f2",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": 407.913304717973,
-        "Y": -0.27823047497381
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 691.9999848258731,
+        "Y": -102.66497236226598
+      },
+      {
+        "Id": "52aafd857ca24f2d9808cf7912e349f2",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 451.12018140714287,
+        "Y": 1.3420274008700233
+      },
+      {
         "Id": "3d8be64b21e740748b2ce5c61a7ccc34",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 561.001987052564,
-        "Y": 50.264022626588
+        "ShowGeometry": true,
+        "X": 700.6033161525525,
+        "Y": 175.17047497920908
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "38447c8df9e14e13a9d0b0d489c55d4c",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -70.3178152525903,
-        "Y": 58.9658593544238
+        "ShowGeometry": true,
+        "X": -150.25053712755454,
+        "Y": 38.44259292706812
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "cef88f0e700a42a5b18c603cd34af1ac",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 10.8312449286153,
-        "Y": 120.018759052882
+        "ShowGeometry": true,
+        "X": -80.98336803587065,
+        "Y": 212.3734579759825
       }
     ],
     "Annotations": [],
-    "X": -154.433030383329,
-    "Y": 87.532407415005,
-    "Zoom": 1.72395684352182
+    "X": 229.02591243849133,
+    "Y": 193.14503822079917,
+    "Zoom": 1.2343714107597545
   }
 }

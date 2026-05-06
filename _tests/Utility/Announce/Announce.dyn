@@ -1,0 +1,261 @@
+{
+  "Uuid": "5766afcc-6fda-41d2-ac1f-b58e94f95adc",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Announce",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 80.0,
+      "WatchHeight": 200.0,
+      "Id": "cf8c1bd5809e4b9187309eab655e9f1f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "0dc603d1efb54ad68097ec01f8cfab0a",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "110b51d966924fd793e52634a49930b8",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "SerializedWidth": 0.0,
+      "SerializedHeight": 0.0,
+      "Id": "e8bfb8c91cac4de9a36c8c53b6956163",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "01f851f4993b45418b4b7e9f78eeac7a",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string.",
+      "InputValue": "SomeTask"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0c9d0a71-f294-436a-bb48-128dd3991a20",
+      "FunctionType": "Graph",
+      "Id": "c4e86123b4184b3e923b0084d13de9d3",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "baf255e0aa2d4dce95b28fb584ae07f1",
+          "Name": "passThrough",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "18bf8145ce5643be8cf319aa12db4f62",
+          "Name": "message",
+          "Description": "string\nDefault value : \"Dynamo task complete.\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5f457d0042b14882bf13f3597db77278",
+          "Name": "passThrough",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Uses the standard windows speech synthesiser to make an announcement when the note gets executed. Useful when placed after a long running task."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "f649aff3e558409c933687a868901695",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "55f1fbcf9711426fa1f056af12988a88",
+          "Name": "string",
+          "Description": "\"SpringsTaskDone\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"SpringsTaskDone\";"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "01f851f4993b45418b4b7e9f78eeac7a",
+      "End": "baf255e0aa2d4dce95b28fb584ae07f1",
+      "Id": "9a2a3e677573478a9ccd2600e4e68ce8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5f457d0042b14882bf13f3597db77278",
+      "End": "0dc603d1efb54ad68097ec01f8cfab0a",
+      "Id": "573d02362ec04e97a328bea785d524a3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "55f1fbcf9711426fa1f056af12988a88",
+      "End": "18bf8145ce5643be8cf319aa12db4f62",
+      "Id": "7c3bff2924b04a50adfe80c1535b43d8",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0c9d0a71-f294-436a-bb48-128dd3991a20"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Utility.Announce.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "c4e86123b4184b3e923b0084d13de9d3"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "cf8c1bd5809e4b9187309eab655e9f1f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2495.082753592143,
+        "Y": 3912.993891352525
+      },
+      {
+        "Id": "e8bfb8c91cac4de9a36c8c53b6956163",
+        "Name": "String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1907.834974026855,
+        "Y": 3914.3027201515847
+      },
+      {
+        "Id": "c4e86123b4184b3e923b0084d13de9d3",
+        "Name": "Utility.Announce",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2141.068871493923,
+        "Y": 3914.8286536300993
+      },
+      {
+        "Id": "f649aff3e558409c933687a868901695",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1863.6558331525105,
+        "Y": 4054.4052247312916
+      }
+    ],
+    "Annotations": [],
+    "X": -1586.6030463395402,
+    "Y": -3779.1093126445517,
+    "Zoom": 1.0897565378428553
+  }
+}

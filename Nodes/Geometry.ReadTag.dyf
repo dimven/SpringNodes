@@ -1,9 +1,9 @@
 {
-  "Uuid": "aa90266c-e750-4268-935e-ca22c36a22ce",
+  "Uuid": "1de2e555-91ec-4117-8ae3-0234c0816fac",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Design script geometry can store a <string, object> dictionary for the duration of the active graph. If no parameter with the active name is found, a null value will be returned instead.",
-  "Name": "ꟿ Geometry.ReadTag",
+  "Name": "Geometry.ReadTag",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -21,13 +21,14 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "OUT = IN[0].Tags.LookupTag(IN[1])",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\nOUT = IN[0].Tags.LookupTag(IN[1])",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "df691c7c616149b2a9f0091a58648726",
+      "Id": "1db799fe7d9f48708b4816b159e3274d",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "48ea0c0ad4564b878b77dc0f7627c5b1",
+          "Id": "6aeecc2296364f82a02127c3f25de5a3",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -36,7 +37,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d11131ca16784a8f8670bc3073731c0d",
+          "Id": "cd04c2725e8248f1a939c244c79d0aa5",
           "Name": "IN[1]",
           "Description": "Input #1",
           "UsingDefaultValue": false,
@@ -47,7 +48,7 @@
       ],
       "Outputs": [
         {
-          "Id": "47843f5c4ca0447c84a826034b4600d5",
+          "Id": "2ca97906e88046d2bc594fbb4251a4b4",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -57,11 +58,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geometry",
         "TypeName": "var",
@@ -69,11 +69,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "6db6f57574f34cfaacbe5e25e5eee7fa",
+      "Id": "1ed61d08bc664e988511203fb0abd1ae",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2321e8a724044f529ef6fa69e77bddd0",
+          "Id": "d17bd2994da1498ab372ab52a71f70a0",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -87,7 +88,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "tagName",
         "TypeName": "string",
@@ -95,11 +95,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "44a03e24665946e6a2c3ce961aaa193a",
+      "Id": "958b2d3cd8454810b96db57a70e987fb",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "99f7389333a7447487223c5013c8ca57",
+          "Id": "9ebaaeb275cb475e8a2f61a900573a2a",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -113,13 +114,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "value",
-      "Id": "acbfc1c0a5334dcda0959809b1e26fba",
+      "Id": "141c07112afe4f2f85e12f5761dabf16",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "20135cc9d26145f6abd7daaf5f523052",
+          "Id": "9dbcfc3745b9419f83e5dc97d8d3c54a",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -135,89 +136,95 @@
   ],
   "Connectors": [
     {
-      "Start": "47843f5c4ca0447c84a826034b4600d5",
-      "End": "20135cc9d26145f6abd7daaf5f523052",
-      "Id": "5c7ab679280f4486898d3ab11638d2e4"
+      "Start": "2ca97906e88046d2bc594fbb4251a4b4",
+      "End": "9dbcfc3745b9419f83e5dc97d8d3c54a",
+      "Id": "2b344b52588845b39b930f47b7988e1f",
+      "IsHidden": "False"
     },
     {
-      "Start": "2321e8a724044f529ef6fa69e77bddd0",
-      "End": "48ea0c0ad4564b878b77dc0f7627c5b1",
-      "Id": "ff7a12afb68d4be2b0f39ef1c865f3e4"
+      "Start": "d17bd2994da1498ab372ab52a71f70a0",
+      "End": "6aeecc2296364f82a02127c3f25de5a3",
+      "Id": "f42061d18b6e4d9e994cf23742f5dd0f",
+      "IsHidden": "False"
     },
     {
-      "Start": "99f7389333a7447487223c5013c8ca57",
-      "End": "d11131ca16784a8f8670bc3073731c0d",
-      "Id": "712ec96347084a7e841c411db780a1f2"
+      "Start": "9ebaaeb275cb475e8a2f61a900573a2a",
+      "End": "cd04c2725e8248f1a939c244c79d0aa5",
+      "Id": "823a7062a319453bb56202c81af74bf2",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 7989.8426775835405,
-      "EyeY": 16441.189390752603,
-      "EyeZ": -2807.0452520331523,
-      "LookX": -8116.3828001003094,
-      "LookY": -14870.000206513943,
-      "LookZ": 2923.778855303276,
-      "UpX": -0.69364371746512565,
-      "UpY": 0.67559020761571542,
-      "UpZ": 0.2498724966759146
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "df691c7c616149b2a9f0091a58648726",
+        "Id": "1db799fe7d9f48708b4816b159e3274d",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.0,
         "Y": 0.0
       },
       {
-        "Id": "6db6f57574f34cfaacbe5e25e5eee7fa",
+        "Id": "1ed61d08bc664e988511203fb0abd1ae",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -32.996459764946906,
+        "Y": 1.2939788143116289
       },
       {
-        "Id": "44a03e24665946e6a2c3ce961aaa193a",
+        "Id": "958b2d3cd8454810b96db57a70e987fb",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 24.0,
-        "Y": 64.4
+        "ShowGeometry": true,
+        "X": -38.0,
+        "Y": 212.4
       },
       {
-        "Id": "acbfc1c0a5334dcda0959809b1e26fba",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "141c07112afe4f2f85e12f5761dabf16",
         "Name": "Output",
-        "ShowGeometry": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 428.2,
-        "Y": -0.800000000000011
+        "ShowGeometry": true,
+        "X": 522.2,
+        "Y": -1.8000000000000114
       }
     ],
     "Annotations": [],
-    "X": 122.4,
-    "Y": 52.8,
-    "Zoom": 1.0
+    "X": 146.16624592976962,
+    "Y": 264.4204722290171,
+    "Zoom": 1.1047642563030273
   }
 }

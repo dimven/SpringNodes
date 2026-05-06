@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Pulls (projects) the point onto the input plane, following the plane normal.",
-  "Name": "ꟿ Point.PullOntoPlane",
+  "Name": "Point.PullOntoPlane",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -37,9 +37,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "n = pl.Normal;\no = pl.Origin;\nd = n.Dot(o.AsVector() ) - n.Dot(pt.AsVector() );\np1 = pt.Add(n.Scale(d) );",
       "Id": "195bc830dd4c4773ace30fcffcd12a88",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "b9985af7b59e4200bef149d55b80d3c8",
@@ -63,8 +62,8 @@
       "Outputs": [
         {
           "Id": "ae9a6e718b244986b88d506752e77d20",
-          "Name": "",
-          "Description": "n",
+          "Name": "n",
+          "Description": "n = pl.Normal",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -72,8 +71,8 @@
         },
         {
           "Id": "7396188dab4345b99c1f5f5ac75a1af7",
-          "Name": "",
-          "Description": "o",
+          "Name": "o",
+          "Description": "o = pl.Origin",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -81,8 +80,8 @@
         },
         {
           "Id": "fb36f04bbd5c4b15ba2048e2051783c2",
-          "Name": "",
-          "Description": "d",
+          "Name": "d",
+          "Description": "d = (n.Dot(o.AsVector())) - (n.Dot(pt.AsVector()))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -90,8 +89,8 @@
         },
         {
           "Id": "8fb0479c630c4dd1ba3a67603619c82c",
-          "Name": "",
-          "Description": "p1",
+          "Name": "p1",
+          "Description": "p1 = pt.Add(n.Scale(d))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -99,11 +98,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "n = pl.Normal;\no = pl.Origin;\nd = n.Dot(o.AsVector() ) - n.Dot(pt.AsVector() );\np1 = pt.Add(n.Scale(d) );"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "point",
         "TypeName": "var",
@@ -112,6 +111,7 @@
         "Description": ""
       },
       "Id": "df52bd9092ad401ea36dd1bc8b05ca97",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -129,7 +129,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "plane",
         "TypeName": "var",
@@ -138,6 +137,7 @@
         "Description": ""
       },
       "Id": "fcfce7bd06374b3dbbabbfc9a2d4c729",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -155,10 +155,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "point",
       "Id": "b55a23d1ed5a4e4686f280ecd165bcaf",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "daac8c0569324b73bb050bf96d47637e",
@@ -179,87 +179,93 @@
     {
       "Start": "8fb0479c630c4dd1ba3a67603619c82c",
       "End": "daac8c0569324b73bb050bf96d47637e",
-      "Id": "9ad00675071c49778f63d48963254a4a"
+      "Id": "9ad00675071c49778f63d48963254a4a",
+      "IsHidden": "False"
     },
     {
       "Start": "db14eea3267e410c86059c1c57ebaff2",
       "End": "a824aef1decd41bf8918aab6c74939fb",
-      "Id": "31095c6bf8e34033ac0c62f0d59cdf98"
+      "Id": "31095c6bf8e34033ac0c62f0d59cdf98",
+      "IsHidden": "False"
     },
     {
       "Start": "880db1b074514d76b8bf6f7be98acde5",
       "End": "b9985af7b59e4200bef149d55b80d3c8",
-      "Id": "da1d374edcaa4199ab4d4c7f14126f4c"
+      "Id": "da1d374edcaa4199ab4d4c7f14126f4c",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": 13.959798812866211,
+      "EyeY": 6.73392391204834,
+      "EyeZ": 17.14632797241211,
+      "LookX": -9.455400466918945,
+      "LookY": -1.2376365661621094,
+      "LookZ": -13.105117797851562,
+      "UpX": 0.08143164962530136,
+      "UpY": 0.9902681112289429,
+      "UpZ": 0.11286293715238571
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "195bc830dd4c4773ace30fcffcd12a88",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 287.730975740907,
         "Y": 125.26014519006
       },
       {
         "Id": "df52bd9092ad401ea36dd1bc8b05ca97",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 144.967471055544,
-        "Y": 138.989431012017
+        "ShowGeometry": true,
+        "X": 54.72866098317016,
+        "Y": 251.40557576319466
       },
       {
         "Id": "fcfce7bd06374b3dbbabbfc9a2d4c729",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 142.862747757501,
-        "Y": 196.329810337339
+        "ShowGeometry": true,
+        "X": 52.62393768512712,
+        "Y": 65.56000930025485
       },
       {
         "Id": "b55a23d1ed5a4e4686f280ecd165bcaf",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 787.080778219809,
-        "Y": 172.168632468369
+        "ShowGeometry": true,
+        "X": 866.6132887920706,
+        "Y": 173.6981038255279
       }
     ],
     "Annotations": [],
-    "X": -157.21979607338,
-    "Y": 136.325665134522,
-    "Zoom": 1.130842140625
+    "X": 137.59194055384768,
+    "Y": 153.92216055080718,
+    "Zoom": 1.3076413563671876
   }
 }

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Places a view hosted family instance at a given point in the view (e.g. a detail component, 2d annotation).\r\nSet track to false if you'd like to place instances on every run.",
-  "Name": "ꟿ FamilyInstance.ByViewAndPoint",
+  "Name": "FamilyInstance.ByViewAndPoint",
   "ElementResolver": {
     "ResolutionMap": {
       "String": {

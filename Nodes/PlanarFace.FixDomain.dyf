@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Corrects the surface domain of a 3 or 4 point planar face extracted from Revit.",
-  "Name": "ꟿ PlanarFace.FixDomain",
+  "Name": "PlanarFace.FixDomain",
   "ElementResolver": {
     "ResolutionMap": {
       "Surface.ByLoftc[{0, 2}]": {
@@ -21,12 +21,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "Surface.ByLoft(sf1.\n  PerimeterCurves()[[0,2]]);",
       "Id": "b2c64cfa7f9649779360aaa0b4cbf071",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "7272fc275b4640bb8b701f7e17f7b24a",
+          "Id": "f7b4b1e66a2e42148223cee164bfffbc",
           "Name": "sf1",
           "Description": "sf1",
           "UsingDefaultValue": false,
@@ -37,9 +36,9 @@
       ],
       "Outputs": [
         {
-          "Id": "430669c5a9a84c71b380476212ef760d",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Id": "bebaad4b90894b818ece189849fbb98c",
+          "Name": "function",
+          "Description": "DesignScript.Geometry.Surface.ByLoft(DesignScript.Builtin.Get.ValueAtIndex(sf1.PerimeterCurves(), [0, 2]))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -47,14 +46,15 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "DesignScript.Geometry.Surface.ByLoft(sf1.\n  PerimeterCurves()[[0,2]]);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "surface",
       "Id": "35587a5cf7324f5e8b1a956ff74736fa",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "35adad64d9a244e6adf1c7faedd2f625",
@@ -72,7 +72,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "surf",
         "TypeName": "var",
@@ -81,6 +80,7 @@
         "Description": ""
       },
       "Id": "dbf8fc3b352c49b1b38e9e34c347db10",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -99,74 +99,79 @@
   ],
   "Connectors": [
     {
-      "Start": "430669c5a9a84c71b380476212ef760d",
+      "Start": "bebaad4b90894b818ece189849fbb98c",
       "End": "35adad64d9a244e6adf1c7faedd2f625",
-      "Id": "3231864eb3d74217bd4cd1e748d899ae"
+      "Id": "fc4eccb13a81415398d3629b95fff5be",
+      "IsHidden": "False"
     },
     {
       "Start": "dac7534a652644a7b635dbe2efdd0a22",
-      "End": "7272fc275b4640bb8b701f7e17f7b24a",
-      "Id": "0f2cda6cb89c4720895e5321fe6a1e39"
+      "End": "f7b4b1e66a2e42148223cee164bfffbc",
+      "Id": "87ff6a93053141b1b1231c53f258b90d",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -6.4689822196960449,
-      "EyeY": 20.569091796875,
-      "EyeZ": 18.448749542236328,
-      "LookX": 13.736084938049316,
-      "LookY": -9.3274745941162109,
-      "LookZ": -15.975666999816895,
-      "UpX": 0.1299794614315033,
-      "UpY": 0.97992467880249023,
-      "UpZ": -0.15117178857326508
+      "Name": "_Background Preview",
+      "EyeX": 13.959798812866211,
+      "EyeY": 6.73392391204834,
+      "EyeZ": 17.14632797241211,
+      "LookX": -9.455400466918945,
+      "LookY": -1.2376365661621094,
+      "LookZ": -13.105117797851562,
+      "UpX": 0.08143164962530136,
+      "UpY": 0.9902681112289429,
+      "UpZ": 0.11286293715238571
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "b2c64cfa7f9649779360aaa0b4cbf071",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 210.927568756837,
         "Y": 11.9314839249984
       },
       {
         "Id": "35587a5cf7324f5e8b1a956ff74736fa",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 525.69345517665,
-        "Y": 6.88341812771566
+        "ShowGeometry": true,
+        "X": 707.5304173838064,
+        "Y": 10.89874536888314
       },
       {
         "Id": "dbf8fc3b352c49b1b38e9e34c347db10",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 90.5,
+        "ShowGeometry": true,
+        "X": -16.366022705051705,
         "Y": 10.0
       }
     ],
     "Annotations": [],
-    "X": -119.700353701292,
-    "Y": 153.512847484657,
-    "Zoom": 1.74331992875497
+    "X": 339.94737604395505,
+    "Y": 344.76074308631365,
+    "Zoom": 1.137582052294739
   }
 }

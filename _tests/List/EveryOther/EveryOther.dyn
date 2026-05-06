@@ -1,0 +1,214 @@
+{
+  "Uuid": "a8f8bc92-47b1-4f60-8fd6-a5a148729d7d",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "EveryOther",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d6649dff24c34cb78fe80bd02081e029",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a8b15e1fe64f40518cd2fa9d1f5e7387",
+          "Name": "range",
+          "Description": "0..3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..3;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 242.0,
+      "WatchHeight": 375.3333333333333,
+      "Id": "18c14a141b55407fb7ff875d3f9bfc1e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "28ddf0b54abd443c81c304120d54186f",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0ac5add78d764bfcaf539021ef763f5c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "8b57c43c-4e2e-47af-876a-bd8f1c12ce46",
+      "FunctionType": "Graph",
+      "Id": "1bc1a7f8eee5486c81ac20e7d5685949",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "71846ed101494c76bea4db4cf81bd199",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ff74dea6150c4e79b514af43c3857c73",
+          "Name": "withDuplicates",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bc105fcb29494ffd8e9323dc32ec141d",
+          "Name": "lists",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Useful for when you want to combine an item on the list with every other item on the list. For example in list {1,2,3} , \"2\" will be paired up only with \"1\" and \"3\" and will not be paired up with itself."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a8b15e1fe64f40518cd2fa9d1f5e7387",
+      "End": "71846ed101494c76bea4db4cf81bd199",
+      "Id": "996dab988c9e477597410b704d230ef0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "bc105fcb29494ffd8e9323dc32ec141d",
+      "End": "28ddf0b54abd443c81c304120d54186f",
+      "Id": "161c322c3a1544ababbac6e66d37934b",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "8b57c43c-4e2e-47af-876a-bd8f1c12ce46"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.EveryOther.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "1bc1a7f8eee5486c81ac20e7d5685949"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d6649dff24c34cb78fe80bd02081e029",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 538.5262210221242,
+        "Y": 695.017497678108
+      },
+      {
+        "Id": "18c14a141b55407fb7ff875d3f9bfc1e",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1069.3135856710112,
+        "Y": 695.9897455031592
+      },
+      {
+        "Id": "1bc1a7f8eee5486c81ac20e7d5685949",
+        "Name": "List.EveryOther",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 758.4507274364539,
+        "Y": 693.3277488805621
+      }
+    ],
+    "Annotations": [],
+    "X": -414.1746442862045,
+    "Y": -457.35880194214843,
+    "Zoom": 1.287039447560302
+  }
+}

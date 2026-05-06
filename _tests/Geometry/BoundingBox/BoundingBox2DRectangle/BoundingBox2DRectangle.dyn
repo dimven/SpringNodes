@@ -1,0 +1,324 @@
+{
+  "Uuid": "0fe245c6-eaa4-4304-ad7b-0f77cbf66f16",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "BoundingBox2DRectangle",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "46725b07-bc8f-477a-8d22-394a758d8474",
+      "FunctionType": "Graph",
+      "Id": "f7bf67b37fc148ba94533bf903ff0656",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "dd605ff3e0dc41e8b8b81348ed2dc808",
+          "Name": "boundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b6056911aebe44d79b132ae12e0ec39b",
+          "Name": "elevation",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dc04d32bec9547898f5e48604772d7a6",
+          "Name": "rectangle",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns a 2d rectangle from a bounding box"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "119ce04d4b5d43dc9c893ea1368d04f4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "abd373d7feda40e481f9e2e17ad66aa1",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "260cb725701941c69e51d44568925de6",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dc9e1e89ef1c43389772442697382986",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2c32c278dd3e46ec8e9b2b9d628de286",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at WCS origin, with width, length, and height.\n\nCuboid.ByLengths (width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "420a531715314c909631edfd5fe2b6e2",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "efd36a37e9474e1b8306cb1f8d89ca98",
+          "Name": "geom",
+          "Description": "Geometry[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "89eac93eeb41490da6a91f6baebd4ce2",
+          "Name": "BoundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.BoundingBox.ByGeometry@Autodesk.DesignScript.Geometry.Geometry[]",
+      "Replication": "Auto",
+      "Description": "Create an axis-aligned BoundingBox around input Geometry.\n\nBoundingBox.ByGeometry (geom: Geometry[]): BoundingBox"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d8533b9a5aaf445c92e9f99bd2fe204d",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "709657a376fd4a59b3d221099906c7d1",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "2;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 320.0,
+      "WatchHeight": 38.0,
+      "Id": "ba731d0004e242428bc4301b0de7e14d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "b47356028235474da9b9a2e8fae571f5",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bca4e9a4f5c04e5e946b5de71d139ebf",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "dc04d32bec9547898f5e48604772d7a6",
+      "End": "b47356028235474da9b9a2e8fae571f5",
+      "Id": "0728a66bc90d4527b2cebc65d0715886",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2c32c278dd3e46ec8e9b2b9d628de286",
+      "End": "efd36a37e9474e1b8306cb1f8d89ca98",
+      "Id": "e3de68f68b3b4b269a9a21e33a5a72a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "89eac93eeb41490da6a91f6baebd4ce2",
+      "End": "dd605ff3e0dc41e8b8b81348ed2dc808",
+      "Id": "014acb37913043c2bee368755ef66316",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "709657a376fd4a59b3d221099906c7d1",
+      "End": "b6056911aebe44d79b132ae12e0ec39b",
+      "Id": "9fbd9dc0af0b4274b0a5c346e5027c0d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "46725b07-bc8f-477a-8d22-394a758d8474"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "BoundingBox.2dRectangle.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "f7bf67b37fc148ba94533bf903ff0656"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": null,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f7bf67b37fc148ba94533bf903ff0656",
+        "Name": "BoundingBox.2dRectangle",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 754.0,
+        "Y": 449.0
+      },
+      {
+        "Id": "119ce04d4b5d43dc9c893ea1368d04f4",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 97.0,
+        "Y": 452.0
+      },
+      {
+        "Id": "420a531715314c909631edfd5fe2b6e2",
+        "Name": "BoundingBox.ByGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 386.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "d8533b9a5aaf445c92e9f99bd2fe204d",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 496.0,
+        "Y": 617.0
+      },
+      {
+        "Id": "ba731d0004e242428bc4301b0de7e14d",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1162.0,
+        "Y": 447.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

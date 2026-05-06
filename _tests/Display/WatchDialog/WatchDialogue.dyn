@@ -1,0 +1,432 @@
+{
+  "Uuid": "7bdfdaaf-a092-444d-826e-6aa77aa282f0",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "WatchDialogue",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "c5f7bd26392f42218c1eb5721ac820f4",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8006e3ed939b45b99ff19aa5fba55f7f",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "E:\\Github\\SpringNodes\\_tests\\Display\\WatchDialog\\test_txt.txt",
+      "InputValue": ".\\test_txt.txt"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "Id": "cd4097f3dee3471c871f54a35bea6eec",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "1bdc470df9af4cb5bcad3889736cdb21",
+          "Name": "path",
+          "Description": "Path to the file.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "623b31b3abdb4f49afe9466264bb6e89",
+          "Name": "file",
+          "Description": "File object",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a file object from the given path"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "670bc81389f5425bb746c18627f805df",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2c11cf43d4f643f89c02fc1087b23d90",
+          "Name": "file",
+          "Description": "File object to read text from\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3ee2333a349c4994839b30f867311245",
+          "Name": "string",
+          "Description": "Contents of the text file.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Replication": "Auto",
+      "Description": "Reads a text file and returns the contents as a string.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "3fb6f97c47dd41429b873de311fde400",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "870bbf080dd64239b41546b81fb0490a",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "aa5b2221589244d283ec09a19b65e43f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "528dbc42186445fba806ccd6cf7aa6ff",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d90808c168cb43d48f0cc09547e81b23",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "70bf616f667e4f67b51ab669e8b04ace",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e2d694092ab04c1e8db29136e14506a1",
+          "Name": "string",
+          "Description": "\"Calibri\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"Calibri\";"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "97df89b56d3141ea9905aff521c10aed",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "57bcbb0d4abc48179aa5e55d78011804",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "eedd69fc-0c1a-4a54-b9b1-e063870ba908",
+      "FunctionType": "Graph",
+      "Id": "6e56ae4fd4334321a95bcf12d4cefeb1",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "fcc1568e5100451a853fc1216f59c8e8",
+          "Name": "input",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1142e7b526c245b7a5af2d0146bfb281",
+          "Name": "font_name",
+          "Description": "string\nDefault value : \"Calibri\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6159d4ff956b40a19ed96b20c3c7a505",
+          "Name": "reset",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5c8b159be2a94682aacd5eb64b030614",
+          "Name": "addIndexes",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f8ae10f0ce4e4d3c90123ecbdf11cf11",
+          "Name": "str",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "This node that serializes the input information and presents it in a resizable text window. It can handle all sorts of different data types, like dictionaries and elements (anything with an Id), also different plan values like numbers, booleans and of course strings."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "8006e3ed939b45b99ff19aa5fba55f7f",
+      "End": "1bdc470df9af4cb5bcad3889736cdb21",
+      "Id": "d41aab7bf6cb4311b6d254d83eedfba7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "623b31b3abdb4f49afe9466264bb6e89",
+      "End": "2c11cf43d4f643f89c02fc1087b23d90",
+      "Id": "83d82fd99ee145819b87f2eb2a96ec46",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3ee2333a349c4994839b30f867311245",
+      "End": "fcc1568e5100451a853fc1216f59c8e8",
+      "Id": "f9ac06bb103945cba58e81ad2db3ece6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d90808c168cb43d48f0cc09547e81b23",
+      "End": "6159d4ff956b40a19ed96b20c3c7a505",
+      "Id": "abc6ad5c45c44070a130e65f4687f78c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e2d694092ab04c1e8db29136e14506a1",
+      "End": "1142e7b526c245b7a5af2d0146bfb281",
+      "Id": "2607397d3ae449b0a4befb2d099a0a28",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "57bcbb0d4abc48179aa5e55d78011804",
+      "End": "5c8b159be2a94682aacd5eb64b030614",
+      "Id": "6e4672f6927340e3833e2d8d605b006f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f8ae10f0ce4e4d3c90123ecbdf11cf11",
+      "End": "870bbf080dd64239b41546b81fb0490a",
+      "Id": "919a5154db2c4a778c54fae640adc0ae",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "eedd69fc-0c1a-4a54-b9b1-e063870ba908"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "WatchDialog.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "6e56ae4fd4334321a95bcf12d4cefeb1"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "6.1",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "c5f7bd26392f42218c1eb5721ac820f4",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -512.9599218632341,
+        "Y": 427.1821139643596
+      },
+      {
+        "Id": "cd4097f3dee3471c871f54a35bea6eec",
+        "Name": "File From Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -112.70284308444616,
+        "Y": 428.0306227612087
+      },
+      {
+        "Id": "670bc81389f5425bb746c18627f805df",
+        "Name": "FileSystem.ReadText",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 190.78649009873413,
+        "Y": 426.2357757259154
+      },
+      {
+        "Id": "3fb6f97c47dd41429b873de311fde400",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 859.9679826457511,
+        "Y": 425.82491555828545
+      },
+      {
+        "Id": "528dbc42186445fba806ccd6cf7aa6ff",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 190.3548780538332,
+        "Y": 672.4147827968093
+      },
+      {
+        "Id": "70bf616f667e4f67b51ab669e8b04ace",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 192.7515185619385,
+        "Y": 546.9869914676835
+      },
+      {
+        "Id": "97df89b56d3141ea9905aff521c10aed",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 190.6731196819776,
+        "Y": 799.3468917001879
+      },
+      {
+        "Id": "6e56ae4fd4334321a95bcf12d4cefeb1",
+        "Name": "WatchDialog",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 545.7888772706748,
+        "Y": 422.52605437178624
+      }
+    ],
+    "Annotations": [],
+    "X": -105.82697446669101,
+    "Y": -160.01355907981974,
+    "Zoom": 1.0009240009373872
+  }
+}

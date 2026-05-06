@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Units.Actions",
   "Description": "Converts a fractioned feet /inch string value into a decimal foot value.",
-  "Name": "ꟿ Fraction.ToFeet",
+  "Name": "Fraction.ToFeet",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {

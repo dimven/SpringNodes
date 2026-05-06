@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Fully utilizes the FilledRegion.Create api method, unlike the OOTB node. You must provide a list with sublist of curve loops.",
-  "Name": "ꟿ FilledRegion.ByCurves+",
+  "Name": "FilledRegion.ByCurves+",
   "ElementResolver": {
     "ResolutionMap": {
       "Rectangle": {
@@ -21,10 +21,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2019, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('System')\r\nfrom System.Collections.Generic import List\r\n\r\nview, frType, dynLoops = UnwrapElement(IN)\r\nOUT = []\r\nrvtLoops = List[DB.CurveLoop]()\r\nfor crvs in dynLoops:\r\n\tloop = DB.CurveLoop.Create([c.ToRevitType() for c in crvs])\r\n\trvtLoops.Add(loop)\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfr = DB.FilledRegion.Create(doc, frType.Id, view.Id, rvtLoops)\r\nOUT.append(fr.ToDSType(False) )\r\nTransactionManager.Instance.TransactionTaskDone()\r\n",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2019, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('System')\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    view = UnwrapElement(tolist(IN[0])[0])\r\n    frType = UnwrapElement(tolist(IN[1])[0])\r\n    dynLoops = IN[2]\r\n\r\n    rvtLoops = List[DB.CurveLoop]()\r\n    for crvs in tolist(dynLoops):\r\n        loop = DB.CurveLoop.Create([c.ToRevitType() for c in tolist(crvs)])\r\n        rvtLoops.Add(loop)\r\n\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    fr = DB.FilledRegion.Create(doc, frType.Id, view.Id, rvtLoops)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n\r\n    OUT = fr.ToDSType(False)\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "b211006201ab4dc596d4130ce48730f0",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "fe64f5bb60b54d38aaedb86a464c8699",
@@ -66,11 +67,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "view",
         "TypeName": "Revit.Elements.Element",
@@ -79,6 +79,7 @@
         "Description": ""
       },
       "Id": "f776db1a72ef4d709806b6f4cf577a53",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -96,7 +97,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "type",
         "TypeName": "Revit.Elements.Element",
@@ -105,6 +105,7 @@
         "Description": ""
       },
       "Id": "e2b0b4b5088f4d5b9764f9d7dcf45d30",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -122,7 +123,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "curveLoops",
         "TypeName": "var",
@@ -131,6 +131,7 @@
         "Description": ""
       },
       "Id": "7211adf97fdd4294baf5c4a24b98c22b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -148,10 +149,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "filledRegion",
       "Id": "21bb05e963644c7a8c48eef27674c572",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "c85ad5dac6df436eb5a0005a98a3ab34",
@@ -172,102 +173,109 @@
     {
       "Start": "68554259c5294a8fb01631cfa41f8a2b",
       "End": "c85ad5dac6df436eb5a0005a98a3ab34",
-      "Id": "aa210311f1ad4c89994b01c277ee0b1f"
+      "Id": "aa210311f1ad4c89994b01c277ee0b1f",
+      "IsHidden": "False"
     },
     {
       "Start": "1242fe4b1e3f4714b80e58ff5226a28a",
       "End": "fe64f5bb60b54d38aaedb86a464c8699",
-      "Id": "8b4c58cf854a4d44b603b784e8a76bb6"
+      "Id": "8b4c58cf854a4d44b603b784e8a76bb6",
+      "IsHidden": "False"
     },
     {
       "Start": "96818603253044b999d04c7940649296",
       "End": "c4a2860125f84c7d85c982126cb4ce8a",
-      "Id": "a7f705d401de4fab94a2f4fb12185c61"
+      "Id": "a7f705d401de4fab94a2f4fb12185c61",
+      "IsHidden": "False"
     },
     {
       "Start": "bc452fd63a82404f9976871b64ee9c9e",
       "End": "cdcd06629ea74f4987e26a16a13353a7",
-      "Id": "69c97966d3544ea397bbca8d62f28c13"
+      "Id": "69c97966d3544ea397bbca8d62f28c13",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -11.383840853648167,
-      "EyeY": 291.632366336871,
-      "EyeZ": 299.48619207865721,
-      "LookX": 6.3838408536481666,
-      "LookY": -280.632366336871,
-      "LookZ": -307.48619207865721,
-      "UpX": 0.010378458662885996,
-      "UpY": 0.86602540378443937,
-      "UpZ": -0.49989227599132091
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "b211006201ab4dc596d4130ce48730f0",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 220.94004421398131,
-        "Y": 22.177334678803788
+        "ShowGeometry": true,
+        "X": 219.2401647239751,
+        "Y": 21.32739493380069
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "f776db1a72ef4d709806b6f4cf577a53",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -53.05313138677738,
-        "Y": -0.64698940715582864
+        "ShowGeometry": true,
+        "X": -175.9206637452073,
+        "Y": -112.80822226547365
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "e2b0b4b5088f4d5b9764f9d7dcf45d30",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "X": -54.347110201089038,
-        "Y": 65.891377069743115
-      },
-      {
-        "ShowGeometry": true,
         "Name": "Input",
-        "Id": "7211adf97fdd4294baf5c4a24b98c22b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -57.582057236868167,
-        "Y": 127.25382828939547
+        "ShowGeometry": true,
+        "X": -176.7384334815343,
+        "Y": 34.443606504628704
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
-        "Id": "21bb05e963644c7a8c48eef27674c572",
+        "Id": "7211adf97fdd4294baf5c4a24b98c22b",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 373.29116782063545,
-        "Y": 23.706806035962614
+        "ShowGeometry": true,
+        "X": -113.6780804070722,
+        "Y": 182.4999117145964
+      },
+      {
+        "Id": "21bb05e963644c7a8c48eef27674c572",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 545.611607393869,
+        "Y": 21.667510893084085
       }
     ],
     "Annotations": [],
-    "X": 111.40085947757086,
-    "Y": 149.33621075988285,
-    "Zoom": 1.3076413563671876
+    "X": 341.43979025542933,
+    "Y": 305.916885012495,
+    "Zoom": 0.7843693280448271
   }
 }

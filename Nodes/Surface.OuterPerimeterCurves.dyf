@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Get only the outer perimeter of a surface, dropping  the inner openings.",
-  "Name": "ꟿ Surface.OuterPerimeterCurves",
+  "Name": "Surface.OuterPerimeterCurves",
   "ElementResolver": {
     "ResolutionMap": {
       "CoordinateSystem": {
@@ -41,10 +41,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2020, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nimport Autodesk.DesignScript.Geometry as DS\r\n\r\ndef tolist(x):\r\n    if hasattr(x,'__iter__'): return x\r\n    return [x]\r\n\r\nsurfaces = tolist(IN[0])\r\n\r\ndef dropSurfaceOpenings(srf):\r\n\tface = srf.Faces[0]\r\n\textLoop = [lp for lp in srf.Faces[0].Loops if lp.IsExternal][0]\r\n\treturn [ce.Edge.CurveGeometry for ce in extLoop.CoEdges]\r\n\r\nOUT = map(dropSurfaceOpenings, surfaces)",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nimport Autodesk.DesignScript.Geometry as DS\r\n\r\ndef tolist(x):\r\n    if hasattr(x,'__iter__'): return x\r\n    return [x]\r\n\r\ndef dropSurfaceOpenings(srf):\r\n\tface = srf.Faces[0]\r\n\textLoop = [lp for lp in srf.Faces[0].Loops if lp.IsExternal][0]\r\n\treturn [ce.Edge.CurveGeometry for ce in extLoop.CoEdges]\r\n\r\ntry:        \r\n    surfaces = tolist(IN[0])\r\n    OUT = map(dropSurfaceOpenings, surfaces)\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "4b242fa7613a40348042cdbabbf40954",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "70d2c8732704488daee323bdc783963f",
@@ -68,11 +69,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "surf",
         "TypeName": "var",
@@ -81,6 +81,7 @@
         "Description": ""
       },
       "Id": "fa25fb6409a34a36a85e8081de335928",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -98,10 +99,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "curves",
       "Id": "0aa5f2edd6e549ba9b7ecb2465b60fb3",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "b3716aef42ae4f1195ca53dec6dc05b7",
@@ -122,26 +123,31 @@
     {
       "Start": "3093a9a9a79448e4810270aaede995b7",
       "End": "b3716aef42ae4f1195ca53dec6dc05b7",
-      "Id": "62b3b6cc90464cf8a5c798ba57ed2de3"
+      "Id": "62b3b6cc90464cf8a5c798ba57ed2de3",
+      "IsHidden": "False"
     },
     {
       "Start": "644b76e4498c4881a6745ed56242881c",
       "End": "70d2c8732704488daee323bdc783963f",
-      "Id": "c75bb91ba3a24bf8a05b8abf6d2dfaec"
+      "Id": "c75bb91ba3a24bf8a05b8abf6d2dfaec",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -152,41 +158,42 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "4b242fa7613a40348042cdbabbf40954",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 0.0,
         "Y": 0.0
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "fa25fb6409a34a36a85e8081de335928",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -248.66666666666663,
+        "Y": 0.6666666666666288
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "0aa5f2edd6e549ba9b7ecb2465b60fb3",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 320.66666666666674,
+        "Y": -3.3333333333332575
       }
     ],
     "Annotations": [],
-    "X": 0.0,
-    "Y": 0.0,
+    "X": 779.3333333333334,
+    "Y": 426.66666666666663,
     "Zoom": 1.0
   }
 }

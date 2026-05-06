@@ -1,0 +1,229 @@
+{
+  "Uuid": "c0efe818-1147-407e-aed6-32ae5b744a41",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ListToString",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d920cea948a6443f831779ffaf3249f5",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "533602d17dc7465690e4facf813998e2",
+          "Name": "range",
+          "Description": "0..50",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "448fd6910e034b11b36cd0374927da7c",
+          "Name": "boolean",
+          "Description": "true",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..50;\ntrue;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "686feb9175dd41ac8ba341ca3482c06f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "aecb5eec8e474b3b9e29ed76b55f479f",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "693539cbbded4307be7aa6d4c3e5ad8a",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "ef763ca7-aa77-4bb8-85ab-b7a0bdc7f7e3",
+      "FunctionType": "Graph",
+      "Id": "90d59e6c6c5845f391420544df828562",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4560e658aae442af8872ca1f86487c8b",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d7e1a9346fc4189a33739f9707d3914",
+          "Name": "multiline",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e0b947e520104c60998a630bfc8d066c",
+          "Name": "str",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Serializes a (nested) list or dictionary of basic objects into a valid design script syntax string."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "533602d17dc7465690e4facf813998e2",
+      "End": "4560e658aae442af8872ca1f86487c8b",
+      "Id": "bb3aa56f09eb4d8380a784bc6f7b57fd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "448fd6910e034b11b36cd0374927da7c",
+      "End": "1d7e1a9346fc4189a33739f9707d3914",
+      "Id": "8da32510a1c949f4ba4e88592b349805",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e0b947e520104c60998a630bfc8d066c",
+      "End": "aecb5eec8e474b3b9e29ed76b55f479f",
+      "Id": "ad2a655e370d4f0fb435fe939a650fbb",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "ef763ca7-aa77-4bb8-85ab-b7a0bdc7f7e3"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.ToString.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "90d59e6c6c5845f391420544df828562"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d920cea948a6443f831779ffaf3249f5",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 356.0,
+        "Y": 472.66666666666663
+      },
+      {
+        "Id": "686feb9175dd41ac8ba341ca3482c06f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 984.9775775588262,
+        "Y": 470.24489162998566
+      },
+      {
+        "Id": "90d59e6c6c5845f391420544df828562",
+        "Name": "List.ToString",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 659.0172042476366,
+        "Y": 471.9088728242617
+      }
+    ],
+    "Annotations": [],
+    "X": -331.97985847056555,
+    "Y": -221.47699279767735,
+    "Zoom": 1.1580300308991538
+  }
+}

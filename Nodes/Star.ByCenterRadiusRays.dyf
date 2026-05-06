@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Create",
   "Description": "Fun little node to create star shapes.",
-  "Name": "ꟿ Star.ByCenterRadiusRays",
+  "Name": "Star.ByCenterRadiusRays",
   "ElementResolver": {
     "ResolutionMap": {
       "PolyCurve": {
@@ -37,7 +37,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "NumberOfRays",
         "TypeName": "int",
@@ -46,6 +45,7 @@
         "Description": ""
       },
       "Id": "f24dfb85bd654d5b84e3355e47bf3bed",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -63,7 +63,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "StarOrigin",
         "TypeName": "Autodesk.DesignScript.Geometry.Point",
@@ -72,6 +71,7 @@
         "Description": ""
       },
       "Id": "10c56a96d4d84aee96eb19bf98297663",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -89,7 +89,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "StarRadius",
         "TypeName": "double",
@@ -98,6 +97,7 @@
         "Description": ""
       },
       "Id": "56f3bfe05c434475bd237e908c56557d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -115,7 +115,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "RayPercentage",
         "TypeName": "double",
@@ -124,6 +123,7 @@
         "Description": ""
       },
       "Id": "8f7bc9d15f6148b9bd2b5fbad4845dc5",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -141,10 +141,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "PolyCurve",
       "Id": "3bb302018bee48be9609d586bfe88871",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "988e330a6b074c41ae0b0ca7962b2891",
@@ -162,12 +162,11 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "c1 = Circle.ByCenterPointRadius(p1,r1);\nc2 = Circle.ByCenterPointRadius(p1,r1*(99.9-s)/100);\npts1 = c1.PointAtParameter(0..1..#n+1);\n//testR = n % 2 == 0;\npts2a = c2.PointAtParameter(0..1..#n*2+1);\npts2b = DSCore.List.TakeEveryNthItem(pts2a,2,0);\npts3 = Flatten(List.Transpose([pts1,pts2b]));\npts3c = DSCore.List.DropItems(pts3,-1);\nstar = PolyCurve.ByPoints(pts3c);",
       "Id": "09fce267a7ec4539baee75602255722f",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "ff2edd631895462b93401e64ff62e76a",
+          "Id": "cd09d24d8e7c46b9a40d6e157d4b7be9",
           "Name": "p1",
           "Description": "p1",
           "UsingDefaultValue": false,
@@ -176,7 +175,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "7f0ee0c5a93c40769d5392352a0bf023",
+          "Id": "4fe121553dcb401b83763db30e246691",
           "Name": "r1",
           "Description": "r1",
           "UsingDefaultValue": false,
@@ -185,7 +184,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "8ea58ac885864d5cac8fab79c78cd37a",
+          "Id": "2277721446bc4df4b36ebe846394ee4b",
           "Name": "s",
           "Description": "s",
           "UsingDefaultValue": false,
@@ -194,7 +193,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b8248237725945b8807cbc16649b17bf",
+          "Id": "93d3e6a73a41412ea38fa2ace0766247",
           "Name": "n",
           "Description": "n",
           "UsingDefaultValue": false,
@@ -205,72 +204,72 @@
       ],
       "Outputs": [
         {
-          "Id": "2af78f83309a4d0ab167a8a20434f552",
-          "Name": "",
-          "Description": "c1",
+          "Id": "b0a650be69164ce998495645bb125650",
+          "Name": "c1",
+          "Description": "c1 = Autodesk.DesignScript.Geometry.Circle.ByCenterPointRadius(p1, r1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "76044db3147e4941834b066e88a9b7d6",
-          "Name": "",
-          "Description": "c2",
+          "Id": "14ff26f38dd643f68adbe689672ce855",
+          "Name": "c2",
+          "Description": "c2 = Autodesk.DesignScript.Geometry.Circle.ByCenterPointRadius(p1, (r1 * (99.9 - s)) / 100)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "2ec51ece22e84db38e2fa9fb9b6b5fe9",
-          "Name": "",
-          "Description": "pts1",
+          "Id": "4dc024d26542412d9e3c0c48b9081a18",
+          "Name": "pts1",
+          "Description": "pts1 = c1.PointAtParameter(0..1..#n + 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "307d9e1496e14fb8bb39372cafb2a592",
-          "Name": "",
-          "Description": "pts2a",
+          "Id": "63ea7252f43d4d9493c5e9221f3a36a6",
+          "Name": "pts2a",
+          "Description": "pts2a = c2.PointAtParameter(0..1..#(n * 2) + 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "3c3231294429469587b173a05626b778",
-          "Name": "",
-          "Description": "pts2b",
+          "Id": "3e3575dcd76a49788ad741ed1708f10e",
+          "Name": "pts2b",
+          "Description": "pts2b = DSCore.List.TakeEveryNthItem(pts2a, 2, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "638d2da806fb4beba66029b105222c76",
-          "Name": "",
-          "Description": "pts3",
+          "Id": "8ce61de42e2647bdaa792620d912db59",
+          "Name": "pts3",
+          "Description": "pts3 = DSCore.List.Flatten(DSCore.List.Transpose([pts1, pts2b]))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "09641b968dd94d188dbffad012b80735",
-          "Name": "",
-          "Description": "pts3c",
+          "Id": "1898dfc38229486b800318e92f89b623",
+          "Name": "pts3c",
+          "Description": "pts3c = DSCore.List.DropItems(pts3, -1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "cab356d296004e7aa8f88d75a06287e8",
-          "Name": "",
-          "Description": "star",
+          "Id": "5cb1ca0a34274e3b85f5c8c22c359655",
+          "Name": "star",
+          "Description": "star = Autodesk.DesignScript.Geometry.PolyCurve.ByPoints(pts3c)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -278,124 +277,133 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "c1 = Circle.ByCenterPointRadius(p1,r1);\nc2 = Circle.ByCenterPointRadius(p1,r1*(99.9-s)/100);\npts1 = c1.PointAtParameter(0..1..#n+1);\n//testR = n % 2 == 0;\npts2a = c2.PointAtParameter(0..1..#n*2+1);\npts2b = DSCore.List.TakeEveryNthItem(pts2a,2,0);\npts3 = DSCore.List.Flatten(List.Transpose([pts1,pts2b]));\npts3c = DSCore.List.DropItems(pts3,-1);\nstar = PolyCurve.ByPoints(pts3c);"
     }
   ],
   "Connectors": [
     {
       "Start": "d4addaac39a846b1b291453c49a078a1",
-      "End": "b8248237725945b8807cbc16649b17bf",
-      "Id": "8752f2e469f041bcae34ec1031f6e9d5"
+      "End": "93d3e6a73a41412ea38fa2ace0766247",
+      "Id": "e72be08da9d445d989cb759942462c2a",
+      "IsHidden": "False"
     },
     {
       "Start": "459ffa1506f2441aab112dda797522ec",
-      "End": "ff2edd631895462b93401e64ff62e76a",
-      "Id": "9915e5ff4c4a473e8ed0402c4ff0eaad"
+      "End": "cd09d24d8e7c46b9a40d6e157d4b7be9",
+      "Id": "7f2667314ba74e8e84d0a8d22b6a8001",
+      "IsHidden": "False"
     },
     {
       "Start": "26af59878da24128a535d228f509256c",
-      "End": "7f0ee0c5a93c40769d5392352a0bf023",
-      "Id": "875b05010ea248fda6cafe6778abb735"
+      "End": "4fe121553dcb401b83763db30e246691",
+      "Id": "0a6b7cebdc9c436aa2953ca842c40088",
+      "IsHidden": "False"
     },
     {
       "Start": "994fd92b643e49d19ae8c8711578f3a8",
-      "End": "8ea58ac885864d5cac8fab79c78cd37a",
-      "Id": "c356be038cb7458caef5da9e867c1fce"
+      "End": "2277721446bc4df4b36ebe846394ee4b",
+      "Id": "c896005c1c604781bfd97f53068be4ef",
+      "IsHidden": "False"
     },
     {
-      "Start": "cab356d296004e7aa8f88d75a06287e8",
+      "Start": "5cb1ca0a34274e3b85f5c8c22c359655",
       "End": "988e330a6b074c41ae0b0ca7962b2891",
-      "Id": "987bb44b212d446fb848b8b6cdd5a7cd"
+      "Id": "863742b562a4440c92be30793fc000b6",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 57.586585998535156,
-      "EyeY": 69.78564453125,
-      "EyeZ": 8.19709300994873,
-      "LookX": -1.0475845336914062,
-      "LookY": -51.8416862487793,
-      "LookZ": -25.962446212768555,
-      "UpX": -0.031332336366176605,
-      "UpY": 0.62932038307189941,
-      "UpZ": -0.77651411294937134
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "f24dfb85bd654d5b84e3355e47bf3bed",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -125.201815586127,
-        "Y": 337.565834365315
+        "ShowGeometry": true,
+        "X": -122.20385672630692,
+        "Y": 466.4780653375755
       },
       {
         "Id": "10c56a96d4d84aee96eb19bf98297663",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -127.700144360366,
-        "Y": 151.511784558346
+        "ShowGeometry": true,
+        "X": -606.7739701596038,
+        "Y": 13.605677006625456
       },
       {
         "Id": "56f3bfe05c434475bd237e908c56557d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -129.017660428558,
-        "Y": 212.080645347074
+        "ShowGeometry": true,
+        "X": -132.01561928837796,
+        "Y": 167.71085422173783
       },
       {
         "Id": "8f7bc9d15f6148b9bd2b5fbad4845dc5",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -128.047262224142,
-        "Y": 272.905385935235
+        "ShowGeometry": true,
+        "X": -159.8256261382341,
+        "Y": 315.47640174467926
       },
       {
         "Id": "3bb302018bee48be9609d586bfe88871",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 746.771712084384,
-        "Y": 214.520383472293
+        "ShowGeometry": true,
+        "X": 823.5194588957766,
+        "Y": 347.62975684830144
       },
       {
         "Id": "09fce267a7ec4539baee75602255722f",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 225.310727627295,
         "Y": 219.474860944479
       }
     ],
     "Annotations": [],
-    "X": 149.217060538527,
-    "Y": 120.957329313517,
-    "Zoom": 1.31597372863108
+    "X": 640.1114968646209,
+    "Y": 159.31355518363864,
+    "Zoom": 0.8945842037903375
   }
 }

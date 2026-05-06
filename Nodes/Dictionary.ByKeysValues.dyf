@@ -1,9 +1,9 @@
 {
-  "Uuid": "f73b43c1-353a-4b03-a337-7e2fb6c7250c",
+  "Uuid": "2a5ac929-0196-4e58-a2cf-0e83af530777",
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Dictionaries are an incredibly powerful tool for making associative sets between two equal length lists. The first list must be of unique strings (or numbers) and will be the key and the second list will be the matching values (it can be made up of geometry, elements, even other lists)\r\nThe search keys list will provide the corresponding value to the input key.",
-  "Name": "ꟿ Dictionary.ByKeysValues",
+  "Name": "Dictionary.ByKeysValues",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,13 +12,14 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nOUT = []\r\n\r\nkeys = tolist(IN[0])\r\nelements = tolist(IN[1])\r\nsearchVals = tolist(IN[2])\r\n\r\ndict1 = dict(zip(keys,elements) )\r\nOUT = [dict1.get(sv, IN[3]) for sv in searchVals]",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\ndef tolist(obj1):\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    keys = tolist(IN[0])\r\n    elements = tolist(IN[1])\r\n    searchVals = tolist(IN[2])\r\n\r\n    if len(keys) != len(elements):\r\n        raise ValueError(\"keys and elements must be the same length\")\r\n\r\n\r\n    dict1 = dict(zip(keys,elements) )\r\n    \r\n    OUT = [dict1.get(sv, IN[3]) for sv in searchVals]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "0d81ea21c6ff4bb19771d92c39b76bfa",
+      "Id": "7d0e469e048c4110b84042fafc8250fa",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "7a5fdb054fe949cab583ee8bc0b5d5cc",
+          "Id": "8c39709cb3a848b49c0cb27eed211061",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -27,7 +28,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6d07ff8cc591487892c805af9c9b4e29",
+          "Id": "e96503a4ed12490b9de0c39a347a86f8",
           "Name": "IN[1]",
           "Description": "Input #1",
           "UsingDefaultValue": false,
@@ -36,7 +37,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "b3a3e9a1006b466084abe2952be642b0",
+          "Id": "4defb117023f42978d8637f89203b93e",
           "Name": "IN[2]",
           "Description": "Input #2",
           "UsingDefaultValue": false,
@@ -45,7 +46,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "13de53f51f7a464b90b7b1da94eb477c",
+          "Id": "e35b11a1b0394c488bac4a1d84b2d41a",
           "Name": "IN[3]",
           "Description": "Input #3",
           "UsingDefaultValue": false,
@@ -56,7 +57,7 @@
       ],
       "Outputs": [
         {
-          "Id": "b3cf76fa55684b25bc398c9e52ef6ecd",
+          "Id": "e1ebd8ba7d634c9b9dde9b5a584ea9aa",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -66,11 +67,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "keys",
         "TypeName": "var",
@@ -78,11 +78,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "3cad9a23eee64193a3e7479546624fa2",
+      "Id": "b01a9bcecd194ce6963c5dc519248ecb",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a95548fe40c14068bcdc325e826a4336",
+          "Id": "12c086ef6aee436ba948a6a433f0b698",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -96,7 +97,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "values",
         "TypeName": "var",
@@ -104,11 +104,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "b4e363dd3a1a439282ac37b6fa6927be",
+      "Id": "34ecdc4928474050a9c0cef2b53ea310",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1a324ad9ff074204bce15cbef83444ec",
+          "Id": "d4784f0434ee493c9f59062e3b12d36c",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -122,13 +123,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "result",
-      "Id": "c0b7c65ffd314e98ae32ec917af6a23f",
+      "Id": "ec8bd9ea1dc54917a4e713c20e826307",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "5ca32c035aae48939e41adba01039c30",
+          "Id": "fb4796935f264bc984eb5cac6a0c33ab",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -143,7 +144,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "searchKeys",
         "TypeName": "var",
@@ -151,11 +151,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "4a063300b37549939fbab78e3e57ca94",
+      "Id": "49e2757b60044f80bd0dd6a0853da7fd",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "4ca5a4438b8c49538429ea4d2d979bf0",
+          "Id": "68b9fcf4711349ba8f98eea1593d70e9",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -169,7 +170,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "defaultValue",
         "TypeName": "var",
@@ -177,11 +177,12 @@
         "DefaultValue": "null",
         "Description": ""
       },
-      "Id": "3ead17508b2d4b0a8b03cd34d8a4d81d",
+      "Id": "c0a4c18baa6443bda01dafd12220bbc2",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "4216c8935ef8491881a86f834fc729e0",
+          "Id": "967586043feb4a85992384acbe042a6f",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -196,44 +197,51 @@
   ],
   "Connectors": [
     {
-      "Start": "b3cf76fa55684b25bc398c9e52ef6ecd",
-      "End": "5ca32c035aae48939e41adba01039c30",
-      "Id": "f08c53d5f71e437ebbc813c497b8f115"
+      "Start": "e1ebd8ba7d634c9b9dde9b5a584ea9aa",
+      "End": "fb4796935f264bc984eb5cac6a0c33ab",
+      "Id": "6c40a4f409ad486cb402351e07f0261f",
+      "IsHidden": "False"
     },
     {
-      "Start": "a95548fe40c14068bcdc325e826a4336",
-      "End": "7a5fdb054fe949cab583ee8bc0b5d5cc",
-      "Id": "7a98edab23a7449e84b02d9137dc01f2"
+      "Start": "12c086ef6aee436ba948a6a433f0b698",
+      "End": "8c39709cb3a848b49c0cb27eed211061",
+      "Id": "d5c67f63dc8449ef8b92341fa84f17ea",
+      "IsHidden": "False"
     },
     {
-      "Start": "1a324ad9ff074204bce15cbef83444ec",
-      "End": "6d07ff8cc591487892c805af9c9b4e29",
-      "Id": "12dba3162df144b886484474a05c1940"
+      "Start": "d4784f0434ee493c9f59062e3b12d36c",
+      "End": "e96503a4ed12490b9de0c39a347a86f8",
+      "Id": "8b8d160022774cdb9bbe2124b62f46ba",
+      "IsHidden": "False"
     },
     {
-      "Start": "4ca5a4438b8c49538429ea4d2d979bf0",
-      "End": "b3a3e9a1006b466084abe2952be642b0",
-      "Id": "3b2862eb8c2e4b31b4e049e7c4329ddd"
+      "Start": "68b9fcf4711349ba8f98eea1593d70e9",
+      "End": "4defb117023f42978d8637f89203b93e",
+      "Id": "f36b9aded6ee48ffa9b7966084319f96",
+      "IsHidden": "False"
     },
     {
-      "Start": "4216c8935ef8491881a86f834fc729e0",
-      "End": "13de53f51f7a464b90b7b1da94eb477c",
-      "Id": "f27ba993ec434b66b6a1adf459f1691d"
+      "Start": "967586043feb4a85992384acbe042a6f",
+      "End": "e35b11a1b0394c488bac4a1d84b2d41a",
+      "Id": "e96a89521db542fa93f1ad1274e9a104",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -244,71 +252,72 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "0d81ea21c6ff4bb19771d92c39b76bfa",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "7d0e469e048c4110b84042fafc8250fa",
         "Name": "Python Script",
-        "ShowGeometry": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 175.122051117491,
-        "Y": 39.3838562304109
+        "Y": 37.33536056967233
       },
       {
-        "Id": "3cad9a23eee64193a3e7479546624fa2",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "b01a9bcecd194ce6963c5dc519248ecb",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 10.1622970369172,
-        "Y": -0.737482626484493
-      },
-      {
-        "Id": "b4e363dd3a1a439282ac37b6fa6927be",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -129.5344418331016,
+        "Y": -70.46950665981997
+      },
+      {
+        "Id": "34ecdc4928474050a9c0cef2b53ea310",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": -32.218419418796,
-        "Y": 61.331693341377
-      },
-      {
-        "Id": "c0b7c65ffd314e98ae32ec917af6a23f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -168.87063911488534,
+        "Y": 65.86735647159111
+      },
+      {
+        "Id": "ec8bd9ea1dc54917a4e713c20e826307",
         "Name": "Output",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 320.988572346544,
-        "Y": 40.4326690500094
-      },
-      {
-        "Id": "4a063300b37549939fbab78e3e57ca94",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -30.8193611813684,
-        "Y": 125.947471408115
+        "ShowGeometry": true,
+        "X": 444.41146314047165,
+        "Y": 38.04383890561082
       },
       {
-        "Id": "3ead17508b2d4b0a8b03cd34d8a4d81d",
+        "Id": "49e2757b60044f80bd0dd6a0853da7fd",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -138.640734163778,
-        "Y": 189.8445500144
+        "ShowGeometry": true,
+        "X": -167.5256950177712,
+        "Y": 207.62758704083632
+      },
+      {
+        "Id": "c0a4c18baa6443bda01dafd12220bbc2",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -263.62896149712714,
+        "Y": 339.0362079881241
       }
     ],
     "Annotations": [],
-    "X": 298.719037465737,
-    "Y": 166.395939625744,
-    "Zoom": 1.47618023926362
+    "X": -42.91837856465929,
+    "Y": 191.28047914856228,
+    "Zoom": 0.650884138486572
   }
 }

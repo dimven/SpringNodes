@@ -1,0 +1,277 @@
+{
+  "Uuid": "e385e830-761b-442f-a1db-74b9c13ecb3f",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DropDown",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "42113ddcc72341d29f2be9e4e4c62a87",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "361904b98a0e4b8787cad66bffd0ed97",
+          "Name": "function",
+          "Description": "\"T\" + (0..50)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "46b71be8f4e745299b0131588231dbce",
+          "Name": "string",
+          "Description": "\"NewSpringsItemName\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a0a209cfba0642eba6083bc26fbfcae9",
+          "Name": "string",
+          "Description": "\"SpringsDropDownDialog\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c5bdbadba72d4eaab87a56117a386999",
+          "Name": "boolean",
+          "Description": "true",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"T\" + (0..50);\n\"NewSpringsItemName\";\n\"SpringsDropDownDialog\";\ntrue;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 34.666666666666664,
+      "WatchHeight": 70.0,
+      "Id": "a0fb52f93ee842b2af8e523200e9df45",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "37ba6a149231443796ec3deb6fdfa3f4",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c820d7a8be684cef8e4cfa2335f4f791",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "a4a2f0a2-ccd6-4307-921d-241ffb37010f",
+      "FunctionType": "Graph",
+      "Id": "95b4b82ba47d4dd188506fff357eba03",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "baa735ab25ba490897cb67922104cd43",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e48b80bc9dce414a914199c2ee52ce47",
+          "Name": "names",
+          "Description": "var[]..[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d5f55d7b87ec4608aa530b559cc71397",
+          "Name": "customMsg",
+          "Description": "string\nDefault value : \"Choose an item and press Select\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b199e530ac0c4e49a51e43966706e739",
+          "Name": "reset",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8a047378053b4c78ba094137923cb705",
+          "Name": "selection",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Selects one list item by a drop-down combo box. The optional names input will override the object representation."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "361904b98a0e4b8787cad66bffd0ed97",
+      "End": "baa735ab25ba490897cb67922104cd43",
+      "Id": "cfc6012249804889a240d4a4acfd9f89",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "46b71be8f4e745299b0131588231dbce",
+      "End": "e48b80bc9dce414a914199c2ee52ce47",
+      "Id": "d42b415ede33464aac8c8147ab0aff3b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a0a209cfba0642eba6083bc26fbfcae9",
+      "End": "d5f55d7b87ec4608aa530b559cc71397",
+      "Id": "b96ffd823b8444e69eb1880d1c6a8abb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c5bdbadba72d4eaab87a56117a386999",
+      "End": "b199e530ac0c4e49a51e43966706e739",
+      "Id": "1d62c6efd9b14ec0b5b37f58f6a3fda7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "8a047378053b4c78ba094137923cb705",
+      "End": "37ba6a149231443796ec3deb6fdfa3f4",
+      "Id": "f1a8832bb7814d8aaffeb139646015e1",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "a4a2f0a2-ccd6-4307-921d-241ffb37010f"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.DropDown.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "95b4b82ba47d4dd188506fff357eba03"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "42113ddcc72341d29f2be9e4e4c62a87",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 355.15965797904187,
+        "Y": 697.0894362435669
+      },
+      {
+        "Id": "a0fb52f93ee842b2af8e523200e9df45",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1099.0218948066622,
+        "Y": 669.5995434912678
+      },
+      {
+        "Id": "95b4b82ba47d4dd188506fff357eba03",
+        "Name": "List.DropDown",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 766.8566855588857,
+        "Y": 671.6069537253984
+      }
+    ],
+    "Annotations": [],
+    "X": -414.1746442862045,
+    "Y": -457.35880194214843,
+    "Zoom": 1.287039447560302
+  }
+}

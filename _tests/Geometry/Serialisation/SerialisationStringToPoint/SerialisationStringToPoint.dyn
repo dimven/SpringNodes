@@ -1,0 +1,395 @@
+{
+  "Uuid": "79f02f78-2544-4129-b57c-73768d9a62a9",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SerialisationStringToPoint",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "25090388520a442ab71401b91cfdcc9e",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4ba2149d8e2f4814a8d9e2800ee995b3",
+          "Name": "range",
+          "Description": "0..1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..1;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "cc4b913a030c4953b1f4ecee7c9ea335",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "518b482d84db4e73b62bb8204cfeaf52",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cbaf0301151d4ad8b3c9d95ca4f5dfa6",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "908b339b40954ef8bc8e49fb62cfbe6d",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "CrossProduct",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "a697c6d3dddf4469a690b4449f3354fb",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "39d9bc5e6c6a4dfaa759bf6f8492cf17",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "685e47bbf2e2427dad7fa3c8499bcd40",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0183b651-93d4-4495-93ad-a87b119c7f91",
+      "FunctionType": "Graph",
+      "Id": "c603c4df12464e6199f9f82023fc08b4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "0a6213a38d344a738e8394029766562d",
+          "Name": "point",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bd8d1b7407a9487ba09c5fe8879f3300",
+          "Name": "separator",
+          "Description": "string\nDefault value : \",\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1eb32d42739c4b30a218ab2a9f1491b7",
+          "Name": "digits",
+          "Description": "int\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c832d2f7709b46d79dc0d6fa2ae01244",
+          "Name": "string",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Serilize a point to a string. You can use a custom delimier  between the coordinates and apply an optional rounding. Works great with Revit text based parameters or Excel."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5",
+      "FunctionType": "Graph",
+      "Id": "bfbe18bfda444c94bd7af82c55ec0e85",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2e15074fba05411c99c3ef303f209987",
+          "Name": "str",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "da510bb9f0ea4cf7b11d0079d6646910",
+          "Name": "separator",
+          "Description": "string\nDefault value : \",\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "90c4ef890a4346118e8ab077098dcb30",
+          "Name": "point",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "De-serilize a Revit parameter string into a geometric point."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "ba8bf7efee30408c8c2e0e28405179ba",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "d62a64c4a3fd408aafb1a84a616805ec",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "22afada1e45b41d29b777188d8b98086",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4ba2149d8e2f4814a8d9e2800ee995b3",
+      "End": "518b482d84db4e73b62bb8204cfeaf52",
+      "Id": "8e1ed5e88ba241b6b7861f746aa40239",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4ba2149d8e2f4814a8d9e2800ee995b3",
+      "End": "cbaf0301151d4ad8b3c9d95ca4f5dfa6",
+      "Id": "6b0c5ff828214b4fb82141459c335e6e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "908b339b40954ef8bc8e49fb62cfbe6d",
+      "End": "0a6213a38d344a738e8394029766562d",
+      "Id": "a3145b610109456188f8977b4b1ce9a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "685e47bbf2e2427dad7fa3c8499bcd40",
+      "End": "2e15074fba05411c99c3ef303f209987",
+      "Id": "d8aa0ef0e54e4060b04223ca866a2f36",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c832d2f7709b46d79dc0d6fa2ae01244",
+      "End": "39d9bc5e6c6a4dfaa759bf6f8492cf17",
+      "Id": "9b3e609f9a904533ad0f461cdfc4daf6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "90c4ef890a4346118e8ab077098dcb30",
+      "End": "d62a64c4a3fd408aafb1a84a616805ec",
+      "Id": "d4958e85011b4aa3ae92eac7153ff610",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0183b651-93d4-4495-93ad-a87b119c7f91",
+    "cf5f9a34-ab6e-43a1-9501-1e4d6869a4b5"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Point.ToString.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "c603c4df12464e6199f9f82023fc08b4"
+      ]
+    },
+    {
+      "Name": "String.ToPoint.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "bfbe18bfda444c94bd7af82c55ec0e85"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "25090388520a442ab71401b91cfdcc9e",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -1336.3763063443791,
+        "Y": 517.4086873255799
+      },
+      {
+        "Id": "cc4b913a030c4953b1f4ecee7c9ea335",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -1125.1807032246388,
+        "Y": 510.1009333738757
+      },
+      {
+        "Id": "a697c6d3dddf4469a690b4449f3354fb",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -445.62316637106596,
+        "Y": 509.8945707869299
+      },
+      {
+        "Id": "c603c4df12464e6199f9f82023fc08b4",
+        "Name": "Point.ToString",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -768.4839983725972,
+        "Y": 508.8487664788653
+      },
+      {
+        "Id": "bfbe18bfda444c94bd7af82c55ec0e85",
+        "Name": "String.ToPoint",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 23.159531283347405,
+        "Y": 509.92970996138547
+      },
+      {
+        "Id": "ba8bf7efee30408c8c2e0e28405179ba",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 356.6173715956552,
+        "Y": 508.79354255920634
+      }
+    ],
+    "Annotations": [],
+    "X": 1054.965069647564,
+    "Y": -124.30907861031213,
+    "Zoom": 0.7618854791156024
+  }
+}

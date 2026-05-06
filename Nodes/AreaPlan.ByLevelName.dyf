@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Creates an area plan at the designated levels. Each new view needs a name. An area scheme must first be activated before it can be used. To activate a scheme, place one view of that type in the project(you can then delete it).  If a view with the same scheme and name exists, you'll get a null instead.",
-  "Name": "ꟿ AreaPlan.ByLevelName",
+  "Name": "AreaPlan.ByLevelName",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,'__iter__') : return obj1\r\n\telse : return [obj1]\r\n\r\ndef first(obj1):\r\n\tif hasattr(obj1,'__iter__'): return obj1[0]\r\n\telse: return obj1\r\n\r\n\t\r\nlvls = UnwrapElement(tolist(IN[0]) )\r\nnames = tolist(IN[1])\r\nplan_type = str(first(IN[2]) )\r\n\r\n#fail_str = 'view with same name exists'\r\nvt1 = None # fetch the area plan type\r\nfec1 = FilteredElementCollector(doc).OfClass(ViewFamilyType)\r\nfor f in fec1:\r\n\tif Element.Name.__get__(f) == plan_type :\r\n\t\tvt1 = f.Id\r\n\t\tbreak\r\n\r\nfec2 = FilteredElementCollector(doc).OfClass(View) #get existing area plans\r\nplan_names = [f.Name for f in fec2 if f.GetTypeId().Equals(vt1)]\r\n\r\nas1 = None #get the scheme\r\nfec3 = FilteredElementCollector(doc).OfClass(AreaScheme)\r\nfor f in fec3:\r\n\tif f.Name == plan_type :\r\n\t\tas1 = f.Id\r\n\t\tbreak\r\n\r\nif as1 != None:\r\n\tOUT = []\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor l, n in zip(lvls, names):\r\n\t\tif n not in plan_names:\r\n\t\t\tv1 = ViewPlan.CreateAreaPlan(doc, as1, l.Id)\r\n\t\t\tv1.Name = n\r\n\t\t\tOUT.append(v1.ToDSType(False) )\r\n\t\telse : OUT.append(None) #could use fail_str but filtering nulls is easier\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\r\nelse : OUT = 'Area scheme with that name not found.'",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef first(obj1):\r\n    return obj1[0] if isinstance(obj1, list) else obj1\r\n\r\ntry:\r\n    lvls = UnwrapElement(tolist(IN[0]))\r\n    names = tolist(IN[1])\r\n    plan_type = str(first(IN[2]))\r\n\r\n    vt1 = None\r\n    fec1 = FilteredElementCollector(doc).OfClass(ViewFamilyType)\r\n    for f in fec1:\r\n        if Element.Name.__get__(f) == plan_type:\r\n            vt1 = f.Id\r\n            break\r\n\r\n    fec2 = FilteredElementCollector(doc).OfClass(View)\r\n    plan_names = [f.Name for f in fec2 if f.GetTypeId().Equals(vt1)]\r\n\r\n    as1 = None\r\n    fec3 = FilteredElementCollector(doc).OfClass(AreaScheme)\r\n    for f in fec3:\r\n        if f.Name == plan_type:\r\n            as1 = f.Id\r\n            break\r\n\r\n    if as1 is not None:\r\n        OUT = []\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        for l, n in zip(lvls, names):\r\n            if n not in plan_names:\r\n                v1 = ViewPlan.CreateAreaPlan(doc, as1, l.Id)\r\n                v1.Name = n\r\n                OUT.append(v1.ToDSType(False))\r\n            else:\r\n                OUT.append(None)\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n    else:\r\n        OUT = 'Area scheme with that name not found.'\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "2cd735976cbc4f6dbd281ad2855dfa57",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "5af073701b014b14b408d3a6e7088c3b",
@@ -57,11 +58,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "level",
         "TypeName": "var",
@@ -70,6 +70,7 @@
         "Description": ""
       },
       "Id": "5691bdadd29f4b68bf2e1d4de760f73e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -87,7 +88,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "name",
         "TypeName": "var",
@@ -96,6 +96,7 @@
         "Description": ""
       },
       "Id": "446a92a1104941d7b465ef4147eef18f",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -113,7 +114,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "schemeName",
         "TypeName": "var",
@@ -122,6 +122,7 @@
         "Description": ""
       },
       "Id": "f0ccf3d229e04659b3bb77735666c62f",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -139,10 +140,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "AreaPlan",
       "Id": "efd15a33a0014068a2225a85577f459f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "7ae089cf2c5b44e8b9a349f8acd8df48",
@@ -163,40 +164,46 @@
     {
       "Start": "0d9a992194a84aab9b933c3529066da2",
       "End": "7ae089cf2c5b44e8b9a349f8acd8df48",
-      "Id": "9a297c4dab9a485ba338575aab139f90"
+      "Id": "9a297c4dab9a485ba338575aab139f90",
+      "IsHidden": "False"
     },
     {
       "Start": "16a55fa6f6274ec8abe7ffedf296c5bd",
       "End": "5af073701b014b14b408d3a6e7088c3b",
-      "Id": "a4569a9e3f054a3b9beddd8e02c11fa3"
+      "Id": "a4569a9e3f054a3b9beddd8e02c11fa3",
+      "IsHidden": "False"
     },
     {
       "Start": "c7c3d9f9082345f09059071551dcfe61",
       "End": "4523512b88e64058926564aba039853d",
-      "Id": "bc2da5477518401fa4d6f5e6fd11059a"
+      "Id": "bc2da5477518401fa4d6f5e6fd11059a",
+      "IsHidden": "False"
     },
     {
       "Start": "909965a633944ea39db91df1ad1bd41c",
       "End": "bd91ec1133c54c748af3ba10699cd123",
-      "Id": "e9d5660c33344a4b8b420b6a687d10f8"
+      "Id": "e9d5660c33344a4b8b420b6a687d10f8",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 81.9612045288086,
-      "EyeY": 60.6141242980957,
-      "EyeZ": 62.268115997314453,
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
       "LookX": 12.0,
       "LookY": -13.0,
       "LookZ": -58.0,
@@ -204,61 +211,62 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "2cd735976cbc4f6dbd281ad2855dfa57",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 183.631624957056,
-        "Y": -1.25223349137627
+        "ShowGeometry": true,
+        "X": 184.6751528665363,
+        "Y": 1.356586282324315
       },
       {
         "Id": "5691bdadd29f4b68bf2e1d4de760f73e",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -92.87398394374179,
+        "Y": -133.57157241347142
       },
       {
         "Id": "446a92a1104941d7b465ef4147eef18f",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 5.83090587457156,
-        "Y": 62.087880660306
+        "ShowGeometry": true,
+        "X": -79.73838270280862,
+        "Y": 4.693845638892483
       },
       {
         "Id": "f0ccf3d229e04659b3bb77735666c62f",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -32.5195195202302,
-        "Y": 120.223205683105
+        "ShowGeometry": true,
+        "X": -100.34883363644619,
+        "Y": 158.31197437913391
       },
       {
         "Id": "efd15a33a0014068a2225a85577f459f",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 338.35121926751,
-        "Y": -1.25223349137627
+        "ShowGeometry": true,
+        "X": 477.66219518312283,
+        "Y": -2.81752535559664
       }
     ],
     "Annotations": [],
-    "X": 121.600023453145,
-    "Y": 83.480649892069,
+    "X": 296.26669011981176,
+    "Y": 270.1473165587356,
     "Zoom": 1.27771698410772
   }
 }

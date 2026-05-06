@@ -1,0 +1,222 @@
+{
+  "Uuid": "20f1770a-d230-4c65-a084-a176ab8d037a",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "FilePathSize",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0672c281-9887-40f9-886e-248abb55564b",
+      "FunctionType": "Graph",
+      "Id": "b0bd472e67ea496ca23cd9b6cdc54b88",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "0432c751de6d4d86906a640de8e3544d",
+          "Name": "path",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e905878a79a046b7b06d765d35d3b4e0",
+          "Name": "kbOnly",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "76038617f0704d95a3fd7f97616ce3e6",
+          "Name": "size",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Outputs the the file size in kilobytes or megabytes. Provide a file path as a string. Set kbOnly to true for a consistent output."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "c2035c0483a64bbda7d20d94c10ce29b",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9c1a79f4625e458bafd82e26b9932e65",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "C:\\test.txt",
+      "InputValue": "C:\\test.txt"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "fca0c360568b42d28de5f164713acb82",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "6cc80bca4e594ab896e3696bc9cc885f",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3f26b50034c849aeab00a46106dceb26",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "76038617f0704d95a3fd7f97616ce3e6",
+      "End": "6cc80bca4e594ab896e3696bc9cc885f",
+      "Id": "36a77460a7604cf098290576ec74e6a3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9c1a79f4625e458bafd82e26b9932e65",
+      "End": "0432c751de6d4d86906a640de8e3544d",
+      "Id": "a2c3768f9a574bb5974866467ade0754",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0672c281-9887-40f9-886e-248abb55564b"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "FilePath.Size.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "b0bd472e67ea496ca23cd9b6cdc54b88"
+      ]
+    },
+    {
+      "Name": "test.txt",
+      "ReferenceType": "External",
+      "Nodes": [
+        "c2035c0483a64bbda7d20d94c10ce29b"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b0bd472e67ea496ca23cd9b6cdc54b88",
+        "Name": "FilePath.Size",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 702.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "c2035c0483a64bbda7d20d94c10ce29b",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 407.0,
+        "Y": 391.0
+      },
+      {
+        "Id": "fca0c360568b42d28de5f164713acb82",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1033.0,
+        "Y": 386.0
+      }
+    ],
+    "Annotations": [],
+    "X": -258.0,
+    "Y": -11.0,
+    "Zoom": 1.0
+  }
+}

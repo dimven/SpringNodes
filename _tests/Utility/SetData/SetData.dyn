@@ -1,0 +1,238 @@
+{
+  "Uuid": "05f21b43-3b14-4902-92e9-784478313a49",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SetData",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 282.6666666666667,
+      "WatchHeight": 200.0,
+      "Id": "fb43ab0fc4384ba0a3db20ac974c007b",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "8f52529db6844825bc1265fe992b1551",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bbe7d52fa06045c29f388aad2ee70c9a",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "a9bffebd-c1dd-4baa-befa-8599de7cf3fd",
+      "FunctionType": "Graph",
+      "Id": "a008e95cc3984bd08fca6b1d6a663124",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "6763a254eba2496dbc9ab40d1a33c36b",
+          "Name": "key",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "87befdb111cd49a8afce309d4faf7ee9",
+          "Name": "data",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "667aa0adc8014ee1ad20daa0a89831f5",
+          "Name": "",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Using the application's app domain, this node will store a reference to the input data under the specified name. use the `Utility.GetData` node to retrieve the data somewhere else.\r\n\r\nTry not to store large ammounts of data, because you risk creating a memory leak that will persist till you close down the aplication."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "dd2996525c7c47f8a1e6baf89d315dff",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ec87e1e7c0d44f0ea5c28ae70552cb9e",
+          "Name": "string",
+          "Description": "\"FilteredWalls\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dccb2e88dac14e2299183b493acd8fd2",
+          "Name": "list",
+          "Description": "[0, 1, 2]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"FilteredWalls\";\n[000, 001, 002];"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "667aa0adc8014ee1ad20daa0a89831f5",
+      "End": "8f52529db6844825bc1265fe992b1551",
+      "Id": "ceabb7ff4c6a43a9a18c3d250e166670",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ec87e1e7c0d44f0ea5c28ae70552cb9e",
+      "End": "6763a254eba2496dbc9ab40d1a33c36b",
+      "Id": "7050314619c24308846479c8db440582",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "dccb2e88dac14e2299183b493acd8fd2",
+      "End": "87befdb111cd49a8afce309d4faf7ee9",
+      "Id": "782872b964c04a73a2a939fe09190209",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "a9bffebd-c1dd-4baa-befa-8599de7cf3fd"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Utility.SetData.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "a008e95cc3984bd08fca6b1d6a663124"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "fb43ab0fc4384ba0a3db20ac974c007b",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2495.082753592143,
+        "Y": 3912.993891352525
+      },
+      {
+        "Id": "a008e95cc3984bd08fca6b1d6a663124",
+        "Name": "Utility.SetData",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2166.703307857489,
+        "Y": 3911.9049439222454
+      },
+      {
+        "Id": "dd2996525c7c47f8a1e6baf89d315dff",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1887.7163417813604,
+        "Y": 3925.7763332337418
+      }
+    ],
+    "Annotations": [],
+    "X": -1883.6955594549247,
+    "Y": -3747.0809805772406,
+    "Zoom": 1.0399364162310287
+  }
+}

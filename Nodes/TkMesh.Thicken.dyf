@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Thickens a surface mesh in the provided direction and by the supplied distance.",
-  "Name": "ꟿ TkMesh.Thicken",
+  "Name": "TkMesh.Thicken",
   "ElementResolver": {
     "ResolutionMap": {
       "CoordinateSystem": {

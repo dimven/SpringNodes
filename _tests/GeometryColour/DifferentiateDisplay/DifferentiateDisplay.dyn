@@ -1,0 +1,348 @@
+{
+  "Uuid": "40aaa1e0-673a-4c8a-81e1-c37604e38bba",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DifferentiateDisplay",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "6cbfc1f2-91d9-4d42-856a-ed68431e462c",
+      "FunctionType": "Graph",
+      "Id": "0bdb9cfb965c443c927ec71a374f5a5d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "5df8312603344115af580f7d124929da",
+          "Name": "geo",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f348240ec2e14fbd8a404de344875e43",
+          "Name": "randomCol",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a65c31f9c628493a9cb172f0d4631045",
+          "Name": "displayGeo",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Paints the input geometry using the default color range. Also works well with lists of geometry."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "b7ba495101d64c6eac3151f26dbd8d49",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "98c7b46ebbe144be9ce0c9d5043245e1",
+          "Name": "origin",
+          "Description": "Origin point\n\nPoint\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c62d0707e6554394898ab3bfcc68f6f2",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "57778e3fbe6946a9915e6ea71f2c6a04",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3249656ea09e43bdb5f5fb8410086dd4",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "43ebdc60e760456ea418e9449cdb79d7",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@Autodesk.DesignScript.Geometry.Point,double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at input Point, with specified width, length, and height.\n\nCuboid.ByLengths (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "948e921312094f58857912473755509f",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "f2866b2be5514159a1d67176fc272d3d",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7800b6e7f9cc4a10b28f189d2613dae1",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9c21ea138a6140d5a4d88946df3c3f47",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "CrossProduct",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d957d84530234fc4b4e2a0bc416d65da",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4f14c0ef8e5549609af560a5c7567fa5",
+          "Name": "range",
+          "Description": "0..10..2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..10..2;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "a5cc70e301a34ebd9e52060bd66c6344",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "27dce9f222d945dba44c2a626d400dbc",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f5b7737401724b48a679d26a22213ce2",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a65c31f9c628493a9cb172f0d4631045",
+      "End": "27dce9f222d945dba44c2a626d400dbc",
+      "Id": "e2bd7fe6c431408996b9c1963751817b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "43ebdc60e760456ea418e9449cdb79d7",
+      "End": "5df8312603344115af580f7d124929da",
+      "Id": "7470add0e6c84943936fa6e3510f630b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9c21ea138a6140d5a4d88946df3c3f47",
+      "End": "98c7b46ebbe144be9ce0c9d5043245e1",
+      "Id": "94caaa16549241379caa2b238722cc6a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4f14c0ef8e5549609af560a5c7567fa5",
+      "End": "f2866b2be5514159a1d67176fc272d3d",
+      "Id": "b1f1861b9b424b6da0803514c455c1dc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4f14c0ef8e5549609af560a5c7567fa5",
+      "End": "7800b6e7f9cc4a10b28f189d2613dae1",
+      "Id": "3eaa623a184f414e9964526f2fbeb6b1",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "6cbfc1f2-91d9-4d42-856a-ed68431e462c"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Geometry.DifferentiateDisplay.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "0bdb9cfb965c443c927ec71a374f5a5d"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -10.111864566802979,
+      "EyeY": 16.069793701171875,
+      "EyeZ": 22.581520080566406,
+      "LookX": 6.20389461517334,
+      "LookY": -6.720888137817383,
+      "LookZ": -29.985492706298828,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "0bdb9cfb965c443c927ec71a374f5a5d",
+        "Name": "Geometry.DifferentiateDisplay",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 633.9909434456484,
+        "Y": 304.05744905373734
+      },
+      {
+        "Id": "b7ba495101d64c6eac3151f26dbd8d49",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 298.3333333333335,
+        "Y": 303.33333333333337
+      },
+      {
+        "Id": "948e921312094f58857912473755509f",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -6.333333333333144,
+        "Y": 302.0000000000001
+      },
+      {
+        "Id": "d957d84530234fc4b4e2a0bc416d65da",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -231.66666666666663,
+        "Y": 313.0
+      },
+      {
+        "Id": "a5cc70e301a34ebd9e52060bd66c6344",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1039.4147786096923,
+        "Y": 302.24066425318324
+      }
+    ],
+    "Annotations": [],
+    "X": 361.6737159901968,
+    "Y": 95.1679586391208,
+    "Zoom": 0.8277025704411902
+  }
+}

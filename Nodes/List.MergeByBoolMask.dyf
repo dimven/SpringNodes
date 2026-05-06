@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Create",
   "Description": "Merge two lists by a boolean mask list. The true count in the mask should be the same as the length of the true list and vice versa for the false list.",
-  "Name": "ꟿ List.MergeByBoolMask",
+  "Name": "List.MergeByBoolMask",
   "ElementResolver": {
     "ResolutionMap": {
       "Plane": {
@@ -61,10 +61,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,'__iter__'): return obj1\r\n\telse: return [obj1]\r\n\r\nt1 = tolist(IN[0])\r\nl1 = list(reversed(tolist(IN[1]) ) )\r\nl2 = list(reversed(tolist(IN[2]) ) )\r\n\r\ntry: OUT = [l1.pop() if i else l2.pop() for i in t1]\r\nexcept Exception as e: OUT = str(e)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n\r\ndef tolist(obj1):\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n    \r\nt1 = tolist(IN[0])\r\nl1 = list(reversed(tolist(IN[1]) ) )\r\nl2 = list(reversed(tolist(IN[2]) ) )\r\n\r\ntry: OUT = [l1.pop() if i else l2.pop() for i in t1]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "edbf94a683484971912d5726bfb8b93a",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "6f06f54edb5f42c6ab5e91e74f5dae28",
@@ -106,14 +107,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "list",
       "Id": "e7845a9910114db68ad58761c4f793a1",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "41ed1959e09b49fe85bcba8dc5bd5d6e",
@@ -131,7 +132,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "In",
         "TypeName": "var",
@@ -140,6 +140,7 @@
         "Description": ""
       },
       "Id": "198da87085274ca8a1df4fe09a4e9ccb",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -157,7 +158,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "Out",
         "TypeName": "var",
@@ -166,6 +166,7 @@
         "Description": ""
       },
       "Id": "06302f8799d34dd0874b869c6deabd17",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -183,7 +184,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "mask",
         "TypeName": "var",
@@ -192,6 +192,7 @@
         "Description": ""
       },
       "Id": "6c4499a6454e484f8fe51389e62f382b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -212,102 +213,109 @@
     {
       "Start": "f78b7497a1674bf0a8d7fa84edcfb8ae",
       "End": "41ed1959e09b49fe85bcba8dc5bd5d6e",
-      "Id": "9383847b349646de90433f85e102ba66"
+      "Id": "9383847b349646de90433f85e102ba66",
+      "IsHidden": "False"
     },
     {
       "Start": "cd8fafdfa8144dadba098ce1497df5eb",
       "End": "f5bbbc472e2f42da8bc60ec5b96b58f6",
-      "Id": "315e879609bf4f0c8007dcc0a43a159a"
+      "Id": "315e879609bf4f0c8007dcc0a43a159a",
+      "IsHidden": "False"
     },
     {
       "Start": "47ef50aa2a2844fea4ef6affad317fa4",
       "End": "9684b2e0333b4064bd28daaeec6f12c0",
-      "Id": "33359d50da6c4b5b9a7a5a365c1d3992"
+      "Id": "33359d50da6c4b5b9a7a5a365c1d3992",
+      "IsHidden": "False"
     },
     {
       "Start": "14a3063c1ef148ae88c901c89c5e4cd1",
       "End": "6f06f54edb5f42c6ab5e91e74f5dae28",
-      "Id": "6e4b00ef9a5e43cb8ab81194e85649e1"
+      "Id": "6e4b00ef9a5e43cb8ab81194e85649e1",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
+      "Name": "_Background Preview",
+      "EyeX": -10.111864566802979,
+      "EyeY": 16.069793701171875,
+      "EyeZ": 22.581520080566406,
+      "LookX": 6.20389461517334,
+      "LookY": -6.720888137817383,
+      "LookZ": -29.985492706298828,
       "UpX": 0.0,
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "edbf94a683484971912d5726bfb8b93a",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 250.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 249.33731223659333,
+        "Y": -1.3253755268129908
       },
       {
         "Id": "e7845a9910114db68ad58761c4f793a1",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 401.904221782307,
-        "Y": 1.68199207920333
+        "ShowGeometry": true,
+        "X": 570.7310245553936,
+        "Y": -0.6825289680387776
       },
       {
         "Id": "198da87085274ca8a1df4fe09a4e9ccb",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 63.7554440527477,
-        "Y": -2.1193586529005
+        "ShowGeometry": true,
+        "X": -88.26146554129969,
+        "Y": 33.65328659273993
       },
       {
         "Id": "06302f8799d34dd0874b869c6deabd17",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 55.8141952079121,
-        "Y": 56.6584116439962
+        "ShowGeometry": true,
+        "X": -80.38843581501979,
+        "Y": 179.91833563759457
       },
       {
         "Id": "6c4499a6454e484f8fe51389e62f382b",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 54.5480040255748,
-        "Y": 117.746373468909
+        "ShowGeometry": true,
+        "X": -92.05851960522233,
+        "Y": -129.7506027450549
       }
     ],
     "Annotations": [],
-    "X": 76.6677151371248,
-    "Y": 94.0012513920946,
-    "Zoom": 1.40972876398001
+    "X": 143.9974923418477,
+    "Y": 348.1212056369611,
+    "Zoom": 1.0060041900272472
   }
 }

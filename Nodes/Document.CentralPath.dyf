@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Query",
   "Description": "If the document is workshared, the node returns the path to the central document as a string. Otherwise a null value will be returned.",
-  "Name": "ꟿ Document.CentralPath",
+  "Name": "Document.CentralPath",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nOUT = None\r\nif doc.IsWorkshared:\r\n\tcp = doc.GetWorksharingCentralModelPath()\r\n\tOUT = ModelPathUtils.ConvertModelPathToUserVisiblePath(cp)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |_--- *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |_--- *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\ntry:\r\n    if doc.IsWorkshared:\r\n        cp = doc.GetWorksharingCentralModelPath()\r\n        if cp.CloudPath:\r\n            OUT = \"Cloud model: Region={0}, ProjectGUID={1}, ModelGUID={2}\".format(\r\n                cp.Region,\r\n                cp.GetProjectGUID(),\r\n                cp.GetModelGUID()\r\n            )\r\n        else:\r\n            OUT = ModelPathUtils.ConvertModelPathToUserVisiblePath(cp)\r\n    else:\r\n        OUT = None\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "1096e2704a884d3fbdecd1ddb4c7d916",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "e730def158564af3b6828b0a4ef10c73",
@@ -39,14 +40,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "path",
       "Id": "f10f91d60aab4755b1669907c67c6bc5",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "85d42322342b43f2a7a2e4631b928c9a",
@@ -64,7 +65,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -73,6 +73,7 @@
         "Description": ""
       },
       "Id": "b802654ced924677bdcfbeb3826bd0ec",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -93,72 +94,77 @@
     {
       "Start": "f0ec33e94a3f4f14a2e23c3d9cfd74f4",
       "End": "85d42322342b43f2a7a2e4631b928c9a",
-      "Id": "8dc466262cc148b0a71698402e957de7"
+      "Id": "8dc466262cc148b0a71698402e957de7",
+      "IsHidden": "False"
     },
     {
       "Start": "96e047bef692441f81e741be4775baec",
       "End": "e730def158564af3b6828b0a4ef10c73",
-      "Id": "deee5f6403c44395b4bc54b369d4004b"
+      "Id": "deee5f6403c44395b4bc54b369d4004b",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -14735.748046875,
+      "EyeY": 5990.63671875,
+      "EyeZ": 3944.71826171875,
+      "LookX": 10275.509765625,
+      "LookY": -4838.8046875,
+      "LookZ": -3466.8740234375,
+      "UpX": 0.38609033823013306,
+      "UpY": 0.9132171869277954,
+      "UpZ": -0.1302638202905655
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "1096e2704a884d3fbdecd1ddb4c7d916",
+        "Name": "Doc.CentralPath",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Doc.CentralPath",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 168.485481527625,
-        "Y": 5.30346908990026
+        "Y": 4.096575107110482
       },
       {
         "Id": "f10f91d60aab4755b1669907c67c6bc5",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 322.086472781259,
-        "Y": 4.52585243546162
+        "ShowGeometry": true,
+        "X": 437.9482951290761,
+        "Y": 5.129299426856512
       },
       {
         "Id": "b802654ced924677bdcfbeb3826bd0ec",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -49.4014355967081,
-        "Y": 6.67650529642208
+        "ShowGeometry": true,
+        "X": -164.05636396173543,
+        "Y": 4.262717330842634
       }
     ],
     "Annotations": [],
-    "X": -78.1601414748687,
-    "Y": 239.871375320695,
+    "X": 167.83985852513132,
+    "Y": 233.20470865402834,
     "Zoom": 1.10476425630303
   }
 }

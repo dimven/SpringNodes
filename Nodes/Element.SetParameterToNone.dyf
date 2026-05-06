@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Actions",
   "Description": "Used to set parameters such as View Template, Phase Demolished or Top Constraint to None / Unconstrained.",
-  "Name": "ꟿ Element.SetParameterToNone",
+  "Name": "Element.SetParameterToNone",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import ElementId\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\ninv = ElementId.InvalidElementId\r\n\r\nitems = tolist(IN[0])\r\nparam = IN[1]\r\nOUT = []\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i in items:\r\n\titm = None\r\n\tpar = i.InternalElement.LookupParameter(param)\r\n\tif par is not None:\r\n\t\ttry:\r\n\t\t\tpar.Set(inv)\r\n\t\t\titm = i\r\n\t\texcept:\r\n\t\t\tpass\r\n\tOUT.append(itm)\r\nTransactionManager.Instance.TransactionTaskDone()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2018, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |_--- *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |_--- *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import ElementId\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    items = tolist(IN[0])\r\n    param = IN[1]\r\n    inv = ElementId.InvalidElementId\r\n\r\n    out1 = []\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    for i in items:\r\n        itm = None\r\n        par = i.InternalElement.LookupParameter(param)\r\n        if par is not None:\r\n            try:\r\n                par.Set(inv)\r\n                itm = i\r\n            except:\r\n                pass\r\n        out1.append(itm)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n\r\n    OUT = out1 if is_list else out1[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "bf2acf686d8042aaa023f1a69c416111",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "87cf63eddac540deb8a0eecb75923d02",
@@ -48,11 +49,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "element",
         "TypeName": "var",
@@ -61,6 +61,7 @@
         "Description": ""
       },
       "Id": "a471bfa6244b4d8bbd6b7811d26d1824",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -78,7 +79,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "paramName",
         "TypeName": "string",
@@ -87,6 +87,7 @@
         "Description": ""
       },
       "Id": "0247f75563534da2b617b62b851b8f7a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -104,10 +105,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "element",
       "Id": "bd731119cc2243f68efd27b172e9425d",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "ff753e42947c4f1095648b0cefa70b5a",
@@ -128,32 +129,37 @@
     {
       "Start": "fe0131066f5d427dbe5dcc82eca0d2b7",
       "End": "ff753e42947c4f1095648b0cefa70b5a",
-      "Id": "210383a2c51e40ba884f196afd3f2eac"
+      "Id": "210383a2c51e40ba884f196afd3f2eac",
+      "IsHidden": "False"
     },
     {
       "Start": "57e9292595da45ea99e29d157d1c8eb7",
       "End": "87cf63eddac540deb8a0eecb75923d02",
-      "Id": "a237ea70fcb94372af714b2fc5f68522"
+      "Id": "a237ea70fcb94372af714b2fc5f68522",
+      "IsHidden": "False"
     },
     {
       "Start": "12f2f5a55bfc4a4da0183af71c7e6ff5",
       "End": "7ae63ef81aa84b578fd74297d6eeea73",
-      "Id": "3c67a3362e224bd7b78640cdf728502e"
+      "Id": "3c67a3362e224bd7b78640cdf728502e",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -164,51 +170,52 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "bf2acf686d8042aaa023f1a69c416111",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 194.49426138629,
-        "Y": -0.560664026401128
+        "Y": -0.5606640264011276
       },
       {
         "Id": "a471bfa6244b4d8bbd6b7811d26d1824",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -91.83045603426149,
+        "Y": -69.91636993517633
       },
       {
         "Id": "0247f75563534da2b617b62b851b8f7a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -1.1213280528022,
-        "Y": 60.2937557758224
+        "ShowGeometry": true,
+        "X": -94.56533245298726,
+        "Y": 139.53427150717937
       },
       {
         "Id": "bd731119cc2243f68efd27b172e9425d",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 367.703716171839,
-        "Y": -2.24265610560444
+        "ShowGeometry": true,
+        "X": 485.6223699431067,
+        "Y": -1.7208921508643158
       }
     ],
     "Annotations": [],
-    "X": 210.256702297938,
-    "Y": 115.379803785776,
-    "Zoom": 1.78359936238281
+    "X": 272.496165179934,
+    "Y": 169.44541977662695,
+    "Zoom": 1.277716984107722
   }
 }

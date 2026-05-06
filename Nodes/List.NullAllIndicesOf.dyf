@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "list all of the indices of a list that match the specified value. Capable of handling null values, part of the SmartCopyMonitor workflow.",
-  "Name": "ꟿ List.NullAllIndicesOf",
+  "Name": "List.NullAllIndicesOf",
   "ElementResolver": {
     "ResolutionMap": {}
   },

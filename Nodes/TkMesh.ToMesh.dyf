@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Attempts to convert a toolkit mesh to a Dynamo mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first.",
-  "Name": "ꟿ TkMesh.ToMesh",
+  "Name": "TkMesh.ToMesh",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {

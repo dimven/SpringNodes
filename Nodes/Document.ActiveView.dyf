@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Query",
   "Description": "Selects the current document's active view. Supports more view types than the built-in option.\r\nWill be depreciated once the bult in node works with all plan types.",
-  "Name": "ꟿ Document.ActiveView",
+  "Name": "Document.ActiveView",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nOUT = doc.ActiveView.ToDSType(True)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |_--- *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |_--- *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ntry:\r\n    OUT = doc.ActiveView.ToDSType(True)\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "a53761c8e321405bb99c72dce1dba17d",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "65ec6376a89443eeb7f86ef614813984",
@@ -39,14 +40,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "view",
       "Id": "5fdfee2a7d044c16bea1b5f7c52b5d74",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "9e3541b509b04b88988927492fdab9a1",
@@ -64,7 +65,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -73,6 +73,7 @@
         "Description": ""
       },
       "Id": "d7aa7ebd105a4ec8a65ac7cb50e1040f",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -93,27 +94,31 @@
     {
       "Start": "f9da50a6a6344f9ab2139df09d72f6dd",
       "End": "9e3541b509b04b88988927492fdab9a1",
-      "Id": "58524a82df004391b648aea2ac46f822"
+      "Id": "58524a82df004391b648aea2ac46f822",
+      "IsHidden": "False"
     },
     {
       "Start": "929f21d30c2841e087e444d6fb930bda",
       "End": "65ec6376a89443eeb7f86ef614813984",
-      "Id": "2fa7abfcfdb64ae5904f3c4b18ce5d86"
+      "Id": "2fa7abfcfdb64ae5904f3c4b18ce5d86",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -124,41 +129,42 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "a53761c8e321405bb99c72dce1dba17d",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 247.069190833231,
-        "Y": 5.86161833353756
+        "Y": 5.461307127797085
       },
       {
         "Id": "5fdfee2a7d044c16bea1b5f7c52b5d74",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 392.989068644927,
-        "Y": 6.59432062522977
+        "ShowGeometry": true,
+        "X": 591.1431154864836,
+        "Y": 4.993075802267683
       },
       {
         "Id": "d7aa7ebd105a4ec8a65ac7cb50e1040f",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 45.0436555175562,
-        "Y": 5.23922456990979
+        "ShowGeometry": true,
+        "X": -110.53346441842058,
+        "Y": 6.460395056063472
       }
     ],
     "Annotations": [],
-    "X": -12.4142946927969,
-    "Y": 200.736739701314,
-    "Zoom": 2.72962159758084
+    "X": 129.6669875687648,
+    "Y": 223.5829322921271,
+    "Zoom": 1.6653709841407736
   }
 }

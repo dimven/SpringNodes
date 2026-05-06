@@ -1,0 +1,368 @@
+{
+  "Uuid": "11616951-0916-407b-bb6e-1c0c2cc19045",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Voroni2DByPoints",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "6d98d26840cd4e3fab5d1aa0c4d5f30a",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "b79a36b9d1224a339cd77be2d34e966f",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f90979f353ff4997ace3e86931055cf0",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ab96ae5ca9ee4da596d282bf77f4e202",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "Auto",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "8e0daeeb-d9c7-444d-8c26-03f0b4dfa0a4",
+      "FunctionType": "Graph",
+      "Id": "4d1cdba1f6894addaa3bc16a536fcad7",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "93b32ed9fccb439ab5c8147a88f79262",
+          "Name": "points",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "719376f0567449c995192d3c3ae8f498",
+          "Name": "lines",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create a voronoi tessellation of a set of planar points. The cell lines will be culled to the bounding extent of the points."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "7eccd7c5109d422a84fdd8afc3da70ac",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "dc6878243e974265a232988b34e9c181",
+          "Name": "script",
+          "Description": "Python script to run.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "178690539a664c5db996bb6aa5dacc41",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs a Python script from a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "SerializedWidth": 0.0,
+      "SerializedHeight": 0.0,
+      "Id": "305bb703d3fb4515ab136b6f0cda5060",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "76a59343b9c34d7d8b0f550d95200b6e",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string.",
+      "InputValue": "import math\r\n\r\npts = []\r\nfor i in range(50):\r\n    angle = i * 137.5 * (math.pi / 180)  # golden angle\r\n    r = math.sqrt(i) * 2\r\n    x = r * math.cos(angle)\r\n    y = r * math.sin(angle)\r\n    pts.append((round(x, 3), round(y, 3)))\r\n\r\nOUT = [p for p in pts]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d0033618fc1c408697b52b2a10a9ba59",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "1023f9bf3ca44dcd8aa2b0e9741f3f20",
+          "Name": "list",
+          "Description": "List to get the first item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e590942c4da341ea8f3cdb83fbfdd4ef",
+          "Name": "item",
+          "Description": "First item in the list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.FirstItem@var[]..[]",
+      "Replication": "Auto",
+      "Description": "Returns the first item in a list.\n\nList.FirstItem (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "3003db4e3633428f826c799f2b3b88ee",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "fad202a625bf48cdbda40bda769fcd6c",
+          "Name": "list",
+          "Description": "List to get the last item of\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "155e4ba01be645d2b6fbf53d6ddc93b9",
+          "Name": "item",
+          "Description": "Last item in the list",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.LastItem@var[]..[]",
+      "Replication": "Auto",
+      "Description": "Retrieves the last item in a list.\n\nList.LastItem (list: var[]..[]): var[]..[]"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ab96ae5ca9ee4da596d282bf77f4e202",
+      "End": "93b32ed9fccb439ab5c8147a88f79262",
+      "Id": "6114578e19424ff08c65521f4686b589",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "178690539a664c5db996bb6aa5dacc41",
+      "End": "fad202a625bf48cdbda40bda769fcd6c",
+      "Id": "b5f09c8c3a34479e9d936cb3e0dc4220",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "178690539a664c5db996bb6aa5dacc41",
+      "End": "1023f9bf3ca44dcd8aa2b0e9741f3f20",
+      "Id": "ee659499bc7a4ce5acfd5f94322ab388",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "76a59343b9c34d7d8b0f550d95200b6e",
+      "End": "dc6878243e974265a232988b34e9c181",
+      "Id": "fbcafc70175e47469dfbff537e8e73d2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e590942c4da341ea8f3cdb83fbfdd4ef",
+      "End": "b79a36b9d1224a339cd77be2d34e966f",
+      "Id": "3379640605924cd98911ff10e77739a4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "155e4ba01be645d2b6fbf53d6ddc93b9",
+      "End": "f90979f353ff4997ace3e86931055cf0",
+      "Id": "dd6f924a7d684aff95c8cc767faac91d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "8e0daeeb-d9c7-444d-8c26-03f0b4dfa0a4"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "PythonNet3 Engine",
+      "Version": "1.4.8.0",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "7eccd7c5109d422a84fdd8afc3da70ac"
+      ]
+    },
+    {
+      "Name": "Voronoi2D.ByPoints.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "4d1cdba1f6894addaa3bc16a536fcad7"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -9.304407119750977,
+      "EyeY": 20.537158966064453,
+      "EyeZ": 40.10417556762695,
+      "LookX": 6.848649978637695,
+      "LookY": -15.657520294189453,
+      "LookZ": -40.111270904541016,
+      "UpX": 0.0253616776317358,
+      "UpY": 0.9885817766189575,
+      "UpZ": -0.14853599667549133
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "6d98d26840cd4e3fab5d1aa0c4d5f30a",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 880.0510390612675,
+        "Y": 125.06278248244217
+      },
+      {
+        "Id": "4d1cdba1f6894addaa3bc16a536fcad7",
+        "Name": "Voronoi2D.ByPoints",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1267.7989839422485,
+        "Y": 118.09634995886591
+      },
+      {
+        "Id": "7eccd7c5109d422a84fdd8afc3da70ac",
+        "Name": "Python Script From String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 307.32439617518514,
+        "Y": 97.79653061404468
+      },
+      {
+        "Id": "305bb703d3fb4515ab136b6f0cda5060",
+        "Name": "String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -29.920394558268526,
+        "Y": 95.79880350284196
+      },
+      {
+        "Id": "d0033618fc1c408697b52b2a10a9ba59",
+        "Name": "List.FirstItem",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 646.5380875768942,
+        "Y": 45.92481925281783
+      },
+      {
+        "Id": "3003db4e3633428f826c799f2b3b88ee",
+        "Name": "List.LastItem",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 643.1254749873397,
+        "Y": 228.1583315350236
+      }
+    ],
+    "Annotations": [],
+    "X": 327.9212655575443,
+    "Y": 161.80547031254324,
+    "Zoom": 0.6274081265976349
+  }
+}

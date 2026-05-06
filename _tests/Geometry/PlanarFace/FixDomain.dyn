@@ -1,0 +1,291 @@
+{
+  "Uuid": "926cde1b-999a-41af-8117-2d24422fee28",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "FixDomain",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "DesignScript.Builtin.Dictionary": {
+        "Key": "DesignScript.Builtin.Dictionary",
+        "Value": "DesignScriptBuiltin.dll"
+      },
+      "List.__Create": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 72.0,
+      "WatchHeight": 40.0,
+      "Id": "60bc1db346e94796a0578afae52353e0",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "df1a8ccc221d4a07b143698169192e10",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "63f3d678389f41beb8d771a63c1ab7fa",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "6bf23363-d854-436b-be05-81d4dc473acf",
+      "FunctionType": "Graph",
+      "Id": "9c451fc28ec84ce085301cb950226446",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "aa321a1a3e5b4b70a28b5c7fa4deacdf",
+          "Name": "surf",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ef6ae1edb74e4f3ebba0e5114674554d",
+          "Name": "surface",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Corrects the surface domain of a 3 or 4 point planar face extracted from Revit."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "14ace86bc2cc4e64beefd92d849d036b",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "dcad872422da413796d8f7bc6c49419d",
+          "Name": "width",
+          "Description": "Width of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d5aa52c6ad6041eba81ad3fd15b4899d",
+          "Name": "length",
+          "Description": "Length of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "49cd6a82d234428d8b0444e038c91a9d",
+          "Name": "Rectangle",
+          "Description": "Rectangle created by width and length",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Rectangle.ByWidthLength@double,double",
+      "Replication": "Auto",
+      "Description": "Create a Rectangle centered at the WCS origin in the WCS XY Plane, with specified width (X Axis length), and length (Y Axis length).\n\nRectangle.ByWidthLength (width: double = 1, length: double = 1): Rectangle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "20506111b3694cd19a954d2fb4129d0c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4558954a076e45abbb6b2fadd9841fff",
+          "Name": "curve",
+          "Description": "Autodesk.DesignScript.Geometry.Curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "33d8c1a506cf47c7a12c173244647eee",
+          "Name": "Surface",
+          "Description": "A Surface on the interior of the curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Curve.Patch",
+      "Replication": "Auto",
+      "Description": "Patch a closed Curve\n\nCurve.Patch ( ): Surface"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ef6ae1edb74e4f3ebba0e5114674554d",
+      "End": "df1a8ccc221d4a07b143698169192e10",
+      "Id": "b7cca9f1626d4a8581795f230c69f433",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "49cd6a82d234428d8b0444e038c91a9d",
+      "End": "4558954a076e45abbb6b2fadd9841fff",
+      "Id": "e37ea2e1d07c4ca3a287bdf8bf5b04a4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "33d8c1a506cf47c7a12c173244647eee",
+      "End": "aa321a1a3e5b4b70a28b5c7fa4deacdf",
+      "Id": "47072871747645c4b62924a4613c705d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "6bf23363-d854-436b-be05-81d4dc473acf"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "PlanarFace.FixDomain.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "9c451fc28ec84ce085301cb950226446"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.6.1.9895",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 13.959798812866211,
+      "EyeY": 6.73392391204834,
+      "EyeZ": 17.14632797241211,
+      "LookX": -9.455400466918945,
+      "LookY": -1.2376365661621094,
+      "LookZ": -13.105117797851562,
+      "UpX": 0.08143164962530136,
+      "UpY": 0.9902681112289429,
+      "UpZ": 0.11286293715238571
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "60bc1db346e94796a0578afae52353e0",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1412.1996039875612,
+        "Y": 524.9412382296885
+      },
+      {
+        "Id": "9c451fc28ec84ce085301cb950226446",
+        "Name": "PlanarFace.FixDomain",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1052.6749929666737,
+        "Y": 522.7846545592326
+      },
+      {
+        "Id": "14ace86bc2cc4e64beefd92d849d036b",
+        "Name": "Rectangle.ByWidthLength",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 331.4226306653704,
+        "Y": 521.7557638854792
+      },
+      {
+        "Id": "20506111b3694cd19a954d2fb4129d0c",
+        "Name": "Curve.Patch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 716.326544972181,
+        "Y": 523.9123475559348
+      }
+    ],
+    "Annotations": [],
+    "X": -183.2124968621282,
+    "Y": -94.2011823224868,
+    "Zoom": 0.9719205601813432
+  }
+}

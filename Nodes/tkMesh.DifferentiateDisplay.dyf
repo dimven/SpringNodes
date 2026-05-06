@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Paints the input toolkit meshes using the default color range. Works well with lists of meshes.",
-  "Name": "ꟿ tkMesh.DifferentiateDisplay",
+  "Name": "tkMesh.DifferentiateDisplay",
   "ElementResolver": {
     "ResolutionMap": {
       "Category": {

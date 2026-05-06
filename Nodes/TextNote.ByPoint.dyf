@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Places a text note at a given point in the view. View, text type and content can either be a single item for all points or the same length as the number of points.\r\nSet track to false if you'd like to place notes on every run.",
-  "Name": "ꟿ TextNote.ByPoint",
+  "Name": "TextNote.ByPoint",
   "ElementResolver": {
     "ResolutionMap": {
       "String": {
@@ -37,10 +37,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\nview = UnwrapElement(tolist(IN[0]))\r\npts = tolist(IN[1])\r\ncontent = map(str, tolist(IN[2]))\r\ntxtType = UnwrapElement(tolist(IN[3]))\r\n_txtAlign = str(IN[4])\r\npersistent = not IN[5]\r\n\r\ntxtAlign_dict = {\"Center\" : DB.HorizontalTextAlignment.Center,\r\n\t\t\t\t \"Left\"   : DB.HorizontalTextAlignment.Left,\r\n\t\t\t\t \"Right\"  : DB.HorizontalTextAlignment.Right}\r\ntxtAlign = txtAlign_dict.get(_txtAlign, None)\r\nif txtAlign is None:\r\n\ttxtAlign = txtAlign_dict[\"Center\"]\r\n\r\nif txtType[0] is None:\r\n\ttxtType[0] = doc.GetElement(doc.GetDefaultElementTypeId(DB.ElementTypeGroup.TextNoteType))\r\n\r\nOUT = []\r\ntxtType_len = len(txtType) == 1\r\nview_len = len(view) == 1\r\ncontent_len = len(content) == 1\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i in xrange(len(pts) ):\r\n\tp = pts[i].ToXyz(True)\r\n\tj = 0 if txtType_len else i\r\n\tk = 0 if view_len else i\r\n\tm = 0 if content_len else i\r\n\ttry:\r\n\t\ttn = DB.TextNote.Create(doc, view[k].Id, p, content[m], txtType[j].Id)\r\n\t\ttn.HorizontalAlignment = txtAlign\r\n\t\tOUT.append(tn.ToDSType(persistent) )\r\n\texcept:\r\n\t\tOUT.append(None)\r\nTransactionManager.Instance.TransactionTaskDone()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2018, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[1], list)\r\n    view = UnwrapElement(tolist(IN[0]))\r\n    pts = tolist(IN[1])\r\n    content = list(map(str, tolist(IN[2])))\r\n    txtType = UnwrapElement(tolist(IN[3]))\r\n    _txtAlign = str(IN[4])\r\n    persistent = not IN[5]\r\n\r\n    txtAlign_dict = {\r\n        \"Center\": DB.HorizontalTextAlignment.Center,\r\n        \"Left\":   DB.HorizontalTextAlignment.Left,\r\n        \"Right\":  DB.HorizontalTextAlignment.Right\r\n    }\r\n    txtAlign = txtAlign_dict.get(_txtAlign, DB.HorizontalTextAlignment.Center)\r\n\r\n    if txtType[0] is None:\r\n        txtType[0] = doc.GetElement(doc.GetDefaultElementTypeId(DB.ElementTypeGroup.TextNoteType))\r\n\r\n    txtType_len = len(txtType) == 1\r\n    view_len = len(view) == 1\r\n    content_len = len(content) == 1\r\n\r\n    out1 = []\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    for i, pt in enumerate(pts):\r\n        p = pt.ToXyz(True)\r\n        j = 0 if txtType_len else i\r\n        k = 0 if view_len else i\r\n        m = 0 if content_len else i\r\n        try:\r\n            tn = DB.TextNote.Create(doc, view[k].Id, p, content[m], txtType[j].Id)\r\n            tn.HorizontalAlignment = txtAlign\r\n            out1.append(tn.ToDSType(persistent))\r\n        except:\r\n            out1.append(None)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n\r\n    OUT = out1 if is_list else out1[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "76b9e68c74774f989050d179a0f2ea9e",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "05e3db6ad01a4cfbb82c60261defe439",
@@ -109,11 +110,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "view",
         "TypeName": "var",
@@ -122,6 +122,7 @@
         "Description": ""
       },
       "Id": "eefc2086b8944094856189a94c0e22a4",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -139,7 +140,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "point",
         "TypeName": "var",
@@ -148,6 +148,7 @@
         "Description": ""
       },
       "Id": "6e48c707ad3b4f83a81abbc04d654e6b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -165,7 +166,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "content",
         "TypeName": "string",
@@ -174,6 +174,7 @@
         "Description": ""
       },
       "Id": "9b9c43ce669b48e182a39fa225590353",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -191,7 +192,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "textType",
         "TypeName": "var",
@@ -200,6 +200,7 @@
         "Description": ""
       },
       "Id": "d00e87aea26241bf8284c8ea65a67055",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -217,7 +218,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "horAlign",
         "TypeName": "string",
@@ -226,6 +226,7 @@
         "Description": ""
       },
       "Id": "763bcf7ad7834c26bb1546ee55daf92d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -243,7 +244,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "track",
         "TypeName": "bool",
@@ -252,6 +252,7 @@
         "Description": ""
       },
       "Id": "2c5d6b467c084c89bb36b3937acc9871",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -269,10 +270,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "textNote",
       "Id": "0db9b4afd0384dcd813198e9eeca3273",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "683eee17228a4f588bb1f5d106c128bd",
@@ -293,147 +294,157 @@
     {
       "Start": "c66210efee4d4c708be942e7da007db8",
       "End": "683eee17228a4f588bb1f5d106c128bd",
-      "Id": "d81ad47c846c458289c667100908014a"
+      "Id": "d81ad47c846c458289c667100908014a",
+      "IsHidden": "False"
     },
     {
       "Start": "feebc11f283845f5bd0aeec1e23b2997",
       "End": "05e3db6ad01a4cfbb82c60261defe439",
-      "Id": "530bf3ca0c554294ab2228ce683dabe4"
+      "Id": "530bf3ca0c554294ab2228ce683dabe4",
+      "IsHidden": "False"
     },
     {
       "Start": "01ef8124400043bc9b0d9eb2ad2f0c78",
       "End": "386bba1d31bf4a13a433cd6b27c4013a",
-      "Id": "e219e58c68ad416fb30a64c752deded9"
+      "Id": "e219e58c68ad416fb30a64c752deded9",
+      "IsHidden": "False"
     },
     {
       "Start": "3d20ab0e440d4256a0627ceb6a03e70a",
       "End": "424cbb189ee94b7cb21dfdda9440eab2",
-      "Id": "c2bf683be3e7448385af0ed5bc5c8334"
+      "Id": "c2bf683be3e7448385af0ed5bc5c8334",
+      "IsHidden": "False"
     },
     {
       "Start": "00bec9feec584e3894e38b08bd62f9a3",
       "End": "b71fe94c1fae45ab9843abf167a9c0ee",
-      "Id": "df3e7efb18394a03a34b779acf8d67b9"
+      "Id": "df3e7efb18394a03a34b779acf8d67b9",
+      "IsHidden": "False"
     },
     {
       "Start": "e5eae995183245c79b9067f5c039b0bd",
       "End": "0b054c905907426e826e95943f6ff479",
-      "Id": "9d6201f766d4415388d082552bc9b98b"
+      "Id": "9d6201f766d4415388d082552bc9b98b",
+      "IsHidden": "False"
     },
     {
       "Start": "fbaa57602df94fd4bfd27a8bb9956799",
       "End": "9e874d1ea98643b68ac17c98f0967019",
-      "Id": "cb2695ef317340bba9968a26501d2cb4"
+      "Id": "cb2695ef317340bba9968a26501d2cb4",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -243.143310546875,
-      "EyeY": 982.30230712890625,
-      "EyeZ": -32.319305419921875,
-      "LookX": -0.19291664659976959,
-      "LookY": -961.03277587890625,
-      "LookZ": -35.58306884765625,
-      "UpX": -0.0052488162182271481,
-      "UpY": 0.2503800094127655,
-      "UpZ": -0.96813338994979858
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "76b9e68c74774f989050d179a0f2ea9e",
+        "Name": "TextNote.ByPoint",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "TextNote.ByPoint",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 264.004192302455,
         "Y": 109.316972529113
       },
       {
         "Id": "eefc2086b8944094856189a94c0e22a4",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -208.795510364838,
-        "Y": -6.62024350475355
+        "ShowGeometry": true,
+        "X": -45.30910092595522,
+        "Y": -192.34970184688547
       },
       {
         "Id": "6e48c707ad3b4f83a81abbc04d654e6b",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -208.795510364838,
-        "Y": 57.9978833347682
+        "ShowGeometry": true,
+        "X": -75.89329316792336,
+        "Y": -50.43698006857225
       },
       {
         "Id": "9b9c43ce669b48e182a39fa225590353",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -208.795510364838,
-        "Y": 122.61601017429
+        "ShowGeometry": true,
+        "X": -121.4915434195843,
+        "Y": 109.27018083234047
       },
       {
         "Id": "d00e87aea26241bf8284c8ea65a67055",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -209.62962469871,
-        "Y": 187.234137013812
+        "ShowGeometry": true,
+        "X": -170.14821289544236,
+        "Y": 270.64557040099703
       },
       {
         "Id": "763bcf7ad7834c26bb1546ee55daf92d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -208.795510364838,
-        "Y": 251.852263853334
+        "ShowGeometry": true,
+        "X": -207.1272816970945,
+        "Y": 417.00690195996026
       },
       {
         "Id": "2c5d6b467c084c89bb36b3937acc9871",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -208.795510364838,
-        "Y": 316.470390692855
+        "ShowGeometry": true,
+        "X": -128.16445809055946,
+        "Y": 575.6019104157098
       },
       {
         "Id": "0db9b4afd0384dcd813198e9eeca3273",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": false,
         "Excluded": false,
-        "X": 410.058714730446,
-        "Y": 109.746946985836
+        "ShowGeometry": false,
+        "X": 742.5922958340234,
+        "Y": 108.07871831809233
       }
     ],
     "Annotations": [],
-    "X": 228.39857193783,
-    "Y": 65.9104398948813,
+    "X": 867.0652386044967,
+    "Y": 397.24377322821454,
     "Zoom": 1.1988764122517
   }
 }

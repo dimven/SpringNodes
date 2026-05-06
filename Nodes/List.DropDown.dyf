@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Selects one list item by a drop-down combo box. The optional names input will override the object representation.",
-  "Name": "ꟿ List.DropDown",
+  "Name": "List.DropDown",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\n\r\nfrom System.Drawing import Point, Color, Font\r\nfrom System.Windows.Forms import *\r\nfrom System import Array, Object\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\ndef hasInd(l1, i):\r\n\ttry: l1[i] ; return True\r\n\texcept: return False\r\n\r\nclass NameWrap(Object):\r\n\tdef __init__(self, obj1, name1 = None):\r\n\t\tself.obj = obj1\r\n\t\tif obj1 == None: name1 = \"null\"\r\n\t\tif name1 == None and obj1 != None: self.name = obj1.ToString()\r\n\t\telse: self.name = name1\r\n\tdef ToString(self):\r\n\t\treturn self.name\r\n\r\nclass DropDownForm(Form):\r\n\tdef __init__(self, cm1):\r\n\t\tself.Text = \"SpringNodes: Drop-Down Selection\"\r\n\t\tself.Width = 368\r\n\t\tself.Height = 142\r\n\t\tself.BackColor = Color.FromArgb(40,40,40)\r\n\t\tself.ControlBox = False\r\n\t\tself.TopMost = True\r\n\t\tself.FormBorderStyle = FormBorderStyle.FixedDialog\r\n\t\tself.StartPosition = FormStartPosition.CenterScreen\r\n\t\t\r\n\t\tself.label = Label()\r\n\t\tself.label.Text = cm1\r\n\t\tself.label.Location = Point(5, 5)\r\n\t\tself.label.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.label.Font = Font(\"Calibri\", 10)\r\n\t\tself.label.AutoSize = True\r\n\t\tself.Controls.Add(self.label)\r\n\t\t\r\n\t\tself.combo1 = ComboBox()\r\n\t\tself.combo1.Location = Point(5, 31)\r\n\t\tself.combo1.Width = 350\r\n\t\tself.combo1.BackColor = Color.FromArgb(53,53,53)\r\n\t\tself.combo1.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.combo1.Font = Font(\"Calibri\", 11)\r\n\t\tself.combo1.MouseClick += self.expand\r\n\t\tself.Controls.Add(self.combo1)\r\n\t\t\r\n\t\tself.button1 = Button()\r\n\t\tself.button1.Text = 'Select'\r\n\t\tself.button1.AutoSize = True\r\n\t\tself.button1.Width = 350\r\n\t\tself.button1.Location = Point(6, 72)\r\n\t\tself.button1.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.button1.Font = Font(\"Calibri\", 10)\r\n\t\tself.button1.Click += self.save\r\n\t\tself.Controls.Add(self.button1)\r\n\t\r\n\tdef expand(self, sender, event):\r\n\t\tself.combo1.DroppedDown = True\r\n\tdef add_range(self,l1):\r\n\t\tself.combo1.Items.AddRange(l1)\t\r\n\t\tif l1.Length >= 1:\r\n\t\t\tself.combo1.SelectedIndex = 0\r\n\tdef save(self, sender, event):\r\n\t\tself.output1 = self.combo1.SelectedItem\r\n\t\tself.Close()\r\n#safety measure due to automatic mode\r\nif IN[0] == None: l1 = []\r\nelse: l1 = tolist(IN[0])\r\nif IN[1] == None: names = None\r\nelse: names = tolist(IN[1])\r\n\r\nfor i in xrange(len(l1)):\r\n\tname1 = None\r\n\tif hasInd(names, i): name1 = names[i]\r\n\tl1[i] = NameWrap(l1[i], name1)\r\nl1_arr = Array[Object](l1)\r\nform = DropDownForm(IN[2])\r\nform.add_range(l1_arr)\r\nApplication.Run(form)\r\nif l1: OUT = form.output1.obj\r\nelse: OUT = []\r\nApplication.Exit()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venitar       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nimport System\r\nfrom System.Drawing import Point, Color, Font\r\nfrom System.Windows.Forms import *\r\nfrom System import Array, Object\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef hasInd(l1, i):\r\n    try: l1[i]; return True\r\n    except: return False\r\n\r\nclass NameWrap(Object):\r\n    def __init__(self, obj1, name1=None):\r\n        self.obj = obj1\r\n        if name1 is None:\r\n            if obj1 is None:\r\n                name1 = \"null\"\r\n            else:\r\n                name1 = str(obj1)\r\n        self.name = name1\r\n\r\n    def ToString(self):\r\n        return self.name\r\n\r\nclass DropDownForm(Form):\r\n    def __init__(self, cm1):\r\n        super().__init__()\r\n        self.output1 = None\r\n        self.Text = \"SpringNodes: Drop-Down Selection\"\r\n        self.Width = 368\r\n        self.Height = 180\r\n        self.MinimumSize = System.Drawing.Size(368, 180)\r\n        self.BackColor = Color.FromArgb(40, 40, 40)\r\n        self.ControlBox = True\r\n        self.TopMost = True\r\n        self.FormBorderStyle = FormBorderStyle.SizableToolWindow\r\n        self.StartPosition = FormStartPosition.CenterScreen\r\n        self.Resize += self.on_resize\r\n\r\n        self.label = Label()\r\n        self.label.Text = cm1\r\n        self.label.Location = Point(5, 5)\r\n        self.label.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.label.Font = Font(\"Calibri\", 10)\r\n        self.label.AutoSize = True\r\n        self.Controls.Add(self.label)\r\n\r\n        self.combo1 = ComboBox()\r\n        self.combo1.Location = Point(5, 31)\r\n        self.combo1.Width = self.ClientSize.Width - 10\r\n        self.combo1.BackColor = Color.FromArgb(53, 53, 53)\r\n        self.combo1.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.combo1.Font = Font(\"Calibri\", 11)\r\n        self.combo1.MouseClick += self.expand\r\n        self.Controls.Add(self.combo1)\r\n\r\n        self.button1 = Button()\r\n        self.button1.Text = 'Select'\r\n        self.button1.Width = self.ClientSize.Width - 10\r\n        self.button1.Location = Point(5, self.ClientSize.Height - 40)\r\n        self.button1.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.button1.Font = Font(\"Calibri\", 10)\r\n        self.button1.Click += self.save\r\n        self.Controls.Add(self.button1)\r\n\r\n    def on_resize(self, sender, event):\r\n        self.combo1.Width = self.ClientSize.Width - 10\r\n        self.button1.Width = self.ClientSize.Width - 10\r\n        self.button1.Location = Point(5, self.ClientSize.Height - 40)\r\n\r\n    def expand(self, sender, event):\r\n        self.combo1.DroppedDown = True\r\n\r\n    def add_range(self, l1):\r\n        self.wrapped = list(l1)\r\n        self.combo1.Items.AddRange(Array[Object]([w.name for w in l1]))\r\n        if len(l1) >= 1:\r\n            self.combo1.SelectedIndex = 0\r\n\r\n    def save(self, sender, event):\r\n        self.output1 = self.wrapped[self.combo1.SelectedIndex]\r\n        self.Close()\r\n\r\ntry:\r\n    if IN[0] is None: l1 = []\r\n    else: l1 = tolist(IN[0])\r\n    if IN[1] is None: names = None\r\n    else: names = tolist(IN[1])\r\n\r\n    for i in range(len(l1)):\r\n        name1 = None\r\n        if hasInd(names, i):\r\n            candidate = names[i]\r\n            if isinstance(candidate, str):\r\n                name1 = candidate\r\n        if name1 is None:\r\n            name1 = str(l1[i])\r\n        l1[i] = NameWrap(l1[i], name1)\r\n\r\n    form = DropDownForm(IN[2])\r\n    form.add_range(l1)\r\n    form.ShowDialog()\r\n\r\n    if l1 and form.output1 is not None:\r\n        OUT = form.output1.obj\r\n    else:\r\n        OUT = \"No selection\"\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e), traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "f40e0841365e4ed6a5d51b99fcc6a501",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "fa68ed73b3874923991cac8e15bc1b33",
@@ -66,11 +67,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list",
         "TypeName": "var",
@@ -79,6 +79,7 @@
         "Description": ""
       },
       "Id": "87248bdf158244a5b04b2bcefdbafada",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -96,7 +97,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "names",
         "TypeName": "var",
@@ -105,6 +105,7 @@
         "Description": ""
       },
       "Id": "b66f9a1fc5454c738e68085748976f56",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -122,10 +123,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "selection",
       "Id": "96320da16aec4a8eb6c948ceba7828b7",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "dd85cc10166c4a9e88c0da4f8c363eaf",
@@ -143,7 +144,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "customMsg",
         "TypeName": "string",
@@ -152,6 +152,7 @@
         "Description": ""
       },
       "Id": "3389dcb69a9748729055bedb602f7dc9",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -169,7 +170,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "reset",
         "TypeName": "bool",
@@ -178,6 +178,7 @@
         "Description": ""
       },
       "Id": "f0f693f661d64f97b16023cd9a720477",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -198,117 +199,125 @@
     {
       "Start": "d95937117ade42e0957aac61f6f47ef6",
       "End": "dd85cc10166c4a9e88c0da4f8c363eaf",
-      "Id": "33695aae02d94db6b8688771f890e622"
+      "Id": "33695aae02d94db6b8688771f890e622",
+      "IsHidden": "False"
     },
     {
       "Start": "a9e8f6d4e28446ae8d9ac39c152e2560",
       "End": "fa68ed73b3874923991cac8e15bc1b33",
-      "Id": "34bf5214fd5849bd9df66a142c6f8afa"
+      "Id": "34bf5214fd5849bd9df66a142c6f8afa",
+      "IsHidden": "False"
     },
     {
       "Start": "7863b459dda5470e8b1e2f873d1f38df",
       "End": "2ba1cf1293234c8fb8e4bbdbdb4dd3fc",
-      "Id": "9a91b2bc03f44700a93fbd275dd6dea4"
+      "Id": "9a91b2bc03f44700a93fbd275dd6dea4",
+      "IsHidden": "False"
     },
     {
       "Start": "8a2382b976734539b59ebf759e7f884f",
       "End": "8c7288d90442477d8287a9c8d66557cb",
-      "Id": "35216658c5434de1918d903ba9969ae0"
+      "Id": "35216658c5434de1918d903ba9969ae0",
+      "IsHidden": "False"
     },
     {
       "Start": "0a0774c4409f4cc09a0b3aa342115a2a",
       "End": "c1bd72bce4fb45a99f550a5483503a77",
-      "Id": "8f9ff09e657f4cc59a0f33559b55433f"
+      "Id": "8f9ff09e657f4cc59a0f33559b55433f",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 110.59494781494141,
-      "EyeY": 205.90982055664062,
-      "EyeZ": -176.049072265625,
-      "LookX": -6.423729419708252,
-      "LookY": -238.83273315429688,
-      "LookZ": 64.478523254394531,
-      "UpX": 0.099016770720481873,
-      "UpY": -0.048849768936634064,
-      "UpZ": -0.99388599395751953
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "f40e0841365e4ed6a5d51b99fcc6a501",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 197.723255901809,
-        "Y": 41.1485262951103
+        "Y": 41.148526295110315
       },
       {
         "Id": "87248bdf158244a5b04b2bcefdbafada",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 72.9804051271766,
-        "Y": 8.66965805588802
+        "ShowGeometry": true,
+        "X": -111.19591277651415,
+        "Y": -124.17883354677409
       },
       {
         "Id": "b66f9a1fc5454c738e68085748976f56",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -75.438964874369,
-        "Y": 67.0559580026236
+        "ShowGeometry": true,
+        "X": -171.62472340486784,
+        "Y": 45.05831815932562
       },
       {
         "Id": "96320da16aec4a8eb6c948ceba7828b7",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 339.011800783511,
-        "Y": 46.5832373152192
+        "ShowGeometry": true,
+        "X": 479.62416527204294,
+        "Y": 39.250690700786514
       },
       {
         "Id": "3389dcb69a9748729055bedb602f7dc9",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -338.615456719079,
-        "Y": 129.058095104668
+        "ShowGeometry": true,
+        "X": -392.9625669201681,
+        "Y": 198.0702985346223
       },
       {
         "Id": "f0f693f661d64f97b16023cd9a720477",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -36.9795600484231,
-        "Y": 187.359868008293
+        "ShowGeometry": true,
+        "X": -115.48094144999627,
+        "Y": 378.86873252641647
       }
     ],
     "Annotations": [],
-    "X": 402.027147497823,
-    "Y": 163.181384257819,
-    "Zoom": 1.545620359375
+    "X": 625.8202093414668,
+    "Y": 224.16344899774805,
+    "Zoom": 1.2484436539722303
   }
 }

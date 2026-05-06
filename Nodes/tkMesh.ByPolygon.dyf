@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Create",
   "Description": "Converts a closed polygon into a toolkit mesh using an ear-clipping division",
-  "Name": "ꟿ tkMesh.ByPolygon",
+  "Name": "tkMesh.ByPolygon",
   "ElementResolver": {
     "ResolutionMap": {
       "Category": {
@@ -49,10 +49,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2020, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nclr.AddReference('MeshToolkit')\r\nimport Autodesk.Dynamo.MeshToolkit.Mesh as tkMesh\r\n\r\ndef tolist(x):\r\n    if hasattr(x,'__iter__'): return x\r\n    return [x]\r\n\r\ndef orientation(v):\r\n    area = 0.0\r\n    for i in range(len(v)):\r\n        area += v[i-1].X*v[i].Y - v[i-1].Y*v[i].X\r\n    return area < 0.0 # if true, it is clockwise\r\n\r\ndef determinant(p1, p2, p3):\r\n    determ = (p2.X - p1.X) * (p3.Y - p1.Y) - (p3.X - p1.X) * (p2.Y - p1.Y)\r\n    return determ >= 0\r\n\r\ndef no_interior(p1, p2, p3, v, poly_or):\r\n    for ip in v:\r\n        p = ip[1]\r\n        if p.IsAlmostEqualTo(p1) or p.IsAlmostEqualTo(p2) or p.IsAlmostEqualTo(p3):\r\n            continue # Don't bother checking against yourself\r\n        if determinant(p1, p2, p) == poly_or or \\\r\n            determinant(p3, p1, p) == poly_or or \\\r\n            determinant(p2, p3, p) == poly_or:\r\n                continue  # This point is outside\r\n        return False # The point is inside\r\n    return True # No points inside this triangle\r\n\r\ndef draw_poly(poly):\r\n    t1 = poly.GetType().ToString()\r\n    if 'Polygon' in t1 or 'Rectangle' in t1:\r\n        pts = poly.Points\r\n    else:\r\n        pts = [c.StartPoint for c in poly.Curves()]\r\n    indices = []\r\n    poly_orientation = orientation(pts)\r\n    v = list(enumerate(pts))\r\n    while len(v) > 3:\r\n        for cur in range(len(v)):\r\n            prev = cur - 1\r\n            next = (cur + 1) % len(v)\r\n            if determinant(v[cur][1], v[prev][1], v[next][1]) == poly_orientation and \\\r\n                no_interior(v[prev][1], v[cur][1], v[next][1], v, poly_orientation):\r\n                    indices.extend((v[prev][0], v[cur][0], v[next][0]))\r\n                    del(v[cur])\r\n                    break\r\n        else:\r\n            raise('Error: Didn\\'t find a triangle.\\n')\r\n\r\n    # Output the final triangle\r\n    indices.extend([i[0] for i in v])\r\n    return tkMesh.ByVerticesAndIndices(pts, indices)\r\n\r\nOUT = map(draw_poly, tolist(IN[0]))",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('MeshToolkit')\r\nimport Autodesk.Dynamo.MeshToolkit.Mesh as tkMesh\r\n\r\ndef tolist(x):\r\n    if hasattr(x,'__iter__'): return x\r\n    return [x]\r\n\r\ndef orientation(v):\r\n    area = 0.0\r\n    for i in range(len(v)):\r\n        area += v[i-1].X*v[i].Y - v[i-1].Y*v[i].X\r\n    return area < 0.0 # if true, it is clockwise\r\n\r\ndef determinant(p1, p2, p3):\r\n    determ = (p2.X - p1.X) * (p3.Y - p1.Y) - (p3.X - p1.X) * (p2.Y - p1.Y)\r\n    return determ >= 0\r\n\r\ndef no_interior(p1, p2, p3, v, poly_or):\r\n    for ip in v:\r\n        p = ip[1]\r\n        if p.IsAlmostEqualTo(p1) or p.IsAlmostEqualTo(p2) or p.IsAlmostEqualTo(p3):\r\n            continue # Don't bother checking against yourself\r\n        if determinant(p1, p2, p) == poly_or or \\\r\n            determinant(p3, p1, p) == poly_or or \\\r\n            determinant(p2, p3, p) == poly_or:\r\n                continue  # This point is outside\r\n        return False # The point is inside\r\n    return True # No points inside this triangle\r\n\r\ndef draw_poly(poly):\r\n    t1 = poly.GetType().ToString()\r\n    if 'Polygon' in t1 or 'Rectangle' in t1:\r\n        pts = poly.Points\r\n    else:\r\n        pts = [c.StartPoint for c in poly.Curves()]\r\n    indices = []\r\n    poly_orientation = orientation(pts)\r\n    v = list(enumerate(pts))\r\n    while len(v) > 3:\r\n        for cur in range(len(v)):\r\n            prev = cur - 1\r\n            next = (cur + 1) % len(v)\r\n            if determinant(v[cur][1], v[prev][1], v[next][1]) == poly_orientation and \\\r\n                no_interior(v[prev][1], v[cur][1], v[next][1], v, poly_orientation):\r\n                    indices.extend((v[prev][0], v[cur][0], v[next][0]))\r\n                    del(v[cur])\r\n                    break\r\n        else:\r\n            raise('Error: Didn\\'t find a triangle.\\n')\r\n\r\n    # Output the final triangle\r\n    indices.extend([i[0] for i in v])\r\n    return tkMesh.ByVerticesAndIndices(pts, indices)\r\n\r\n\r\ntry:\r\n    OUT = map(draw_poly, tolist(IN[0]))\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )\r\n\r\n\r\n",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "a497ff0ef6a8475897dfef81e247c0da",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "5bea1100516c457a988e53c8264dfca9",
@@ -76,11 +77,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "poly",
         "TypeName": "var",
@@ -89,6 +89,7 @@
         "Description": ""
       },
       "Id": "853323ce96e24103964ad730cd8e5c69",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -106,10 +107,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "tkMesh",
       "Id": "1ec932b6bcea4b3e82af222c1b380305",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "b1e736df56c14c6282f9da967c102d32",
@@ -130,65 +131,70 @@
     {
       "Start": "bc61d5e88e33468dbed0c82477510ce0",
       "End": "b1e736df56c14c6282f9da967c102d32",
-      "Id": "f7a2226f6c6d4ebc854216d2eb7c6259"
+      "Id": "f7a2226f6c6d4ebc854216d2eb7c6259",
+      "IsHidden": "False"
     },
     {
       "Start": "1641ceebf00b4e88a064abb994b075c8",
       "End": "5bea1100516c457a988e53c8264dfca9",
-      "Id": "85c3df6115104335a92e41449953993b"
+      "Id": "85c3df6115104335a92e41449953993b",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -11680.036358293151,
-      "EyeY": 31333.235598892526,
-      "EyeZ": -13042.434836848681,
-      "LookX": -2968.1630978671,
-      "LookY": -26390.008436734541,
-      "LookZ": 9135.0667019576758,
-      "UpX": -0.29038098931159123,
-      "UpY": 0.34202014332568476,
-      "UpZ": 0.89370079031294181
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "a497ff0ef6a8475897dfef81e247c0da",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 250.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 249.62622398239944,
+        "Y": -0.7475520352014655
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "853323ce96e24103964ad730cd8e5c69",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 0.0,
         "Y": 0.0
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "1ec932b6bcea4b3e82af222c1b380305",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 449.0,
         "Y": 0.0
       }

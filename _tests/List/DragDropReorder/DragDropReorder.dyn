@@ -1,0 +1,277 @@
+{
+  "Uuid": "7d928751-387e-402d-9c0b-2e96fdd51760",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DragDropReorder",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3ff3de76a4344a0a9f94af0626a7491e",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f462ac8641d24139806cd2b83d9704b6",
+          "Name": "function",
+          "Description": "\"T\" + (0..50)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5fc467fcff33442c9bb01290f976cca1",
+          "Name": "string",
+          "Description": "\"NewSpringsItemName\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9a8595cdb60349b383114a7c0df17f77",
+          "Name": "string",
+          "Description": "\"SpringsReorderDialog\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1a43043dbdd8411f88a3f1c438e0ed2e",
+          "Name": "boolean",
+          "Description": "true",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"T\" + (0..50);\n\"NewSpringsItemName\";\n\"SpringsReorderDialog\";\ntrue;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "536cc35718004a79a9a3a8ab6da1d8ce",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "919aa5b0786b473c86e97bbf4bb1c93e",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1e4fd38e9a524ccea6d0187e1585b56b",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "747d5ee1-bd7c-4ae8-adee-863ef266d10a",
+      "FunctionType": "Graph",
+      "Id": "de86e9b1b9044e71a7c4edeeb0cef078",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "93458e9d102c401fbc81a59c5f80528c",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c2c2be48195644cba751fa433c034423",
+          "Name": "names",
+          "Description": "var[]..[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fbecd8aefd454237b8f3e5af1a0f35e7",
+          "Name": "customMsg",
+          "Description": "string\nDefault value : \"Reorder the items by dragging & dropping them.\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bad6970188c547049493c34d0579a7b8",
+          "Name": "reset",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "052f84ec73564d5386f3754a01ff6bf5",
+          "Name": "list",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Press and hold on an item to move it up or down the list. To confirm and close the window, select \"Save Order\". The optional names input will override the object representation."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f462ac8641d24139806cd2b83d9704b6",
+      "End": "93458e9d102c401fbc81a59c5f80528c",
+      "Id": "6a6ec4f5220a46ac8aadfb34f36154a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5fc467fcff33442c9bb01290f976cca1",
+      "End": "c2c2be48195644cba751fa433c034423",
+      "Id": "b1e78f98b8d94beaae3c47e70475cd36",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9a8595cdb60349b383114a7c0df17f77",
+      "End": "fbecd8aefd454237b8f3e5af1a0f35e7",
+      "Id": "4f28e4194ec14dbb84fdd4660a75f31a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1a43043dbdd8411f88a3f1c438e0ed2e",
+      "End": "bad6970188c547049493c34d0579a7b8",
+      "Id": "d4d1909cc4f84352986ace20e35d6354",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "052f84ec73564d5386f3754a01ff6bf5",
+      "End": "919aa5b0786b473c86e97bbf4bb1c93e",
+      "Id": "ce92509c40ce4c6d843fadfb21af349b",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "747d5ee1-bd7c-4ae8-adee-863ef266d10a"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.DragDropReorder.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "de86e9b1b9044e71a7c4edeeb0cef078"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "3ff3de76a4344a0a9f94af0626a7491e",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 415.2773291672322,
+        "Y": 463.08301720996604
+      },
+      {
+        "Id": "536cc35718004a79a9a3a8ab6da1d8ce",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1084.1540836525937,
+        "Y": 449.1680824679035
+      },
+      {
+        "Id": "de86e9b1b9044e71a7c4edeeb0cef078",
+        "Name": "List.DragDropReorder",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 773.9396709050147,
+        "Y": 439.98059841124814
+      }
+    ],
+    "Annotations": [],
+    "X": -580.5900579359784,
+    "Y": -355.628509845586,
+    "Zoom": 1.436093667282766
+  }
+}

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Sets the Z coordinate of each vertex of the mesh to the desired value.",
-  "Name": "ꟿ TkMesh.Flatten",
+  "Name": "TkMesh.Flatten",
   "ElementResolver": {
     "ResolutionMap": {
       "CoordinateSystem": {

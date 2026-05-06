@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Filters the input elements by their category name. You can input multiple category names.",
-  "Name": "ꟿ List.FilterByCategoryName",
+  "Name": "List.FilterByCategoryName",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {

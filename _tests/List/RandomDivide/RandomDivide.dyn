@@ -1,0 +1,253 @@
+{
+  "Uuid": "7e026a61-0224-4d0d-a19a-0675f9740cf2",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "RandomDivide",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "ad795fc1-a530-482f-94a0-95882af53b62",
+      "FunctionType": "Graph",
+      "Id": "0496f52484304345b79502c1dc52482d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "df8e20941dea4afba63e548a6a71e096",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d70b4430abac4a19aaca7d0e92118559",
+          "Name": "ratios",
+          "Description": "var[]\nDefault value : [1]",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "890d2e151fbd4ad68d23d35af0a70246",
+          "Name": "seed",
+          "Description": "var\nDefault value : \"seed\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "52f9817bed1c481b88f30ef6a7a499d5",
+          "Name": "lists",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "f0bb243f87044c16882cf5342d8108cd",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9fdd1630b3454ba984617ec96ec9a8b3",
+          "Name": "range",
+          "Description": "0..50",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "828ccab14a01489abfe648c2658350a3",
+          "Name": "list",
+          "Description": "[0.6, 0.4]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2ab1913bc2a748f996986abd96064de0",
+          "Name": "integer",
+          "Description": "7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..50;\n[0.6, 0.4];\n7;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "88e3c0bf143b4bcd9364b323e76f0661",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "907add129873464d85c31846a88162b4",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0ae422c6ffdc4d5dbd5421c6a27b0ec9",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "52f9817bed1c481b88f30ef6a7a499d5",
+      "End": "907add129873464d85c31846a88162b4",
+      "Id": "e8d9073a8b3d4f83bd1dcaa2230e7248",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9fdd1630b3454ba984617ec96ec9a8b3",
+      "End": "df8e20941dea4afba63e548a6a71e096",
+      "Id": "dc5c604848a84d73b4b47a6ede87fd1e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "828ccab14a01489abfe648c2658350a3",
+      "End": "d70b4430abac4a19aaca7d0e92118559",
+      "Id": "45db14e848c744df9ea46b27765cc949",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2ab1913bc2a748f996986abd96064de0",
+      "End": "890d2e151fbd4ad68d23d35af0a70246",
+      "Id": "5999c31fad304e43a908cd2d23bd4da1",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "ad795fc1-a530-482f-94a0-95882af53b62"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.RandomiseDivide.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "0496f52484304345b79502c1dc52482d"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "0496f52484304345b79502c1dc52482d",
+        "Name": "List.RandomiseDivide",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 732.3333333333334,
+        "Y": 473.33333333333326
+      },
+      {
+        "Id": "f0bb243f87044c16882cf5342d8108cd",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 356.0,
+        "Y": 472.66666666666663
+      },
+      {
+        "Id": "88e3c0bf143b4bcd9364b323e76f0661",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1114.148320984473,
+        "Y": 474.4266782876505
+      }
+    ],
+    "Annotations": [],
+    "X": -161.50670044558387,
+    "Y": -168.92223834792247,
+    "Zoom": 0.9597886995812659
+  }
+}

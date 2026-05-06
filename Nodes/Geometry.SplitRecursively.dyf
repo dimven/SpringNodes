@@ -1,9 +1,9 @@
 {
-  "Uuid": "aa362d48-4b0d-412d-abcf-0e3ac67b7e2b",
+  "Uuid": "eaafddcc-bbae-4559-ab1e-ef0f252af232",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Splits a surface or a solid recursively, using the resulting reduced geometry for every consecutive split. Select a point or another geometry to control the direction of the split.",
-  "Name": "ꟿ Geometry.SplitRecursively",
+  "Name": "Geometry.SplitRecursively",
   "ElementResolver": {
     "ResolutionMap": {
       "Circle": {
@@ -40,83 +40,7 @@
   "Outputs": [],
   "Nodes": [
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "face;\nplanes;\ndir1;\ngeom = [Imperative]{\noutp = [];\ni = 0;\nfor (p in planes){\n\ts1 = face.Split(p);\n\tif(Count(s1) < 2){\n\t\tface = s1[0];\n\t\tcontinue;\n\t}\n\tind1 = SortIndexByValue(\n\t\tdir1.DistanceTo(s1) );\n\ts1 = Reorder(s1,ind1);\n\tface = s1[0];\n\ts2 = s1[1];\n\toutp[i] = s1[1];\n\ti = i + 1;\n}\noutp[i] = face;\nreturn = outp;\n};",
-      "Id": "a41677810e8a41cda0e66204dcb9e7bb",
-      "Inputs": [
-        {
-          "Id": "eca42bdead9b4a8ca9633c9503d55632",
-          "Name": "face",
-          "Description": "face",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "c8cd11d410f24c728a9d95a43b0b581b",
-          "Name": "planes",
-          "Description": "planes",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "57b5eb9f4672426287e6362b68fa65c9",
-          "Name": "dir1",
-          "Description": "dir1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "c172e39be9a8438f8eaef16b771a8212",
-          "Name": "",
-          "Description": "Value of expression at line 1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "5f515ee0ac5d461cbc7d8eef7a3db5a0",
-          "Name": "",
-          "Description": "Value of expression at line 2",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "626a0c4a66754892bb66314a38eead5a",
-          "Name": "",
-          "Description": "Value of expression at line 3",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "65bbb4054b194850937c14d6d0ca6d7b",
-          "Name": "",
-          "Description": "geom",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geometry",
         "TypeName": "var",
@@ -124,11 +48,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "fc0129dac04a4d628a82d3e809f6e6dd",
+      "Id": "2c1454bdd49348c9bfb7841a17beecf2",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "a64eb2dea3d24a06aff6c907efef549e",
+          "Id": "4324d0326a22475d9ca6e1869b2778e4",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -142,7 +67,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "tools",
         "TypeName": "var",
@@ -150,11 +74,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "d8882ad41ccd4eb6960ff1c3bf132f0f",
+      "Id": "93f7eb8d3d6841a4abe2968fac5b1b58",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "8457fdcc1ad94cc082d292cd8eb8d4a2",
+          "Id": "19f190091b464139a4fff147a28429da",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -168,7 +93,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "pickPoint",
         "TypeName": "var",
@@ -176,11 +100,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "5991023e8be24c6980a66884683b2059",
+      "Id": "42b3c17b84674f5e805a1dc822386f2a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "cf41bc3ba6cf4d68815d9ddffb045be3",
+          "Id": "b510f301f5cc4a7ba7a89413cad38948",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -194,13 +119,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "geometry",
-      "Id": "ba31a892dba547b1a5518d48ff3dde2b",
+      "Id": "c8d85b96e15d4ce1ad87edac253e5856",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "3056f3bac608494f8e887545d4385ecc",
+          "Id": "c8fd74bf256543b3b54e824a233dd46c",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -212,108 +137,165 @@
       "Outputs": [],
       "Replication": "Disabled",
       "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\n\r\n\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nfrom collections.abc import Iterable\r\n\r\n\r\nsurface, cutting_list, point = IN\r\n\r\n# Ensure cutting_list is always a list\r\nif not isinstance(cutting_list, list):\r\n    cutting_list = [cutting_list]\r\n\r\ndef exhaustive_split(initial_faces, planes, dir1):\r\n    queue = list(initial_faces)\r\n    result = []\r\n\r\n    while queue:\r\n        face = queue.pop(0)\r\n        split_occurred = False\r\n\r\n        for plane in planes:\r\n            split = Geometry.Split(face, plane)\r\n\r\n            # Normalize split to a list\r\n            if split is None:\r\n                split = []\r\n                \r\n            if not isinstance(split, Iterable):\r\n                split = [split] if split else []\r\n\r\n\r\n            if len(split) >= 2:\r\n                distances = [dir1.DistanceTo(s) for s in split]\r\n                sorted_indices = sorted(range(len(distances)), key=lambda i: distances[i])\r\n                split = [split[i] for i in sorted_indices]\r\n\r\n                queue.append(split[0])\r\n                queue.append(split[1])\r\n                split_occurred = True\r\n                break  # restart with new pieces\r\n\r\n        if not split_occurred:\r\n            result.append(face)\r\n\r\n    return result\r\n\r\ntry:\r\n    OUT = exhaustive_split([surface], cutting_list, point)\r\nexcept Exception as e:\r\n    OUT = str(e)",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "8391a3b7d1ae44e0a215591687427077",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "9f01546708284aaa8fa5a275248348ce",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6eaf3199f9bc465c933e2f47d405ac1a",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "38de2379a5d94577ba431113af743741",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8398c25c4fea4d8b9fde27ab560c35e6",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
     }
   ],
   "Connectors": [
     {
-      "Start": "65bbb4054b194850937c14d6d0ca6d7b",
-      "End": "3056f3bac608494f8e887545d4385ecc",
-      "Id": "d257dda57af949ca92039c3834232426"
+      "Start": "4324d0326a22475d9ca6e1869b2778e4",
+      "End": "9f01546708284aaa8fa5a275248348ce",
+      "Id": "9101f86f53db4d44aeaab28941db03e9",
+      "IsHidden": "False"
     },
     {
-      "Start": "a64eb2dea3d24a06aff6c907efef549e",
-      "End": "eca42bdead9b4a8ca9633c9503d55632",
-      "Id": "3379a18e175348d5ae65e2507f550e00"
+      "Start": "19f190091b464139a4fff147a28429da",
+      "End": "6eaf3199f9bc465c933e2f47d405ac1a",
+      "Id": "c9cd926708614fd7a3e0afe7713bfb7c",
+      "IsHidden": "False"
     },
     {
-      "Start": "8457fdcc1ad94cc082d292cd8eb8d4a2",
-      "End": "c8cd11d410f24c728a9d95a43b0b581b",
-      "Id": "8dc57663d55e40f4a16cf23e9d661a02"
+      "Start": "b510f301f5cc4a7ba7a89413cad38948",
+      "End": "38de2379a5d94577ba431113af743741",
+      "Id": "1e3a199480d241f0b6f4cebf9f47b7e1",
+      "IsHidden": "False"
     },
     {
-      "Start": "cf41bc3ba6cf4d68815d9ddffb045be3",
-      "End": "57b5eb9f4672426287e6362b68fa65c9",
-      "Id": "528bfd3d11f14704a33e4eb7dfe27803"
+      "Start": "8398c25c4fea4d8b9fde27ab560c35e6",
+      "End": "c8fd74bf256543b3b54e824a233dd46c",
+      "Id": "86f75693ddeb4e7daf1f0d9384824a03",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 20.116401672363281,
-      "EyeY": 17.506513595581055,
-      "EyeZ": 27.060199737548828,
-      "LookX": -1.1268378496170044,
-      "LookY": -6.3907303810119629,
-      "LookZ": -27.926593780517578,
-      "UpX": -0.00035182933788746595,
-      "UpY": 0.99996191263198853,
-      "UpZ": -0.0087194405496120453
+      "Name": "_Background Preview",
+      "EyeX": -13.054098129272461,
+      "EyeY": 13.571005821228027,
+      "EyeZ": 4.5806803703308105,
+      "LookX": 6.763647079467773,
+      "LookY": -5.281354904174805,
+      "LookZ": -3.7199783325195312,
+      "UpX": 0.328236848115921,
+      "UpY": 0.9271839261054993,
+      "UpZ": -0.18052901327610016
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "a41677810e8a41cda0e66204dcb9e7bb",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
-        "Excluded": false,
-        "X": 314.539993482075,
-        "Y": 360.085020456944
-      },
-      {
-        "Id": "fc0129dac04a4d628a82d3e809f6e6dd",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "2c1454bdd49348c9bfb7841a17beecf2",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 102.911947126204,
-        "Y": 356.507053390387
-      },
-      {
-        "Id": "d8882ad41ccd4eb6960ff1c3bf132f0f",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -57.80730812641178,
+        "Y": 698.0968687745038
+      },
+      {
+        "Id": "93f7eb8d3d6841a4abe2968fac5b1b58",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 111.879007191495,
-        "Y": 420.572727764678
-      },
-      {
-        "Id": "5991023e8be24c6980a66884683b2059",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -48.84024806112082,
+        "Y": 833.3833229708216
+      },
+      {
+        "Id": "42b3c17b84674f5e805a1dc822386f2a",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 94.6921420663536,
-        "Y": 485.385657144409
-      },
-      {
-        "Id": "ba31a892dba547b1a5518d48ff3dde2b",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -65.24446725415203,
+        "Y": 968.6343862404691
+      },
+      {
+        "Id": "c8d85b96e15d4ce1ad87edac253e5856",
         "Name": "Output",
-        "ShowGeometry": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 720.08500207862,
-        "Y": 389.21873725698
+        "ShowGeometry": true,
+        "X": 637.3096184627008,
+        "Y": 788.540967398777
+      },
+      {
+        "Id": "8391a3b7d1ae44e0a215591687427077",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 340.55638585029226,
+        "Y": 771.8708625334119
       }
     ],
     "Annotations": [],
-    "X": -46.3469713489022,
-    "Y": -320.353063528023,
-    "Zoom": 1.27771698410772
+    "X": 333.7741889558132,
+    "Y": -415.4118890355329,
+    "Zoom": 1.0004619005657078
   }
 }

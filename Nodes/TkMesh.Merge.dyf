@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Creates a single mesh entity from a list of toolkit meshes.",
-  "Name": "ꟿ TkMesh.Merge",
+  "Name": "TkMesh.Merge",
   "ElementResolver": {
     "ResolutionMap": {}
   },

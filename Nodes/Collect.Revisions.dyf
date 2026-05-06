@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Collects all revision clouds from a specific date.",
-  "Name": "ꟿ Collect.Revisions",
+  "Name": "Collect.Revisions",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nrdat = IN[0].lower()\r\nall_rev, match = [], []\r\n\r\nfec = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Revisions)\r\nfor f in fec:\r\n\trev1 = f.ToDSType(True)\r\n\tall_rev.append(rev1)\r\n\tpar1 = f.get_Parameter(BuiltInParameter.PROJECT_REVISION_REVISION_DATE)\r\n\tif par1.AsString().lower() == rdat: match.append(rev1)\r\nif len(match) != 0: OUT = match, all_rev\r\nelse: OUT = \"No revisions found from date %s\" %rdat, all_rev",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |_--- *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |_--- *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ntry:\r\n    rdat = IN[0].lower()\r\n    all_rev, match = [], []\r\n\r\n    fec = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Revisions)\r\n    for f in fec:\r\n        rev1 = f.ToDSType(True)\r\n        all_rev.append(rev1)\r\n        par1 = f.get_Parameter(BuiltInParameter.PROJECT_REVISION_REVISION_DATE)\r\n        if par1.AsString().lower() == rdat:\r\n            match.append(rev1)\r\n\r\n    if len(match) != 0:\r\n        OUT = match, all_rev\r\n    else:\r\n        OUT = \"No revisions found from date %s\" % rdat, all_rev\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "cf70f36c7e14423aae1d3985068be490",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "d54efba5943540569380893530e2952a",
@@ -48,11 +49,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "date",
         "TypeName": "string",
@@ -61,6 +61,7 @@
         "Description": ""
       },
       "Id": "f8030bca70644b849f4daebbd1fa628d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -78,10 +79,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "matched",
       "Id": "46effa28479e4a66a94a2e886b897c10",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "fc6dc46cbc8543318ed037fca49007fe",
@@ -99,9 +100,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "rev[0];\nrev[1];",
       "Id": "a31b42ea91304fb6b5ab9336373d3554",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "eac729d683e4405d9886d9a757ff8553",
@@ -116,8 +116,8 @@
       "Outputs": [
         {
           "Id": "38074fda630e48e3896e9628ff4812fb",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(rev, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -125,8 +125,8 @@
         },
         {
           "Id": "423daa67b8324cae94ceb47a7a19d435",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(rev, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -134,14 +134,15 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "rev[0];\nrev[1];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "all revisions",
       "Id": "6acc495a2b1b471ba3754d6e368e50b0",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "dfd439181a46455ab0507da15415698c",
@@ -159,7 +160,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -168,6 +168,7 @@
         "Description": ""
       },
       "Id": "33af6194ad414320a751d775ec763780",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -188,117 +189,125 @@
     {
       "Start": "9c97fab12562425f8830b302fbf6e1ea",
       "End": "eac729d683e4405d9886d9a757ff8553",
-      "Id": "03397f7134bf4429a5d60d8919a51a22"
+      "Id": "03397f7134bf4429a5d60d8919a51a22",
+      "IsHidden": "False"
     },
     {
       "Start": "2cfa680135bb468797f5a6d55504174a",
       "End": "d54efba5943540569380893530e2952a",
-      "Id": "12158ef1bb9148e5acb9c3500c206a79"
+      "Id": "12158ef1bb9148e5acb9c3500c206a79",
+      "IsHidden": "False"
     },
     {
       "Start": "38074fda630e48e3896e9628ff4812fb",
       "End": "fc6dc46cbc8543318ed037fca49007fe",
-      "Id": "4036caadd5724d8eac1659aa7ab35ad1"
+      "Id": "4036caadd5724d8eac1659aa7ab35ad1",
+      "IsHidden": "False"
     },
     {
       "Start": "423daa67b8324cae94ceb47a7a19d435",
       "End": "dfd439181a46455ab0507da15415698c",
-      "Id": "75abd866c30343769d146ef3f88fc36f"
+      "Id": "75abd866c30343769d146ef3f88fc36f",
+      "IsHidden": "False"
     },
     {
       "Start": "502fab6805b24fe7b8eaa948e48753c9",
       "End": "d31cd5da3d074783aa2139701e114fae",
-      "Id": "b6a7ca9ed5cf48f3b668370927e90e9c"
+      "Id": "b6a7ca9ed5cf48f3b668370927e90e9c",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "cf70f36c7e14423aae1d3985068be490",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 232.351988237078,
-        "Y": -1.3898345013348
+        "ShowGeometry": true,
+        "X": 231.193792819299,
+        "Y": -1.3898345013348035
       },
       {
         "Id": "f8030bca70644b849f4daebbd1fa628d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 63.1879559409764,
-        "Y": -2.85600363357173
+        "ShowGeometry": true,
+        "X": -56.6852697991527,
+        "Y": -70.61043557364474
       },
       {
         "Id": "46effa28479e4a66a94a2e886b897c10",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 522.777857416747,
-        "Y": -8.38632268787521
+        "ShowGeometry": true,
+        "X": 820.4340797859563,
+        "Y": -84.82722026129085
       },
       {
         "Id": "a31b42ea91304fb6b5ab9336373d3554",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 371.839221729708,
-        "Y": 2.83849358195789
+        "ShowGeometry": true,
+        "X": 521.8255283320917,
+        "Y": -1.215190380268723
       },
       {
         "Id": "6acc495a2b1b471ba3754d6e368e50b0",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 520.168037948881,
-        "Y": 49.9299846717673
+        "ShowGeometry": true,
+        "X": 819.5615534447589,
+        "Y": 118.84261202961923
       },
       {
         "Id": "33af6194ad414320a751d775ec763780",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2.52644471053276,
-        "Y": 63.1656900085108
+        "ShowGeometry": true,
+        "X": -115.03039019403826,
+        "Y": 129.18282882191528
       }
     ],
     "Annotations": [],
-    "X": -16.7550982911112,
-    "Y": 222.716360462913,
+    "X": 369.91156837555553,
+    "Y": 302.71636046291303,
     "Zoom": 1.15121620485268
   }
 }

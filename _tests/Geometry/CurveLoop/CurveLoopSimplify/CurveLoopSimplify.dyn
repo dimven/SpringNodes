@@ -1,0 +1,555 @@
+{
+  "Uuid": "46f1be37-0bef-4a9a-8072-a56b5cc0bad8",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "CurveLoopSimplify",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "fa9d58c4a6fc43f3a13a08b6394652ec",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "f9bbafb20099498fa3c939ab06955bc8",
+          "Name": "width",
+          "Description": "Width of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4489cc588bb24f77816dd2b2d23f6b9c",
+          "Name": "length",
+          "Description": "Length of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0f3e1cc4acec4214901453ee0ab672c4",
+          "Name": "Rectangle",
+          "Description": "Rectangle created by width and length",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Rectangle.ByWidthLength@double,double",
+      "Replication": "Auto",
+      "Description": "Create a Rectangle centered at the WCS origin in the WCS XY Plane, with specified width (X Axis length), and length (Y Axis length).\n\nRectangle.ByWidthLength (width: double = 1, length: double = 1): Rectangle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "145a57bf3bfc4e75ba03a472d048ca54",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e30ddb484eaf4194b07a4122cd263ed7",
+          "Name": "range",
+          "Description": "0..0.99..0.01",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..0.99..0.01;"
+    },
+    {
+      "ConcreteType": "Watch3DNodeModels.Watch3D, Watch3DNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "WasExecuted": true,
+      "Camera": {
+        "Name": "1233c775-5085-4bbd-a76a-ca87f040a64f Preview",
+        "EyeX": -0.9551825523376465,
+        "EyeY": 1.19234299659729,
+        "EyeZ": 1.2980804443359375,
+        "LookX": 3.3196804523468018,
+        "LookY": -4.813049793243408,
+        "LookZ": -4.707801818847656,
+        "UpX": 0.26609694957733154,
+        "UpY": 0.8870107531547546,
+        "UpZ": -0.37736502289772034
+      },
+      "VariableInputPorts": true,
+      "Id": "1233c77550854bbda76aca87f040a64f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1d73ebe10ae4d3dba6d367c7714246a",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "be75d51ac89c4c6594a13b153ecc3b84",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Shows a dynamic preview of geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "14a42fdaf0a74982a6626706c379b22e",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "3ecd533ba42f49d79a2c2aca9c95fc8e",
+          "Name": "curve",
+          "Description": "Autodesk.DesignScript.Geometry.Curve",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "293e3ca8e8af41ec8db7f67596675e28",
+          "Name": "parameters",
+          "Description": "A list of parameters at which to split the curve\n\ndouble[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "99098d5d9fd146d7acb68b51642d6c10",
+          "Name": "Curve[]",
+          "Description": "Curves created from splitting",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Curve.SplitByParameter@double[]",
+      "Replication": "Auto",
+      "Description": "Split a Curve into multiple pieces at the given parameters\n\nCurve.SplitByParameter (parameters: double[]): Curve[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "715585aff092479f99972c563045eafc",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "e603decac9aa40aea51af9829a5a7558",
+          "Name": "curves",
+          "Description": "Curves to join into a polycurve\n\nCurve[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ca5366814d9c438ca1711e08ddc6eef4",
+          "Name": "joinTolerance",
+          "Description": "Tolerance to determine size of gap allowed between curves to be joined\n\ndouble\nDefault value : 0.001",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0a81bbb232894df5855c25bbe0ed154a",
+          "Name": "trimCurves",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2e6c993510384c9ba0caae2d63549ecb",
+          "Name": "trimLength",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "beb00b20d02f434fa32ccb277a60fd1f",
+          "Name": "PolyCurve",
+          "Description": "Polycurve created by joined curves",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves@Autodesk.DesignScript.Geometry.Curve[],double,bool,double",
+      "Replication": "Auto",
+      "Description": "Make PolyCurve by joining curves. Input curves need not be specified in order of connectivity. PolyCurve direction is based on the first curve in the input array. Choose a preferred join tolerance between 1e-6 and 1e-3 units.\n\nPolyCurve.ByJoinedCurves (curves: Curve[], joinTolerance: double = 0.001, trimCurves: bool = false, trimLength: double = 0): PolyCurve"
+    },
+    {
+      "ConcreteType": "Watch3DNodeModels.Watch3D, Watch3DNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "WasExecuted": true,
+      "Camera": {
+        "Name": "434fbd23-a7d0-44c1-a7e3-76cbf92fa44c Preview",
+        "EyeX": -0.9344081878662109,
+        "EyeY": 1.1013894081115723,
+        "EyeZ": 1.4057354927062988,
+        "LookX": 3.319680690765381,
+        "LookY": -4.813049793243408,
+        "LookZ": -4.707801818847656,
+        "UpX": 0.26609694957733154,
+        "UpY": 0.8870107531547546,
+        "UpZ": -0.37736502289772034
+      },
+      "VariableInputPorts": true,
+      "Id": "434fbd23a7d044c1a7e376cbf92fa44c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "68eb991fba2c492dbc85a461399a0176",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5a3ba635e2824ddb96bae0839336a286",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Shows a dynamic preview of geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "071b806fb7894c3ebdebb4ebe9b03499",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "add2d1a6dfae4694ab49fbb8b51c763f",
+          "Name": "X",
+          "Description": "X",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f085e2e55f084d61b7f81cb97e39843f",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(X, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "X[0];"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "70bc685ae5ea418a9c7767d754e14cde",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "179f5d6623b8435488499059b2da8550",
+          "Name": "X",
+          "Description": "X",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c2e93ea9a7ac4132b2e4632b2efbb20e",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(X, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "X[0];"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "bd31f096-ca49-4e46-97b3-c08815da20b6",
+      "FunctionType": "Graph",
+      "Id": "cfde754992b84730ab4fb43c538c8e61",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "a5c345b71a9d4f84876b72792b521d82",
+          "Name": "curveLoop",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6053cecd3e2140b48eb2c46c1e8af4a2",
+          "Name": "curveLoop",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "0f3e1cc4acec4214901453ee0ab672c4",
+      "End": "3ecd533ba42f49d79a2c2aca9c95fc8e",
+      "Id": "c4b91379532a4e8cb414963cf005f3d7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e30ddb484eaf4194b07a4122cd263ed7",
+      "End": "293e3ca8e8af41ec8db7f67596675e28",
+      "Id": "1d4b09e3629c4bac9b608550fb198f74",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "99098d5d9fd146d7acb68b51642d6c10",
+      "End": "add2d1a6dfae4694ab49fbb8b51c763f",
+      "Id": "ba23178b74ef4b91bffd09d68e71e0f5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "99098d5d9fd146d7acb68b51642d6c10",
+      "End": "a5c345b71a9d4f84876b72792b521d82",
+      "Id": "d8c64eb0626f4ea7b18a3a9c29ccc0b5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f085e2e55f084d61b7f81cb97e39843f",
+      "End": "68eb991fba2c492dbc85a461399a0176",
+      "Id": "6dc04454d76f4c31b545f442912cd126",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2e93ea9a7ac4132b2e4632b2efbb20e",
+      "End": "e1d73ebe10ae4d3dba6d367c7714246a",
+      "Id": "a0f1cc7bd4c04ad78641b3035a423589",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6053cecd3e2140b48eb2c46c1e8af4a2",
+      "End": "e603decac9aa40aea51af9829a5a7558",
+      "Id": "9db1af78fec643aea67b5a0fe66ac9c6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6053cecd3e2140b48eb2c46c1e8af4a2",
+      "End": "179f5d6623b8435488499059b2da8550",
+      "Id": "e7e88691cbd441688b2ab4fbc95d293c",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "bd31f096-ca49-4e46-97b3-c08815da20b6"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "CurveLoop.Simplify.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "cfde754992b84730ab4fb43c538c8e61"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 0.48716890811920166,
+      "EyeY": 1.275269865989685,
+      "EyeZ": 2.3458707332611084,
+      "LookX": 1.3308383226394653,
+      "LookY": -1.441741704940796,
+      "LookZ": -6.432386875152588,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "fa9d58c4a6fc43f3a13a08b6394652ec",
+        "Name": "Rectangle.ByWidthLength",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": -26.275618975270504,
+        "Y": 326.3853669382671
+      },
+      {
+        "Id": "145a57bf3bfc4e75ba03a472d048ca54",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 34.57986842287937,
+        "Y": 518.0
+      },
+      {
+        "Id": "1233c77550854bbda76aca87f040a64f",
+        "Name": "Watch 3D",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1196.7012045988272,
+        "Y": 892.1488287528869
+      },
+      {
+        "Id": "14a42fdaf0a74982a6626706c379b22e",
+        "Name": "Curve.SplitByParameter",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 364.39761458071644,
+        "Y": 480.81722894638557
+      },
+      {
+        "Id": "715585aff092479f99972c563045eafc",
+        "Name": "PolyCurve.ByJoinedCurves",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1239.9324903919503,
+        "Y": 477.9849179741381
+      },
+      {
+        "Id": "434fbd23a7d044c1a7e376cbf92fa44c",
+        "Name": "Watch 3D",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 850.2671883273758,
+        "Y": 889.122158514074
+      },
+      {
+        "Id": "071b806fb7894c3ebdebb4ebe9b03499",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 850.4183135616421,
+        "Y": 745.8573054136282
+      },
+      {
+        "Id": "70bc685ae5ea418a9c7767d754e14cde",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1200.5110192652517,
+        "Y": 758.5201093426447
+      },
+      {
+        "Id": "cfde754992b84730ab4fb43c538c8e61",
+        "Name": "CurveLoop.Simplify",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 805.9897513366266,
+        "Y": 480.0812597087049
+      }
+    ],
+    "Annotations": [],
+    "X": 117.0961118980772,
+    "Y": -171.2430105100085,
+    "Zoom": 0.7843693280448272
+  }
+}

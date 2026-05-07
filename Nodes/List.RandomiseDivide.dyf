@@ -116,7 +116,7 @@
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport random\r\n\r\ndef tolist(obj1):\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n \r\ntry:    \r\n    l1, rat, seed = IN\r\n    l1 = tolist(l1)\r\n    r = random.Random()\r\n    r.seed(seed)\r\n    r.shuffle(l1)\r\n    len1 = len(l1)\r\n    OUT = []\r\n    if len(rat) < 2:\r\n\t    rat.append(1.0 - rat[0])\r\n    if sum(rat) < 1.0:\r\n\t    rat.append(1.0 - sum(rat) )\r\n    start, end = 0, int(round(rat[0] * len1) )\r\n    len2 = len(rat)\r\n    for i in range(len2):\r\n\t    OUT.append(l1[start : end])\r\n\t    start = end\r\n\t    j = (i + 1) % len2\r\n\t    end += int(round(rat[j] * len1) )\r\n    if not OUT[-1]:\r\n\t    del(OUT[-1])\r\n    \r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport random\r\n\r\ndef tolist(obj1):\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n \r\ntry:    \r\n    l1, rat, seed = IN\r\n    l1 = tolist(l1)\r\n    r = random.Random()\r\n    r.seed(seed)\r\n    r.shuffle(l1)\r\n    len1 = len(l1)\r\n    OUT = []\r\n    if len(rat) < 2:\r\n\t    rat.append(1.0 - rat[0])\r\n    if sum(rat) < 1.0:\r\n\t    rat.append(1.0 - sum(rat) )\r\n    start, end = 0, int(round(rat[0] * len1) )\r\n    len2 = len(rat)\r\n    for i in range(len2):\r\n\t    OUT.append(l1[start : end])\r\n\t    start = end\r\n\t    j = (i + 1) % len2\r\n\t    end += int(round(rat[j] * len1) )\r\n    if not OUT[-1]:\r\n\t    del(OUT[-1])\r\n    remaining = len1 - sum(len(i) for i in OUT)\r\n    if remaining > 0:\r\n        OUT.append(l1[-remaining:])\r\n    \r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
       "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "4163b50f4fbe490ebf6d079c3e8abcfb",
@@ -206,15 +206,15 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": 215.1671142578125,
+      "EyeY": 102.30821228027344,
+      "EyeZ": 10.132331848144531,
+      "LookX": -31.701919555664062,
+      "LookY": -66.85600280761719,
+      "LookZ": -104.93148803710938,
+      "UpX": -0.14709115028381348,
+      "UpY": 0.8338867425918579,
+      "UpZ": -0.4868629276752472
     },
     "ConnectorPins": [],
     "NodeViews": [

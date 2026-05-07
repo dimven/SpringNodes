@@ -301,7 +301,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
       "ElementResolver": null,
-      "Symbol": "str",
+      "Symbol": "fraction(str)",
       "Id": "73b5f31beca34ac0b2818e6f98c2f79c",
       "NodeType": "OutputNode",
       "Inputs": [
@@ -323,11 +323,11 @@
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
       "FunctionSignature": "7138be89-af7b-4232-b938-e63a5fe78240",
       "FunctionType": "Graph",
-      "Id": "5155fd01401349809789bb488b8ccc2e",
+      "Id": "c41e45716fca4ca3a1b9f480ca6d376f",
       "NodeType": "FunctionNode",
       "Inputs": [
         {
-          "Id": "bb85e87506f9479c8cd2ec712810d83b",
+          "Id": "7349e02091f943b68b4d2db16a748bf3",
           "Name": "num",
           "Description": "var[]",
           "UsingDefaultValue": false,
@@ -336,7 +336,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "68eb5fad5c2943edb583c1e913d49053",
+          "Id": "7b20dc8bb3984f6daa0430cf4871a7ec",
           "Name": "digits",
           "Description": "int\nDefault value : null",
           "UsingDefaultValue": true,
@@ -347,7 +347,7 @@
       ],
       "Outputs": [
         {
-          "Id": "8226da6aeeee48b1aa36219621c7577c",
+          "Id": "bfa1db4a82ab4d608ca1fb4bb94268ec",
           "Name": "str",
           "Description": "return value",
           "UsingDefaultValue": false,
@@ -374,9 +374,9 @@
       "IsHidden": "False"
     },
     {
-      "Start": "8226da6aeeee48b1aa36219621c7577c",
+      "Start": "bfa1db4a82ab4d608ca1fb4bb94268ec",
       "End": "5142769b630546bcbfd17ec6efe673e3",
-      "Id": "bcbf1535969240bfa2aba025f9496692",
+      "Id": "c8bfd398bc62499da953309713ba8282",
       "IsHidden": "False"
     }
   ],
@@ -385,10 +385,11 @@
   ],
   "NodeLibraryDependencies": [
     {
-      "Name": "Number.ToString.dyf",
-      "ReferenceType": "DYFFile",
+      "Name": "spring nodes",
+      "Version": "210.1.1",
+      "ReferenceType": "Package",
       "Nodes": [
-        "5155fd01401349809789bb488b8ccc2e"
+        "c41e45716fca4ca3a1b9f480ca6d376f"
       ]
     }
   ],
@@ -405,15 +406,15 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": 215.1671142578125,
+      "EyeY": 102.30821228027344,
+      "EyeZ": 10.132331848144531,
+      "LookX": -31.701919555664062,
+      "LookY": -66.85600280761719,
+      "LookZ": -104.93148803710938,
+      "UpX": -0.14709115028381348,
+      "UpY": 0.8338867425918579,
+      "UpZ": -0.4868629276752472
     },
     "ConnectorPins": [],
     "NodeViews": [
@@ -424,8 +425,8 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": 238.04337970268125,
-        "Y": 3.7879873709811136
+        "X": 240.37453901311528,
+        "Y": -54.49099538986616
       },
       {
         "Id": "2981bc6865814f9aab0d24cd9cde62a9",
@@ -448,19 +449,19 @@
         "Y": 362.1698168101684
       },
       {
-        "Id": "5155fd01401349809789bb488b8ccc2e",
+        "Id": "c41e45716fca4ca3a1b9f480ca6d376f",
         "Name": "Number.ToString",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": -61.21349216755374,
-        "Y": 73.0850694802821
+        "X": -50.92689524934087,
+        "Y": 42.540725296241135
       }
     ],
     "Annotations": [],
-    "X": 257.65699432458865,
-    "Y": 370.32394666344976,
-    "Zoom": 1.2059988786994882
+    "X": 357.6923336997178,
+    "Y": 428.50251558884395,
+    "Zoom": 0.8579422225878449
   }
 }

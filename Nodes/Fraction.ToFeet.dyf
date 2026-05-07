@@ -33,12 +33,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "num = [Imperative]{\ns0 = \"\";\ns1 = String.TrimWhitespace(s1);\nn1 = 0;\nn2 = 0;\nn3 = 0;\nn4 = 0;\nn5 = 0;\nsign = 1;\nif(String.StartsWith(s1,\"-\",true))\n{\n\ts1 = String.Substring(s1, 1,\n\t  String.Length(s1) - 1);\n\tsign = -1;\n}\n\nif(String.Contains(s1,\"'\",true))\n{\n\ts0 = String.Split(s1,[\"'\"]);\n\tn1 = String.ToNumber(s0[0]);\n\ts1 = String.TrimWhitespace(s0[1]);\n}\nif(String.Contains(s1,\" \",true))\n{\n\ts0 = String.Split(s1,[\" \"]);\n\tn2 = String.ToNumber(s0[0])/12;\n\ts1 = s0[1];\n}\nif(String.Contains(s1,\"/\",true))\n{\n\ts0 = String.Split(s1,[\"/\"]);\n\tn3 = String.ToNumber(s0[0]);\n\tn4 = String.ToNumber(\n\tString.Split(s0[1],[\"\\\"\"])[0]);\n}\nelseif(!String.Contains(s1,\"/\",true))\n{\n\tn2 = String.ToNumber(\n\tString.Split(s1,[\"\\\"\"])[0])/12;\n}\nif (n3 != 0 && n4 != 0)\n{\n\tn5 = (n3/n4)/12;\n}\nreturn = sign * (n1 + n2 + n5);\n};",
       "Id": "0c0bd3f8e20143b5b05e6a25c4aa628e",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "862f439d12ac4c71a8619f0cb44b324a",
+          "Id": "c89d1751b928452399fce3c19392b50d",
           "Name": "s1",
           "Description": "s1",
           "UsingDefaultValue": false,
@@ -49,9 +48,9 @@
       ],
       "Outputs": [
         {
-          "Id": "5a8f7afe28194411a9f16c8769af52d7",
-          "Name": "",
-          "Description": "num",
+          "Id": "1923baffe340499cae873cea19867efc",
+          "Name": "num",
+          "Description": "num = [Imperative]\n{\ns0 = \"\";\ns1 = String.TrimWhitespace(s1);\nn1 = 0;\nn2 = 0;\nn3 = 0;\nn4 = 0;\nn5 = 0;\nsign = 1;\nif(String.StartsWith(s1, \"-\", True))\n{\ns1 = String.Substring(s1, 1, String.Length(s1) - 1);\nsign = -1;\n\n}\nif(String.Contains(s1, \"'\", True))\n{\ns0 = String.Split(s1, [\"'\"]);\nn1 = String.ToNumber(DesignScript.Builtin.Get.ValueAtIndex(s0, 0));\ns1 = String.TrimWhitespace(DesignScript.Builtin.Get.ValueAtIndex(s0, 1));\n\n}\nif(String.Contains(s1, \" \", True))\n{\ns0 = String.Split(s1, [\" \"]);\n...",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -59,11 +58,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "num = [Imperative]{\ns0 = \"\";\ns1 = String.TrimWhitespace(s1);\nn1 = 0;\nn2 = 0;\nn3 = 0;\nn4 = 0;\nn5 = 0;\nsign = 1;\nif(String.StartsWith(s1,\"-\",true))\n{\n\ts1 = String.Substring(s1, 1,\n\t  String.Length(s1) - 1);\n\tsign = -1;\n}\n\nif(String.Contains(s1,\"'\",true))\n{\n\ts0 = String.Split(s1,[\"'\"]);\n\tn1 = String.ToNumber(s0[0]);\n\ts1 = String.TrimWhitespace(s0[1]);\n}\nif(String.Contains(s1,\" \",true))\n{\n\ts0 = String.Split(s1,[\" \"]);\n\tn2 = String.ToNumber(s0[0])/12;\n\ts1 = s0[1];\n}\nif(String.Contains(s1,\"/\",true))\n{\n\ts0 = String.Split(s1,[\"/\"]);\n\tn3 = String.ToNumber(s0[0]);\n\tn4 = String.ToNumber(\n\tString.Split(s0[1],[\"\\\"\"])[0]);\n}\nelseif(!String.Contains(s1,\"/\",true))\n{\n\tn2 = String.ToNumber(\n\tString.Split(s1,[\"\\\"\"])[0])/12;\n}\nif (n3 != 0 && n4 != 0)\n{\n\tn5 = (n3/n4)/12;\n}\nif (n2 == null)\n{\n    n2 = 0;\n}\nreturn = sign * (n1 + n2 + n5);\n};"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "fraction",
         "TypeName": "var",
@@ -72,6 +71,7 @@
         "Description": ""
       },
       "Id": "8eacd47ba7434b20833686e61f08b6d7",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -89,10 +89,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "number",
       "Id": "57cbf9da5ecd4db3ac39c0f722de232e",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2b035f39112d40b0a2944ed3e73df377",
@@ -111,74 +111,79 @@
   ],
   "Connectors": [
     {
-      "Start": "5a8f7afe28194411a9f16c8769af52d7",
+      "Start": "1923baffe340499cae873cea19867efc",
       "End": "2b035f39112d40b0a2944ed3e73df377",
-      "Id": "ee7b92b732ef4141a448bff1da9ead8e"
+      "Id": "73ccaa68f13843339d9a1cc721ba7fb9",
+      "IsHidden": "False"
     },
     {
       "Start": "061067997953476cb376386ecd3f48e2",
-      "End": "862f439d12ac4c71a8619f0cb44b324a",
-      "Id": "a96f1e420d83439d9613cf2ccd96e1f2"
+      "End": "c89d1751b928452399fce3c19392b50d",
+      "Id": "64966426aeb3444ca0d162f06f6f0896",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 55.528221130371094,
-      "EyeY": 195.78382873535156,
-      "EyeZ": -51.284481048583984,
-      "LookX": -0.858967661857605,
-      "LookY": -87.94305419921875,
-      "LookZ": -60.708198547363281,
-      "UpX": -0.0096487114205956459,
-      "UpY": 0.73135370016098022,
-      "UpZ": -0.68193012475967407
+      "Name": "_Background Preview",
+      "EyeX": 215.1671142578125,
+      "EyeY": 102.30821228027344,
+      "EyeZ": 10.132331848144531,
+      "LookX": -31.701919555664062,
+      "LookY": -66.85600280761719,
+      "LookZ": -104.93148803710938,
+      "UpX": -0.14709115028381348,
+      "UpY": 0.8338867425918579,
+      "UpZ": -0.4868629276752472
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "0c0bd3f8e20143b5b05e6a25c4aa628e",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 347.207899908435,
-        "Y": 68.0962026724531
+        "Y": 64.72239497534486
       },
       {
         "Id": "8eacd47ba7434b20833686e61f08b6d7",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 169.271862659019,
-        "Y": 61.1702307007633
+        "ShowGeometry": true,
+        "X": 19.699721420552464,
+        "Y": 66.79324352927706
       },
       {
         "Id": "57cbf9da5ecd4db3ac39c0f722de232e",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 764.939553019642,
-        "Y": 64.8655050159852
+        "ShowGeometry": true,
+        "X": 885.2720275498367,
+        "Y": 67.11471014739072
       }
     ],
     "Annotations": [],
-    "X": 152.012074100287,
-    "Y": -57.1762560816646,
+    "X": 367.012074100287,
+    "Y": 117.8237439183354,
     "Zoom": 0.889203022025036
   }
 }

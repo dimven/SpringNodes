@@ -17,7 +17,7 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nfrom itertools import repeat\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    elements = tolist(IN[0])\r\n    opt_names = IN[1]\r\n    terms = set(map(str.lower, map(str, tolist(IN[2]))))\r\n\r\n    use_opt_names = (\r\n        opt_names is not None and\r\n        len(elements) == len(tolist(opt_names))\r\n    )\r\n\r\n    if use_opt_names:\r\n        opt_names = list(map(str.lower, map(str, tolist(opt_names))))\r\n    else:\r\n        if opt_names is not None:\r\n            raise ValueError(\r\n                \"optNames length ({}) does not match elements length ({})\".format(\r\n                    len(tolist(opt_names)), len(elements)\r\n                )\r\n            )\r\n        opt_names = repeat(\"\", len(elements))\r\n\r\n    result = []\r\n    for e, n in zip(elements, opt_names):\r\n        if e is None:\r\n            result.append(False)\r\n            continue\r\n        if use_opt_names:\r\n            n1 = n\r\n        else:\r\n            n1 = e.GetType().Name.lower()\r\n        result.append(any(f in n1 for f in terms))\r\n\r\n    OUT = result\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nfrom itertools import repeat\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    elements = tolist(IN[0])\r\n    opt_names = IN[1]\r\n    terms = set(map(str.lower, map(str, tolist(IN[2]))))\r\n\r\n    use_opt_names = (\r\n        opt_names is not None and\r\n        len(elements) == len(tolist(opt_names))\r\n    )\r\n\r\n    if use_opt_names:\r\n        opt_names = list(map(str.lower, map(str, tolist(opt_names))))\r\n    else:\r\n        if opt_names is not None:\r\n            raise ValueError(\r\n                \"optNames length ({}) does not match elements length ({})\".format(\r\n                    len(tolist(opt_names)), len(elements)\r\n                )\r\n            )\r\n        opt_names = repeat(\"\", len(elements))\r\n\r\n    result = []\r\n    for e, n in zip(elements, opt_names):\r\n        if e is None:\r\n            result.append(False)\r\n            continue\r\n        if use_opt_names:\r\n            n1 = n\r\n        else:\r\n            n1 = type(e).__name__.lower()\r\n        result.append(any(f in n1 for f in terms))\r\n\r\n    OUT = result\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
       "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "2779a9f79d614e85b0c881c5d13d21d6",
@@ -206,15 +206,15 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": 215.1671142578125,
+      "EyeY": 102.30821228027344,
+      "EyeZ": 10.132331848144531,
+      "LookX": -31.701919555664062,
+      "LookY": -66.85600280761719,
+      "LookZ": -104.93148803710938,
+      "UpX": -0.14709115028381348,
+      "UpY": 0.8338867425918579,
+      "UpZ": -0.4868629276752472
     },
     "ConnectorPins": [],
     "NodeViews": [
@@ -226,7 +226,7 @@
         "Excluded": false,
         "ShowGeometry": true,
         "X": 247.820658132283,
-        "Y": 10.351873871659095
+        "Y": 7.387570432952657
       },
       {
         "Id": "b21adbd037a441a4abba8ad300250e67",

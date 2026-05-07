@@ -1,9 +1,9 @@
 {
-  "Uuid": "bb10ead0-3257-4a6e-975d-94189272ddca",
+  "Uuid": "c3102bde-4de0-45cd-8a5e-a734a2b742f5",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
-  "Description": "Paints the input toolkit meshes using the default color range. Works well with lists of meshes.",
-  "Name": "tkMesh.DifferentiateDisplay",
+  "Description": "Paints the input meshes using the default color range. Works well with lists of meshes.",
+  "Name": "Mesh.DifferentiateDisplay",
   "ElementResolver": {
     "ResolutionMap": {
       "Category": {
@@ -49,6 +49,14 @@
       "DSCore.Color": {
         "Key": "DSCore.Color",
         "Value": "DSCoreNodes.dll"
+      },
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "GeometryColor": {
+        "Key": "Modifiers.GeometryColor",
+        "Value": "GeometryColor.dll"
       }
     }
   },
@@ -57,12 +65,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "eb5ed73d754b488691ccfcf64b17a1d8",
       "NodeType": "CodeBlockNode",
-      "Code": "def col1(x){\nr = Math.Random(0, 255);\ng = Math.Random(0, 255);\nb = Math.Random(0, 255);\nreturn = DSCore.Color.ByARGB(255, r, g, b);\n};\n\nrand;\ncol = [Imperative]{\nif (rand)\n{\n\treturn = col1(GetKeys(geo));\n}\nelse\n{\n\tdcr = ColorRange1D.Default();\n\treturn = ColorRange1D.GetColorAtParameter\n\t  (dcr, 0..1..#(Count(geo)));\n}\n}\n\nMeshDisplay.ByMeshColor(geo, List.Chop(col, 1));",
-      "Id": "8c5689c781fb4ddc909bc07e1b06f6ab",
       "Inputs": [
         {
-          "Id": "9dab3d171e394ad78b5daa79277bbab2",
+          "Id": "32ccb635b5084985b0e1bc06261f0f5a",
           "Name": "rand",
           "Description": "rand",
           "UsingDefaultValue": false,
@@ -71,7 +78,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "4c1e436e97444ba0a9458f4f4e93ea56",
+          "Id": "20c8521591044ac4b90b9833ac0910ce",
           "Name": "geo",
           "Description": "geo",
           "UsingDefaultValue": false,
@@ -82,27 +89,27 @@
       ],
       "Outputs": [
         {
-          "Id": "7e2a78153ec846fe818c008fcfdd2b6b",
-          "Name": "",
-          "Description": "Value of expression at line 8",
+          "Id": "f8c616e14a4942f9be87aec6fb51e7aa",
+          "Name": "rand",
+          "Description": "rand",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "285caae0506a413f9b0936e163e4d991",
-          "Name": "",
-          "Description": "col",
+          "Id": "23a345b04a8b493e8d37bba1097dfad3",
+          "Name": "col",
+          "Description": "col = [Imperative]\n{\nif(rand)\n{\nreturn = col1(GetKeys(geo));\n\n}\nelse\n{\ndcr = ColorRange1D.Default();\nreturn = ColorRange1D.GetColorAtParameter(dcr, 0..1..#Count(geo));\n\n}\n\n}\n",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "4604b66c6b7841fdad6c306012c2105b",
-          "Name": "",
-          "Description": "Value of expression at line 22",
+          "Id": "ec58451d269844fa915af63d264e1d5a",
+          "Name": "function",
+          "Description": "Modifiers.GeometryColor.ByMeshColors(geo, List.Chop(col, 1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -110,17 +117,18 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "def col1(x){\nr = Math.Random(0, 255);\ng = Math.Random(0, 255);\nb = Math.Random(0, 255);\nreturn = DSCore.Color.ByARGB(255, r, g, b);\n};\n\nrand;\ncol = [Imperative]{\nif (rand)\n{\n\treturn = col1(GetKeys(geo));\n}\nelse\n{\n\tdcr = ColorRange1D.Default();\n\treturn = ColorRange1D.GetColorAtParameter\n\t  (dcr, 0..1..#(Count(geo)));\n}\n}\n\nGeometryColor.ByMeshColors(geo, List.Chop(col, 1));"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "meshDisplay",
-      "Id": "7cd8853d42be44a691eba4c218807ae0",
+      "Id": "5b996c7e86de474e9fc06082e5f933a8",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "9b811c45c5f54236863a4d73625b0294",
+          "Id": "cc0b246067e44b00b6c4b008812f2901",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -135,7 +143,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "randomCol",
         "TypeName": "bool",
@@ -143,11 +150,12 @@
         "DefaultValue": "false",
         "Description": ""
       },
-      "Id": "38b00fa085774c3aad30c779b59d4110",
+      "Id": "632321ea515a45b7988f1b114252a5af",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d6e3dd0d508a45afacca2fe38fbf7f4f",
+          "Id": "efc08bb2af2649d684c0d711f414cb9e",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -161,7 +169,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geo",
         "TypeName": "var",
@@ -169,11 +176,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "275daeafc6ec47fc82d4db8921ef1485",
+      "Id": "5b0f234c5e4c43eaa117b3d46c1c18c8",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "5e987fe1a3d94067a1c65ed24df79d57",
+          "Id": "c8e352d564b94bf6aadd92ae49ceeb3f",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -188,89 +196,95 @@
   ],
   "Connectors": [
     {
-      "Start": "4604b66c6b7841fdad6c306012c2105b",
-      "End": "9b811c45c5f54236863a4d73625b0294",
-      "Id": "69be0dba9cc84e7bbaade9179d7ff8ae"
+      "Start": "ec58451d269844fa915af63d264e1d5a",
+      "End": "cc0b246067e44b00b6c4b008812f2901",
+      "Id": "18a2c1f49a704e29a3eb9665d955eb94",
+      "IsHidden": "False"
     },
     {
-      "Start": "d6e3dd0d508a45afacca2fe38fbf7f4f",
-      "End": "9dab3d171e394ad78b5daa79277bbab2",
-      "Id": "dfc0ee36cf4942a4b77b646338303f90"
+      "Start": "efc08bb2af2649d684c0d711f414cb9e",
+      "End": "32ccb635b5084985b0e1bc06261f0f5a",
+      "Id": "a63b0770ab544bc1a05987d0b79e5531",
+      "IsHidden": "False"
     },
     {
-      "Start": "5e987fe1a3d94067a1c65ed24df79d57",
-      "End": "4c1e436e97444ba0a9458f4f4e93ea56",
-      "Id": "11d96ed57b224e72b7505db6b92b95c6"
+      "Start": "c8e352d564b94bf6aadd92ae49ceeb3f",
+      "End": "20c8521591044ac4b90b9833ac0910ce",
+      "Id": "d19d42a900ae407d8c175914f440569a",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.1.0.4676",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 10115.774624916165,
-      "EyeY": 80528.949023276073,
-      "EyeZ": -17344.003293993297,
-      "LookX": 4408.435800419029,
-      "LookY": -77120.2967604894,
-      "LookZ": 9901.50892313482,
-      "UpX": 0.40277831002511816,
-      "UpY": 0.13917310096007393,
-      "UpZ": 0.9046548960474069
+      "Name": "_Background Preview",
+      "EyeX": -11.297866821289062,
+      "EyeY": 606.2621765136719,
+      "EyeZ": 456.0040283203125,
+      "LookX": 235.21681213378906,
+      "LookY": -127.19842529296875,
+      "LookZ": -457.89190673828125,
+      "UpX": 0.1096089631319046,
+      "UpY": 0.9708024263381958,
+      "UpZ": -0.21337443590164185
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
+        "Id": "eb5ed73d754b488691ccfcf64b17a1d8",
         "Name": "Code Block",
-        "Id": "8c5689c781fb4ddc909bc07e1b06f6ab",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.0,
         "Y": 0.0
       },
       {
-        "ShowGeometry": true,
+        "Id": "5b996c7e86de474e9fc06082e5f933a8",
         "Name": "Output",
-        "Id": "7cd8853d42be44a691eba4c218807ae0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 751.0,
-        "Y": 364.0
+        "ShowGeometry": true,
+        "X": 931.0,
+        "Y": 344.0
       },
       {
-        "ShowGeometry": true,
+        "Id": "632321ea515a45b7988f1b114252a5af",
         "Name": "Input",
-        "Id": "38b00fa085774c3aad30c779b59d4110",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -6.1842036666849936,
-        "Y": 72.344750044386956
+        "ShowGeometry": true,
+        "X": -203.184203666685,
+        "Y": 7.344750044386956
       },
       {
-        "ShowGeometry": true,
+        "Id": "5b0f234c5e4c43eaa117b3d46c1c18c8",
         "Name": "Input",
-        "Id": "275daeafc6ec47fc82d4db8921ef1485",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -6.6127671349759964,
-        "Y": 14.819364429349292
+        "ShowGeometry": true,
+        "X": -198.612767134976,
+        "Y": 156.8193644293493
       }
     ],
     "Annotations": [],
-    "X": -155.0,
-    "Y": 128.0,
+    "X": 506.0,
+    "Y": 116.0,
     "Zoom": 1.0
   }
 }

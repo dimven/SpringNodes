@@ -301,7 +301,7 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
       "ElementResolver": null,
-      "Symbol": "fraction(str)",
+      "Symbol": "str",
       "Id": "73b5f31beca34ac0b2818e6f98c2f79c",
       "NodeType": "OutputNode",
       "Inputs": [
@@ -405,15 +405,15 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -22097.466796875,
-      "EyeY": 28607.990234375,
-      "EyeZ": -2637.763671875,
-      "LookX": 19701.869140625,
-      "LookY": -21681.78515625,
-      "LookZ": -12783.443359375,
-      "UpX": 0.4236624836921692,
-      "UpY": 0.8631019592285156,
-      "UpZ": -0.2748910188674927
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
     "ConnectorPins": [],
     "NodeViews": [

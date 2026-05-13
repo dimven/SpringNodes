@@ -2,7 +2,7 @@
   "Uuid": "76291c31-d677-4a61-ae14-6e5af1d4a25b",
   "IsCustomNode": true,
   "Category": "Springs.Utility.Excel",
-  "Description": "Writes data to an Excel file. Pass a single sheet name and a list of data for one sheet, or a list of sheet names and a matching list of datasets for multiple sheets. TEMPORARY SpringNodes shim — original node from the BumbleBee package by Konrad Sobon and David Mans (archi-lab.net / neoarchaic.net). Will be removed once BumbleBee is updated for PythonNet3 by the author.",
+  "Description": "Writes data to an Excel file. Pass a single sheet name and a list of data for one sheet, or a list of sheet names and a matching list of datasets for multiple sheets. Original node from the BumbleBee package by Konrad Sobon and David Mans (archi-lab.net / neoarchaic.net). Will be removed once BumbleBee is re-released.",
   "Name": "Write Excel Bumblebee",
   "ElementResolver": {
     "ResolutionMap": {}

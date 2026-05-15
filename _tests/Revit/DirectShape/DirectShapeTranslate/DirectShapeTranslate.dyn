@@ -1,0 +1,708 @@
+{
+  "Uuid": "ba54d5cc-0e82-4623-85bf-c68f5164009b",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DirectShapeTranslate",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2416ec21-d9a2-4c67-a742-20d5cf82446e",
+      "FunctionType": "Graph",
+      "Id": "3d7e941ef04b4a68a6e3b8d6172b5425",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "33c1927eb75543069484324f5152fccf",
+          "Name": "geometry",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "de4788a2887a4f0e99777cbe5122a2b8",
+          "Name": "category",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ff88187fcdc24849829f1037a8fcdfde",
+          "Name": "name",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "74093d95b31d42309994602a0296c807",
+          "Name": "DirectShape",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Convert the input geometry to DirectShape element inside the Revit document.  It supports solids or surfaces. It is based on an alternative process that uses a SAT import and can produce smooth surfaces. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category for all geometries or a unique category for each geometry - the node's lacing is set to longest by default. The default category is \r\nGeneric Models."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "936b1e7aa468494fa3c607d861cd66a3",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "f61d4adb06104290adb7b19785e9e1f2",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "00adbd7588cb45ef86419113a1543b73",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "aa7f193e79364c2d980bcf4c7f1c679e",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "aa471086f07649828e8d5481d4696524",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at WCS origin, with width, length, and height.\n\nCuboid.ByLengths (width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
+      "SelectedIndex": 177,
+      "SelectedString": "OST_Doors",
+      "Id": "82a0e2db1dfa4b6b9ad7f8fceaa3356c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e058a39b7e644b6f9d93a3258da2294f",
+          "Name": "Category",
+          "Description": "The selected Category.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All built-in categories."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "e5925a9b1b12429b85c428484a1d0cac",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2c078e7738204363bfd6f7113fbf6845",
+          "Name": "string",
+          "Description": "\"ExcellentSpringsDoor\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"ExcellentSpringsDoor\";"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "822742640f4e498d8a3a13a44f75cc6e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "8d64452b3820498685e4d42d02ac15a8",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3cf54855dbf649eabd4fb8c64f6468a7",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "12780047-c2ae-4b94-bb43-6408c7dbd8ef",
+      "FunctionType": "Graph",
+      "Id": "121fa09cdb2b429b869b4b5b487d1f98",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "56df2839392e4fd691cb32216c97dcd1",
+          "Name": "directShape",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "07907016bff8411196a25dabf66708fd",
+          "Name": "coordSystem",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "96bb03f0be2c4443a9c698d1f4e06f09",
+          "Name": "directShape",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Transforms the typed DirectShape element from the identity coordinate system to the input coordinate system(s), in a manner similar to Dynamo's Geometry.Transform node."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "1e24c9a85ad44b07861805174b48a48d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "604d49204d8c40ec80b8d89bf98ba6ef",
+          "Name": "x",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9f640874c6174dc5b479f0b0a87ce680",
+          "Name": "y",
+          "Description": "double\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cd4eb9349b2748dab9686b14b8deee34",
+          "Name": "CoordinateSystem",
+          "Description": "CoordinateSystem",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.CoordinateSystem.ByOrigin@double,double",
+      "Replication": "Auto",
+      "Description": "Create a CoordinateSystem with origin at X and Y locations, with X and Y Axes set as WCS X and Y Axes. Z defaults to 0.\n\nCoordinateSystem.ByOrigin (x: double = 0, y: double = 0): CoordinateSystem"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "47264a2e5ad048fb9b53b7d32842a237",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d968170187c148a4a5c6922af499c4b2",
+          "Name": "integer",
+          "Description": "10",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "10;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "f5294f122624483b9efffda7df4acafd",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "4ba28a2fb8194e6b88832c2fc6c7028c",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ff4eb4911036454290eaf50abb2d2603",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "bcea7793-3a55-4695-87b4-309ecb7fd500",
+      "FunctionType": "Graph",
+      "Id": "25a71b58fefb487da235212af3737816",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4555a5f1f468438183edd10ff438a216",
+          "Name": "directShape",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6ccf8ce8d64849c59a5c23d8a382653c",
+          "Name": "vector",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0bf29b73b09e413a83835fe5690013be",
+          "Name": "directShape",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "b8a841180cd9442b93e1af8ee2f5d571",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2328c019743d4d38a9c74e94687e1daf",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ed348867d41d481cafa233fa7a20a7f2",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4ff0553a54294af9abacd2928c31772f",
+          "Name": "z",
+          "Description": "Z coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8a6831ef9dda4accbd2013ec96cb8279",
+          "Name": "Vector",
+          "Description": "Vector created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Vector.ByCoordinates@double,double,double",
+      "Replication": "Auto",
+      "Description": "Form a Vector by 3 Euclidean coordinates\n\nVector.ByCoordinates (x: double = 0, y: double = 0, z: double = 0): Vector"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c8b90d449cfc4882ae22a4a087595a6b",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fb8cb3233a8d44bd94b3ef5da06dca60",
+          "Name": "integer",
+          "Description": "40",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "40;"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "74093d95b31d42309994602a0296c807",
+      "End": "8d64452b3820498685e4d42d02ac15a8",
+      "Id": "d2401da63a1942488dd4e3832655594b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "aa471086f07649828e8d5481d4696524",
+      "End": "33c1927eb75543069484324f5152fccf",
+      "Id": "0f3e08b7dc3a40099951053f8b3d5a46",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e058a39b7e644b6f9d93a3258da2294f",
+      "End": "de4788a2887a4f0e99777cbe5122a2b8",
+      "Id": "5bf3ec5a70ca45e4852f354c9da000d5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2c078e7738204363bfd6f7113fbf6845",
+      "End": "ff88187fcdc24849829f1037a8fcdfde",
+      "Id": "e448ee5128b14926a0fd9471d35ba6d9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3cf54855dbf649eabd4fb8c64f6468a7",
+      "End": "56df2839392e4fd691cb32216c97dcd1",
+      "Id": "fc8cd11617d047f58dfb6963b7227d69",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "96bb03f0be2c4443a9c698d1f4e06f09",
+      "End": "4ba28a2fb8194e6b88832c2fc6c7028c",
+      "Id": "e4aa88437df14d789cef2995cb625bfa",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cd4eb9349b2748dab9686b14b8deee34",
+      "End": "07907016bff8411196a25dabf66708fd",
+      "Id": "1d914ddd3c894642b638bb793dd552cf",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d968170187c148a4a5c6922af499c4b2",
+      "End": "604d49204d8c40ec80b8d89bf98ba6ef",
+      "Id": "0ff2d512f0004905b70fde5b41bb25a0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d968170187c148a4a5c6922af499c4b2",
+      "End": "9f640874c6174dc5b479f0b0a87ce680",
+      "Id": "8770688e827d4d7b9bafe9646d2c6acb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ff4eb4911036454290eaf50abb2d2603",
+      "End": "4555a5f1f468438183edd10ff438a216",
+      "Id": "aab8d199e9da4bd995b0e120e7887109",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "8a6831ef9dda4accbd2013ec96cb8279",
+      "End": "6ccf8ce8d64849c59a5c23d8a382653c",
+      "Id": "e18a4e1e7b2844bb90061d99a6730a84",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fb8cb3233a8d44bd94b3ef5da06dca60",
+      "End": "2328c019743d4d38a9c74e94687e1daf",
+      "Id": "a599d557313e491f8358488002163258",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fb8cb3233a8d44bd94b3ef5da06dca60",
+      "End": "ed348867d41d481cafa233fa7a20a7f2",
+      "Id": "2225ee019724418d94ef341cdab8aec9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fb8cb3233a8d44bd94b3ef5da06dca60",
+      "End": "4ff0553a54294af9abacd2928c31772f",
+      "Id": "4d96fdef36874e3d850d8ade14e8ecc4",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "2416ec21-d9a2-4c67-a742-20d5cf82446e",
+    "12780047-c2ae-4b94-bb43-6408c7dbd8ef",
+    "bcea7793-3a55-4695-87b4-309ecb7fd500"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "DirectShape.ByGeometry.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "3d7e941ef04b4a68a6e3b8d6172b5425"
+      ]
+    },
+    {
+      "Name": "DirectShape.Transform.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "121fa09cdb2b429b869b4b5b487d1f98"
+      ]
+    },
+    {
+      "Name": "DirectShape.Translate.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "25a71b58fefb487da235212af3737816"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "3d7e941ef04b4a68a6e3b8d6172b5425",
+        "Name": "DirectShape.ByGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 650.860066814179,
+        "Y": 926.6167670230205
+      },
+      {
+        "Id": "936b1e7aa468494fa3c607d861cd66a3",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 299.3995064109142,
+        "Y": 931.5755698939142
+      },
+      {
+        "Id": "82a0e2db1dfa4b6b9ad7f8fceaa3356c",
+        "Name": "Categories",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 268.5215589068338,
+        "Y": 1132.3839993816166
+      },
+      {
+        "Id": "e5925a9b1b12429b85c428484a1d0cac",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 226.78760803045452,
+        "Y": 1277.598451003807
+      },
+      {
+        "Id": "822742640f4e498d8a3a13a44f75cc6e",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1014.1465223370026,
+        "Y": 924.0614748328587
+      },
+      {
+        "Id": "121fa09cdb2b429b869b4b5b487d1f98",
+        "Name": "DirectShape.Transform",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1684.697896305279,
+        "Y": 921.5305375100487
+      },
+      {
+        "Id": "1e24c9a85ad44b07861805174b48a48d",
+        "Name": "CoordinateSystem.ByOrigin",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1197.9631663767884,
+        "Y": 1294.5176523953003
+      },
+      {
+        "Id": "47264a2e5ad048fb9b53b7d32842a237",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 967.0534916040323,
+        "Y": 1302.3628442741738
+      },
+      {
+        "Id": "f5294f122624483b9efffda7df4acafd",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2111.4924209415735,
+        "Y": 920.165457587641
+      },
+      {
+        "Id": "25a71b58fefb487da235212af3737816",
+        "Name": "DirectShape.Translate",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 3036.1764830864745,
+        "Y": 922.8100545301431
+      },
+      {
+        "Id": "b8a841180cd9442b93e1af8ee2f5d571",
+        "Name": "Vector.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2698.3771383520916,
+        "Y": 1255.7903623996065
+      },
+      {
+        "Id": "c8b90d449cfc4882ae22a4a087595a6b",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2438.969276707202,
+        "Y": 1294.5931062467535
+      }
+    ],
+    "Annotations": [],
+    "X": -67.30903654835959,
+    "Y": -217.66316909674947,
+    "Zoom": 0.6621391141168144
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "Uuid": "d0a0dd05-c725-405d-b8b1-2bb309f3a1f7",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "TextNoteByPoint",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "b076567fa3214b86b12132dbb0bfdcc2",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "5afce0605cb4443f9522ec34125ec840",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "03bb9dd0f5ca4e1c9373d11f606fb3e8",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "6d9eac08-17d3-49be-be91-4ce94069a40a",
+      "FunctionType": "Graph",
+      "Id": "e9e659f2229144119ac0a77f86635e46",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "5fa6610a018b40c3b5b0472be1131048",
+          "Name": "view",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "99779398d9c348b79d837c12a7c2df06",
+          "Name": "point",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1e752931915d4755a037729c629b6129",
+          "Name": "content",
+          "Description": "string[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7bc49b6907574b0d93b070f1397c71f0",
+          "Name": "textType",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d944e6dfd2c4d29a24ab036eb946ae2",
+          "Name": "horAlign",
+          "Description": "string\nDefault value : \"Center\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "640bf7983f4e4164a36f935cc43a975c",
+          "Name": "track",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fbdc4c3dbdd5455281b325d9c095e740",
+          "Name": "textNote",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Places a text note at a given point in the view. View, text type and content can either be a single item for all points or the same length as the number of points.\r\nSet track to false if you'd like to place notes on every run."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Views, DSRevitNodesUI",
+      "SelectedIndex": 13,
+      "SelectedString": "Level 0",
+      "Id": "ba705e0485944368a0d126e10745ca5d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a8b7ec44e5714b53b571c65eef6fc134",
+          "Name": "Views",
+          "Description": "The selected Views",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All views available in the current document."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "1345235942d641438dc83c635655be74",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "301393f082a7446e9e694730fcfa9c3b",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f84ca92972ab4b1c897bc0287a3d8d72",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "34da659bd66e41fc925308030b1faeb1",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "Auto",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "8b82cd5d2bdd48a19a07d541b1541b68",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d1aab1a87b94494eb03fae736de302ad",
+          "Name": "integer",
+          "Description": "5000",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "5000;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "SerializedWidth": 0.0,
+      "SerializedHeight": 0.0,
+      "Id": "0646d592093a45a9a59f6698a3392918",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "60e90d7360924982bf46db82750de8b0",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string.",
+      "InputValue": "Amazing Springs Text Note"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fbdc4c3dbdd5455281b325d9c095e740",
+      "End": "5afce0605cb4443f9522ec34125ec840",
+      "Id": "69e6883dc8084f61b20a8141e5eb8b40",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a8b7ec44e5714b53b571c65eef6fc134",
+      "End": "5fa6610a018b40c3b5b0472be1131048",
+      "Id": "ac255c4bbfe3437ebb85f27d721bfb1e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "34da659bd66e41fc925308030b1faeb1",
+      "End": "99779398d9c348b79d837c12a7c2df06",
+      "Id": "d19ed269a50144eea00e2db6c8685c8d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d1aab1a87b94494eb03fae736de302ad",
+      "End": "301393f082a7446e9e694730fcfa9c3b",
+      "Id": "1fa4378a45a2469bade61cfbda19f31e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d1aab1a87b94494eb03fae736de302ad",
+      "End": "f84ca92972ab4b1c897bc0287a3d8d72",
+      "Id": "8165299a2a42410a9c4138f89738972a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "60e90d7360924982bf46db82750de8b0",
+      "End": "1e752931915d4755a037729c629b6129",
+      "Id": "34936eb2bf234eaf809652d09f08e935",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "6d9eac08-17d3-49be-be91-4ce94069a40a"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "TextNote.ByPoint.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "e9e659f2229144119ac0a77f86635e46"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b076567fa3214b86b12132dbb0bfdcc2",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1804.9473878801946,
+        "Y": 945.2403298890655
+      },
+      {
+        "Id": "e9e659f2229144119ac0a77f86635e46",
+        "Name": "TextNote.ByPoint",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1423.303617313804,
+        "Y": 949.9341052465463
+      },
+      {
+        "Id": "ba705e0485944368a0d126e10745ca5d",
+        "Name": "Views",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1091.109750337489,
+        "Y": 889.2174578026544
+      },
+      {
+        "Id": "1345235942d641438dc83c635655be74",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1090.3003672254297,
+        "Y": 1024.0142852627246
+      },
+      {
+        "Id": "8b82cd5d2bdd48a19a07d541b1541b68",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 849.9885321952559,
+        "Y": 1039.5591575431504
+      },
+      {
+        "Id": "0646d592093a45a9a59f6698a3392918",
+        "Name": "String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1092.275557427695,
+        "Y": 1185.9798818484915
+      }
+    ],
+    "Annotations": [],
+    "X": -412.72033675524915,
+    "Y": -236.52300322331615,
+    "Zoom": 0.6015492523939712
+  }
+}

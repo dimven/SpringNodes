@@ -1,0 +1,261 @@
+{
+  "Uuid": "69ef4ddd-bc24-4e8b-8582-1bbadf330001",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SelectLinkedFace",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "f2228413372f4f66b155ee3f62efc17b",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c3f8a8e945ea49edb884741ab14c6af6",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 387.3333333333333,
+      "WatchHeight": 200.0,
+      "Id": "a6b025cde18f4a6e892c3c45a3364c82",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "7f67fa1dbb49486989adf25d48529cec",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3f2a4b135e2e48d78cd315dccf56f117",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 72.66666666666667,
+      "WatchHeight": 200.0,
+      "Id": "8498d51c52db4c2db2802b9e9e8c687f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "481fecb44bfd458986f2cd2a424e4f5d",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5798848aee314f23b1bb62dcae16c354",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "6e98ce37-6cea-4a42-8e2d-7737e6c918ca",
+      "FunctionType": "Graph",
+      "Id": "db1f776b4fe0420e95be785b9d6cba3c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "adb51e556a91476fb4c58748bca3cb22",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ea10c021b60b40bf869b9e0377d13467",
+          "Name": "surface",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "eb652abb5fdb4ca08bb20bb9a9ac17f2",
+          "Name": "pickPoint",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select the linked instance first, followed by the face. The face will be transformed to the host file's coordinate system. If your selection fails, just press escape.\r\nTo refresh the node, connect a boolean switch node."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "c3f8a8e945ea49edb884741ab14c6af6",
+      "End": "adb51e556a91476fb4c58748bca3cb22",
+      "Id": "a59dfeac2f3a4f038c5df51da90c80d7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ea10c021b60b40bf869b9e0377d13467",
+      "End": "481fecb44bfd458986f2cd2a424e4f5d",
+      "Id": "48c20d5f3b104b17bff8517c5399e821",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "eb652abb5fdb4ca08bb20bb9a9ac17f2",
+      "End": "7f67fa1dbb49486989adf25d48529cec",
+      "Id": "7a5f215bdfaf4810b97307563c1b087d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "6e98ce37-6cea-4a42-8e2d-7737e6c918ca"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "SelectLinkedFace.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "db1f776b4fe0420e95be785b9d6cba3c"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f2228413372f4f66b155ee3f62efc17b",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 699.579358401265,
+        "Y": 456.8110063810652
+      },
+      {
+        "Id": "a6b025cde18f4a6e892c3c45a3364c82",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1408.6161716141735,
+        "Y": 606.1919491985541
+      },
+      {
+        "Id": "8498d51c52db4c2db2802b9e9e8c687f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1409.528454324788,
+        "Y": 291.33499058309303
+      },
+      {
+        "Id": "db1f776b4fe0420e95be785b9d6cba3c",
+        "Name": "SelectLinkedFace",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1030.8087254201034,
+        "Y": 455.5502473960874
+      }
+    ],
+    "Annotations": [],
+    "X": -579.8997648643885,
+    "Y": 98.86888201209183,
+    "Zoom": 1.0611496168469554
+  }
+}

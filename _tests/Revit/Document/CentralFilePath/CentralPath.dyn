@@ -1,0 +1,213 @@
+{
+  "Uuid": "f1d71cd5-3958-44b6-978f-f99a9b86668b",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "CentralPath",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2652eeea-0a2f-4100-9027-32c61cd67686",
+      "FunctionType": "Graph",
+      "Id": "403843ac3b1d403a960a21e8161c84bc",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "26e11b7f11d3436b8d56867a51f8b20c",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4a2da7e1bb7e480bb5bb15e10adab6e7",
+          "Name": "path",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "If the document is workshared, the node returns the path to the central document as a string. Otherwise a null value will be returned."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "efe9f343489e45a1a28a9957a69f4599",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0d2057e157c34f1ca58380378b5b64ef",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 192.66666666666666,
+      "WatchHeight": 80.0,
+      "Id": "12910a7eef9e4a9fb3b92452d4e61423",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "de2a700861614e618ed043a0c7b7cb0d",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "659a54245d014a19b73557bc4cbbafaa",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4a2da7e1bb7e480bb5bb15e10adab6e7",
+      "End": "de2a700861614e618ed043a0c7b7cb0d",
+      "Id": "fc49c585b9ca4f5f9d853c54903a5f6e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0d2057e157c34f1ca58380378b5b64ef",
+      "End": "26e11b7f11d3436b8d56867a51f8b20c",
+      "Id": "2e271f0d3241449d9e122bccadc52cf7",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "2652eeea-0a2f-4100-9027-32c61cd67686"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Document.CentralPath.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "403843ac3b1d403a960a21e8161c84bc"
+      ]
+    },
+    {
+      "Name": "Worksetted.rvt",
+      "ReferenceType": "External",
+      "Nodes": [
+        "403843ac3b1d403a960a21e8161c84bc",
+        "12910a7eef9e4a9fb3b92452d4e61423"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": null,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "403843ac3b1d403a960a21e8161c84bc",
+        "Name": "Document.CentralPath",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 545.0,
+        "Y": 289.3333333333334
+      },
+      {
+        "Id": "efe9f343489e45a1a28a9957a69f4599",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 249.33333333333326,
+        "Y": 289.33333333333326
+      },
+      {
+        "Id": "12910a7eef9e4a9fb3b92452d4e61423",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 902.6666666666664,
+        "Y": 289.99999999999994
+      }
+    ],
+    "Annotations": [],
+    "X": -183.33333333333326,
+    "Y": -75.99999999999991,
+    "Zoom": 1.0
+  }
+}

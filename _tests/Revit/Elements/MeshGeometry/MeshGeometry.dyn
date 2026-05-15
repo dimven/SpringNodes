@@ -1,0 +1,225 @@
+{
+  "Uuid": "7aca6192-8477-412e-8566-ccbef38f8aa0",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "MeshGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "d9ffb52d-f99b-4d21-bec9-28e42ad7dc59-0004fa15"
+      ],
+      "Id": "1f26d6f6e1164762addea4158e9137b7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "226711dfc93641509c538fbdc2dd60f9",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "4653023bb05b4b4981ea137a36bddb30",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c8812bf955dc42f582776f277bb711bc",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cecf12970c7a4d4f86d587ac97490d4e",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "753fce74-3f5f-437b-9dc0-ac7fbedf9fbf",
+      "FunctionType": "Graph",
+      "Id": "f7ed10c8174c4521b2b5110a888eed84",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "5fa86a61b9d147b7be8e4dc1e56646bc",
+          "Name": "element",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "38f660c3a741490e8babcd4f41838e09",
+          "Name": "LOD",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0f359211f1a9402c8163d954d3f1b3a1",
+          "Name": "asToolkitMesh",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "54bdf85bdc274a0baa52190c9286c81e",
+          "Name": "meshes",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Reads an element's geometry and converts it to either a Dynamo mesh or a toolkit mesh representation.  The node will return Dynamo meshes by default.\r\n\r\nThe LOD input represents the triangulation factor. Its range is from 0 to 1. 0 is the lowest level of detail and 1 is the highest. It's set to 0 by default."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "226711dfc93641509c538fbdc2dd60f9",
+      "End": "5fa86a61b9d147b7be8e4dc1e56646bc",
+      "Id": "207d804b086149bdb37cce37778926a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "54bdf85bdc274a0baa52190c9286c81e",
+      "End": "c8812bf955dc42f582776f277bb711bc",
+      "Id": "6ec2a62f7ca149b1af06dd38c60bdc1a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "753fce74-3f5f-437b-9dc0-ac7fbedf9fbf"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Element.MeshGeometry.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "f7ed10c8174c4521b2b5110a888eed84"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -14735.748046875,
+      "EyeY": 5990.63671875,
+      "EyeZ": 3944.71826171875,
+      "LookX": 10275.509765625,
+      "LookY": -4838.8046875,
+      "LookZ": -3466.8740234375,
+      "UpX": 0.38609033823013306,
+      "UpY": 0.9132171869277954,
+      "UpZ": -0.1302638202905655
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "1f26d6f6e1164762addea4158e9137b7",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 372.86863645366384,
+        "Y": 626.0266802357391
+      },
+      {
+        "Id": "4653023bb05b4b4981ea137a36bddb30",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1138.2825899784896,
+        "Y": 623.2969347490434
+      },
+      {
+        "Id": "f7ed10c8174c4521b2b5110a888eed84",
+        "Name": "Element.MeshGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 711.0873681276361,
+        "Y": 624.347074529038
+      }
+    ],
+    "Annotations": [],
+    "X": -198.39726768121824,
+    "Y": -481.2314929821471,
+    "Zoom": 0.9322439325351514
+  }
+}

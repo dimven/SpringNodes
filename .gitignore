@@ -5,7 +5,6 @@ CLAUDE.md
 CLAUDE.local.md
 
 # Revit binary files
-_tests/Revit/
 _tests/Revit.sat
 *.rvt
 *.rfa

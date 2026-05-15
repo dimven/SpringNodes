@@ -1,0 +1,316 @@
+{
+  "Uuid": "003d0f73-2caf-46eb-8834-6d076c30dfb5",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "AreaPlan",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "9e4b53c46ff644b59ec9f99b657b7b8b",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "fbcb99ddb1dd4aa4af344aa0dc6bdbc9",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8f79846a1c3441faa2789cf3b2cf53e9",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1e945ccb-531f-4888-9a76-fc0125ed5c63",
+      "FunctionType": "Graph",
+      "Id": "b63a7d35673d4393adf4afa8ca2f2586",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "e17a37cefef140639ab1551f14eb94f6",
+          "Name": "level",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5dbb05b9ec194f24b8f0654e9291ae8c",
+          "Name": "name",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1f5938cbddb346f1826ba02fcc066e34",
+          "Name": "schemeName",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f4eba00eccb54b8d8f15cc6dc3348dd3",
+          "Name": "AreaPlan",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates an area plan at the designated levels. Each new view needs a name. An area scheme must first be activated before it can be used. To activate a scheme, place one view of that type in the project(you can then delete it).  If a view with the same scheme and name exists, you'll get a null instead."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Levels, DSRevitNodesUI",
+      "SelectedIndex": 0,
+      "SelectedString": "Level 0",
+      "Id": "d0b864d3399d4f1583897899888babbd",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c05c623c239a417b96e367b43681187d",
+          "Name": "Levels",
+          "Description": "The selected Levels",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a level in the active document"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "dc08306b1ed040d3b6414f8371a17609",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1f24a8defb9f4e30832fe77f696f6f20",
+          "Name": "string",
+          "Description": "\"SpringsGreatAreaPlan\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4261f3b718324aa9bf24c5f65558b3d9",
+          "Name": "string",
+          "Description": "\"Rentable\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"SpringsGreatAreaPlan\";\n\"Rentable\";"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 467.3333333333333,
+      "WatchHeight": 97.33333333333333,
+      "Id": "ed43802a70ef42a6baa220f525e8ba31",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "ffb4665cc8f04028b59bcbb375d0131b",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bd0146da9e0c4df485103b551e9ca4d7",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f4eba00eccb54b8d8f15cc6dc3348dd3",
+      "End": "ffb4665cc8f04028b59bcbb375d0131b",
+      "Id": "2113dcff0bbc4c49bc57c69eee85903e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c05c623c239a417b96e367b43681187d",
+      "End": "e17a37cefef140639ab1551f14eb94f6",
+      "Id": "d99e09886d74425b837fd4f020e8c218",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1f24a8defb9f4e30832fe77f696f6f20",
+      "End": "5dbb05b9ec194f24b8f0654e9291ae8c",
+      "Id": "19238b35729440599b4a1a64b18fa3a6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4261f3b718324aa9bf24c5f65558b3d9",
+      "End": "1f5938cbddb346f1826ba02fcc066e34",
+      "Id": "d3ae183e551a4685b1bbd5357a383064",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "1e945ccb-531f-4888-9a76-fc0125ed5c63"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "AreaPlan.ByLevelName.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "b63a7d35673d4393adf4afa8ca2f2586"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "9e4b53c46ff644b59ec9f99b657b7b8b",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 255.7331064470955,
+        "Y": 1204.0081277002432
+      },
+      {
+        "Id": "b63a7d35673d4393adf4afa8ca2f2586",
+        "Name": "AreaPlan.ByLevelName",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 356.34084760782804,
+        "Y": 687.3557494275408
+      },
+      {
+        "Id": "d0b864d3399d4f1583897899888babbd",
+        "Name": "Levels",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 30.169890435693446,
+        "Y": 693.0641567596853
+      },
+      {
+        "Id": "dc08306b1ed040d3b6414f8371a17609",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 27.699686693899594,
+        "Y": 820.9065274955418
+      },
+      {
+        "Id": "ed43802a70ef42a6baa220f525e8ba31",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 688.4018618210984,
+        "Y": 686.9725666024949
+      }
+    ],
+    "Annotations": [],
+    "X": 92.63740497119335,
+    "Y": -565.759086709813,
+    "Zoom": 1.0837271163390751
+  }
+}

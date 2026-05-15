@@ -1,0 +1,261 @@
+{
+  "Uuid": "bd529160-62b9-4d19-9754-27608260a096",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SelectLinkedElement",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "821e1c28b32342ee837c67e24addc5a0",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4240a44af5b645fb8845e10fb0f7ced5",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "ebc8e76b6a564927baaa914b76ce1169",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "71c68ab63b4a4d0eb2115493d3c2c2a1",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e86d873ac76a4199b96e164a24ebef1b",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "103fe51c-7e28-46c5-9175-d07c9d05437b",
+      "FunctionType": "Graph",
+      "Id": "f3d41667cb4a40d6866fd732bd8214ef",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "b1c9974931dc4b96968b3a12164186fe",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a9114b4b0bb84b8ea3ea77771bcfc2ca",
+          "Name": "element",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bcf6d91f968f407dad9aec6c867e919c",
+          "Name": "transform",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select the linked instance first, followed by the element. If your selection fails, just press escape.\r\nTo refresh the node, connect a boolean switch node."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "07ab8fd80c9d4812a2ff31d58445afef",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "2c52a11b8b4648f69616c59241b82266",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eff6e99b5bf94000a640726f4f0ca842",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4240a44af5b645fb8845e10fb0f7ced5",
+      "End": "b1c9974931dc4b96968b3a12164186fe",
+      "Id": "d9184ce2051a4acea0ac7f58c3743a29",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a9114b4b0bb84b8ea3ea77771bcfc2ca",
+      "End": "71c68ab63b4a4d0eb2115493d3c2c2a1",
+      "Id": "872b810ce93647a7acfa05c18c935282",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "bcf6d91f968f407dad9aec6c867e919c",
+      "End": "2c52a11b8b4648f69616c59241b82266",
+      "Id": "746a119a80d04ba4870d5378619d4f27",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "103fe51c-7e28-46c5-9175-d07c9d05437b"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "SelectLinkedElement.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "f3d41667cb4a40d6866fd732bd8214ef"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "821e1c28b32342ee837c67e24addc5a0",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 698.3228594946405,
+        "Y": 288.4401528933661
+      },
+      {
+        "Id": "ebc8e76b6a564927baaa914b76ce1169",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1383.048235977163,
+        "Y": 292.17120504839323
+      },
+      {
+        "Id": "f3d41667cb4a40d6866fd732bd8214ef",
+        "Name": "SelectLinkedElement",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1018.8719858071697,
+        "Y": 290.32064117494974
+      },
+      {
+        "Id": "07ab8fd80c9d4812a2ff31d58445afef",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1410.5009199741103,
+        "Y": 606.1919491985541
+      }
+    ],
+    "Annotations": [],
+    "X": -579.8997648643885,
+    "Y": 98.86888201209183,
+    "Zoom": 1.0611496168469554
+  }
+}

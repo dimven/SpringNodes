@@ -1,0 +1,369 @@
+{
+  "Uuid": "32b37673-57e3-4b69-9a7f-197c58a7d8c7",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "InstanceByHostAndPoint",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "DSRevitNodesUI.FamilyTypes, DSRevitNodesUI",
+      "SelectedIndex": 191,
+      "SelectedString": "Windows_Sgl_Plain:910x1210mm",
+      "Id": "6efb5f49bebc4e5cb914f8e6fe2ebed1",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b315758b55534ee5a63623a5710791b8",
+          "Name": "Family Type",
+          "Description": "The selected Family Type",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All family types available in the document."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "102b6285-f9b8-45ab-8367-d1592eafe735",
+      "FunctionType": "Graph",
+      "Id": "8984564e2e504877b6a53d1bc6592ccc",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "b6229c33590b42899b7ece1f0fb9509d",
+          "Name": "boundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "01728804957648eb896fcb36be9a8635",
+          "Name": "point",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Fetches the mid point of the bounding box."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "360236986153454b8342f3f4d6fac0a5",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "05e89170e18d4185ae36466dd9d2b535",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "01ffb550e90a46d8b7c8ff19682b8abe",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2b432cef-fa0a-44ef-92c2-89b586bfc8ba",
+      "FunctionType": "Graph",
+      "Id": "42e8a34875cb45efac5a495d8502fc0d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "6f6bb98bd42e4f5ca2593a05bc0e1d9c",
+          "Name": "host",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "76bad59a3db54af28643bbbb4524c57d",
+          "Name": "type",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fc5814d892e14daf97afe3e9485744e2",
+          "Name": "point",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a20f2135d2a04e4ba8a73d2acc94bef5",
+          "Name": "FamilyInstance",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Creates hosted family instances(doors/windows) at the specified points. You can feed either a single family type or a unique type for each instance."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "d9ffb52d-f99b-4d21-bec9-28e42ad7dc59-0005012d"
+      ],
+      "Id": "ef695d143a39492d8faea65569191e46",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5935bce46bac4686b3b83e7418fef3d7",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "f7587866b88544319869d035a62d8006",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "dcc778f9272f4ab8ab36fb79125c4cc8",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e514a56fc8e44265943cb5f4257cd66e",
+          "Name": "BoundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Revit.Elements.Element.BoundingBox",
+      "Replication": "Auto",
+      "Description": "Get an Axis-aligned BoundingBox of the Element\n\nElement.BoundingBox: BoundingBox"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b315758b55534ee5a63623a5710791b8",
+      "End": "76bad59a3db54af28643bbbb4524c57d",
+      "Id": "7096c4d4f746447c8b62a488ef125e9a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "01728804957648eb896fcb36be9a8635",
+      "End": "fc5814d892e14daf97afe3e9485744e2",
+      "Id": "ce636ed8eb384871b5fd552159d750a2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a20f2135d2a04e4ba8a73d2acc94bef5",
+      "End": "05e89170e18d4185ae36466dd9d2b535",
+      "Id": "43271c6f657b4e71be8d5774c97459c8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5935bce46bac4686b3b83e7418fef3d7",
+      "End": "6f6bb98bd42e4f5ca2593a05bc0e1d9c",
+      "Id": "e3dea3c8353443c8b71584f06d88df32",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5935bce46bac4686b3b83e7418fef3d7",
+      "End": "dcc778f9272f4ab8ab36fb79125c4cc8",
+      "Id": "ff2187eafdb44d95982137cdbc0b32c7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e514a56fc8e44265943cb5f4257cd66e",
+      "End": "b6229c33590b42899b7ece1f0fb9509d",
+      "Id": "2c9fd0a9978641cab86bdaa0b3dca33a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "102b6285-f9b8-45ab-8367-d1592eafe735",
+    "2b432cef-fa0a-44ef-92c2-89b586bfc8ba"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "BoundingBox.MidPoint.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "8984564e2e504877b6a53d1bc6592ccc"
+      ]
+    },
+    {
+      "Name": "FamilyInstance.ByHostAndPoint.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "42e8a34875cb45efac5a495d8502fc0d"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "6efb5f49bebc4e5cb914f8e6fe2ebed1",
+        "Name": "Family Types",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 339.5255018857772,
+        "Y": 410.4910897872909
+      },
+      {
+        "Id": "8984564e2e504877b6a53d1bc6592ccc",
+        "Name": "BoundingBox.MidPoint",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 490.6217433368216,
+        "Y": 572.9973215726961
+      },
+      {
+        "Id": "360236986153454b8342f3f4d6fac0a5",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1303.8585347002195,
+        "Y": 310.92620360868983
+      },
+      {
+        "Id": "42e8a34875cb45efac5a495d8502fc0d",
+        "Name": "FamilyInstance.ByHostAndPoint",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 882.9397202058583,
+        "Y": 310.8575824829309
+      },
+      {
+        "Id": "ef695d143a39492d8faea65569191e46",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -173.57530091794695,
+        "Y": 317.1676259679699
+      },
+      {
+        "Id": "f7587866b88544319869d035a62d8006",
+        "Name": "Element.BoundingBox",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 133.14602645239052,
+        "Y": 574.8492062296777
+      }
+    ],
+    "Annotations": [],
+    "X": 273.11433905970193,
+    "Y": -157.81062242697524,
+    "Zoom": 0.7476928171233252
+  }
+}

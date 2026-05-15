@@ -1,0 +1,444 @@
+{
+  "Uuid": "4d4640b7-0f01-4668-82a8-bd6120cdc879",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ParseErrorReport",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "7588e3a69db7424e9cb03fe8c41a869a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e220d2368a774c7fa4c1747fd131d60d",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f927172b8d79405dbebd7e20a2b45211",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "23636aafb654469b8e0d8e1acc9fefc2",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "44e0eadba1ef4f52bb24a42351d05779",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "335de09580614a8dae694386a0a4dedb",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "ee2831f399cc4470890ff3fbe966a240",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "0ce04646d65c400db1a1c1b8ddf03d2c",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8bbb3295135b42eebe7c6073815b981c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "f7974021-f210-460d-84f1-a9665d99dbe2",
+      "FunctionType": "Graph",
+      "Id": "950e22f4ab1c437c8bcd943a7d8fce22",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "763aec92f054480b9009592444402fd2",
+          "Name": "report",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8895b46a1d504fdabe7bf646636fdc57",
+          "Name": "fetch_elements",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "68d60b7a4fec4ed996a8cbc31bd3f357",
+          "Name": "error messages",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "911ac4c1f1744a939037a18d066b448f",
+          "Name": "affected elements",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3b57890ba5654d1c83e237e0ee7c3eb7",
+          "Name": "unique errors",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "17e4a751abf04d8d95f5f4a42e94cc2b",
+          "Name": "number of errors",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Process a Revit error report (HTML file) and extract the error types, all affected elements and the total number of errors. If you are executing from a document different than the one the error report belongs to, be sure to set \"fetch_elements\" to false."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "8b1367d5500240748f585d162ada8ae7",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cf14da24d6b343e2b0cffd25f3e31081",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "C:\\Me\\CODE\\Github\\SpringNodes\\_tests\\Revit\\Utility\\ParseErrorReport\\LinkingTestFile_Error Report.html",
+      "InputValue": "..\\ParseErrorReport\\LinkingTestFile_Error Report.html"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.FileObject, CoreNodeModels",
+      "Id": "46c9f199731b414ab790c343036b5839",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "b4f7507387254574929861e81bf015e4",
+          "Name": "path",
+          "Description": "Path to the file as string.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c35c405923824ca3acc14ce9700368e6",
+          "Name": "file",
+          "Description": "File object",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a file object from the given path"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "66e1c40de0084c61817c0a82066720b7",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "9d7a8d125c6d4e95ba6e77469b1e8390",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "776e6c81c2b64f8f8914dfc055239a37",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "68d60b7a4fec4ed996a8cbc31bd3f357",
+      "End": "e220d2368a774c7fa4c1747fd131d60d",
+      "Id": "9c55eeed92454b6dbda1ead7e7f77043",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "911ac4c1f1744a939037a18d066b448f",
+      "End": "44e0eadba1ef4f52bb24a42351d05779",
+      "Id": "855a36aa068b41dfbf023b9be1fe6e3c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3b57890ba5654d1c83e237e0ee7c3eb7",
+      "End": "0ce04646d65c400db1a1c1b8ddf03d2c",
+      "Id": "d975a0e801354899ab09154a1f50f4e7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "17e4a751abf04d8d95f5f4a42e94cc2b",
+      "End": "9d7a8d125c6d4e95ba6e77469b1e8390",
+      "Id": "43c5b3ac1aa7405687c7525cbac397de",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cf14da24d6b343e2b0cffd25f3e31081",
+      "End": "b4f7507387254574929861e81bf015e4",
+      "Id": "9d637296cd934c3eb05bc8899136c3a7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c35c405923824ca3acc14ce9700368e6",
+      "End": "763aec92f054480b9009592444402fd2",
+      "Id": "f13455fbfdbb4ee39c5b905332054dbd",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "f7974021-f210-460d-84f1-a9665d99dbe2"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Parse.ErrorReport.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "950e22f4ab1c437c8bcd943a7d8fce22"
+      ]
+    },
+    {
+      "Name": "LinkingTestFile_Error Report.html",
+      "ReferenceType": "External",
+      "Nodes": [
+        "8b1367d5500240748f585d162ada8ae7"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "7588e3a69db7424e9cb03fe8c41a869a",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2367.6527191791993,
+        "Y": 1386.6691374817356
+      },
+      {
+        "Id": "23636aafb654469b8e0d8e1acc9fefc2",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2370.349956650924,
+        "Y": 1719.192525483971
+      },
+      {
+        "Id": "ee2831f399cc4470890ff3fbe966a240",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2370.8321660148235,
+        "Y": 2014.1085102165837
+      },
+      {
+        "Id": "950e22f4ab1c437c8bcd943a7d8fce22",
+        "Name": "Parse.ErrorReport",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1839.584360765633,
+        "Y": 1713.7408435892874
+      },
+      {
+        "Id": "8b1367d5500240748f585d162ada8ae7",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1054.2863940780285,
+        "Y": 1711.6328156997365
+      },
+      {
+        "Id": "46c9f199731b414ab790c343036b5839",
+        "Name": "File From Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1574.918789318811,
+        "Y": 1712.416859400439
+      },
+      {
+        "Id": "66e1c40de0084c61817c0a82066720b7",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2365.4061173007935,
+        "Y": 2311.6352091799527
+      }
+    ],
+    "Annotations": [],
+    "X": -775.188638155455,
+    "Y": -1144.9860995060726,
+    "Zoom": 0.8967134515933727
+  }
+}

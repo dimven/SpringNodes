@@ -1,0 +1,260 @@
+{
+  "Uuid": "d89d0622-ec6b-4c53-b908-e4192410295e",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "IsCurtainWall",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "8b94345766e54985908ee25c3d28dc39",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "57e673ebcfae455a85b0d22b17af025a",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bc212f0c95df466684c8a48a4f32fa2b",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1e205815-6fb3-471a-9276-a942d3cfd25e",
+      "FunctionType": "Graph",
+      "Id": "182ae980031f4a138fac4e88b9c4d7d8",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "cafc84583e204d70950081da2c26b30a",
+          "Name": "wall",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4c7c339596bb40dd8673f762b93eb7f7",
+          "Name": "bool",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns true if the wall is a curtain wall."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Categories, DSRevitNodesUI",
+      "SelectedIndex": 746,
+      "SelectedString": "OST_Walls",
+      "Id": "2caf320934b647cbbef2d6a8f37a8865",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1b5f94e67ca2406b9f17d3c2830d827f",
+          "Name": "Category",
+          "Description": "The selected Category.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All built-in categories."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.ElementsOfCategory, DSRevitNodesUI",
+      "Id": "3acfd2d7719a491fb4322261139a394a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "12d7f898486d4db6aa6d043d838ae98a",
+          "Name": "Category",
+          "Description": "The Category",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "91dff0a1dfe94f8eb512a08aed5ba7d4",
+          "Name": "Elements",
+          "Description": "An element class.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Get all elements of the specified category from the model."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4c7c339596bb40dd8673f762b93eb7f7",
+      "End": "57e673ebcfae455a85b0d22b17af025a",
+      "Id": "534500fecc2449fa8479966fa6d684f8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1b5f94e67ca2406b9f17d3c2830d827f",
+      "End": "12d7f898486d4db6aa6d043d838ae98a",
+      "Id": "6f6d4016800d45b4ade700650feab172",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "91dff0a1dfe94f8eb512a08aed5ba7d4",
+      "End": "cafc84583e204d70950081da2c26b30a",
+      "Id": "f355d1ed31b84e179c13b3c41245dc6c",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "1e205815-6fb3-471a-9276-a942d3cfd25e"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Wall.IsCurtainWall.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "182ae980031f4a138fac4e88b9c4d7d8"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "8b94345766e54985908ee25c3d28dc39",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2820.2653870687527,
+        "Y": 3367.5760171362926
+      },
+      {
+        "Id": "182ae980031f4a138fac4e88b9c4d7d8",
+        "Name": "Wall.IsCurtainWall",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2467.847394689105,
+        "Y": 3365.3902251395198
+      },
+      {
+        "Id": "2caf320934b647cbbef2d6a8f37a8865",
+        "Name": "Categories",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1722.8389810592676,
+        "Y": 3367.105217598869
+      },
+      {
+        "Id": "3acfd2d7719a491fb4322261139a394a",
+        "Name": "All Elements of Category",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2110.692848910502,
+        "Y": 3367.105217598869
+      }
+    ],
+    "Annotations": [],
+    "X": -1077.7414445251593,
+    "Y": -1640.3786047569124,
+    "Zoom": 0.6650096957053514
+  }
+}

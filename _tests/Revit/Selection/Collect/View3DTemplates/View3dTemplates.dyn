@@ -1,0 +1,246 @@
+{
+  "Uuid": "6f521cbe-f719-4719-80dc-ca5f5ac0e56c",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "View3dTemplates",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "b5547b6fde8e4146aa54f6f402562e4e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c2424b6959df49828921cb3044ae1ae5",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "35bcfa68448b429387e2ea33acb805bd",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "fb21dc93d54c43869ed9413cfae34de9",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "5dc7626fd5a447149305569b08ebb5cb",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "561fda8f27e04c7bb9cac9b1495a8fad",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "4bb75f2217a1492287ab7588b26ba4b2",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "895e683e9d5e4fdea3f67d60dd5c8001",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "5b93bb97-5c57-4f7f-adfe-194a9168c8fe",
+      "FunctionType": "Graph",
+      "Id": "bdf5ade5f19b4075928591a27f874533",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "ef7845cff73e4932b65787bcae5cf2ee",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "707347924e08429d941a7078cef9edf2",
+          "Name": "Templates",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Gets all 3d view templates and returns them to Dynamo as generic Elements"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "895e683e9d5e4fdea3f67d60dd5c8001",
+      "End": "ef7845cff73e4932b65787bcae5cf2ee",
+      "Id": "23610b4b02aa43a99e4416a65abb5344",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "707347924e08429d941a7078cef9edf2",
+      "End": "c2424b6959df49828921cb3044ae1ae5",
+      "Id": "87654c7a59fc4dca98fc8454442eb6c8",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "5b93bb97-5c57-4f7f-adfe-194a9168c8fe"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Collect.View3DTemplates.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "bdf5ade5f19b4075928591a27f874533"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b5547b6fde8e4146aa54f6f402562e4e",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1733.8790236957652,
+        "Y": 521.2663251592571
+      },
+      {
+        "Id": "fb21dc93d54c43869ed9413cfae34de9",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1258.4972413017429,
+        "Y": 1110.5358245857
+      },
+      {
+        "Id": "4bb75f2217a1492287ab7588b26ba4b2",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1097.22411401332,
+        "Y": 525.4850146343649
+      },
+      {
+        "Id": "bdf5ade5f19b4075928591a27f874533",
+        "Name": "Collect.View3DTemplates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1387.8742901317587,
+        "Y": 523.0107127028988
+      }
+    ],
+    "Annotations": [],
+    "X": -718.5812181575436,
+    "Y": -92.62251908509981,
+    "Zoom": 0.7526721162286302
+  }
+}

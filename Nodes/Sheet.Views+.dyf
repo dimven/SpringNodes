@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Query",
   "Description": "Extracts all views and schedules (minus the revision schedule) placed on the input sheet (or sheets).\r\nWill be depreciated once the bult in node works with all plan types.",
-  "Name": "ꟿ Sheet.Views+",
+  "Name": "Sheet.Views+",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nsheets = UnwrapElement(tolist(IN[0]))\r\nsheet_views, sheets_scheds = [], []\r\nrev_str = \"<Revision Schedule>\"\r\nsched_dict = dict()\r\nfec1 = FilteredElementCollector(doc).OfClass(ScheduleSheetInstance)\r\nfor s in fec1:\r\n\tif rev_str not in s.Name:\r\n\t\tkey = s.OwnerViewId.IntegerValue\r\n\t\tif key not in sched_dict:\r\n\t\t\tsched_dict[key] = [s]\r\n\t\telse:\r\n\t\t\tsched_dict[key].append(s)\r\n\r\nfor i in xrange(len(sheets) ):\r\n\tviewsid = sheets[i].GetAllPlacedViews()\r\n\tviews = [doc.GetElement(v).ToDSType(True) for v in viewsid]\r\n\tsheet_views.append(views)\r\n\ts_id = sheets[i].Id.IntegerValue\r\n\tscheds = sched_dict[s_id] if s_id in sched_dict else []\r\n\tsheets_scheds.append(scheds)\r\nOUT = sheet_views, sheets_scheds",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    sheets = UnwrapElement(tolist(IN[0]))\r\n\r\n    rev_str = \"<Revision Schedule>\"\r\n    sched_dict = {}\r\n\r\n    fec1 = FilteredElementCollector(doc).OfClass(ScheduleSheetInstance)\r\n    for s in fec1:\r\n        if rev_str not in s.Name:\r\n            key = s.OwnerViewId.Value\r\n            if key not in sched_dict:\r\n                sched_dict[key] = [s]\r\n            else:\r\n                sched_dict[key].append(s)\r\n\r\n    sheet_views, sheets_scheds = [], []\r\n    for sheet in sheets:\r\n        viewsid = sheet.GetAllPlacedViews()\r\n        views = [doc.GetElement(v).ToDSType(True) for v in viewsid]\r\n        sheet_views.append(views)\r\n        s_id = sheet.Id.Value\r\n        scheds = sched_dict[s_id] if s_id in sched_dict else []\r\n        sheets_scheds.append(scheds)\r\n\r\n    OUT = sheet_views, sheets_scheds\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "6938582023994edebdb28234cad8914e",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "3893d35302ee479ea9a573f549281965",
@@ -39,11 +40,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "sheet",
         "TypeName": "var",
@@ -52,6 +52,7 @@
         "Description": ""
       },
       "Id": "b96658de7b6b44de9e6b4d055d2a1a1d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -69,10 +70,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "view(s)",
       "Id": "54fd61a2567d4aa193a65204e68d5f2e",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "244351dfd8cb44e299161fa36dd930f0",
@@ -90,9 +91,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "o[0];\no[1];",
       "Id": "60466e0712014fc88f6b20ad7e3e9d7d",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "50600c25363147afa402c4f92e5d07d6",
@@ -107,8 +107,8 @@
       "Outputs": [
         {
           "Id": "aa1db0d32a4548a9953cd2dc4aae380c",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(o, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -116,8 +116,8 @@
         },
         {
           "Id": "87de650201d442d2b2202834dbfe18d0",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(o, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -125,14 +125,15 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "o[0];\no[1];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "schedule(s)",
       "Id": "3561f338fae544c29ee05537963dcaa0",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2a4b788736d542148a5daf2f6dc61777",
@@ -153,102 +154,109 @@
     {
       "Start": "6b6fc71cccbc4878b605de7f7cb5f548",
       "End": "50600c25363147afa402c4f92e5d07d6",
-      "Id": "26f1de1b04274af29bac5ac0a08bac64"
+      "Id": "26f1de1b04274af29bac5ac0a08bac64",
+      "IsHidden": "False"
     },
     {
       "Start": "93c7a7ce4e90425dac8c942928f1990d",
       "End": "3893d35302ee479ea9a573f549281965",
-      "Id": "c997759982b7423da759eeb09fd49a7e"
+      "Id": "c997759982b7423da759eeb09fd49a7e",
+      "IsHidden": "False"
     },
     {
       "Start": "aa1db0d32a4548a9953cd2dc4aae380c",
       "End": "244351dfd8cb44e299161fa36dd930f0",
-      "Id": "ea07dc5e9c914c61a971fe99cc71c28f"
+      "Id": "ea07dc5e9c914c61a971fe99cc71c28f",
+      "IsHidden": "False"
     },
     {
       "Start": "87de650201d442d2b2202834dbfe18d0",
       "End": "2a4b788736d542148a5daf2f6dc61777",
-      "Id": "11452f4d029943b1b59de2068d98d1ed"
+      "Id": "11452f4d029943b1b59de2068d98d1ed",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 81.9612045288086,
-      "EyeY": 60.6141242980957,
-      "EyeZ": 62.268115997314453,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "6938582023994edebdb28234cad8914e",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 123.6,
-        "Y": 0.799999999999983
+        "Y": 0.338399399919183
       },
       {
         "Id": "b96658de7b6b44de9e6b4d055d2a1a1d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -26.8418672045012,
-        "Y": 1.7659123160856
+        "ShowGeometry": true,
+        "X": -124.35828063556696,
+        "Y": -0.5019112520787203
       },
       {
         "Id": "54fd61a2567d4aa193a65204e68d5f2e",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 389.052475913393,
-        "Y": -24.6131189783483
+        "ShowGeometry": true,
+        "X": 601.8499207261449,
+        "Y": -150.85529760616208
       },
       {
         "Id": "60466e0712014fc88f6b20ad7e3e9d7d",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 263.642680558776,
-        "Y": 6.45792068110116
+        "ShowGeometry": true,
+        "X": 367.96256469433473,
+        "Y": -0.3455500233917945
       },
       {
         "Id": "3561f338fae544c29ee05537963dcaa0",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 391.288406513814,
-        "Y": 33.3220693301947
+        "ShowGeometry": true,
+        "X": 602.5739689477898,
+        "Y": 94.93127626532547
       }
     ],
     "Annotations": [],
-    "X": -200.451664516203,
-    "Y": 7.44775048137922,
-    "Zoom": 4.0
+    "X": -23.40488602082928,
+    "Y": 343.0305139172583,
+    "Zoom": 2.033966971873106
   }
 }

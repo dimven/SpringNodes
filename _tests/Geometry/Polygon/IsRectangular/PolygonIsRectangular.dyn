@@ -1,0 +1,647 @@
+{
+  "Uuid": "546f04aa-8276-48f4-ab40-89f254864f39",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "PolygonIsRectangular",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d30e62df511e403ca20ce923703e9dce",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "48368ef2e85647718ce8e809ceb93112",
+          "Name": "circle",
+          "Description": "Circle",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "67df8121ce1b4aa1b4e7e40c62bee9b5",
+          "Name": "numberSides",
+          "Description": "int\nDefault value : 5",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "33ff09478bd94cc8aea92d499a2856b0",
+          "Name": "Polygon",
+          "Description": "Polygon",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Polygon.RegularPolygon@Autodesk.DesignScript.Geometry.Circle,int",
+      "Replication": "Auto",
+      "Description": "Construct an inscribed Polygon Curve within a circle.\n\nPolygon.RegularPolygon (circle: Circle, numberSides: int = 5): Polygon"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "f4a308a1b2c64de5b37523985e92724a",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "692704b801c14ead8ea6401d1cb63eb1",
+          "Name": "centerPoint",
+          "Description": "Center point of circle\n\nPoint\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "592e2ec3dc094ec48c4c5497741f47d2",
+          "Name": "radius",
+          "Description": "Radius\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ee78678354aa4cd0899c07fa71f20271",
+          "Name": "Circle",
+          "Description": "Circle created with center point and radius",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Circle.ByCenterPointRadius@Autodesk.DesignScript.Geometry.Point,double",
+      "Replication": "Auto",
+      "Description": "Creates a Circle with input center Point and radius in the world XY plane, with world Z as normal.\n\nCircle.ByCenterPointRadius (centerPoint: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), radius: double = 1): Circle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "9336e01f-c9ab-475b-ad3c-927b537d84a0",
+      "FunctionType": "Graph",
+      "Id": "f6b9d796d0d74d5d98d26f69ca3358aa",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "470b10a57e784528ab1831d16d5e7c57",
+          "Name": "poly",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "36c48d73971541b180639c5ce71a0217",
+          "Name": "isSquare",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "835fe9512cf344159225fe9e86b719c1",
+          "Name": "isRectangle",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b2edbeedb47b4ea3b334bc239f4fb489",
+          "Name": "XOR",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Determines if a polygon (or a polycurve) is rectangular or square. If you want to differenciate between square and rectangular polys, use the XOR output."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 173.33333333333334,
+      "WatchHeight": 83.33333333333333,
+      "Id": "5c17d8e0ad6e4a728265d06e5bca41b0",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "a42a49f4494b4694a94085efca6bc9f4",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "49e189cfba6547e99acae78cc98b2535",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 169.33333333333334,
+      "WatchHeight": 83.33333333333333,
+      "Id": "bf4cb3b62ab443e0aa59785449d2227a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "ed28f8a5f6de470181ca6ee40ed0d51c",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "94e731162c8e4492af2949d422af4591",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 177.33333333333334,
+      "WatchHeight": 84.0,
+      "Id": "ff91d419b9014a9c834967b1a8db0e27",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "74bfab9e104a4fc4a664a4016353f44e",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a4f38588f7034a90a3ed58d2cd6922ca",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "261be6d57e78488791e2399bdeec113e",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "635bb2f5094541a89ad52df756629e9b",
+          "Name": "width",
+          "Description": "Width of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "324bec9f2b68423495a2a88bde8638da",
+          "Name": "length",
+          "Description": "Length of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6ad62ffd262c4860942a62ee6bf80526",
+          "Name": "Rectangle",
+          "Description": "Rectangle created by width and length",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Rectangle.ByWidthLength@double,double",
+      "Replication": "Auto",
+      "Description": "Create a Rectangle centered at the WCS origin in the WCS XY Plane, with specified width (X Axis length), and length (Y Axis length).\n\nRectangle.ByWidthLength (width: double = 1, length: double = 1): Rectangle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "9336e01f-c9ab-475b-ad3c-927b537d84a0",
+      "FunctionType": "Graph",
+      "Id": "b6bf41b631464cb1a193e95079458484",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "973fcf872ae746c8b1dfd10d0068ef63",
+          "Name": "poly",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ae1f80912d514c24b0b31f9a9a4c34ee",
+          "Name": "isSquare",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "21f9013a209d42abbf1f3a82c86d4e0a",
+          "Name": "isRectangle",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "85c8258193b342248b8c6024777c7df3",
+          "Name": "XOR",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Determines if a polygon (or a polycurve) is rectangular or square. If you want to differenciate between square and rectangular polys, use the XOR output."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 208.0,
+      "WatchHeight": 83.33333333333333,
+      "Id": "824b6eaf79d54357b59ba4b3e6f67ed8",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "d557f429d0c54be8b3effeac52f7c452",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "35fc2da702874b50809184eba82369da",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 196.66666666666666,
+      "WatchHeight": 84.0,
+      "Id": "b288cf7b4cbb44e4a6b0433c6a1e4b06",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "16c633e1f5204fbfb37bb37eabd1b570",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c45784d045f9445ab2da5fc2a3efce81",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 198.66666666666666,
+      "WatchHeight": 83.33333333333333,
+      "Id": "b2ce936678ce460794d5f0746c16ab3e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "f8072cb89ba4416d80bc8beb79e06d73",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "173ca39248df4a0db6fdb53fc4bb522f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "33ff09478bd94cc8aea92d499a2856b0",
+      "End": "470b10a57e784528ab1831d16d5e7c57",
+      "Id": "e362f33fcfc6430da16e12de28ac6381",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ee78678354aa4cd0899c07fa71f20271",
+      "End": "48368ef2e85647718ce8e809ceb93112",
+      "Id": "887eece5f7ce4eb19e899d1e79f873c1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "36c48d73971541b180639c5ce71a0217",
+      "End": "ed28f8a5f6de470181ca6ee40ed0d51c",
+      "Id": "546cdf378ff24a08bcb3f23b989fe082",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "835fe9512cf344159225fe9e86b719c1",
+      "End": "a42a49f4494b4694a94085efca6bc9f4",
+      "Id": "df7bd638376b4556ad38a32b1979c1aa",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2edbeedb47b4ea3b334bc239f4fb489",
+      "End": "74bfab9e104a4fc4a664a4016353f44e",
+      "Id": "b9d9507f2b894c71a17c9a33454fe916",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6ad62ffd262c4860942a62ee6bf80526",
+      "End": "973fcf872ae746c8b1dfd10d0068ef63",
+      "Id": "2a12dfbbf190469e90b51608881cf835",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ae1f80912d514c24b0b31f9a9a4c34ee",
+      "End": "d557f429d0c54be8b3effeac52f7c452",
+      "Id": "ea286e1ca1b84c4f847848767e6626d1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "21f9013a209d42abbf1f3a82c86d4e0a",
+      "End": "16c633e1f5204fbfb37bb37eabd1b570",
+      "Id": "88521c0bf65e47ab91b248b2be6a5ec5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "85c8258193b342248b8c6024777c7df3",
+      "End": "f8072cb89ba4416d80bc8beb79e06d73",
+      "Id": "fb72e7e143ce459788e77ab7423d266c",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "9336e01f-c9ab-475b-ad3c-927b537d84a0"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Polygon.IsRectangular.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "f6b9d796d0d74d5d98d26f69ca3358aa",
+        "b6bf41b631464cb1a193e95079458484"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d30e62df511e403ca20ce923703e9dce",
+        "Name": "Polygon.RegularPolygon",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 367.850274435326,
+        "Y": 293.5104411698207
+      },
+      {
+        "Id": "f4a308a1b2c64de5b37523985e92724a",
+        "Name": "Circle.ByCenterPointRadius",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": -38.86422145643485,
+        "Y": 294.9010788124781
+      },
+      {
+        "Id": "f6b9d796d0d74d5d98d26f69ca3358aa",
+        "Name": "Polygon.IsRectangular",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 736.8289653534559,
+        "Y": 302.2477107403749
+      },
+      {
+        "Id": "5c17d8e0ad6e4a728265d06e5bca41b0",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1099.754055237135,
+        "Y": 335.28993703939113
+      },
+      {
+        "Id": "bf4cb3b62ab443e0aa59785449d2227a",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1092.1973901192762,
+        "Y": 136.43748263614833
+      },
+      {
+        "Id": "ff91d419b9014a9c834967b1a8db0e27",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1102.6661340003368,
+        "Y": 512.4431656064073
+      },
+      {
+        "Id": "261be6d57e78488791e2399bdeec113e",
+        "Name": "Rectangle.ByWidthLength",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 374.33774138100216,
+        "Y": 875.7088398875009
+      },
+      {
+        "Id": "b6bf41b631464cb1a193e95079458484",
+        "Name": "Polygon.IsRectangular",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 725.9118824733108,
+        "Y": 873.8209361717372
+      },
+      {
+        "Id": "824b6eaf79d54357b59ba4b3e6f67ed8",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1081.2803072391312,
+        "Y": 708.0107080675107
+      },
+      {
+        "Id": "b288cf7b4cbb44e4a6b0433c6a1e4b06",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1088.83697235699,
+        "Y": 906.8631624707534
+      },
+      {
+        "Id": "b2ce936678ce460794d5f0746c16ab3e",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1091.7490511201918,
+        "Y": 1084.0163910377696
+      }
+    ],
+    "Annotations": [],
+    "X": 504.7631044325449,
+    "Y": 318.9906914023787,
+    "Zoom": 0.5488569341499132
+  }
+}

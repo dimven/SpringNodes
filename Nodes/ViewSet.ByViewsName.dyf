@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Creates a set of views(or sheets) for printing. If the set exists, set Overwrite to true to replace it.",
-  "Name": "ꟿ ViewSet.ByViewsName",
+  "Name": "ViewSet.ByViewsName",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2015, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n#code inspired by Harry Mattison\r\n#https://boostyourbim.wordpress.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\") : return obj1\r\n\telse : return [obj1]\r\n\r\ndef first(obj1):\r\n\tif hasattr(obj1,'__iter__') : return obj1[0]\r\n\telse : return obj1\r\n\r\nviews = UnwrapElement(tolist(IN[0]))\r\nname1 = str(first(IN[1]) )\r\noverwrite = IN[2]\r\nvs_exists = None\r\n\r\nfec = FilteredElementCollector(doc).OfClass(ViewSheetSet).GetElementIterator()\r\nfec.Reset()\r\nfor f in fec:\r\n\tif f.Name == name1:\r\n\t\tvs_exists = f\r\n\t\tbreak\r\nif vs_exists != None and overwrite:\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tdoc.Delete(vs_exists.Id)\r\n\tTransactionManager.Instance.TransactionTaskDone()\r\n\tvs_exists = None\r\nelif vs_exists != None and not overwrite:\r\n\tOUT = \"There's a ViewSet with the same name.\\nSet Overwrite to true to continue.\"\r\nif vs_exists == None:\r\n\tvs1 = ViewSet()\r\n\tfor v in views: (vs1.Insert(v))\r\n\tprintMan = doc.PrintManager\r\n\tprintMan.PrintRange = PrintRange.Select\r\n\tviewSS = printMan.ViewSheetSetting\r\n\ttry:\r\n\t\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\t\tviewSS.CurrentViewSheetSet.Views = vs1\r\n\t\tviewSS.SaveAs(name1)\r\n\t\tTransactionManager.Instance.TransactionTaskDone()\r\n\t\tOUT = \"ViewSet created with %s views inside.\" %len(views)\r\n\texcept:\r\n\t\tOUT = \"The ViewSet could not be created\"",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2015, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n# code inspired by Harry Mattison\r\n# https://boostyourbim.wordpress.com\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef first(obj1):\r\n    return obj1[0] if isinstance(obj1, list) else obj1\r\n\r\ntry:\r\n    views = UnwrapElement(tolist(IN[0]))\r\n    name1 = str(first(IN[1]))\r\n    overwrite = IN[2]\r\n\r\n    vs_exists = None\r\n    fec = FilteredElementCollector(doc).OfClass(ViewSheetSet)\r\n    for f in fec:\r\n        if f.Name == name1:\r\n            vs_exists = f\r\n            break\r\n\r\n    if vs_exists is not None and overwrite:\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        doc.Delete(vs_exists.Id)\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n        vs_exists = None\r\n    elif vs_exists is not None and not overwrite:\r\n        OUT = \"There's a ViewSet with the same name.\\nSet Overwrite to true to continue.\"\r\n\r\n    if vs_exists is None:\r\n        vs1 = ViewSet()\r\n        for v in views:\r\n            vs1.Insert(v)\r\n        printMan = doc.PrintManager\r\n        printMan.PrintRange = PrintRange.Select\r\n        viewSS = printMan.ViewSheetSetting\r\n        try:\r\n            TransactionManager.Instance.EnsureInTransaction(doc)\r\n            viewSS.CurrentViewSheetSet.Views = vs1\r\n            viewSS.SaveAs(name1)\r\n            TransactionManager.Instance.TransactionTaskDone()\r\n            OUT = \"ViewSet created with %s views inside.\" % len(views)\r\n        except:\r\n            OUT = \"The ViewSet could not be created\"\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "f404bea1281a496dbb41f364a0b8c16e",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "70d0547af24d4ae4b246722fd6af63bb",
@@ -57,11 +58,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "views",
         "TypeName": "var",
@@ -70,6 +70,7 @@
         "Description": ""
       },
       "Id": "dea39b45c1e84169b63716def36587d8",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -87,7 +88,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "setName",
         "TypeName": "var",
@@ -96,6 +96,7 @@
         "Description": ""
       },
       "Id": "db2a615503ae4ef5a30f5fb96f4f73e7",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -113,7 +114,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "Overwrite",
         "TypeName": "bool",
@@ -122,6 +122,7 @@
         "Description": ""
       },
       "Id": "6e9ad46ed238419ab92cb844af2b4c5e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -139,10 +140,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "result",
       "Id": "735f552e41cd4c7eb3c59199e59dbbc2",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "641a2057ddc54a519642118bb289640b",
@@ -163,102 +164,109 @@
     {
       "Start": "5dafb4c2ae36470abf38082d2864f11e",
       "End": "641a2057ddc54a519642118bb289640b",
-      "Id": "82cca21648e8429a988ca3088841d5d9"
+      "Id": "82cca21648e8429a988ca3088841d5d9",
+      "IsHidden": "False"
     },
     {
       "Start": "80b0e974e0df4c8f8c761e702c80431d",
       "End": "70d0547af24d4ae4b246722fd6af63bb",
-      "Id": "934e031128024f16a55daaf7473e24a4"
+      "Id": "934e031128024f16a55daaf7473e24a4",
+      "IsHidden": "False"
     },
     {
       "Start": "e5971cb625d24fd88ceffac1b44a606e",
       "End": "4be726c2dc6b45eb8c1a7aa4ea151df2",
-      "Id": "dca23578512e4ff5b4ecb1b5ab9ffde9"
+      "Id": "dca23578512e4ff5b4ecb1b5ab9ffde9",
+      "IsHidden": "False"
     },
     {
       "Start": "2ef0bf1a802c413db3421407cebd47c3",
       "End": "a3f123f9f67742d0a1233bcc4e5247ed",
-      "Id": "f46f38aab1a24de593cbc6db289faace"
+      "Id": "f46f38aab1a24de593cbc6db289faace",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "f404bea1281a496dbb41f364a0b8c16e",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 250.0,
+        "ShowGeometry": true,
+        "X": 248.66666666666674,
         "Y": 0.0
       },
       {
         "Id": "dea39b45c1e84169b63716def36587d8",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -22.0,
+        "Y": -128.0
       },
       {
         "Id": "db2a615503ae4ef5a30f5fb96f4f73e7",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -0.800000000000011,
-        "Y": 62.8
+        "ShowGeometry": true,
+        "X": -25.46666666666664,
+        "Y": 38.13333333333331
       },
       {
         "Id": "6e9ad46ed238419ab92cb844af2b4c5e",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 123.2
+        "ShowGeometry": true,
+        "X": -104.0,
+        "Y": 202.53333333333325
       },
       {
         "Id": "735f552e41cd4c7eb3c59199e59dbbc2",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 401.0,
-        "Y": 0.800000000000011
+        "ShowGeometry": true,
+        "X": 489.00000000000006,
+        "Y": 3.466666666666697
       }
     ],
     "Annotations": [],
-    "X": 104.8,
-    "Y": 104.8,
+    "X": 295.4666666666665,
+    "Y": 369.46666666666664,
     "Zoom": 1.0
   }
 }

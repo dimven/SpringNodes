@@ -1,9 +1,9 @@
 {
-  "Uuid": "42e197a8-bd0d-494b-ad44-e6f2929babe4",
+  "Uuid": "d4821903-d989-43b9-b8de-11acec154052",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Scales the bounding box by a fixed distance.",
-  "Name": "ꟿ BoundingBox.ScaleByDistance",
+  "Name": "BoundingBox.ScaleByDistance",
   "ElementResolver": {
     "ResolutionMap": {
       "String": {
@@ -29,12 +29,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "19b50ed26ac744bd88dfb1d1486745d0",
       "NodeType": "CodeBlockNode",
-      "Code": "v = Autodesk.Vector.ByCoordinates(s, s, s);\na = box.MinPoint.Subtract(v);\nb = box.MaxPoint.Add(v);\nnewBox = BoundingBox.ByCorners(a, b);",
-      "Id": "f91cc33b52cf41489d42fc689dd01e00",
       "Inputs": [
         {
-          "Id": "a19ee18d4c48436a93bed2dd5230d277",
+          "Id": "ee620045070640cc9e1ce710e40a4730",
           "Name": "s",
           "Description": "s",
           "UsingDefaultValue": false,
@@ -43,7 +42,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ba75baaf2cbc4350871a5d573d009da9",
+          "Id": "188a8dd88250457dbc51c9ed01d46429",
           "Name": "box",
           "Description": "box",
           "UsingDefaultValue": false,
@@ -54,7 +53,7 @@
       ],
       "Outputs": [
         {
-          "Id": "849d36fad8434d19be7d7ad418f361d8",
+          "Id": "0df47c8a85db4ad3961c3e154af38461",
           "Name": "",
           "Description": "v",
           "UsingDefaultValue": false,
@@ -63,7 +62,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e87a61ab517046d2a6441faa625e9c0a",
+          "Id": "ec9db965fefd4cb78883ce952a8b70c0",
           "Name": "",
           "Description": "a",
           "UsingDefaultValue": false,
@@ -72,7 +71,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e1b6478abc2341ce8204aa55d5d6b543",
+          "Id": "e509189148124f3c9829b24fd42b5157",
           "Name": "",
           "Description": "b",
           "UsingDefaultValue": false,
@@ -81,7 +80,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "34becaad492b4866880460d1fd8b057d",
+          "Id": "b8a5c62b351641cf9589f3ea2f650d31",
           "Name": "",
           "Description": "newBox",
           "UsingDefaultValue": false,
@@ -91,11 +90,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "v = Autodesk.Vector.ByCoordinates(s, s, s);\na = box.MinPoint.Subtract(v);\nb = box.MaxPoint.Add(v);\nnewBox = BoundingBox.ByCorners(a, b);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "boundingBox",
         "TypeName": "Autodesk.DesignScript.Geometry.BoundingBox",
@@ -103,11 +102,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "35c722e096b94b758525ca8e5e4781f6",
+      "Id": "875f1d464e1c4c258c0e5672699b99d7",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "04bb6e3d9a47451bac1e1db0ccc6b84f",
+          "Id": "486a5fa64a0d4110b3e4ec89eadc7c6f",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -121,7 +121,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "distance",
         "TypeName": "double",
@@ -129,11 +128,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "ff497be12a0f407f9dbb89b9dc71a1e1",
+      "Id": "2e418b99308141ccaa74b61754b60a60",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "e9a26fb1dfa74464866c23aa5ccd79e8",
+          "Id": "e5396026b08e413d8213ef0ce843aaa2",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -147,13 +147,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "boundingBox",
-      "Id": "686edcb5d76741e68f756e504b32d97c",
+      "Id": "02729b485414429d880ae50a1fb97a9f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "0bbf655929d4491d9040b55ae0631d25",
+          "Id": "033eed7cba5a407da1e34b862480abae",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -169,33 +169,39 @@
   ],
   "Connectors": [
     {
-      "Start": "34becaad492b4866880460d1fd8b057d",
-      "End": "0bbf655929d4491d9040b55ae0631d25",
-      "Id": "31909d0fc38c4782909c8f52bddfabd5"
+      "Start": "b8a5c62b351641cf9589f3ea2f650d31",
+      "End": "033eed7cba5a407da1e34b862480abae",
+      "Id": "f444026c8e034ff38338fd7168631a9a",
+      "IsHidden": "False"
     },
     {
-      "Start": "04bb6e3d9a47451bac1e1db0ccc6b84f",
-      "End": "ba75baaf2cbc4350871a5d573d009da9",
-      "Id": "96e273d580c248dd9e6e8ca739b33c94"
+      "Start": "486a5fa64a0d4110b3e4ec89eadc7c6f",
+      "End": "188a8dd88250457dbc51c9ed01d46429",
+      "Id": "488c3cefb94a4c56b19b1aed0f6cfb46",
+      "IsHidden": "False"
     },
     {
-      "Start": "e9a26fb1dfa74464866c23aa5ccd79e8",
-      "End": "a19ee18d4c48436a93bed2dd5230d277",
-      "Id": "be0635808d51408a916cc47e4e3035c7"
+      "Start": "e5396026b08e413d8213ef0ce843aaa2",
+      "End": "ee620045070640cc9e1ce710e40a4730",
+      "Id": "a48aa717fe364476ab56f9d9affe99f0",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -206,51 +212,52 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "f91cc33b52cf41489d42fc689dd01e00",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "19b50ed26ac744bd88dfb1d1486745d0",
         "Name": "Code Block",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
-      },
-      {
-        "Id": "35c722e096b94b758525ca8e5e4781f6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 11.0,
+        "Y": -44.0
+      },
+      {
+        "Id": "875f1d464e1c4c258c0e5672699b99d7",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
-      },
-      {
-        "Id": "ff497be12a0f407f9dbb89b9dc71a1e1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -588.0,
+        "Y": 98.0
+      },
+      {
+        "Id": "2e418b99308141ccaa74b61754b60a60",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
-      },
-      {
-        "Id": "686edcb5d76741e68f756e504b32d97c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -289.0,
+        "Y": -71.0
+      },
+      {
+        "Id": "02729b485414429d880ae50a1fb97a9f",
         "Name": "Output",
-        "ShowGeometry": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 601.0,
+        "Y": 4.0
       }
     ],
     "Annotations": [],
-    "X": 0.0,
-    "Y": 0.0,
+    "X": 678.0,
+    "Y": 345.0,
     "Zoom": 1.0
   }
 }

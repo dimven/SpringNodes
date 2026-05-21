@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Filters the input elements by their category name. You can input multiple category names.",
-  "Name": "ꟿ List.FilterByCategoryName",
+  "Name": "List.FilterByCategoryName",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -18,7 +18,7 @@
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
       "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nfrom itertools import imap\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = tolist(IN[0])\r\nfilter = map(str.lower, imap(str, tolist(IN[1]) ) )\r\nin1, out1, nulls = [], [], []\r\nOUT = in1, out1, nulls\r\n\r\nfor e in elements:\r\n\tif e is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tc1 = UnwrapElement(e).Category\r\n\tif c1 is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tn1 = c1.Name.lower()\r\n\tif any(f in n1 for f in filter):\r\n\t\tin1.append(e)\r\n\telse:\r\n\t\tout1.append(e)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nfrom itertools import imap\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = tolist(IN[0])\r\nfilter = map(str.lower, imap(str, tolist(IN[1]) ) )\r\nin1, out1, nulls = [], [], []\r\nOUT = in1, out1, nulls\r\n\r\nfor e in elements:\r\n\tif e is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tc1 = UnwrapElement(e).Category\r\n\tif c1 is None:\r\n\t\tnulls.append(e)\r\n\t\tcontinue\r\n\t\r\n\tn1 = c1.Name.lower()\r\n\tif any(f in n1 for f in filter):\r\n\t\tin1.append(e)\r\n\telse:\r\n\t\tout1.append(e)",
       "VariableInputPorts": true,
       "Id": "50269127bcc64739a94f81962ad06018",
       "Inputs": [

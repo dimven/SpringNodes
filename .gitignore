@@ -1,0 +1,17 @@
+# IDE / tooling
+.vs/
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+
+# Revit binary files
+_tests/Revit.sat
+*.rvt
+*.rfa
+*.rte
+*.rft
+*.rws
+*.slog
+
+# Accidental copy artefacts
+*- Copy.*

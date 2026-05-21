@@ -1,0 +1,450 @@
+{
+  "Uuid": "01e55134-8f13-4ae6-89ab-96d2158403d7",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Polygon3DArea",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "DesignScript.Builtin.Dictionary": {
+        "Key": "DesignScript.Builtin.Dictionary",
+        "Value": "DesignScriptBuiltin.dll"
+      },
+      "List.__Create": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "356b7cef-58d4-4713-abc0-8867c17ca0d9",
+      "FunctionType": "Graph",
+      "Id": "a73052a0b64b4c4e9a076b1f60e339b3",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "92a8e49b81b147318a0ec50df4fc10ad",
+          "Name": "polygon",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7b25a93ab9cb426c83dbe98a6b7ecc50",
+          "Name": "area",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the planar area of the input polygon(s) in euclidean space. Not accurate for self-intersecting polys."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "a55deeba4733410eb877bc09272a80b8",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "a52316d47f314f648cad94c2175e054a",
+          "Name": "p1",
+          "Description": "1st corner point of rectangle\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5cdac52cf7704cb2853033739807dff6",
+          "Name": "p2",
+          "Description": "2nd corner point of rectangle\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "75843391ccc642579938ed921b298e89",
+          "Name": "p3",
+          "Description": "3rd corner point of rectangle\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "28795d698163471db40f8a74c9232dba",
+          "Name": "p4",
+          "Description": "4th corner point of rectangle\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "485f5a8a9ca146b685272ad40fad9570",
+          "Name": "Rectangle",
+          "Description": "Rectangle created by corner points",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Rectangle.ByCornerPoints@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "Replication": "Auto",
+      "Description": "Create a Rectangle by four corner Points.\n\nRectangle.ByCornerPoints (p1: Point, p2: Point, p3: Point, p4: Point): Rectangle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "5a4e31de-51f3-49ed-bbc1-9415ac2bb15e",
+      "FunctionType": "Graph",
+      "Id": "ed3435886a8a4b82bc581ff7335f6c20",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "80db722981454426b6a662ba9b2108ee",
+          "Name": "polygon",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "317fcec73b774b6799c94d0dc5ffde06",
+          "Name": "area",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the planar area of the input polygon(s). Not accurate for self-intersecting polys."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "f49e27b02eb74367bdb32762c6c72e6f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "857b3f099e5e4582a4e7ab04cde4ec39",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e89e7597d0f54e4ca0eb2c19cb6e422c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "ab2f8adedba24aa6b68db91ec84071ca",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "0989f78241114c28ba5a66969d104b57",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3c2192e634ee4d6a9b757fad6145ba86",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "4d00770aa28a415087e5c8170c3e1d97",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "536018672e114afb8655f08c53da9f95",
+          "Name": "point1",
+          "Description": "point1 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "927a040170484862be083167d7102b56",
+          "Name": "point2",
+          "Description": "point2 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 5, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a721f8efc66c4d68ac93622808414289",
+          "Name": "point3",
+          "Description": "point3 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(5, 5, 5)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "53b61178da634ee0918e6c48037eebf0",
+          "Name": "point4",
+          "Description": "point4 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(5, 0, 5)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "point1 = Point.ByCoordinates(0, 0, 0);\npoint2 = Point.ByCoordinates(0, 5, 0);\npoint3 = Point.ByCoordinates(5, 5, 5);\npoint4 = Point.ByCoordinates(5, 0, 5);"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "7b25a93ab9cb426c83dbe98a6b7ecc50",
+      "End": "0989f78241114c28ba5a66969d104b57",
+      "Id": "112e8a366a00476fb49770437f98413c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "485f5a8a9ca146b685272ad40fad9570",
+      "End": "92a8e49b81b147318a0ec50df4fc10ad",
+      "Id": "8b2dc7dc37e741b6b915d04d15ecb949",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "485f5a8a9ca146b685272ad40fad9570",
+      "End": "80db722981454426b6a662ba9b2108ee",
+      "Id": "5c0b071d577248f6a608aec37844f4cb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "317fcec73b774b6799c94d0dc5ffde06",
+      "End": "857b3f099e5e4582a4e7ab04cde4ec39",
+      "Id": "ab845e5da69e4c1d8331c49d7a436e3c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "536018672e114afb8655f08c53da9f95",
+      "End": "a52316d47f314f648cad94c2175e054a",
+      "Id": "81933a25cc324d2aaaab9fc8f7b1e47d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "927a040170484862be083167d7102b56",
+      "End": "5cdac52cf7704cb2853033739807dff6",
+      "Id": "0350ba67429144cbb1e26eb185357ef0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a721f8efc66c4d68ac93622808414289",
+      "End": "75843391ccc642579938ed921b298e89",
+      "Id": "34e464cc05c64f7a8b8e77eccce5275a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "53b61178da634ee0918e6c48037eebf0",
+      "End": "28795d698163471db40f8a74c9232dba",
+      "Id": "8d6ace263c5b4923896856336cf07fb7",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "356b7cef-58d4-4713-abc0-8867c17ca0d9",
+    "5a4e31de-51f3-49ed-bbc1-9415ac2bb15e"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Polygon.3DArea.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "a73052a0b64b4c4e9a076b1f60e339b3"
+      ]
+    },
+    {
+      "Name": "Polygon.2DArea.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "ed3435886a8a4b82bc581ff7335f6c20"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.6.1.9895",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -11.73553466796875,
+      "EyeY": 10.62167739868164,
+      "EyeZ": 13.827497482299805,
+      "LookX": 16.983970642089844,
+      "LookY": -8.34893798828125,
+      "LookZ": -16.580114364624023,
+      "UpX": 0.08720500767230988,
+      "UpY": 0.9925463199615479,
+      "UpZ": -0.08513020724058151
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a73052a0b64b4c4e9a076b1f60e339b3",
+        "Name": "Polygon.3DArea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 334.360079271024,
+        "Y": 766.7894612871585
+      },
+      {
+        "Id": "a55deeba4733410eb877bc09272a80b8",
+        "Name": "Rectangle.ByCornerPoints",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -7.150204710739217,
+        "Y": 1006.1690206734147
+      },
+      {
+        "Id": "ed3435886a8a4b82bc581ff7335f6c20",
+        "Name": "Polygon.2DArea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 344.5111868969501,
+        "Y": 1190.5633784553174
+      },
+      {
+        "Id": "f49e27b02eb74367bdb32762c6c72e6f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 673.3048533927332,
+        "Y": 1166.8727811906185
+      },
+      {
+        "Id": "ab2f8adedba24aa6b68db91ec84071ca",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 744.565505955199,
+        "Y": 760.126277441949
+      },
+      {
+        "Id": "4d00770aa28a415087e5c8170c3e1d97",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -451.12406532241164,
+        "Y": 1027.6260116825138
+      }
+    ],
+    "Annotations": [],
+    "X": 496.9171665568108,
+    "Y": -264.70472236009743,
+    "Zoom": 0.6606280422827697
+  }
+}

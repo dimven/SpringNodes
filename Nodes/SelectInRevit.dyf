@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Selects the input elements inside the Revit UI.",
-  "Name": "ꟿ SelectInRevit",
+  "Name": "SelectInRevit",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -17,10 +17,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n#inspired by Julien Benoit @jbenoit44 \r\n#http://aecuandme.wordpress.com/\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import ElementId\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI.Selection import *\r\n\r\nclr.AddReference(\"System\")\r\nfrom System.Collections.Generic import List as cList\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = UnwrapElement(tolist(IN[0]) )\r\nids1 = []\r\nfor i in xrange(len(elements)):\r\n\ttry:(ids1.append(elements[i].Id))\r\n\texcept: pass\r\nids2 = cList[ElementId](ids1)\r\nuidoc.Selection.SetElementIds(ids2)\r\nOUT = \"%s elements selected in Revit.\" %ids2.Count",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n# inspired by Julien Benoit @jbenoit44\r\n# http://aecuandme.wordpress.com/\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import ElementId\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI.Selection import *\r\n\r\nclr.AddReference(\"System\")\r\nfrom System.Collections.Generic import List as cList\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    elements = UnwrapElement(tolist(IN[0]))\r\n\r\n    ids1 = []\r\n    for e in elements:\r\n        try:\r\n            ids1.append(e.Id)\r\n        except:\r\n            pass\r\n\r\n    ids2 = cList[ElementId](ids1)\r\n    uidoc.Selection.SetElementIds(ids2)\r\n    OUT = \"%s elements selected in Revit.\" % ids2.Count\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "8a4d2e898dcf44a3b8612590a0033f8e",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "717695e5fd6344639e174bd147dc269d",
@@ -53,11 +54,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "element",
         "TypeName": "var",
@@ -66,6 +66,7 @@
         "Description": ""
       },
       "Id": "86d0140ee8ac414aa132476259f6293c",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -83,10 +84,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "success?",
       "Id": "8bbb9a23f1c94b378c0fc17ab06bef42",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "e0768a08190949f0a0ff408050ec56db",
@@ -104,7 +105,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "reset",
         "TypeName": "bool",
@@ -113,6 +113,7 @@
         "Description": ""
       },
       "Id": "73406a5dafb046e1b125e13964dc62e3",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -133,87 +134,93 @@
     {
       "Start": "cdf8d2fa151248fd945b3f3083f9849e",
       "End": "e0768a08190949f0a0ff408050ec56db",
-      "Id": "b8bedca97ba54467b5238280a6ef9c6e"
+      "Id": "b8bedca97ba54467b5238280a6ef9c6e",
+      "IsHidden": "False"
     },
     {
       "Start": "5e6123bbb8e242e4bd95561367d5aea0",
       "End": "717695e5fd6344639e174bd147dc269d",
-      "Id": "be95162da5524239979acad01841758c"
+      "Id": "be95162da5524239979acad01841758c",
+      "IsHidden": "False"
     },
     {
       "Start": "b69d23d21efa45d8b333cdd28cc4fe33",
       "End": "efa1e231a06948a5a95f714a75d1d26d",
-      "Id": "1b0cce7f6bae496e98282b3726c199ac"
+      "Id": "1b0cce7f6bae496e98282b3726c199ac",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -6386.11328125,
-      "EyeY": 1433.7071533203125,
-      "EyeZ": 779.842041015625,
-      "LookX": -304.95797729492187,
-      "LookY": -1846.5634765625,
-      "LookZ": -6441.21923828125,
-      "UpX": -0.0029694759286940098,
-      "UpY": 0.99802672863006592,
-      "UpZ": -0.062720261514186859
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "8a4d2e898dcf44a3b8612590a0033f8e",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 250.0,
+        "ShowGeometry": true,
+        "X": 249.67772491447943,
         "Y": 0.0
       },
       {
         "Id": "86d0140ee8ac414aa132476259f6293c",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 70.4570544632575,
-        "Y": 1.41805732742414
+        "ShowGeometry": true,
+        "X": 3.746111760490109,
+        "Y": -111.70049769031193
       },
       {
         "Id": "8bbb9a23f1c94b378c0fc17ab06bef42",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 398.388855625663,
-        "Y": -1.19560800870553
+        "ShowGeometry": true,
+        "X": 501.51688299226,
+        "Y": -1.5178830942261463
       },
       {
         "Id": "73406a5dafb046e1b125e13964dc62e3",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 35.6581311442392,
-        "Y": 67.0939820951629
+        "ShowGeometry": true,
+        "X": -34.92011258477558,
+        "Y": 120.91392137710572
       }
     ],
     "Annotations": [],
-    "X": -291.909871710612,
-    "Y": 93.6786594330484,
+    "X": 293.4234616227214,
+    "Y": 464.3453260997151,
     "Zoom": 2.06862614151419
   }
 }

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Checks a line's end points for irregularities and corrects them if they are at or below the specified margin. The default margin is 1/5000 of the curve length, which is conservative.",
-  "Name": "ꟿ Line.StraightenXY",
+  "Name": "Line.StraightenXY",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -17,10 +17,10 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "line",
       "Id": "6fff2fb3e3a648e49e80e90d909a9fb6",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2921563d62ef46edb8f07ec605c34406",
@@ -38,12 +38,11 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "c;\nx;\nstraightened = [Imperative]{\nmargin = c.Length / x;\ncS = c.StartPoint;\ncE = c.EndPoint;\ndX = Math.Abs(cS.X - cE.X);\ndY = Math.Abs(cS.Y - cE.Y);\nif (dX <= margin){\n\treturn = Line.ByStartPointEndPoint(\n\tcS,Point.ByCoordinates(cS.X, cE.Y, cE.Z));\n}\nelseif (dY <= margin){\n\treturn = Line.ByStartPointEndPoint(\n\tcS,Point.ByCoordinates(cE.X, cS.Y, cE.Z));\n}\nelse{\n\treturn = c;\n}\n};",
       "Id": "f8908e6ee89247a1875ae294e348a029",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "312a5272a8b3466b9828625f36c75215",
+          "Id": "8a806b60495c4e9798bbd73712ff46dd",
           "Name": "c",
           "Description": "c",
           "UsingDefaultValue": false,
@@ -52,9 +51,18 @@
           "KeepListStructure": false
         },
         {
-          "Id": "54f8ff8f32fb4b9fbe1dd55f394417e0",
+          "Id": "bf16819bc5d5462595441bdd51481514",
           "Name": "x",
           "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "66dd1edb03c84561bb380e8df604bb21",
+          "Name": "b",
+          "Description": "b",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -63,7 +71,7 @@
       ],
       "Outputs": [
         {
-          "Id": "255e75ca4cf44628b2c1c167b5af4fd5",
+          "Id": "b8d588cd8dae4d7e881e72f15f7908cb",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -72,7 +80,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e5cf21963eb54cc2b795975e7985d02c",
+          "Id": "e226cb43072e49c994673e6cb90cb505",
           "Name": "",
           "Description": "Value of expression at line 2",
           "UsingDefaultValue": false,
@@ -81,7 +89,16 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5b76e34ba5d141949c98c54925f854ee",
+          "Id": "b3db640870854fbc9a3ca45b90b85dbf",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "367f962f4e9346788b5b0c3b106c4221",
           "Name": "",
           "Description": "straightened",
           "UsingDefaultValue": false,
@@ -91,11 +108,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "c;\nx;\nb;\n\nstraightened = [Imperative]{\n\nm = c.Length / x;\n\nif(!b){\nm = x;\n}\n\ncS = c.StartPoint;\ncE = c.EndPoint;\ndX = DSCore.Math.Abs(cS.X - cE.X);\ndY = DSCore.Math.Abs(cS.Y - cE.Y);\nif (dX <= m){\n\treturn = DesignScript.Line.ByStartPointEndPoint(\n\tcS,DesignScript.Point.ByCoordinates(cS.X, cE.Y, cE.Z));\n}\nelseif (dY <= m){\n\treturn = DesignScript.Line.ByStartPointEndPoint(\n\tcS,DesignScript.Point.ByCoordinates(cE.X, cS.Y, cE.Z));\n}\nelse{\n\treturn = c;\n}\n};"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "line",
         "TypeName": "var",
@@ -104,6 +121,7 @@
         "Description": ""
       },
       "Id": "8e42c59c399e4119b6fdf83795edb825",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -121,7 +139,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "margin",
         "TypeName": "double",
@@ -130,6 +147,7 @@
         "Description": ""
       },
       "Id": "513ad85e10f84cc19d43b068694a217f",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -144,93 +162,141 @@
       ],
       "Replication": "Disabled",
       "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "isRatio",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "true",
+        "Description": ""
+      },
+      "Id": "579b9c509c0f42d989e9dbb88f3fc637",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2f6f6896ce1f4f529de21fa96a331193",
+          "Name": "",
+          "Description": "Input Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
     }
   ],
   "Connectors": [
     {
-      "Start": "5b76e34ba5d141949c98c54925f854ee",
+      "Start": "367f962f4e9346788b5b0c3b106c4221",
       "End": "2921563d62ef46edb8f07ec605c34406",
-      "Id": "69ebc8b9ab844bccb3dffa9623e13c64"
+      "Id": "fe21bb6965a4438d85a3f20c5359e95f",
+      "IsHidden": "False"
     },
     {
       "Start": "06adb4b0a92444b9b2793c0b6e062065",
-      "End": "312a5272a8b3466b9828625f36c75215",
-      "Id": "0119ef71cfe147b384ed60f6c47db3ca"
+      "End": "8a806b60495c4e9798bbd73712ff46dd",
+      "Id": "a53897b01b124d3098aa5ad2accba6ae",
+      "IsHidden": "False"
     },
     {
       "Start": "34c87d7c9aa342a58a456fdd639f7e4c",
-      "End": "54f8ff8f32fb4b9fbe1dd55f394417e0",
-      "Id": "4b0ddac25ab246ef9439dce29fee64ba"
+      "End": "bf16819bc5d5462595441bdd51481514",
+      "Id": "63ffd6b0e11246d2860c3b8cf64b61d3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2f6f6896ce1f4f529de21fa96a331193",
+      "End": "66dd1edb03c84561bb380e8df604bb21",
+      "Id": "13e745398e7640e6b3d93fb094bc0e56",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 164.34893798828125,
-      "EyeY": 95.6162109375,
-      "EyeZ": -22.259712219238281,
-      "LookX": -14.981433868408203,
-      "LookY": -22.510177612304687,
-      "LookZ": -24.152572631835938,
-      "UpX": -0.231071338057518,
-      "UpY": 0.89879405498504639,
-      "UpZ": -0.37252557277679443
+      "Name": "_Background Preview",
+      "EyeX": 10630.0595703125,
+      "EyeY": 307.386962890625,
+      "EyeZ": 413.2626953125,
+      "LookX": -2547.79052734375,
+      "LookY": -1123.297119140625,
+      "LookZ": -2848.491943359375,
+      "UpX": -0.18362922966480255,
+      "UpY": 0.9371070861816406,
+      "UpZ": -0.20530180633068085
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "6fff2fb3e3a648e49e80e90d909a9fb6",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 560.845713998262,
-        "Y": 464.037912578197
+        "ShowGeometry": true,
+        "X": 760.5571158295102,
+        "Y": 516.9819459165756
       },
       {
         "Id": "f8908e6ee89247a1875ae294e348a029",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 92.7902665029553,
+        "ShowGeometry": true,
+        "X": 92.79026650295532,
         "Y": 468.703717667128
       },
       {
         "Id": "8e42c59c399e4119b6fdf83795edb825",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -61.7629360717337,
-        "Y": 463.434985092336
+        "ShowGeometry": true,
+        "X": -165.97922044658662,
+        "Y": 416.2738120485063
       },
       {
         "Id": "513ad85e10f84cc19d43b068694a217f",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -176.042725200774,
-        "Y": 529.169551058156
+        "ShowGeometry": true,
+        "X": -258.9870331300772,
+        "Y": 562.6171986603383
+      },
+      {
+        "Id": "579b9c509c0f42d989e9dbb88f3fc637",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -246.01513020959106,
+        "Y": 716.7102949228848
       }
     ],
     "Annotations": [],
-    "X": 403.36490077738,
-    "Y": -451.548789776613,
-    "Zoom": 1.23432823230355
+    "X": 362.5891337554274,
+    "Y": -394.78994287339043,
+    "Zoom": 1.17828586559479
   }
 }

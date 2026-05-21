@@ -940,7 +940,7 @@
       },
       {
         "ShowGeometry": true,
-        "Name": "ꟿ String.RightSplitOnce",
+        "Name": "String.RightSplitOnce",
         "Id": "90ce3bdd7fbc48c7aae8402f942185b3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,

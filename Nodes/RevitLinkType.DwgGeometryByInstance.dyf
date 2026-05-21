@@ -1,0 +1,322 @@
+{
+  "Uuid": "7f0c2c8e-0c44-4e3b-9c3c-2a4c1b0f6d91",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit",
+  "Description": "Retrieves DWG Geometry from an Instance, attempts to parse to Dynamo geometry, where it can't, it returns the original.",
+  "Name": "RevitLinkType.DwgGeometryByInstance",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "LinkInstance": {
+        "Key": "Revit.Elements.LinkInstance",
+        "Value": "RevitNodes.dll"
+      },
+      "ImportInstance": {
+        "Key": "Revit.Elements.ImportInstance",
+        "Value": "RevitNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2027, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope----Maintained by Mark Ackerley---------#\r\n\r\nimport clr\r\nimport sys\r\nimport System\r\nimport traceback\r\nimport math\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nimport Autodesk.DesignScript.Geometry as DS\r\n\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\n# ALWAYS RETURN A POINT + ERROR (never None)\r\ndef to_ds_point(rpt):\r\n    try:\r\n        return rpt.ToPoint(), None\r\n    except Exception as ex:\r\n        return rpt, \"Point conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc()\r\n\r\n# DEAL WITH THOSE PESKY NESTED LISTS!\r\ndef normalize_and_expand(obj):\r\n    # convert .NET IList to Python list if possible\r\n    try:\r\n        obj = list(obj)\r\n    except Exception:\r\n        return obj if not isinstance(obj, (str, bytes)) else obj\r\n\r\n    # fully unwrap single-item containers\r\n    while isinstance(obj, list) and len(obj) == 1:\r\n        obj = obj[0]\r\n        try:\r\n            obj = list(obj)\r\n        except Exception:\r\n            break\r\n\r\n    # if it's a list of surfaces, return that list; else return single object\r\n    return obj\r\n\r\n# GEOMETRY CONVERSION (non-solid types only)\r\ndef convert_revit_geom(g):\r\n    ds_geom = None\r\n    errors = []\r\n\r\n    try:\r\n        # ---------------- POLYLINE ----------------\r\n        if isinstance(g, DB.PolyLine):\r\n            try:\r\n                coords = list(g.GetCoordinates())\r\n                pts = []\r\n                for p in coords:\r\n                    ds_p, p_err = to_ds_point(p)\r\n                    if p_err:\r\n                        errors.append(p_err)\r\n                    pts.append(ds_p)\r\n\r\n                valid_pts = [p for p in pts if isinstance(p, DS.Point)]\r\n                n = len(valid_pts)\r\n\r\n                if n >= 3:\r\n                    ds_geom = DS.PolyCurve.ByPoints(valid_pts)\r\n                elif n == 2:\r\n                    ds_geom = DS.Line.ByStartPointEndPoint(valid_pts[0], valid_pts[1])\r\n                else:\r\n                    errors.append(\"PolyLine has insufficient valid points.\")\r\n                    ds_geom = g\r\n\r\n            except Exception as ex:\r\n                errors.append(\"PolyLine conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc())\r\n                ds_geom = g\r\n\r\n        # ---------------- LINE ----------------\r\n        elif isinstance(g, DB.Line):\r\n            try:\r\n                p0, e0 = to_ds_point(g.GetEndPoint(0))\r\n                p1, e1 = to_ds_point(g.GetEndPoint(1))\r\n                if e0:\r\n                    errors.append(e0)\r\n                if e1:\r\n                    errors.append(e1)\r\n\r\n                if isinstance(p0, DS.Point) and isinstance(p1, DS.Point):\r\n                    ds_geom = DS.Line.ByStartPointEndPoint(p0, p1)\r\n                else:\r\n                    errors.append(\"Line endpoints failed to convert.\")\r\n                    ds_geom = g\r\n\r\n            except Exception as ex:\r\n                errors.append(\"Line conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc())\r\n                ds_geom = g\r\n\r\n        # ---------------- ELLIPSE ----------------\r\n        elif isinstance(g, DB.Ellipse):\r\n            try:\r\n                centre, c_err = to_ds_point(g.Center)\r\n                if c_err:\r\n                    errors.append(c_err)\r\n\r\n                if isinstance(centre, DS.Point):\r\n                    ds_geom = DS.Ellipse.ByOriginRadii(centre, g.RadiusX, g.RadiusY)\r\n                else:\r\n                    errors.append(\"Ellipse center failed to convert.\")\r\n                    ds_geom = g\r\n\r\n            except Exception as ex:\r\n                errors.append(\"Ellipse conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc())\r\n                ds_geom = g\r\n\r\n        # ---------------- ARC ----------------\r\n        elif isinstance(g, DB.Arc):\r\n            try:\r\n                if g.IsCyclic:\r\n                    start = g.Evaluate(0, False)\r\n                    quart = g.Evaluate(math.pi / 2, False)\r\n                    mid   = g.Evaluate(math.pi, False)\r\n\r\n                    s, es = to_ds_point(start)\r\n                    q, eq = to_ds_point(quart)\r\n                    m, em = to_ds_point(mid)\r\n                    for e in (es, eq, em):\r\n                        if e:\r\n                            errors.append(e)\r\n\r\n                    if all(isinstance(x, DS.Point) for x in (s, q, m)):\r\n                        ds_geom = DS.Circle.ByThreePoints(s, q, m)\r\n                    else:\r\n                        errors.append(\"Arc cyclic sample points failed.\")\r\n                        ds_geom = g\r\n\r\n                else:\r\n                    try:\r\n                        center, ce = to_ds_point(g.Center)\r\n                        if ce:\r\n                            errors.append(ce)\r\n\r\n                        if isinstance(center, DS.Point):\r\n                            normal = g.Normal\r\n                            normal_vec = DS.Vector.ByCoordinates(normal.X, normal.Y, normal.Z)\r\n                            start_angle = math.degrees(g.GetEndParameter(0))\r\n                            sweep_angle = math.degrees(g.GetEndParameter(1) - g.GetEndParameter(0))\r\n                            ds_geom = DS.Arc.ByCenterPointRadiusAngle(\r\n                                center, g.Radius, start_angle, sweep_angle, normal_vec\r\n                            )\r\n                        else:\r\n                            raise Exception(\"Center point invalid\")\r\n\r\n                    except Exception:\r\n                        try:\r\n                            s, es = to_ds_point(g.GetEndPoint(0))\r\n                            m, em = to_ds_point(g.Evaluate(0.5, True))\r\n                            e, ee = to_ds_point(g.GetEndPoint(1))\r\n                            for x in (es, em, ee):\r\n                                if x:\r\n                                    errors.append(x)\r\n\r\n                            if all(isinstance(x, DS.Point) for x in (s, m, e)):\r\n                                ds_geom = DS.Arc.ByThreePoints(s, m, e)\r\n                            else:\r\n                                errors.append(\"Arc fallback points invalid.\")\r\n                                ds_geom = g\r\n\r\n                        except Exception as ex2:\r\n                            errors.append(\"Arc conversion fallback error: \" + str(ex2) + \"\\n\" + traceback.format_exc())\r\n                            ds_geom = g\r\n\r\n            except Exception as ex:\r\n                errors.append(\"Arc conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc())\r\n                ds_geom = g\r\n\r\n        # ---------------- DEFAULT ----------------\r\n        else:\r\n            ds_geom = g\r\n\r\n    except Exception as ex:\r\n        errors.append(\"Top-level conversion error: \" + str(ex) + \"\\n\" + traceback.format_exc())\r\n        ds_geom = g\r\n\r\n    if ds_geom is None:\r\n        ds_geom = g\r\n\r\n    return ds_geom, (\"\\n\".join(errors) if errors else None)\r\n\r\n\r\n# ----------------------------------------------------------------------\r\n# GRAPHICS STYLE RESOLUTION\r\n# ----------------------------------------------------------------------\r\ndef get_style_from_face(face):\r\n    try:\r\n        if face.GraphicsStyleId != ElementId.InvalidElementId:\r\n            gStyle = doc.GetElement(face.GraphicsStyleId)\r\n            if gStyle and hasattr(gStyle, \"GraphicsStyleCategory\"):\r\n                return gStyle.GraphicsStyleCategory.Name\r\n    except Exception:\r\n        pass\r\n    return \"no Line Style\"\r\n\r\n\r\ndef get_style_from_geom(g):\r\n    try:\r\n        if hasattr(g, \"GraphicsStyleId\") and g.GraphicsStyleId != ElementId.InvalidElementId:\r\n            gStyle = doc.GetElement(g.GraphicsStyleId)\r\n            if gStyle is not None and hasattr(gStyle, \"GraphicsStyleCategory\"):\r\n                return gStyle.GraphicsStyleCategory.Name\r\n    except Exception:\r\n        pass\r\n    return \"no Line Style\"\r\n\r\n\r\n# ----------------------------------------------------------------------\r\n# MAIN EXTRACTION\r\n# ----------------------------------------------------------------------\r\ndef get_CAD_geometry(importinstance):\r\n    curves = []\r\n    solids = []\r\n\r\n    opt = Options()\r\n    opt.DetailLevel = ViewDetailLevel.Fine\r\n    opt.IncludeNonVisibleObjects = True\r\n\r\n    try:\r\n        geoSet = importinstance.get_Geometry(opt)\r\n    except Exception as e:\r\n        return [], [[\"Error getting geometry\", str(e)]]\r\n\r\n    def process_geom(geom_element):\r\n        for geo in geom_element:\r\n\r\n            # ---------------- GEOMETRY INSTANCE ----------------\r\n            # Use GetSymbolGeometry() only — GetInstanceGeometry() returns the\r\n            # same objects with transforms applied, causing duplicates\r\n            if isinstance(geo, GeometryInstance):\r\n                try:\r\n                    sym_geom = geo.GetSymbolGeometry()\r\n                    if sym_geom:\r\n                        process_geom(sym_geom)\r\n                except Exception:\r\n                    pass\r\n\r\n            # ---------------- SOLID ----------------\r\n            elif isinstance(geo, Solid):\r\n                for face in geo.Faces:\r\n                    proto = face.ToProtoType()\r\n\r\n                    try:\r\n                        # Works for DS arrays, .NET IList, Python lists\r\n                        if len(proto) == 1:\r\n                            dsFace = proto[0]      # unwrap\r\n                        else:\r\n                            dsFace = proto         # multi‑surface case\r\n                    except:\r\n                        dsFace = proto             # not sized → already a DS object\r\n                        \r\n                    face_style = get_style_from_face(face)\r\n                    solids.append([dsFace, face_style])     \r\n                                  \r\n\r\n\r\n            # ---------------- CURVES / OTHER ----------------\r\n            else:\r\n                gstyleName = get_style_from_geom(geo)\r\n                ds_geom, conv_err = convert_revit_geom(geo)\r\n                curves.append([ds_geom, gstyleName])\r\n\r\n    process_geom(geoSet)     \r\n    \r\n    flat = []\r\n    for dsFace, layer in solids:\r\n        norm = normalize_and_expand(dsFace)\r\n        if isinstance(norm, list):\r\n            for f in norm:\r\n                flat.append([f, layer])\r\n        else:\r\n            flat.append([norm, layer])\r\n    solids = flat\r\n    \r\n    return curves, solids\r\n\r\n# -------------------------\r\n# Explode PolyCurve helper\r\n# -------------------------\r\ndef explode_polycurves(curve_rows):\r\n    \"\"\"\r\n    Input: curve_rows = [[geom, layer], ...]\r\n    Output: new list where PolyCurve entries are exploded into multiple [subcurve, layer]\r\n    Leaves Line/Circle/other single-curve rows unchanged.\r\n    \"\"\"\r\n    out = []\r\n    for row in curve_rows:\r\n        # defensive unpack\r\n        if not (isinstance(row, (list, tuple)) and len(row) >= 2):\r\n            continue\r\n        geom = row[0]\r\n        layer = row[1]\r\n\r\n        # keep None or non-objects as-is\r\n        if geom is None:\r\n            out.append([geom, layer])\r\n            continue\r\n\r\n        # detect polycurve-like\r\n        try:\r\n            n = int(getattr(geom, \"NumberOfCurves\", 0))\r\n        except Exception:\r\n            n = 0\r\n\r\n        if n > 0:\r\n            produced = 0\r\n            # call Curves() once\r\n            try:\r\n                curves_coll = geom.Curves()\r\n            except Exception:\r\n                curves_coll = None\r\n\r\n            curves_list = []\r\n            if curves_coll is not None:\r\n                # try iteration first\r\n                try:\r\n                    for c in curves_coll:\r\n                        curves_list.append(c)\r\n                except Exception:\r\n                    pass\r\n\r\n                # try list() conversion\r\n                if not curves_list:\r\n                    try:\r\n                        curves_list = list(curves_coll)\r\n                    except Exception:\r\n                        pass\r\n\r\n                # try index access patterns\r\n                if not curves_list:\r\n                    try:\r\n                        for i in range(n):\r\n                            try:\r\n                                curves_list.append(curves_coll[i])\r\n                            except Exception:\r\n                                try:\r\n                                    curves_list.append(curves_coll.GetItem(i))\r\n                                except Exception:\r\n                                    try:\r\n                                        curves_list.append(curves_coll.Item[i])\r\n                                    except Exception:\r\n                                        pass\r\n                    except Exception:\r\n                        pass\r\n\r\n                # enumerator fallback\r\n                if not curves_list:\r\n                    try:\r\n                        enum = curves_coll.GetEnumerator()\r\n                        while enum.MoveNext():\r\n                            curves_list.append(enum.Current)\r\n                    except Exception:\r\n                        pass\r\n\r\n            # append only real sub-curves\r\n            for sub in curves_list:\r\n                if sub is None:\r\n                    continue\r\n                out.append([sub, layer])\r\n                produced += 1\r\n\r\n            if produced > 0:\r\n                continue\r\n            else:\r\n                # couldn't materialize sub-curves — keep original\r\n                out.append([geom, layer])\r\n                continue\r\n\r\n        # not a polycurve — keep original\r\n        out.append([geom, layer])\r\n\r\n    return out\r\n\r\ntry:\r\n    # OUT\r\n    importinstance = UnwrapElement(IN[0])\r\n    curves, solids = get_CAD_geometry(importinstance)\r\n\r\n    # explode polycurves in the curves list only\r\n    curves = explode_polycurves(curves)\r\n\r\n    OUT = curves, solids\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )\r\n\r\n",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "f404bea1281a496dbb41f364a0b8c16e",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "70d0547af24d4ae4b246722fd6af63bb",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4be726c2dc6b45eb8c1a7aa4ea151df2",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5dafb4c2ae36470abf38082d2864f11e",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "linkInstance",
+        "TypeName": "Revit.Elements.ImportInstance",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "dea39b45c1e84169b63716def36587d8",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "80b0e974e0df4c8f8c761e702c80431d",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "lines",
+      "Id": "735f552e41cd4c7eb3c59199e59dbbc2",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "641a2057ddc54a519642118bb289640b",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "Refresh",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "6e9ad46ed238419ab92cb844af2b4c5e",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0bce7ae9e8c64fa7b730110b95d3f6e3",
+          "Name": "",
+          "Description": "Input Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "solidSurfaces",
+      "Id": "a5d5d639e4544b80b031d9428080145e",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "a15e12b4670c40cda5201af7b98faa07",
+          "Name": "",
+          "Description": "Output Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "5c3e6932c8d04b0b979cfafb5bfcccd0",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "89a3064004a84c858ff93ec7e7e1f95e",
+          "Name": "OUT",
+          "Description": "OUT",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ea07887cb0a74d04becfd14c11e903e8",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(OUT, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0042e6b6397040fbb32b46ce9830fc53",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(OUT, 1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "OUT[0];\nOUT[1];"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5dafb4c2ae36470abf38082d2864f11e",
+      "End": "89a3064004a84c858ff93ec7e7e1f95e",
+      "Id": "b02b1def952b47cfb8c2522b04241260",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "80b0e974e0df4c8f8c761e702c80431d",
+      "End": "70d0547af24d4ae4b246722fd6af63bb",
+      "Id": "934e031128024f16a55daaf7473e24a4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0bce7ae9e8c64fa7b730110b95d3f6e3",
+      "End": "4be726c2dc6b45eb8c1a7aa4ea151df2",
+      "Id": "21ca136ad97b4901b2f7cc3a293bd661",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ea07887cb0a74d04becfd14c11e903e8",
+      "End": "641a2057ddc54a519642118bb289640b",
+      "Id": "97785b6acaf449188d468277dd88023a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0042e6b6397040fbb32b46ce9830fc53",
+      "End": "a15e12b4670c40cda5201af7b98faa07",
+      "Id": "66732767a5994a8bbd70df163ed36ef9",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 1006296.1875,
+      "EyeY": 438977.84375,
+      "EyeZ": -29763.0859375,
+      "LookX": -205256.6875,
+      "LookY": -422257.59375,
+      "LookZ": 82928.9921875,
+      "UpX": -0.8211733102798462,
+      "UpY": 0.4643271267414093,
+      "UpZ": 0.33177512884140015
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f404bea1281a496dbb41f364a0b8c16e",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 246.33699332607875,
+        "Y": -0.9292859239254767
+      },
+      {
+        "Id": "dea39b45c1e84169b63716def36587d8",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -203.3528768489988,
+        "Y": -95.87869330632788
+      },
+      {
+        "Id": "735f552e41cd4c7eb3c59199e59dbbc2",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 796.3445686353763,
+        "Y": -80.70964166976987
+      },
+      {
+        "Id": "6e9ad46ed238419ab92cb844af2b4c5e",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -73.33333333333326,
+        "Y": 121.86666666666662
+      },
+      {
+        "Id": "a5d5d639e4544b80b031d9428080145e",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 789.2696679209424,
+        "Y": 139.01513575705505
+      },
+      {
+        "Id": "5c3e6932c8d04b0b979cfafb5bfcccd0",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 455.85169747339205,
+        "Y": -0.8913093717689549
+      }
+    ],
+    "Annotations": [],
+    "X": 397.9854667405384,
+    "Y": 354.8771189555189,
+    "Zoom": 1.4347934247201617
+  }
+}

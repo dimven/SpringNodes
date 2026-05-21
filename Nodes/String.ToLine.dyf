@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Serialization.Actions",
   "Description": "De-serilize a Revit parameter string into a geometric line.",
-  "Name": "ꟿ String.ToLine",
+  "Name": "String.ToLine",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -57,9 +57,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "par;\ns1;\npar1 = String.ToNumber(String.Split(par, s1));\np1 = Point.ByCoordinates(par1[0],par1[1],par1[2]);\np2 = Point.ByCoordinates(par1[3],par1[4],par1[5]);\nln = Line.ByStartPointEndPoint(p1,p2);",
       "Id": "08d1be687c9e44b8a52b3f4a98cce2b1",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "8791c9497e8d47f080b4799a734f28aa",
@@ -83,8 +82,8 @@
       "Outputs": [
         {
           "Id": "b0b1e92e28914ecfa17243066cf4b12d",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "par",
+          "Description": "par",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -92,8 +91,8 @@
         },
         {
           "Id": "fe34186b5fe34ca086c085adaa247b79",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "s1",
+          "Description": "s1",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -101,8 +100,8 @@
         },
         {
           "Id": "8d017c8c1be0406a9a740d61f6d0d3ce",
-          "Name": "",
-          "Description": "par1",
+          "Name": "par1",
+          "Description": "par1 = DSCore.String.ToNumber(DSCore.String.Split(par, s1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -110,8 +109,8 @@
         },
         {
           "Id": "32170172ea4e4dd68993bf0a7bd96002",
-          "Name": "",
-          "Description": "p1",
+          "Name": "p1",
+          "Description": "p1 = Point.ByCoordinates(DesignScript.Builtin.Get.ValueAtIndex(par1, 0), DesignScript.Builtin.Get.ValueAtIndex(par1, 1), DesignScript.Builtin.Get.ValueAtIndex(par1, 2))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -119,8 +118,8 @@
         },
         {
           "Id": "86f7181f0b94430eaef28c272d12828d",
-          "Name": "",
-          "Description": "p2",
+          "Name": "p2",
+          "Description": "p2 = Point.ByCoordinates(DesignScript.Builtin.Get.ValueAtIndex(par1, 3), DesignScript.Builtin.Get.ValueAtIndex(par1, 4), DesignScript.Builtin.Get.ValueAtIndex(par1, 5))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -128,8 +127,8 @@
         },
         {
           "Id": "5dd4f0bdc98d43c4bf1014c7083ae5c7",
-          "Name": "",
-          "Description": "ln",
+          "Name": "ln",
+          "Description": "ln = Autodesk.DesignScript.Geometry.Line.ByStartPointEndPoint(p1, p2)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -137,11 +136,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "par;\ns1;\npar1 = String.ToNumber(String.Split(par, s1));\np1 = Point.ByCoordinates(par1[0],par1[1],par1[2]);\np2 = Point.ByCoordinates(par1[3],par1[4],par1[5]);\nln = Line.ByStartPointEndPoint(p1,p2);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "str",
         "TypeName": "var",
@@ -150,6 +149,7 @@
         "Description": ""
       },
       "Id": "3129cf66299943149eee82f8612c6121",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -167,10 +167,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "line",
       "Id": "44a7255b39c34fec91cfc129f12cbefb",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "bba004c7f3aa471e908948069f894c29",
@@ -188,7 +188,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "separator",
         "TypeName": "string",
@@ -197,6 +196,7 @@
         "Description": ""
       },
       "Id": "174c8475cea2446f8a48a8bf0f0b8198",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -217,82 +217,88 @@
     {
       "Start": "5dd4f0bdc98d43c4bf1014c7083ae5c7",
       "End": "bba004c7f3aa471e908948069f894c29",
-      "Id": "621483f8f9f74518b4a77e396e4e6997"
+      "Id": "621483f8f9f74518b4a77e396e4e6997",
+      "IsHidden": "False"
     },
     {
       "Start": "a9c4d1b07b344b678426f85afcf38831",
       "End": "8791c9497e8d47f080b4799a734f28aa",
-      "Id": "dd9a0145d1ab424194a780e9cc40a0d0"
+      "Id": "dd9a0145d1ab424194a780e9cc40a0d0",
+      "IsHidden": "False"
     },
     {
       "Start": "94a4f4c57d3442dd922580932081d8b8",
       "End": "478e6af5233d46b6a20cf0e3701aeff3",
-      "Id": "fac9a6422f374fb59a6df1fff6d78f2c"
+      "Id": "fac9a6422f374fb59a6df1fff6d78f2c",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 55.528221130371094,
-      "EyeY": 195.78382873535156,
-      "EyeZ": -51.284481048583984,
-      "LookX": -0.858967661857605,
-      "LookY": -87.94305419921875,
-      "LookZ": -60.708198547363281,
-      "UpX": -0.0096487114205956459,
-      "UpY": 0.73135370016098022,
-      "UpZ": -0.68193012475967407
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "08d1be687c9e44b8a52b3f4a98cce2b1",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 235.588796593341,
         "Y": 0.0
       },
       {
         "Id": "3129cf66299943149eee82f8612c6121",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 124.113736612372,
-        "Y": -3.13128113352978
+        "ShowGeometry": true,
+        "X": -73.08731872761969,
+        "Y": -107.6431114216309
       },
       {
         "Id": "44a7255b39c34fec91cfc129f12cbefb",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 742.089932117741,
-        "Y": 83.1725545961071
+        "ShowGeometry": true,
+        "X": 838.5623908452189,
+        "Y": 81.75384196776186
       },
       {
         "Id": "174c8475cea2446f8a48a8bf0f0b8198",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -4.69174502373932,
-        "Y": 64.6528897989109
+        "ShowGeometry": true,
+        "X": -173.51854779682566,
+        "Y": 151.66726433742036
       }
     ],
     "Annotations": [],

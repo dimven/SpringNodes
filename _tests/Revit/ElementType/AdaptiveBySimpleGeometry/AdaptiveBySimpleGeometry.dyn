@@ -1,0 +1,423 @@
+{
+  "Uuid": "aa5d9ed8-5ff1-4f7b-a2a1-a0ab8a57cf64",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "AdaptiveBySimpleGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "fd198d9c-0e5e-4472-af70-464c835ba923",
+      "FunctionType": "Graph",
+      "Id": "437c3e0dceef488380c30fe77a15d815",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "b209bd2d4a7e4e37bc3abb5c2b717971",
+          "Name": "geometry",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4c5e3bff2f494c3fa4f2bdb585c79a6c",
+          "Name": "familyTemplatePath",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0a25f852f81d4c74966aec33beb091e8",
+          "Name": "familyName",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1ff9f6577aa54aadbf3aca72e525e366",
+          "Name": "category",
+          "Description": "var[]\nDefault value : Revit.Elements.Category.ByName(\"OST_GenericModel\")",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bdb1df78365340f59702f228c52ffd8b",
+          "Name": "materialName",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "83709ed4ebbe41669cb459e49e4e5d94",
+          "Name": "subcategoryName",
+          "Description": "var[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e5803eef8aee44ad8c375b5970225fd0",
+          "Name": "type",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d4dc8300a5444a50aeb984160602f1fb",
+          "Name": "family",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Genearate a new eight point adaptive component family type from any solid or polysurface consisting of planar faces. Faces with openigs are not supported."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "66c4c6b4dfc2479a8c616b6339f47f7e",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "847218fcfed64cb2ac96e090e10002ca",
+          "Name": "origin",
+          "Description": "Origin point\n\nPoint\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "06af1495b0a64d5fa2864aeeb5407fae",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1f3d1d83fa784e3082f1b93c6f9b5aea",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5dffcb7f5c7f451190dbbf73300118af",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "912c5dbb4d484a2b9f0065dd52cc4e06",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@Autodesk.DesignScript.Geometry.Point,double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at input Point, with specified width, length, and height.\n\nCuboid.ByLengths (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "39e6bc588c254d7c90b4251a53f0bb07",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "140eecfe2a1e48acb83c4029cafb8c27",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "C:\\ProgramData\\Autodesk\\RVT 2027\\Family Templates\\English\\Metric Generic Model Adaptive.rft",
+      "InputValue": "..\\..\\..\\..\\..\\..\\..\\..\\ProgramData\\Autodesk\\RVT 2027\\Family Templates\\English\\Metric Generic Model Adaptive.rft"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "004910eccbfe4a69a0ace3491658e31b",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9fa6b27409154805b79b800064de98fe",
+          "Name": "string",
+          "Description": "\"SpringsAwesomeAdaptiveFamily\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"SpringsAwesomeAdaptiveFamily\";"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 494.0,
+      "WatchHeight": 121.33333333333333,
+      "Id": "53f2ac49b88a4bdd9106cd993d4a9f2d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "5cc1a68d9412492796ef5a94280dc7c3",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "20c5d260fcc74e969675ff72373799f5",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 422.6666666666667,
+      "WatchHeight": 116.66666666666667,
+      "Id": "b0b96d696bfe4afb81923fc4245ce3cc",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "a15a8a4d7a804394af996a7ec5688705",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "59bebbc3b4204754834fc674921a2cce",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e5803eef8aee44ad8c375b5970225fd0",
+      "End": "a15a8a4d7a804394af996a7ec5688705",
+      "Id": "c948a3e8080a47ce81f9ab3e62fbabaa",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d4dc8300a5444a50aeb984160602f1fb",
+      "End": "5cc1a68d9412492796ef5a94280dc7c3",
+      "Id": "60bb3b26dd9d465096e018cc46f5086d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "912c5dbb4d484a2b9f0065dd52cc4e06",
+      "End": "b209bd2d4a7e4e37bc3abb5c2b717971",
+      "Id": "863ef306e78742759732c5e1ff261a4c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "140eecfe2a1e48acb83c4029cafb8c27",
+      "End": "4c5e3bff2f494c3fa4f2bdb585c79a6c",
+      "Id": "33edb414ffbe4fb7b86dbe2ec58a1684",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9fa6b27409154805b79b800064de98fe",
+      "End": "0a25f852f81d4c74966aec33beb091e8",
+      "Id": "3c82a1d8eb894cc895e9a7d7ccdc5ea1",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "fd198d9c-0e5e-4472-af70-464c835ba923"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "ElementType.AdaptiveBySimpleGeometry.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "437c3e0dceef488380c30fe77a15d815"
+      ]
+    },
+    {
+      "Name": "Metric Generic Model Adaptive.rft",
+      "ReferenceType": "External",
+      "Nodes": [
+        "39e6bc588c254d7c90b4251a53f0bb07"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -14735.748046875,
+      "EyeY": 5990.63671875,
+      "EyeZ": 3944.71826171875,
+      "LookX": 10275.509765625,
+      "LookY": -4838.8046875,
+      "LookZ": -3466.8740234375,
+      "UpX": 0.38609033823013306,
+      "UpY": 0.9132171869277954,
+      "UpZ": -0.1302638202905655
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "437c3e0dceef488380c30fe77a15d815",
+        "Name": "ElementType.AdaptiveBySimpleGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 644.0929425930983,
+        "Y": 872.7489397598463
+      },
+      {
+        "Id": "66c4c6b4dfc2479a8c616b6339f47f7e",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 262.2218738833223,
+        "Y": 821.6351034822727
+      },
+      {
+        "Id": "39e6bc588c254d7c90b4251a53f0bb07",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -50.10103896044143,
+        "Y": 1041.2048762208535
+      },
+      {
+        "Id": "004910eccbfe4a69a0ace3491658e31b",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 188.53987748022973,
+        "Y": 1184.0994255992316
+      },
+      {
+        "Id": "53f2ac49b88a4bdd9106cd993d4a9f2d",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1183.916486867588,
+        "Y": 1080.285409781698
+      },
+      {
+        "Id": "b0b96d696bfe4afb81923fc4245ce3cc",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1279.6841976387263,
+        "Y": 843.7466844395867
+      }
+    ],
+    "Annotations": [],
+    "X": 195.796864347419,
+    "Y": -358.1865384646989,
+    "Zoom": 0.6880830873593176
+  }
+}

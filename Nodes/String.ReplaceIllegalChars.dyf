@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Replaces all characters in a string that are found in a commonly known list of illegal characters",
-  "Name": "ꟿ String.ReplaceIllegalChars",
+  "Name": "String.ReplaceIllegalChars",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -25,10 +25,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nfrom itertools import imap, repeat\r\nimport System\r\nbadChars = set(System.IO.Path.GetInvalidFileNameChars() )\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\ndef fixName(n, rep=\"\", badChars=badChars):\r\n\tn1 = (c if c not in badChars else rep for c in iter(n) )\r\n\treturn ''.join(n1)\r\n\r\nnames = tolist(IN[0])\r\nreplacement = str(IN[1])\r\nother = tolist(IN[2])\r\n\r\nbadChars.update(other)\r\nOUT = map(fixName, imap(str, names), repeat(replacement, len(names) ) )",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport System\r\nfrom itertools import repeat\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef fixName(n, rep=\"\", badChars=None):\r\n    if badChars is None:\r\n        badChars = set()\r\n    return ''.join(c if c not in badChars else rep for c in str(n))\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    names = tolist(IN[0])\r\n    replacement = str(IN[1])\r\n    other = tolist(IN[2]) if IN[2] is not None else []\r\n\r\n    badChars = set(System.IO.Path.GetInvalidFileNameChars())\r\n    badChars.update(other)\r\n\r\n    result = list(map(fixName, map(str, names), repeat(replacement, len(names)), repeat(badChars, len(names))))\r\n    OUT = result if is_list else result[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "92dc2334e6fa4dc7aeec867d43255dfb",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "56486dc851544aabb85553e12ac29240",
@@ -70,11 +71,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "str",
         "TypeName": "var",
@@ -83,6 +83,7 @@
         "Description": ""
       },
       "Id": "9d09b0d2e23f45faa21b47f0dd8306ef",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -100,7 +101,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "replacement",
         "TypeName": "string",
@@ -109,6 +109,7 @@
         "Description": ""
       },
       "Id": "4db6d6c55f58425eb229d55cc76b5b5e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -126,10 +127,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "str",
       "Id": "ae3825aeca2e4072aa237019b15f97b7",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "621f43d823f34bf09db1e15684a8d90f",
@@ -147,7 +148,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "otherBadChars",
         "TypeName": "var",
@@ -156,6 +156,7 @@
         "Description": ""
       },
       "Id": "2aa56dd601204c3ab4ad150d52c14bd3",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -176,102 +177,109 @@
     {
       "Start": "669dda55a8ce4d8ea977eb082625be4c",
       "End": "621f43d823f34bf09db1e15684a8d90f",
-      "Id": "ffaced0ea2624420871180bbec2d7790"
+      "Id": "ffaced0ea2624420871180bbec2d7790",
+      "IsHidden": "False"
     },
     {
       "Start": "fd2143aae63740238211fee274b60620",
       "End": "56486dc851544aabb85553e12ac29240",
-      "Id": "ad7dc3b486d04228aa0e89fe6c6b1368"
+      "Id": "ad7dc3b486d04228aa0e89fe6c6b1368",
+      "IsHidden": "False"
     },
     {
       "Start": "83a42d93cde44140a48f0a155b0a255c",
       "End": "7bf127c142a94230b63b70e4b8450e6d",
-      "Id": "6be74ddafc9b4d9fb0b3ab0f7d0f488f"
+      "Id": "6be74ddafc9b4d9fb0b3ab0f7d0f488f",
+      "IsHidden": "False"
     },
     {
       "Start": "647e296bcd864437a626de9734493ef0",
       "End": "f2aed4d4c6b1473a8a41cb800495922e",
-      "Id": "3e1f43a57806472aaa57f9981d721b25"
+      "Id": "3e1f43a57806472aaa57f9981d721b25",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "92dc2334e6fa4dc7aeec867d43255dfb",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 197.001971245497,
-        "Y": 2.43110223644511
+        "Y": 1.5394704708335212
       },
       {
         "Id": "9d09b0d2e23f45faa21b47f0dd8306ef",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -84.60235782829,
-        "Y": 3.40354313102316
+        "ShowGeometry": true,
+        "X": -67.66135428167263,
+        "Y": -121.42490405457912
       },
       {
         "Id": "4db6d6c55f58425eb229d55cc76b5b5e",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -86.5472396174462,
-        "Y": 59.0767763569527
+        "ShowGeometry": true,
+        "X": -188.19326089715085,
+        "Y": 35.89435045105508
       },
       {
         "Id": "ae3825aeca2e4072aa237019b15f97b7",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 357.53543769882,
-        "Y": 4.3759840256012
+        "ShowGeometry": true,
+        "X": 777.792022765603,
+        "Y": 7.045975036190711
       },
       {
         "Id": "2aa56dd601204c3ab4ad150d52c14bd3",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -82.1574696505456,
-        "Y": 116.271648563226
+        "ShowGeometry": true,
+        "X": -568.0967819087832,
+        "Y": 201.86829806192486
       }
     ],
     "Annotations": [],
-    "X": 472.817434082642,
-    "Y": 68.7038319688007,
-    "Zoom": 2.05668026833428
+    "X": 375.36992138096423,
+    "Y": 449.44668422987166,
+    "Zoom": 0.7476928171233261
   }
 }

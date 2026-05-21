@@ -1,0 +1,426 @@
+{
+  "Uuid": "0226e67c-0d84-41c8-9889-355bb78dbb39",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "BoxedDistanceTo",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Autodesk.Geometry": {
+        "Key": "Autodesk.DesignScript.Geometry.Geometry",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Geometry": {
+        "Key": "Autodesk.DesignScript.Geometry.Geometry",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.Object": {
+        "Key": "DSCore.Object",
+        "Value": "DSCoreNodes.dll"
+      },
+      "BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 148.0,
+      "WatchHeight": 200.0,
+      "Id": "b056438bb1c24f4ea2720cf23f88a436",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "dd1dea00db9149de9a2d9f7ae648a82b",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dd68142584934aa99baa296d192a2443",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "faf1a814-583f-4469-888a-56118707c9d2",
+      "FunctionType": "Graph",
+      "Id": "aae8b23f72544e28a2ad8bf0ef347bff",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "a00be5e06e4c45c19f2f5e1d91c57c1e",
+          "Name": "geometry",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "abdfd65497534cffa6faf95b8ce7353e",
+          "Name": "other",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c801e7e4daa14c3f8d7d65f11f7d6eb4",
+          "Name": "distance",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Computes the minimal distance between the axis-aligned bounding boxes of two geometry elements. Works directly with a bounding box input."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "388faa933ef3437b86aa3b80498dc015",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "261b10131c1447c69e21338c2fdcaf2b",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "662660d93cc84cafa5baefebb52ad532",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "21af603721f74a00b72b0ed0711ad5d3",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d6c77ed47f3c4c98ae580d47d20647be",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at WCS origin, with width, length, and height.\n\nCuboid.ByLengths (width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "4b8d2a2f36254616832978b0e7c26c8d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2c90ba7ff554422f873c8084bf789bbd",
+          "Name": "geometry",
+          "Description": "Autodesk.DesignScript.Geometry.Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8f4a6a210f204ab3b2ae5907c3fb2ddf",
+          "Name": "direction",
+          "Description": "Vector",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cd3ed2667d4e4dc898d7c93e0eff1eea",
+          "Name": "Geometry",
+          "Description": "Geometry",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.Translate@Autodesk.DesignScript.Geometry.Vector",
+      "Replication": "Auto",
+      "Description": "Translate geometry in the given direction by the vector length\n\nGeometry.Translate (direction: Vector): Geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "6703f08a83804f72932009d6ecb222fd",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4f6d7c423e674ceabe42a0dc9daac8bd",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "62b6768e999747409bae1f64527495b6",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "42e1c709667c40dfb9dcf5c970691d9b",
+          "Name": "z",
+          "Description": "Z coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fa5090962ec14e9f9e94b97604981d7f",
+          "Name": "Vector",
+          "Description": "Vector created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Vector.ByCoordinates@double,double,double",
+      "Replication": "Auto",
+      "Description": "Form a Vector by 3 Euclidean coordinates\n\nVector.ByCoordinates (x: double = 0, y: double = 0, z: double = 0): Vector"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "2b4e74f2a2734c52a79a83a60127c057",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fdccf198fbe34779b50c340cb87e5446",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "5;"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "c801e7e4daa14c3f8d7d65f11f7d6eb4",
+      "End": "dd1dea00db9149de9a2d9f7ae648a82b",
+      "Id": "a3377cb58e0a4205b24650c15dfc9e3f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d6c77ed47f3c4c98ae580d47d20647be",
+      "End": "2c90ba7ff554422f873c8084bf789bbd",
+      "Id": "ddb8048fa41e4bb487dbf69e32fa495d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d6c77ed47f3c4c98ae580d47d20647be",
+      "End": "a00be5e06e4c45c19f2f5e1d91c57c1e",
+      "Id": "3a97a3b1f5ff40dc99f66e8506b5d22b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cd3ed2667d4e4dc898d7c93e0eff1eea",
+      "End": "abdfd65497534cffa6faf95b8ce7353e",
+      "Id": "c85b6acb9e0f47da879eabe7730e0060",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fa5090962ec14e9f9e94b97604981d7f",
+      "End": "8f4a6a210f204ab3b2ae5907c3fb2ddf",
+      "Id": "8ebff1055d734521bec209ef91226d08",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fdccf198fbe34779b50c340cb87e5446",
+      "End": "4f6d7c423e674ceabe42a0dc9daac8bd",
+      "Id": "a996b66317764975a1b8b6d1b9f367a6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fdccf198fbe34779b50c340cb87e5446",
+      "End": "62b6768e999747409bae1f64527495b6",
+      "Id": "f266aa26e3c846109c37f2eab425bb0a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "faf1a814-583f-4469-888a-56118707c9d2"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Geometry.BoxedDistanceTo.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "aae8b23f72544e28a2ad8bf0ef347bff"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -13.054098129272461,
+      "EyeY": 13.571005821228027,
+      "EyeZ": 4.5806803703308105,
+      "LookX": 6.763647079467773,
+      "LookY": -5.281354904174805,
+      "LookZ": -3.7199783325195312,
+      "UpX": 0.328236848115921,
+      "UpY": 0.9271839261054993,
+      "UpZ": -0.18052901327610016
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b056438bb1c24f4ea2720cf23f88a436",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1583.4170299535488,
+        "Y": 437.6624139072894
+      },
+      {
+        "Id": "aae8b23f72544e28a2ad8bf0ef347bff",
+        "Name": "Geometry.BoxedDistanceTo",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1186.3799513835145,
+        "Y": 439.62539690183445
+      },
+      {
+        "Id": "388faa933ef3437b86aa3b80498dc015",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 563.6860052113964,
+        "Y": 441.306748846503
+      },
+      {
+        "Id": "4b8d2a2f36254616832978b0e7c26c8d",
+        "Name": "Geometry.Translate",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 881.0104047095691,
+        "Y": 591.8545158018106
+      },
+      {
+        "Id": "6703f08a83804f72932009d6ecb222fd",
+        "Name": "Vector.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 565.3110983950087,
+        "Y": 707.7427346531911
+      },
+      {
+        "Id": "2b4e74f2a2734c52a79a83a60127c057",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 339.5182739785507,
+        "Y": 746.418991119386
+      }
+    ],
+    "Annotations": [],
+    "X": -210.18037839802696,
+    "Y": -108.44925577211075,
+    "Zoom": 0.7456038946450769
+  }
+}

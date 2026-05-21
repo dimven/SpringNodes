@@ -1,0 +1,246 @@
+{
+  "Uuid": "0d246f30-08d8-4c6a-b59d-fd4febb9356b",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "OpenViews",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "915008e5327d4601acd909a39a80c31f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e50f9d732de44f2abc847bbe94ddc044",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "88fe25a656194198a008c8293fb5e90a",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "f9f49e07d9cb4a66bf3bd60cc92e840d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "ab085c032c1b4d1db2a278132c1159f2",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b3894f5e75da4f2f95088b419ce8d102",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1643d0ad-7ea1-48b2-9b08-4b0aeb282536",
+      "FunctionType": "Graph",
+      "Id": "beadb4d43bf84e7c900d7b42060b817d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "3a6c5a1850e949c4b0f0b5ba197d3b2a",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d4ca95f61beb44d1829ced4ef4e67687",
+          "Name": "views",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Lists all views currently open inside the Revit UI"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "6517c1b497c54f4ea637f91d31deb240",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "203bbaea7ee2446a9471259de0a8fd79",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d4ca95f61beb44d1829ced4ef4e67687",
+      "End": "ab085c032c1b4d1db2a278132c1159f2",
+      "Id": "a902d458f925479ca1d521d5a68c6b89",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "203bbaea7ee2446a9471259de0a8fd79",
+      "End": "3a6c5a1850e949c4b0f0b5ba197d3b2a",
+      "Id": "9eb4236db1f249adb2425fba5f373410",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "1643d0ad-7ea1-48b2-9b08-4b0aeb282536"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Application.OpenViews.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "beadb4d43bf84e7c900d7b42060b817d"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "915008e5327d4601acd909a39a80c31f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 255.7331064470955,
+        "Y": 1204.0081277002432
+      },
+      {
+        "Id": "f9f49e07d9cb4a66bf3bd60cc92e840d",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 684.7072801607463,
+        "Y": 685.962983448678
+      },
+      {
+        "Id": "beadb4d43bf84e7c900d7b42060b817d",
+        "Name": "Application.OpenViews",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 352.01484627405256,
+        "Y": 687.5964158773884
+      },
+      {
+        "Id": "6517c1b497c54f4ea637f91d31deb240",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 65.76615699549956,
+        "Y": 689.1281363417412
+      }
+    ],
+    "Annotations": [],
+    "X": 83.97073830452649,
+    "Y": -390.4257533764798,
+    "Zoom": 1.0837271163390751
+  }
+}

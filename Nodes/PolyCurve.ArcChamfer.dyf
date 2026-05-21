@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Symmetrically chamfers the corners of the polycurve by the designated distance and close with tangent arcs.",
-  "Name": "ꟿ PolyCurve.ArcChamfer",
+  "Name": "PolyCurve.ArcChamfer",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {

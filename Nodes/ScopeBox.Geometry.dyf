@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Query",
   "Description": "Fetches the base curve and solid representation of a scope box element.",
-  "Name": "ꟿ ScopeBox.Geometry",
+  "Name": "ScopeBox.Geometry",
   "ElementResolver": {
     "ResolutionMap": {
       "Line": {
@@ -41,9 +41,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "c1 = s.Geometry();\nmsk = Vector.ZAxis().Dot(c1.Direction) == 0;\nc2 = DSCore.List.FilterByBoolMask(c1, msk)[\"in\"];\nc3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z);\nc4 = c3[\"sorted list\"];\nc5 = c4 == null ? c3[\"sortedList\"] : c4;\npc1 = PolyCurve.ByJoinedCurves(c5[0..3]);\ns1 = pc1.ExtrudeAsSolid(c5[4].EndPoint.Z - c5[0].EndPoint.Z);",
       "Id": "93707410ade94d25944b218daf92b08a",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "88ac6e9bdf07408cb652d4a1821db049",
@@ -58,8 +57,8 @@
       "Outputs": [
         {
           "Id": "ceec84be378e400f88e5617ae79d61ce",
-          "Name": "",
-          "Description": "c1",
+          "Name": "c1",
+          "Description": "c1 = s.Geometry()",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -67,8 +66,8 @@
         },
         {
           "Id": "d64b875955934e818e13243bf31916fe",
-          "Name": "",
-          "Description": "msk",
+          "Name": "msk",
+          "Description": "msk = (Autodesk.DesignScript.Geometry.Vector.ZAxis().Dot(c1.Direction)) == 0",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -76,8 +75,8 @@
         },
         {
           "Id": "00847d57becb4e0bac5b94d5d52be04d",
-          "Name": "",
-          "Description": "c2",
+          "Name": "c2",
+          "Description": "c2 = DesignScript.Builtin.Get.ValueAtIndex(DSCore.List.FilterByBoolMask(c1, msk), \"in\")",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -85,8 +84,8 @@
         },
         {
           "Id": "04d7c74162364811ae69e43a6cfed218",
-          "Name": "",
-          "Description": "c3",
+          "Name": "c3",
+          "Description": "c3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -94,8 +93,8 @@
         },
         {
           "Id": "68768f7f8c2b4f3ca35e6790a25e75fc",
-          "Name": "",
-          "Description": "c4",
+          "Name": "c4",
+          "Description": "c4 = DesignScript.Builtin.Get.ValueAtIndex(c3, \"sorted list\")",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -103,8 +102,8 @@
         },
         {
           "Id": "685ffefbbe434491919906ca58f19a6b",
-          "Name": "",
-          "Description": "c5",
+          "Name": "c5",
+          "Description": "c5 = ((c4 == null ? DesignScript.Builtin.Get.ValueAtIndex(c3, \"sortedList\") : c4))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -112,8 +111,8 @@
         },
         {
           "Id": "4d0819a0266e4375babd98a3a3cb5029",
-          "Name": "",
-          "Description": "pc1",
+          "Name": "pc1",
+          "Description": "pc1 = PolyCurve.ByJoinedCurves(DesignScript.Builtin.Get.ValueAtIndex(c5, 0..3))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -121,8 +120,8 @@
         },
         {
           "Id": "642f11ccb51a4704a3cfcb04675961c4",
-          "Name": "",
-          "Description": "s1",
+          "Name": "s1",
+          "Description": "s1 = pc1.ExtrudeAsSolid((DesignScript.Builtin.Get.ValueAtIndex(c5, 4).EndPoint.Z) - (DesignScript.Builtin.Get.ValueAtIndex(c5, 0).EndPoint.Z))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -130,11 +129,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "c1 = s.Geometry();\nmsk = Vector.ZAxis().Dot(c1.Direction) == 0;\nc2 = DSCore.List.FilterByBoolMask(c1, msk)[\"in\"];\nc3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z);\nc4 = c3[\"sorted list\"];\nc5 = c4 == null ? c3[\"sortedList\"] : c4;\npc1 = PolyCurve.ByJoinedCurves(c5[0..3]);\ns1 = pc1.ExtrudeAsSolid(c5[4].EndPoint.Z - c5[0].EndPoint.Z);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "scopeBox",
         "TypeName": "var",
@@ -143,6 +142,7 @@
         "Description": ""
       },
       "Id": "56f4e35289cf4c09a9a94897144c767a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -160,10 +160,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "polyCurve",
       "Id": "39d8d3e14b4648c4a76f64fde28fd1ba",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "72a309b0717744768b347058e846d071",
@@ -181,10 +181,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "solid",
       "Id": "783f962d4e0b40418575ca9329accf6c",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "262f0f28ee8042cd91d84705bb2e5a89",
@@ -205,87 +205,92 @@
     {
       "Start": "4d0819a0266e4375babd98a3a3cb5029",
       "End": "72a309b0717744768b347058e846d071",
-      "Id": "b4d68e9910464fb18e6dee0bbaf1de67"
+      "Id": "b4d68e9910464fb18e6dee0bbaf1de67",
+      "IsHidden": "False"
     },
     {
       "Start": "642f11ccb51a4704a3cfcb04675961c4",
       "End": "262f0f28ee8042cd91d84705bb2e5a89",
-      "Id": "130ebd81d4634d459dac4fa04d71729d"
+      "Id": "130ebd81d4634d459dac4fa04d71729d",
+      "IsHidden": "False"
     },
     {
       "Start": "5b4997705a764342aa0d2db1ff9856c7",
       "End": "88ac6e9bdf07408cb652d4a1821db049",
-      "Id": "f4601d711fec44099e1edf20702bea22"
+      "Id": "f4601d711fec44099e1edf20702bea22",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
   "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.10.1.3976",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 16036.220703125,
-      "EyeY": 34881.95703125,
-      "EyeZ": 25444.06640625,
-      "LookX": -6862.791015625,
-      "LookY": -25982.92578125,
-      "LookZ": -35939.828125,
-      "UpX": -0.073286950588226318,
-      "UpY": 0.92050492763519287,
-      "UpZ": -0.38379678130149841
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Code Block",
         "Id": "93707410ade94d25944b218daf92b08a",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": -19.217385781588945,
-        "Y": -186.33084973670259
+        "Y": -186.3308497367026
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "56f4e35289cf4c09a9a94897144c767a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -399.92374872407055,
-        "Y": -222.91839643259388
+        "ShowGeometry": true,
+        "X": -382.80689278144166,
+        "Y": -182.46037329547102
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "39d8d3e14b4648c4a76f64fde28fd1ba",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 783.960031136367,
-        "Y": -63.8204327129633
+        "ShowGeometry": true,
+        "X": 777.735719884502,
+        "Y": -90.79244813771189
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "783f962d4e0b40418575ca9329accf6c",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 784.519422242299,
-        "Y": -6.35714738419458
+        "ShowGeometry": true,
+        "X": 790.743733494164,
+        "Y": 88.56359920674745
       }
     ],
     "Annotations": [],
-    "X": 545.95103856688513,
+    "X": 545.9510385668851,
     "Y": 393.5293780510566,
     "Zoom": 1.2852827688530004
   }

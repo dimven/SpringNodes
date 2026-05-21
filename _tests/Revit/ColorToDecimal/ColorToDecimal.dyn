@@ -1,0 +1,349 @@
+{
+  "Uuid": "93041dc6-17cd-40ef-bef5-36ff9f5014ec",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ColorToDecimal",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "b5264d48b5544054b1a4c0d300927118",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "bda5c51283ff4cce9fd42e25ff07c202",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "47fdfc0c5135407885df126d68e2234f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0cf5e509-573d-429d-815c-02876bc9a0cd",
+      "FunctionType": "Graph",
+      "Id": "1c34aacec7d6409588e78b58e383f1b1",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "bcb8fa55932346cf98508926e846dadb",
+          "Name": "color",
+          "Description": "Color",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2a6c10992bc64bc5828b8b3edf90df0e",
+          "Name": "decimal",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Converts a Dynamo colour its Revit equivalent  decimal value."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 72.66666666666667,
+      "WatchHeight": 200.0,
+      "Id": "8b7e4e1dad394f84b01f451a219f8720",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "acd90e4e95fc4a5a8220619e9d788a27",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "10700d57a425406aa41de18f2c314a82",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "4a7639b1f4544e8da7f999a9933055e1",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "bbe67fb5bfdb427c8f44237086283f98",
+          "Name": "alpha",
+          "Description": "Alpha value (between 0 and 255 inclusive)\n\nint\nDefault value : 255",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "94213b26070149ee87de0695be78aca8",
+          "Name": "red",
+          "Description": "Red value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "29e3e1d84c064abc9f49a84023ae9994",
+          "Name": "green",
+          "Description": "Green value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c43f48ba5a1741fb8a9b7a5367176a7c",
+          "Name": "blue",
+          "Description": "Blue value for RGB color model (between 0 and 255 inclusive)\n\nint\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7fc105a746d14358b742ffe789f794b2",
+          "Name": "color",
+          "Description": "Color created from ARGB",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.Color.ByARGB@int,int,int,int",
+      "Replication": "Auto",
+      "Description": "Construct a color by alpha, red, green, and blue components.\n\nColor.ByARGB (alpha: int = 255, red: int = 0, green: int = 0, blue: int = 0): Color"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "73085caf751c445aa57d937ddefe9778",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "eaff9af406f84f609a6d1c8723e8dd49",
+          "Name": "integer",
+          "Description": "5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f51bfe8da1814d5196fe277e18d09473",
+          "Name": "integer",
+          "Description": "200",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "47564b22c0494503a2f2480735b95594",
+          "Name": "integer",
+          "Description": "100",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "5;\n200;\n100;"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2a6c10992bc64bc5828b8b3edf90df0e",
+      "End": "acd90e4e95fc4a5a8220619e9d788a27",
+      "Id": "e8b10c609c9f444f9853b213070cc701",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7fc105a746d14358b742ffe789f794b2",
+      "End": "bcb8fa55932346cf98508926e846dadb",
+      "Id": "45d2675abcc1415eb41d223bf2826f67",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "eaff9af406f84f609a6d1c8723e8dd49",
+      "End": "94213b26070149ee87de0695be78aca8",
+      "Id": "3c5c45c8efbe4fb188c2c26b0ac8cefc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f51bfe8da1814d5196fe277e18d09473",
+      "End": "29e3e1d84c064abc9f49a84023ae9994",
+      "Id": "987b324d142d46788df09a1e09aac19e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "47564b22c0494503a2f2480735b95594",
+      "End": "c43f48ba5a1741fb8a9b7a5367176a7c",
+      "Id": "74d52b692be54c05a578fe4edacc2713",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0cf5e509-573d-429d-815c-02876bc9a0cd"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Color.ToDecimal.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "1c34aacec7d6409588e78b58e383f1b1"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b5264d48b5544054b1a4c0d300927118",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 316.1565105209734,
+        "Y": 1174.9437054874916
+      },
+      {
+        "Id": "1c34aacec7d6409588e78b58e383f1b1",
+        "Name": "Color.ToDecimal",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 551.8416367092017,
+        "Y": 741.633543134001
+      },
+      {
+        "Id": "8b7e4e1dad394f84b01f451a219f8720",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 815.7695951014215,
+        "Y": 741.3873691249931
+      },
+      {
+        "Id": "4a7639b1f4544e8da7f999a9933055e1",
+        "Name": "Color.ByARGB",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 299.5891080866012,
+        "Y": 740.5281981782682
+      },
+      {
+        "Id": "73085caf751c445aa57d937ddefe9778",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 69.71922889739818,
+        "Y": 781.7711323200787
+      }
+    ],
+    "Annotations": [],
+    "X": 30.38851410696236,
+    "Y": -616.488694820204,
+    "Zoom": 1.1691952180666414
+  }
+}

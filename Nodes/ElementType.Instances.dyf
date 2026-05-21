@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Query",
   "Description": "Fetches all instances of the input element type",
-  "Name": "ꟿ ElementType.Instances",
+  "Name": "ElementType.Instances",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\ntypes = UnwrapElement(tolist(IN[0]) )\r\ncatNames = set()\r\nfor t in types:\r\n\tc1 = t.Category\r\n\tif c1 is not None:\r\n\t\tcatNames.add(c1.Name)\r\n\r\ncatId = List[ElementId]()\r\nallCats = doc.Settings.Categories\r\nfor cn in catNames:\r\n\tif allCats.Contains(cn):\r\n\t\tcatId.Add(allCats[cn].Id)\r\n\r\ntype_storage = dict()\r\nfec = FilteredElementCollector(doc).WhereElementIsNotElementType()\r\nif catId:\r\n\tfec = fec.WherePasses(ElementMulticategoryFilter(catId) )\r\n\r\nfor e in fec:\r\n\tid1 = e.GetTypeId().IntegerValue\r\n\tif id1 in type_storage:\r\n\t\ttype_storage[id1].append(e.ToDSType(True) )\r\n\telse:\r\n\t\ttype_storage[id1] = [e.ToDSType(True)]\r\n\r\nOUT = [type_storage.get(t.Id.IntegerValue, None) for t in types]",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    types = UnwrapElement(tolist(IN[0]) )\r\n    catNames = set()\r\n    for t in types:\r\n        c1 = t.Category\r\n        if c1 is not None:\r\n            catNames.add(c1.Name)\r\n\r\n    catId = List[ElementId]()\r\n    allCats = doc.Settings.Categories\r\n    for cn in catNames:\r\n        if allCats.Contains(cn):\r\n            catId.Add(allCats[cn].Id)\r\n\r\n    type_storage = dict()\r\n    fec = FilteredElementCollector(doc).WhereElementIsNotElementType()\r\n    if catId:\r\n        fec = fec.WherePasses(ElementMulticategoryFilter(catId) )\r\n\r\n    for e in fec:\r\n        id1 = e.GetTypeId().Value\r\n        if id1 in type_storage:\r\n            type_storage[id1].append(e.ToDSType(True) )\r\n        else:\r\n            type_storage[id1] = [e.ToDSType(True)]\r\n\r\n    OUT = [type_storage.get(t.Id.Value, None) for t in types]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "057010993ed6470394d858cc51463729",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "6c6b29f306d044b59457eb40c6eb0402",
@@ -39,11 +40,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "type",
         "TypeName": "var",
@@ -52,6 +52,7 @@
         "Description": ""
       },
       "Id": "482f25e251ea4aad9fe2ff8be55b8b1a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -69,10 +70,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "instances",
       "Id": "327359e339cd413da3ef2c0b9eb9d6ff",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "ad5fb939d4d04581924fe53a6b29c4fb",
@@ -93,72 +94,77 @@
     {
       "Start": "1871c09b64394f7cbfb9800d015e3807",
       "End": "ad5fb939d4d04581924fe53a6b29c4fb",
-      "Id": "a7a035753eb5431d98be50126550afa2"
+      "Id": "a7a035753eb5431d98be50126550afa2",
+      "IsHidden": "False"
     },
     {
       "Start": "0c50c52c309f4c9caa425e8583da72f3",
       "End": "6c6b29f306d044b59457eb40c6eb0402",
-      "Id": "d2df7a32fbd44091b8cfd680f831fd4f"
+      "Id": "d2df7a32fbd44091b8cfd680f831fd4f",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -18.052804946899414,
-      "EyeY": 15634.6513671875,
-      "EyeZ": -930.51702880859375,
-      "LookX": 13.052804946899414,
-      "LookY": -15623.6513671875,
-      "LookZ": 922.51702880859375,
-      "UpX": -0.013973522931337357,
-      "UpY": 0.15643446147441864,
-      "UpZ": -0.98758947849273682
+      "Name": "_Background Preview",
+      "EyeX": -14735.748046875,
+      "EyeY": 5990.63671875,
+      "EyeZ": 3944.71826171875,
+      "LookX": 10275.509765625,
+      "LookY": -4838.8046875,
+      "LookZ": -3466.8740234375,
+      "UpX": 0.38609033823013306,
+      "UpY": 0.9132171869277954,
+      "UpZ": -0.1302638202905655
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "057010993ed6470394d858cc51463729",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.0,
         "Y": 0.0
       },
       {
         "Id": "482f25e251ea4aad9fe2ff8be55b8b1a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 108.009562477819,
-        "Y": -0.204844458956586
+        "ShowGeometry": true,
+        "X": -12.198945634537523,
+        "Y": -0.2048444589565861
       },
       {
         "Id": "327359e339cd413da3ef2c0b9eb9d6ff",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 447.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 557.191132436327,
+        "Y": -2.0034751352059175
       }
     ],
     "Annotations": [],
-    "X": -763.123649001443,
-    "Y": 89.0797089016103,
-    "Zoom": 3.74023439427936
+    "X": 226.1319204290113,
+    "Y": 335.6905117197221,
+    "Zoom": 1.3310205950684555
   }
 }

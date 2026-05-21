@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node.",
-  "Name": "ꟿ SelectElementsInOrder",
+  "Name": "SelectElementsInOrder",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\n#inspired by Troy Gates https://forums.autodesk.com/t5/revit-api/revit-api-selected-element-set-order/td-p/5597203\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom  Autodesk.Revit.UI import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ndef output1(l1):\r\n\tif len(l1) == 1: return l1[0]\r\n\telse: return l1\r\n\r\nsel1 = uidoc.Selection\r\nobt1 = Selection.ObjectType.Element\r\nmsg1 = 'Pick elements in the desired order, hit ESC to stop picking.'\r\nout1 = []\r\n\r\nflag = True\r\nTaskDialog.Show(\"Spring Nodes\", msg1)\r\nwhile flag:\r\n\ttry:\r\n\t\tel1 = doc.GetElement(sel1.PickObject(obt1, msg1).ElementId)\r\n\t\tout1.append(el1.ToDSType(True))\r\n\texcept : flag = False\r\n\r\nOUT = output1(out1)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n# inspired by Troy Gates\r\n# https://forums.autodesk.com/t5/revit-api/revit-api-selected-element-set-order/td-p/5597203\r\n\r\nimport clr\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ntry:\r\n    sel1 = uidoc.Selection\r\n    obt1 = Selection.ObjectType.Element\r\n    msg1 = 'Pick elements in the desired order, hit ESC to stop picking.'\r\n\r\n    out1 = []\r\n    TaskDialog.Show(\"Spring Nodes\", msg1)\r\n    flag = True\r\n    while flag:\r\n        try:\r\n            el1 = doc.GetElement(sel1.PickObject(obt1, msg1).ElementId)\r\n            out1.append(el1.ToDSType(True))\r\n        except:\r\n            flag = False\r\n\r\n    OUT = out1[0] if len(out1) == 1 else out1\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "d92bcee5b98a4981a5d22482a43e9bb5",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "014e04036cbc4f6c8fd4b531c289690c",
@@ -39,14 +40,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "elements",
       "Id": "9656dedf9f184ab095ea32f4161280b3",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "4238f8474f7643cdaf80da389ef19104",
@@ -64,7 +65,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -73,6 +73,7 @@
         "Description": ""
       },
       "Id": "df1ac182aa03434da888e8b8d112db70",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -93,72 +94,77 @@
     {
       "Start": "e0cf0061dbca42e59b04d6bfa092abc3",
       "End": "4238f8474f7643cdaf80da389ef19104",
-      "Id": "5b76409c1d7747658d15704336a7914d"
+      "Id": "5b76409c1d7747658d15704336a7914d",
+      "IsHidden": "False"
     },
     {
       "Start": "2c05082f4d5848a1ace272dbf88f867c",
       "End": "014e04036cbc4f6c8fd4b531c289690c",
-      "Id": "a9b187e3c81b4ca2abf4bace28628551"
+      "Id": "a9b187e3c81b4ca2abf4bace28628551",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "d92bcee5b98a4981a5d22482a43e9bb5",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 223.6,
-        "Y": -8.80000000000001
+        "ShowGeometry": true,
+        "X": 224.14653445702206,
+        "Y": -10.439603371066255
       },
       {
         "Id": "9656dedf9f184ab095ea32f4161280b3",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 383.4,
-        "Y": -8.80000000000001
+        "ShowGeometry": true,
+        "X": 478.47572679596476,
+        "Y": -7.67484346987024
       },
       {
         "Id": "df1ac182aa03434da888e8b8d112db70",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 8.06245304096109,
-        "Y": -9.53754695903895
+        "ShowGeometry": true,
+        "X": -116.00086870305114,
+        "Y": -6.258340216906461
       }
     ],
     "Annotations": [],
-    "X": -216.707402702134,
-    "Y": 170.464140626685,
-    "Zoom": 2.37004060791358
+    "X": 607.0996246463347,
+    "Y": 361.65559958321853,
+    "Zoom": 1.2198072017254953
   }
 }

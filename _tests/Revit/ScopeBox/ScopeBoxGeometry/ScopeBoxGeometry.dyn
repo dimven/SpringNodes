@@ -1,0 +1,263 @@
+{
+  "Uuid": "54df5f73-156f-40ca-9814-ec7c77a4558f",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ScopeBoxGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "b99149b8-f8a0-4a73-ae80-c06bd6a5d165",
+      "FunctionType": "Graph",
+      "Id": "91947b11135a405a94c8c85a86dc011b",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "837a8a43c64149febaa87f8c4fb772a2",
+          "Name": "scopeBox",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "18cd080a1b5d4df680191e872b8f20fd",
+          "Name": "polyCurve",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4a16a012be8d469ba0b4a105849955bf",
+          "Name": "solid",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Fetches the base curve and solid representation of a scope box element."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "3609393c-bd24-4f03-bc82-811c7512372a-0004fa10"
+      ],
+      "Id": "10b2b50ab00347ab86953bb608372efd",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4ff5ad574a1c4eb4bcac1c4e84a36d15",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 237.33333333333334,
+      "WatchHeight": 40.0,
+      "Id": "d214edc814314145badc2c649cf2fe7a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "cd02c417baf34e68878b79c678c68b0f",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6cb8922145f642dc92cf71ce251681f0",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 57.333333333333336,
+      "WatchHeight": 40.0,
+      "Id": "1f4e625e409d4dcf89d6c8bd2934a2d9",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "97961368706e4b97ac3d8797ea309e82",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6909a5b583994528b4a4395f56c92095",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "18cd080a1b5d4df680191e872b8f20fd",
+      "End": "cd02c417baf34e68878b79c678c68b0f",
+      "Id": "40884872ff174ff3863878a8f7873e2c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4a16a012be8d469ba0b4a105849955bf",
+      "End": "97961368706e4b97ac3d8797ea309e82",
+      "Id": "77d37eaa268247bca935bf8171f1bf77",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4ff5ad574a1c4eb4bcac1c4e84a36d15",
+      "End": "837a8a43c64149febaa87f8c4fb772a2",
+      "Id": "8ec25ce2d01e46f8966dedc19527e26d",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "b99149b8-f8a0-4a73-ae80-c06bd6a5d165"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "ScopeBox.Geometry.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "91947b11135a405a94c8c85a86dc011b"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "91947b11135a405a94c8c85a86dc011b",
+        "Name": "ScopeBox.Geometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1152.8409110240623,
+        "Y": 461.5568460292537
+      },
+      {
+        "Id": "10b2b50ab00347ab86953bb608372efd",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 782.8816690533456,
+        "Y": 462.3590802091131
+      },
+      {
+        "Id": "d214edc814314145badc2c649cf2fe7a",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1520.848156355452,
+        "Y": 288.092295255845
+      },
+      {
+        "Id": "1f4e625e409d4dcf89d6c8bd2934a2d9",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1557.1486209344143,
+        "Y": 718.2712584791841
+      }
+    ],
+    "Annotations": [],
+    "X": -201.84999160302937,
+    "Y": 85.97904623484305,
+    "Zoom": 1.1247123199785862
+  }
+}

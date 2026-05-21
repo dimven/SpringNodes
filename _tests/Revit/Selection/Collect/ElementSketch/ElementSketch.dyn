@@ -1,0 +1,317 @@
+{
+  "Uuid": "33deef82-5ed9-4fd4-9161-5a1b13dca2cf",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ElementSketch",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "b72c8d3693684bbeaf80b711a4369fe7",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7671e506e9b14318a3da7a2cdd7b73c2",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "c946ce37897b426d82f8bec36350d142",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "cc242bafd0cc4e379b142d06c92f145e",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e902832d22b549baa909bac6a5b38faa",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "94050ce4-e59f-4377-933d-16326991c630",
+      "FunctionType": "Graph",
+      "Id": "3f862348a4be411da2d4ddf7f13738bd",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "bd2bbc2d8bac45238f430ff92d560ce2",
+          "Name": "element",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bb9b774673fb4b7aa2ba91658ae8cdc7",
+          "Name": "fetchModelCurves",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "647fc1c9f82b43fca0b7088056a5fdd5",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9e2863b6fdc7436cae62a6e2acc6d89b",
+          "Name": "curves",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1dc00eee15804da39b65cb9f38790a90",
+          "Name": "model curves",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the actual sketch lines of a sketch based element (floor, ceiling, modified wall, etc.) . You can optionally fetch the matching model curves, however this might prove comptationally heavy on larger data sets. Does not work with elements from linked files."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "3609393c-bd24-4f03-bc82-811c7512372a-0004fa13"
+      ],
+      "Id": "a5ac1389126040a7aca451f6d97cb790",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c06d0ece61224d5ab7ffd798ced07a68",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "06aeced1482f4b34a4f287ce9c67bf04",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "96a06ae39e2148f1b51d633161369b51",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fc5de14411784a9a899a8bbcab61caea",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "7671e506e9b14318a3da7a2cdd7b73c2",
+      "End": "647fc1c9f82b43fca0b7088056a5fdd5",
+      "Id": "e74a5bc315894311bdcad1aa1e17f6ea",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9e2863b6fdc7436cae62a6e2acc6d89b",
+      "End": "cc242bafd0cc4e379b142d06c92f145e",
+      "Id": "152e2029d66f441893ed23ad1f0d2329",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1dc00eee15804da39b65cb9f38790a90",
+      "End": "96a06ae39e2148f1b51d633161369b51",
+      "Id": "f39d2d8c813249a5b65396974060a8d0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c06d0ece61224d5ab7ffd798ced07a68",
+      "End": "bd2bbc2d8bac45238f430ff92d560ce2",
+      "Id": "82f5f795850b45e9a7801165aee4948a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "94050ce4-e59f-4377-933d-16326991c630"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Collect.ElementSketch.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "3f862348a4be411da2d4ddf7f13738bd"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b72c8d3693684bbeaf80b711a4369fe7",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 837.1659886766607,
+        "Y": 480.68448560693287
+      },
+      {
+        "Id": "c946ce37897b426d82f8bec36350d142",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1636.6707231665412,
+        "Y": 168.3020802398742
+      },
+      {
+        "Id": "3f862348a4be411da2d4ddf7f13738bd",
+        "Name": "Collect.ElementSketch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1177.1908480418708,
+        "Y": 313.5658709475052
+      },
+      {
+        "Id": "a5ac1389126040a7aca451f6d97cb790",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 807.8343379559046,
+        "Y": 177.60403276706157
+      },
+      {
+        "Id": "06aeced1482f4b34a4f287ce9c67bf04",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1638.7268134430888,
+        "Y": 526.3002861218968
+      }
+    ],
+    "Annotations": [],
+    "X": -518.5664315310553,
+    "Y": 154.20221534542523,
+    "Zoom": 1.0611496168469554
+  }
+}

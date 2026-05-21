@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Query",
   "Description": "Computes the minimum area rectangle in xy space for a set of points using a linear time algorithm",
-  "Name": "ꟿ Points.MinAreaRectangle",
+  "Name": "Points.MinAreaRectangle",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -45,9 +45,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "x[0];\nx[1];\nx[2];",
       "Id": "fbe0df27759c4ea599fa4f0fc3734a75",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "c7bf5aa29a774a17a235b65979e78e1e",
@@ -62,8 +61,8 @@
       "Outputs": [
         {
           "Id": "0fd8699adfa34ca685ed04dcac1a8050",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(x, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -71,8 +70,8 @@
         },
         {
           "Id": "ac00834a03bb43c685aa4e0107d18268",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(x, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -80,8 +79,8 @@
         },
         {
           "Id": "8df8d31072bf48f89c448811e733b6b6",
-          "Name": "",
-          "Description": "Value of expression at line 3",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(x, 2)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -89,14 +88,16 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "x[0];\nx[1];\nx[2];"
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Point, Vector, Rectangle\r\nfrom math import sqrt\r\nfrom operator import itemgetter\r\n\r\n_pts, elev = IN\r\n\r\ndef hull(_pts):\r\n\tdef pCrs(o, a, b):\r\n\t\treturn (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])\r\n\r\n\tpts = sorted( (p.X, p.Y) for p in _pts)\r\n\tpLen = len(pts)\r\n\tif pLen < 4 : return pts\r\n\telse:\r\n\t\tlower, upper = [], []\r\n\t\t\r\n\t\tfor i in xrange(pLen):\r\n\t\t\tj = pLen - 1 - i\r\n\t\t\twhile len(lower) >= 2 and pCrs(lower[-2], lower[-1], pts[i]) <= 0.000001:\r\n\t\t\t\tlower.pop()\r\n\t\t\tlower.append(pts[i])\r\n\t\t\twhile len(upper) >= 2 and pCrs(upper[-2], upper[-1], pts[j]) <= 0.000001:\r\n\t\t\t\tupper.pop()\r\n\t\t\tupper.append(pts[j])\r\n\t\t\r\n\t\tlower.pop()\r\n\t\tupper.pop()\r\n\t\tlower.extend(upper)\r\n\t\treturn lower\r\n\r\n# http://eprints.cs.vt.edu/archive/00000869/01/CS81017-R.pdf\r\n\r\ndef scalar(k, i, j):\r\n\treturn k[0] * (i[1] - j[1]) + k[1] * (j[0] - i[0]) + j[1] * i[0] - i[1] * j[0]\r\n\r\ndef pDist(a, b, sqrt=sqrt):\r\n\treturn sqrt( (a[0] - b[0])**2 + (a[1] - b[1])**2)\r\n\r\ndef linDist(a, b, p):\r\n\tline_dist = pDist(a, b)\r\n\tif line_dist == 0:\r\n\t\treturn a, pDist(p, a)\r\n\t\r\n\tt = ( (p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1]) ) / line_dist**2\r\n\t\r\n\tcp = ( (b[0] - a[0]) * t + a[0], (b[1] - a[1]) * t + a[1])\r\n\td1 = pDist(p, cp)\r\n\treturn cp, d1\r\n\r\ndef indexer(end, position=0, start=0, step=1):\r\n\ti = position - step\r\n\twhile True:\r\n\t\ti += step\r\n\t\tif i >= end:\r\n\t\t\ti = start\r\n\t\tyield i\r\n\r\ndef highSearch(pts, iPt, jPt, j, it1=None, k=None, m=None,\r\n\t\t\t   indexer=indexer, scalar=scalar):\r\n\tif it1 is None:\r\n\t\tit1 = indexer(len(pts), j)\r\n\t\tk, m = it1.next(), it1.next()\r\n\tSa = scalar(pts[k], iPt, jPt)\r\n\tSb = scalar(pts[m], iPt, jPt)\r\n\twhile Sa < Sb:\r\n\t\tk, m = m, it1.next()\r\n\t\tSa = scalar(pts[k], iPt, jPt)\r\n\t\tSb = scalar(pts[m], iPt, jPt)\r\n\treturn k, m\r\n\r\npts = hull(_pts)\r\n\r\nOUT = []\r\nhighPts, closePts, areas, dists = [], [], [], []\r\nlnPts = len(pts)\r\n\r\nit1 = indexer(lnPts, 2)\r\nk, m = it1.next(), it1.next()\r\n\r\nfor i in xrange(lnPts):\r\n\tj = (i + 1) % lnPts\r\n\r\n\tk, m = highSearch(pts, pts[i], pts[j], j+1, it1, k, m)\r\n\t\r\n\thighPts.append(pts[k])\r\n\tcp, l1 = linDist(pts[i], pts[j], pts[k])\r\n\tclosePts.append(cp)\r\n\t\r\n\tn, _ = highSearch(pts, pts[k], cp, j)\r\n\t_, l2a = linDist(pts[k], cp, pts[n])\r\n\t\t\r\n\tq, _ = highSearch(pts, cp, pts[k], m)\r\n\t_, l2b = linDist(cp, pts[k], pts[q])\r\n\t\r\n\tareas.append(l1 * (l2a + l2b) )\r\n\tdists.append( (l2a, l2b) )\r\n\r\nix, _ = min(enumerate(areas), key=itemgetter(1) )\r\nd1, d2 = dists[ix]\r\n_a, _b = closePts[ix], highPts[ix]\r\na = Point.ByCoordinates(_a[0], _a[1], elev)\r\nb = Point.ByCoordinates(_b[0], _b[1], elev)\r\n\r\n_v = Vector.ByTwoPoints(a, b)\r\nv = Vector.ByCoordinates(-_v.Y, _v.X, 0).Normalized()\r\np1 = a.Add(v.Scale(d2) )\r\np2 = a.Subtract(v.Scale(d1) )\r\np3 = b.Subtract(v.Scale(d1) )\r\np4 = b.Add(v.Scale(d2) )\r\n\r\nOUT = (Rectangle.ByCornerPoints(p1, p2, p3, p4), \r\n90 - v.AngleAboutAxis(Vector.XAxis(), Vector.ZAxis() ),\r\n[Point.ByCoordinates(p[0], p[1], elev) for p in pts])",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Point, Vector, Rectangle\r\nfrom math import sqrt\r\nfrom operator import itemgetter\r\n\r\n_pts, elev = IN\r\n\r\ndef hull(_pts):\r\n    def pCrs(o, a, b):\r\n        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])\r\n\r\n    pts = sorted( (p.X, p.Y) for p in _pts)\r\n    pLen = len(pts)\r\n    if pLen < 4 : return pts\r\n    else:\r\n        lower, upper = [], []\r\n        \r\n        for i in range(pLen):\r\n            j = pLen - 1 - i\r\n            while len(lower) >= 2 and pCrs(lower[-2], lower[-1], pts[i]) <= 0.000001:\r\n                lower.pop()\r\n            lower.append(pts[i])\r\n            while len(upper) >= 2 and pCrs(upper[-2], upper[-1], pts[j]) <= 0.000001:\r\n                upper.pop()\r\n            upper.append(pts[j])\r\n        \r\n        lower.pop()\r\n        upper.pop()\r\n        lower.extend(upper)\r\n        return lower\r\n\r\n# http://eprints.cs.vt.edu/archive/00000869/01/CS81017-R.pdf\r\n\r\ndef scalar(k, i, j):\r\n    return k[0] * (i[1] - j[1]) + k[1] * (j[0] - i[0]) + j[1] * i[0] - i[1] * j[0]\r\n\r\ndef pDist(a, b, sqrt=sqrt):\r\n    return sqrt( (a[0] - b[0])**2 + (a[1] - b[1])**2)\r\n\r\ndef linDist(a, b, p):\r\n    line_dist = pDist(a, b)\r\n    if line_dist == 0:\r\n        return a, pDist(p, a)\r\n    \r\n    t = ( (p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1]) ) / line_dist**2\r\n    \r\n    cp = ( (b[0] - a[0]) * t + a[0], (b[1] - a[1]) * t + a[1])\r\n    d1 = pDist(p, cp)\r\n    return cp, d1\r\n\r\ndef indexer(end, position=0, start=0, step=1):\r\n    i = position - step\r\n    while True:\r\n        i += step\r\n        if i >= end:\r\n            i = start\r\n        yield i\r\n\r\ndef highSearch(pts, iPt, jPt, j, it1=None, k=None, m=None,\r\n              indexer=indexer, scalar=scalar):\r\n    if it1 is None:\r\n        it1 = indexer(len(pts), j)\r\n        k, m = next(it1), next(it1)  # Changed\r\n    Sa = scalar(pts[k], iPt, jPt)\r\n    Sb = scalar(pts[m], iPt, jPt)\r\n    while Sa < Sb:\r\n        k, m = m, next(it1)  # Changed\r\n        Sa = scalar(pts[k], iPt, jPt)\r\n        Sb = scalar(pts[m], iPt, jPt)\r\n    return k, m\r\npts = hull(_pts)\r\n\r\nOUT = []\r\nhighPts, closePts, areas, dists = [], [], [], []\r\nlnPts = len(pts)\r\n\r\nit1 = indexer(lnPts, 2)\r\nk, m = next(it1), next(it1)\r\n\r\nfor i in range(lnPts):\r\n    j = (i + 1) % lnPts\r\n\r\n    k, m = highSearch(pts, pts[i], pts[j], j+1, it1, k, m)\r\n    \r\n    highPts.append(pts[k])\r\n    cp, l1 = linDist(pts[i], pts[j], pts[k])\r\n    closePts.append(cp)\r\n    \r\n    n, _ = highSearch(pts, pts[k], cp, j)\r\n    _, l2a = linDist(pts[k], cp, pts[n])\r\n        \r\n    q, _ = highSearch(pts, cp, pts[k], m)\r\n    _, l2b = linDist(cp, pts[k], pts[q])\r\n    \r\n    areas.append(l1 * (l2a + l2b) )\r\n    dists.append( (l2a, l2b) )\r\n\r\nix, _ = min(enumerate(areas), key=itemgetter(1) )\r\nd1, d2 = dists[ix]\r\n_a, _b = closePts[ix], highPts[ix]\r\na = Point.ByCoordinates(_a[0], _a[1], elev)\r\nb = Point.ByCoordinates(_b[0], _b[1], elev)\r\n\r\n_v = Vector.ByTwoPoints(a, b)\r\nv = Vector.ByCoordinates(-_v.Y, _v.X, 0).Normalized()\r\np1 = a.Add(v.Scale(d2) )\r\np2 = a.Subtract(v.Scale(d1) )\r\np3 = b.Subtract(v.Scale(d1) )\r\np4 = b.Add(v.Scale(d2) )\r\n\r\nOUT = (Rectangle.ByCornerPoints(p1, p2, p3, p4), \r\n90 - v.AngleAboutAxis(Vector.XAxis(), Vector.ZAxis() ),\r\n[Point.ByCoordinates(p[0], p[1], elev) for p in pts])",
+      "Engine": "CPython3",
       "VariableInputPorts": true,
       "Id": "eb7629059a954f5e9a1c1dc34fdb05c9",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "865379829b4b48758576344d56e4b3fe",
@@ -129,11 +130,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "points",
         "TypeName": "var",
@@ -142,6 +142,7 @@
         "Description": ""
       },
       "Id": "cead9564255247a4931492af32935b33",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -159,7 +160,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "elevation",
         "TypeName": "double",
@@ -168,6 +168,7 @@
         "Description": ""
       },
       "Id": "ce003ae7dd734a24b46159bad7d55c37",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -185,10 +186,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "rectangle",
       "Id": "8d3e374a932b4f84964902d81c9fe87c",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "dc40cf669b654570b02dda61a620721a",
@@ -206,10 +207,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "angle",
       "Id": "b3ccc33ea91c4e4b88b45c03898e01c6",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "21246966b10c454390b606f109e0a9ab",
@@ -227,10 +228,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "hullPoints",
       "Id": "a83607147faf4d75812e0bef3341351e",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "e60ed053e2df4da4828e5848419e2b1d",
@@ -251,132 +252,141 @@
     {
       "Start": "0fd8699adfa34ca685ed04dcac1a8050",
       "End": "dc40cf669b654570b02dda61a620721a",
-      "Id": "1a43f8de869540359640c1fa0aa9f463"
+      "Id": "1a43f8de869540359640c1fa0aa9f463",
+      "IsHidden": "False"
     },
     {
       "Start": "ac00834a03bb43c685aa4e0107d18268",
       "End": "21246966b10c454390b606f109e0a9ab",
-      "Id": "c6b32df2090c419e85c6263b21bfc66a"
+      "Id": "c6b32df2090c419e85c6263b21bfc66a",
+      "IsHidden": "False"
     },
     {
       "Start": "8df8d31072bf48f89c448811e733b6b6",
       "End": "e60ed053e2df4da4828e5848419e2b1d",
-      "Id": "a444d68c55604598a3fad8d368c3899e"
+      "Id": "a444d68c55604598a3fad8d368c3899e",
+      "IsHidden": "False"
     },
     {
       "Start": "5801042511e843a7a02defb1f610723e",
       "End": "c7bf5aa29a774a17a235b65979e78e1e",
-      "Id": "74a8fca9f843421987fe6db91b40b1e6"
+      "Id": "74a8fca9f843421987fe6db91b40b1e6",
+      "IsHidden": "False"
     },
     {
       "Start": "1413aa0cbad3461fa558386976c71099",
       "End": "865379829b4b48758576344d56e4b3fe",
-      "Id": "2daa8ccc322340de857c51f793fd6106"
+      "Id": "2daa8ccc322340de857c51f793fd6106",
+      "IsHidden": "False"
     },
     {
       "Start": "a41c662d15b04717bf2443c5961159cb",
       "End": "78aefb07b777482086bc52581e78fe9c",
-      "Id": "c0b10753926a44dbbe76b4141882c2e4"
+      "Id": "c0b10753926a44dbbe76b4141882c2e4",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 120629.421875,
-      "EyeY": 71818.0625,
-      "EyeZ": 10268.4296875,
-      "LookX": -6212.56201171875,
-      "LookY": -56672.3984375,
-      "LookZ": -37893.77734375,
-      "UpX": -0.11136675626039505,
-      "UpY": 0.72537434101104736,
-      "UpZ": -0.679286003112793
+      "Name": "_Background Preview",
+      "EyeX": 6.9076337814331055,
+      "EyeY": 2.554680824279785,
+      "EyeZ": -1.349558711051941,
+      "LookX": -3.4441561698913574,
+      "LookY": 0.24981689453125,
+      "LookZ": -0.40394890308380127,
+      "UpX": 0.2820819616317749,
+      "UpY": 0.9588197469711304,
+      "UpZ": 0.03308360278606415
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "fbe0df27759c4ea599fa4f0fc3734a75",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 403.511359084488,
-        "Y": 2.58485604730785
+        "ShowGeometry": true,
+        "X": 505.48202552213417,
+        "Y": -2.689488768432483
       },
       {
         "Id": "eb7629059a954f5e9a1c1dc34fdb05c9",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 247.082677316266,
-        "Y": 1.45866134186707
+        "Y": 1.4586613418670709
       },
       {
         "Id": "cead9564255247a4931492af32935b33",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -42.787399361434,
-        "Y": 2.43110223644511
+        "ShowGeometry": true,
+        "X": -15.75658185368566,
+        "Y": -104.43492046860636
       },
       {
         "Id": "ce003ae7dd734a24b46159bad7d55c37",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -42.3011789141451,
-        "Y": 60.5354376988198
+        "ShowGeometry": true,
+        "X": -112.07840550391398,
+        "Y": 122.14055666996711
       },
       {
         "Id": "8d3e374a932b4f84964902d81c9fe87c",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 546.631438956482,
-        "Y": -4.86220447289023
+        "ShowGeometry": true,
+        "X": 752.3250097843253,
+        "Y": -113.2308300158567
       },
       {
         "Id": "b3ccc33ea91c4e4b88b45c03898e01c6",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 549.062541192927,
-        "Y": 54.2145718840625
+        "ShowGeometry": true,
+        "X": 759.7851013245373,
+        "Y": 29.452893516224513
       },
       {
         "Id": "a83607147faf4d75812e0bef3341351e",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 549.625537997169,
-        "Y": 115.05708945634
+        "ShowGeometry": true,
+        "X": 767.89158208443,
+        "Y": 172.6451109376888
       }
     ],
     "Annotations": [],
-    "X": -105.741616684786,
-    "Y": 150.661209535187,
-    "Zoom": 2.05668026833428
+    "X": 293.30970764462296,
+    "Y": 303.7857031483313,
+    "Zoom": 1.1375820522947415
   }
 }

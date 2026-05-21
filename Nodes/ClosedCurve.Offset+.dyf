@@ -1,9 +1,9 @@
 {
-  "Uuid": "8342e5b0-fb37-4302-9941-964d3b67265c",
+  "Uuid": "b74ce793-0e5f-4cbc-bf17-46d0e11edadd",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Offsets a curve both ways and correctly differenciates the external and internal offset. If an offset goes beyond the curve's bounds, the result will fail and a null value will be appended instead. Also works for convex curves like arcs.",
-  "Name": "ꟿ ClosedCurve.Offset+",
+  "Name": "ClosedCurve.Offset+",
   "ElementResolver": {
     "ResolutionMap": {
       "Rectangle": {
@@ -49,12 +49,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "9b04064f497c4a66976978ddeb408589",
       "NodeType": "CodeBlockNode",
-      "Code": "c;\ndist;\noff1 = [Imperative]{\n\tc1_fail = false;\n\tc2_fail = false;\n\trev = 0;\n\tc1 = c.Offset(dist);\n\tc2 = c.Offset(-dist);\n\tif (c1 == null){\n\t\tc1 = c;\n\t\tc1_fail = true;\n\t}\n\tif (c2 == null){\n\t\tc2 = c;\n\t\tc2_fail = true;\n\t}\n\tout1 = [c1,c2];\n\tif (c1.Length > c2.Length){\n\t\tout1 = [c2,c1];\n\t\trev = 1;\n\t}\n\tif (c1_fail){\n\tout1[0-rev] = null;\n\t}\n\tif (c2_fail){\n\tout1[1-rev] = null;\n\t}\n\treturn = out1;\n};\noff1[0];\noff1[1];",
-      "Id": "0ba263c396c948e0b7db857096dfc76f",
       "Inputs": [
         {
-          "Id": "22a5b5405b324c39be851b961200e3f0",
+          "Id": "e235b5ec9c9d4f72ba7f25726fb6aa16",
           "Name": "c",
           "Description": "c",
           "UsingDefaultValue": false,
@@ -63,7 +62,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "6ca7be7d1beb4bde8ce1de6df53aefce",
+          "Id": "af3d0098f08546998dcf1ba125a70257",
           "Name": "dist",
           "Description": "dist",
           "UsingDefaultValue": false,
@@ -74,7 +73,7 @@
       ],
       "Outputs": [
         {
-          "Id": "0ff1551604374a8d85513f028aa7edf3",
+          "Id": "1821a75198714426a41741d3046cce34",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -83,7 +82,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "cc580dd34b984540ac543daee790b065",
+          "Id": "f7033b0abbf14ed1b0e623cab5168fc7",
           "Name": "",
           "Description": "Value of expression at line 2",
           "UsingDefaultValue": false,
@@ -92,7 +91,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "88a7054fea0742b5b3c314cfc3883164",
+          "Id": "b188dc4b829449a9a82704c4a87f2819",
           "Name": "",
           "Description": "off1",
           "UsingDefaultValue": false,
@@ -101,7 +100,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "ac3742b3ff1a43c2b266efd6bcd5a061",
+          "Id": "2b0f0dade60e4245922b54467c22c61a",
           "Name": "",
           "Description": "Value of expression at line 30",
           "UsingDefaultValue": false,
@@ -110,7 +109,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "c3fecb5a6d7d491e8d35d0e9fcfc1332",
+          "Id": "3f91607b7a0140fbadbbf2851e984f73",
           "Name": "",
           "Description": "Value of expression at line 31",
           "UsingDefaultValue": false,
@@ -120,11 +119,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "c;\ndist;\noff1 = [Imperative]{\n\tc1_fail = false;\n\tc2_fail = false;\n\trev = 0;\n\tc1 = c.Offset(dist);\n\tc2 = c.Offset(-dist);\n\tif (c1 == null){\n\t\tc1 = c;\n\t\tc1_fail = true;\n\t}\n\tif (c2 == null){\n\t\tc2 = c;\n\t\tc2_fail = true;\n\t}\n\tout1 = [c1,c2];\n\tif (c1.Length > c2.Length){\n\t\tout1 = [c2,c1];\n\t\trev = 1;\n\t}\n\tif (c1_fail){\n\tout1[0-rev] = null;\n\t}\n\tif (c2_fail){\n\tout1[1-rev] = null;\n\t}\n\treturn = out1;\n};\noff1[0];\noff1[1];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "curve",
         "TypeName": "var",
@@ -132,11 +131,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "aa1b955134bc4a8484b91653ff2ad30d",
+      "Id": "c15f5bcf64ed47fba5a431e8a15ad79d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d017924272e042519bd3e92f3d749307",
+          "Id": "0fb114dee023408ab374c8f3175c76ac",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -150,7 +150,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "distance",
         "TypeName": "double",
@@ -158,11 +157,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "08331144db4d4f459b6b7b49cf61abc9",
+      "Id": "b89aaba2cf1947f091edab62b2f61361",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "378f093ff3284bbb9af9f819b3c17cb4",
+          "Id": "e54d2cc9c80c4c179ad61fe93b7b387a",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -176,13 +176,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "internal offset",
-      "Id": "cf29285ece70413e9aa8a0bcc3a82aa7",
+      "Id": "7797fda6a7b946eb97896edaaea045d1",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "8fae7b8ae6d24d159b35ed961cd1311c",
+          "Id": "8c3c6d627b60406aad1ee691a05f9e6f",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -197,13 +197,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "external offset",
-      "Id": "45c19cc9f17f4929a0c2af19277969fc",
+      "Id": "0f5ad7ecad92411fb5c2b29bb0bd3dcd",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "8f44fb4ac0eb43b5b50fc1c5427d2651",
+          "Id": "ec4f2ea7f9c8434eaf3c84dfe56d9613",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -219,104 +219,111 @@
   ],
   "Connectors": [
     {
-      "Start": "ac3742b3ff1a43c2b266efd6bcd5a061",
-      "End": "8fae7b8ae6d24d159b35ed961cd1311c",
-      "Id": "21f502ad16d2464e803308dab806f0f8"
+      "Start": "2b0f0dade60e4245922b54467c22c61a",
+      "End": "8c3c6d627b60406aad1ee691a05f9e6f",
+      "Id": "33bb1a99ba3d46f59ad60ca389a1782c",
+      "IsHidden": "False"
     },
     {
-      "Start": "c3fecb5a6d7d491e8d35d0e9fcfc1332",
-      "End": "8f44fb4ac0eb43b5b50fc1c5427d2651",
-      "Id": "edfab6725e2147a4868f9259b0f70038"
+      "Start": "3f91607b7a0140fbadbbf2851e984f73",
+      "End": "ec4f2ea7f9c8434eaf3c84dfe56d9613",
+      "Id": "453124fbab384edcad96825c3ee6d4c9",
+      "IsHidden": "False"
     },
     {
-      "Start": "d017924272e042519bd3e92f3d749307",
-      "End": "22a5b5405b324c39be851b961200e3f0",
-      "Id": "48d0c5589b8a48fcb51cb2be9e41f99f"
+      "Start": "0fb114dee023408ab374c8f3175c76ac",
+      "End": "e235b5ec9c9d4f72ba7f25726fb6aa16",
+      "Id": "1c337d9335ee4d1f8948a0fb5e0aef3c",
+      "IsHidden": "False"
     },
     {
-      "Start": "378f093ff3284bbb9af9f819b3c17cb4",
-      "End": "6ca7be7d1beb4bde8ce1de6df53aefce",
-      "Id": "84bb4e3bf3f346ae8498ea190d7e2a60"
+      "Start": "e54d2cc9c80c4c179ad61fe93b7b387a",
+      "End": "af3d0098f08546998dcf1ba125a70257",
+      "Id": "7338f2f9f8b24357af7b86322ba9e051",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 14.848381996154785,
-      "EyeY": 14.656919479370117,
-      "EyeZ": 12.203851699829102,
-      "LookX": -8.12502384185791,
-      "LookY": -10.863901138305664,
-      "LookZ": -15.083101272583008,
-      "UpX": -0.1622035950422287,
-      "UpY": 0.93969261646270752,
-      "UpZ": -0.3011108934879303
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "0ba263c396c948e0b7db857096dfc76f",
+        "Id": "9b04064f497c4a66976978ddeb408589",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 390.213578835756,
         "Y": -6.77523630798434
       },
       {
-        "Id": "aa1b955134bc4a8484b91653ff2ad30d",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "c15f5bcf64ed47fba5a431e8a15ad79d",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 177.178884150821,
-        "Y": -0.956439195741481
-      },
-      {
-        "Id": "08331144db4d4f459b6b7b49cf61abc9",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 146.1931964574956,
+        "Y": -117.90242178022787
+      },
+      {
+        "Id": "b89aaba2cf1947f091edab62b2f61361",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 177.454342533915,
-        "Y": 57.7948135950791
-      },
-      {
-        "Id": "cf29285ece70413e9aa8a0bcc3a82aa7",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 835.370353521193,
-        "Y": 14.2389257872449
+        "ShowGeometry": true,
+        "X": 103.92773465777066,
+        "Y": 27.405732485699133
       },
       {
-        "Id": "45c19cc9f17f4929a0c2af19277969fc",
+        "Id": "7797fda6a7b946eb97896edaaea045d1",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 834.963194261795,
-        "Y": 74.638925787245
+        "ShowGeometry": true,
+        "X": 857.5326741922438,
+        "Y": 286.63687880666157
+      },
+      {
+        "Id": "0f5ad7ecad92411fb5c2b29bb0bd3dcd",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 860.7640976766359,
+        "Y": 484.8360166044886
       }
     ],
     "Annotations": [],
-    "X": -135.485554499662,
-    "Y": 83.1430782358604,
-    "Zoom": 1.24165004332912
+    "X": 253.4302872594467,
+    "Y": 309.17965585370376,
+    "Zoom": 1.0004619005657132
   }
 }

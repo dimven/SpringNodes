@@ -1,0 +1,207 @@
+{
+  "Uuid": "66126688-b3c7-4c00-855a-2571c48969d7",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Create",
+  "Description": "Converts a closed polygon into a mesh using an ear-clipping division",
+  "Name": "Mesh.ByPolygon",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Category": {
+        "Key": "Revit.Elements.Category",
+        "Value": "RevitNodes.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.Plane.By": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Plane.By": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Rectangle": {
+        "Key": "Autodesk.DesignScript.Geometry.Rectangle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Line.ByBestFitThroughPoints": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nimport Autodesk.DesignScript.Geometry as DS\r\n\r\ndef tolist(x):\r\n    if hasattr(x,'__iter__'): return x\r\n    return [x]\r\n\r\ndef orientation(v):\r\n    area = 0.0\r\n    for i in range(len(v)):\r\n        area += v[i-1].X*v[i].Y - v[i-1].Y*v[i].X\r\n    return area < 0.0 # if true, it is clockwise\r\n\r\ndef determinant(p1, p2, p3):\r\n    determ = (p2.X - p1.X) * (p3.Y - p1.Y) - (p3.X - p1.X) * (p2.Y - p1.Y)\r\n    return determ >= 0\r\n\r\ndef no_interior(p1, p2, p3, v, poly_or):\r\n    for ip in v:\r\n        p = ip[1]\r\n        if p.IsAlmostEqualTo(p1) or p.IsAlmostEqualTo(p2) or p.IsAlmostEqualTo(p3):\r\n            continue # Don't bother checking against yourself\r\n        if determinant(p1, p2, p) == poly_or or \\\r\n            determinant(p3, p1, p) == poly_or or \\\r\n            determinant(p2, p3, p) == poly_or:\r\n                continue  # This point is outside\r\n        return False # The point is inside\r\n    return True # No points inside this triangle\r\n\r\ndef draw_poly(poly):\r\n    pts = poly.Points\r\n    indices = []\r\n    poly_orientation = orientation(pts)\r\n    v = list(enumerate(pts))\r\n    while len(v) > 3:\r\n        for cur in range(len(v)):\r\n            prev = cur - 1\r\n            next = (cur + 1) % len(v)\r\n            if determinant(v[cur][1], v[prev][1], v[next][1]) == poly_orientation and \\\r\n                no_interior(v[prev][1], v[cur][1], v[next][1], v, poly_orientation):\r\n                    indices.extend((v[prev][0], v[cur][0], v[next][0]))\r\n                    del(v[cur])\r\n                    break\r\n        else:\r\n            raise('Error: Didn\\'t find a triangle.\\n')\r\n\r\n    # Output the final triangle\r\n    indices.extend([i[0] for i in v])\r\n    return DS.Mesh.ByPointsIndices(pts, indices)\r\n\r\ntry:\r\n    OUT = map(draw_poly, tolist(IN[0]))\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )\r\n",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "a35387643d1442dbbb29c91d1404007e",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "867dfb224eda49b2a1c93aaeb4715103",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "31a70ebfc58443b2b654bca17541404c",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "poly",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "f6c08729ac4846bb8eaf6267b24723e4",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "11fa9d1dcd0041d0b28b8f38ff53f172",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "mesh",
+      "Id": "35961e1e2b4f4f349228dca5198c188d",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "ec14d63b21304b54a50559bfaaeffee1",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "31a70ebfc58443b2b654bca17541404c",
+      "End": "ec14d63b21304b54a50559bfaaeffee1",
+      "Id": "47b531b92c534ffebaeb911945ff34e8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "11fa9d1dcd0041d0b28b8f38ff53f172",
+      "End": "867dfb224eda49b2a1c93aaeb4715103",
+      "Id": "4f12cf4ff5b04dec8b732744baeba728",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.1.0.4676",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -11.297866821289062,
+      "EyeY": 606.2621765136719,
+      "EyeZ": 456.0040283203125,
+      "LookX": 235.21681213378906,
+      "LookY": -127.19842529296875,
+      "LookZ": -457.89190673828125,
+      "UpX": 0.1096089631319046,
+      "UpY": 0.9708024263381958,
+      "UpZ": -0.21337443590164185
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a35387643d1442dbbb29c91d1404007e",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 249.62622398239944,
+        "Y": -0.7475520352014655
+      },
+      {
+        "Id": "f6c08729ac4846bb8eaf6267b24723e4",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "35961e1e2b4f4f349228dca5198c188d",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 653.0817056100041,
+        "Y": -1.6819920792033258
+      }
+    ],
+    "Annotations": [],
+    "X": 223.68196665675964,
+    "Y": 112.67881083949219,
+    "Zoom": 1.7835993623828124
+  }
+}

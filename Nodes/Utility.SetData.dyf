@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Using the application's app domain, this node will store a reference to the input data under the specified name. use the `Utility.GetData` node to retrieve the data somewhere else.\r\n\r\nTry not to store large ammounts of data, because you risk creating a memory leak that will persist till you close down the aplication.",
-  "Name": "ꟿ Utility.SetData",
+  "Name": "Utility.SetData",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import System\r\n\r\ndataKey, data = IN\r\nSystem.AppDomain.CurrentDomain.SetData(\"_Dyn_Wireless_%s\" % dataKey, data)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport System\r\n\r\ntry:\r\n    dataKey, data = IN\r\n    System.AppDomain.CurrentDomain.SetData(\"_Dyn_Wireless_%s\" % dataKey, data)\r\n    OUT = \"Data stored with key: %s\" % dataKey\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "c03143e8899d496b960792a1f516946e",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "1ac8b9df8bff45d18e61f48f440209b2",
@@ -48,11 +49,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "key",
         "TypeName": "string",
@@ -61,6 +61,7 @@
         "Description": ""
       },
       "Id": "4d175b3e6d6a4bdc8b8d1c2a5a079786",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -78,7 +79,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "data",
         "TypeName": "var",
@@ -87,6 +87,7 @@
         "Description": ""
       },
       "Id": "6412e911681540eb82bd45627faf8bf1",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -107,71 +108,77 @@
     {
       "Start": "386b0b5184944466b5006d48d13d748e",
       "End": "1ac8b9df8bff45d18e61f48f440209b2",
-      "Id": "65213045114945d397b826945e399cc5"
+      "Id": "65213045114945d397b826945e399cc5",
+      "IsHidden": "False"
     },
     {
       "Start": "54370e25f70b42dba96838fc64a7c3cc",
       "End": "68cc9871c14f43d78d1a870e8aa42bb7",
-      "Id": "0ab24a712c584ef08d589832d06d1003"
+      "Id": "0ab24a712c584ef08d589832d06d1003",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "c03143e8899d496b960792a1f516946e",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -45.99999999999977,
+        "Y": 17.333333333333314
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "4d175b3e6d6a4bdc8b8d1c2a5a079786",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -334.0,
+        "Y": 16.66666666666663
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "6412e911681540eb82bd45627faf8bf1",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -365.33333333333326,
+        "Y": 160.66666666666674
       }
     ],
     "Annotations": [],
-    "X": 0.0,
-    "Y": 0.0,
+    "X": 814.0,
+    "Y": 391.9999999999999,
     "Zoom": 1.0
   }
 }

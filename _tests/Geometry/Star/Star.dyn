@@ -1,0 +1,148 @@
+{
+  "Uuid": "8f4cc159-77cd-492a-9df2-7c752b8e2881",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Star",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "274bb472-d985-49b8-ad53-307495a00169",
+      "FunctionType": "Graph",
+      "Id": "11a137e4e7d642968d0adffef7ffb6c0",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2acdcbe3081a4459976b87c737b4df00",
+          "Name": "NumberOfRays",
+          "Description": "int\nDefault value : 7",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "157aacf5661a4c9883a98806b817634f",
+          "Name": "StarOrigin",
+          "Description": "Point\nDefault value : Autodesk.DesignScript.Geometry.Point.Origin()",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8d61ab4aacba4862b34eefa5e279a791",
+          "Name": "StarRadius",
+          "Description": "double\nDefault value : 5",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "41473f15f72141a2949691ab6eb9aaf6",
+          "Name": "RayPercentage",
+          "Description": "double\nDefault value : 55",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e4cc0fdd66b949e3a318edc3be790ce5",
+          "Name": "PolyCurve",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Fun little node to create star shapes."
+    }
+  ],
+  "Connectors": [],
+  "Dependencies": [
+    "274bb472-d985-49b8-ad53-307495a00169"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Star.ByCenterRadiusRays.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "11a137e4e7d642968d0adffef7ffb6c0"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "11a137e4e7d642968d0adffef7ffb6c0",
+        "Name": "Star.ByCenterRadiusRays",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 742.3333333333334,
+        "Y": 346.66666666666663
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

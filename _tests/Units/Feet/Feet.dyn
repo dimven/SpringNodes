@@ -1,0 +1,205 @@
+{
+  "Uuid": "61c6a79d-7766-40a1-91f2-f0028e47e2f3",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Feet",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c5a7e5aeecf24c11944f7ef0da0fb328",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "85145d490862487eb38b102a3125b7f0",
+          "Name": "double",
+          "Description": "123.321",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "123.321;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 125.33333333333333,
+      "WatchHeight": 40.0,
+      "Id": "6d5b528e1f694afe89af82931cade2cc",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "a5d179b0fada44e9b5e56706a2d8df49",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2b3b9292741d4e90aff63b7df02a1682",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "3784aae0-dd38-4cfd-ac57-a87ebe885a81",
+      "FunctionType": "Graph",
+      "Id": "3dc7e18a215e4bda8be1b69aa172d0da",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d05be6e88b194c7598cb2c70473e3873",
+          "Name": "number",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "922a3930bbcc43c19b6f041d58457be8",
+          "Name": "str",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Converts a decimal foot value to a fractional foot/inch string."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "85145d490862487eb38b102a3125b7f0",
+      "End": "d05be6e88b194c7598cb2c70473e3873",
+      "Id": "c2779a3b8f6942be8e13309ec9e0d8a2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "922a3930bbcc43c19b6f041d58457be8",
+      "End": "a5d179b0fada44e9b5e56706a2d8df49",
+      "Id": "7f5677013c5743eea9ff02f914419c08",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "3784aae0-dd38-4cfd-ac57-a87ebe885a81"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Feet.ToFraction.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "3dc7e18a215e4bda8be1b69aa172d0da"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "c5a7e5aeecf24c11944f7ef0da0fb328",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 600.0,
+        "Y": 452.1738340453504
+      },
+      {
+        "Id": "6d5b528e1f694afe89af82931cade2cc",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1134.2685092165198,
+        "Y": 452.0
+      },
+      {
+        "Id": "3dc7e18a215e4bda8be1b69aa172d0da",
+        "Name": "Feet.ToFraction",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 851.0955706978693,
+        "Y": 455.21411971450357
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

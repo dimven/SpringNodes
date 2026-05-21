@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Similar to the built in node, with a built-in safety for null values. Part of the SmartCopyMonitor workflow.",
-  "Name": "ꟿ List.NullSetDifference",
+  "Name": "List.NullSetDifference",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -57,9 +57,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "newl;\noldl;\nres = [Imperative]{\nif (oldl != null)\n{\n\treturn = SetDifference(newl, oldl);\n}\nelse\n{\n\treturn = newl;\n}\n};",
       "Id": "c2c6a9daea5d4dd5a7c36eb25602b766",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "727950f87d46493f88b6196b8d078267",
@@ -83,8 +82,8 @@
       "Outputs": [
         {
           "Id": "5114878db366473fb40e6dd0bf71fffb",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "newl",
+          "Description": "newl",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -92,8 +91,8 @@
         },
         {
           "Id": "5685223353ee4d3794efac94fc421917",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "oldl",
+          "Description": "oldl",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -101,8 +100,8 @@
         },
         {
           "Id": "ce8bc855cf6b4479bda460461411ad53",
-          "Name": "",
-          "Description": "res",
+          "Name": "res",
+          "Description": "res = [Imperative]\n{\nif(oldl != null)\n{\nreturn = SetDifference(newl, oldl);\n\n}\nelse\n{\nreturn = newl;\n\n}\n\n}\n",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -110,14 +109,15 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "newl;\noldl;\nres = [Imperative]{\nif (oldl != null)\n{\n\treturn = SetDifference(newl, oldl);\n}\nelse\n{\n\treturn = newl;\n}\n};"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "list",
       "Id": "d9ba3069db454297b3a1a88666b5ed6f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "ca561f4e695a4763b3040f7a9423093b",
@@ -135,7 +135,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list1",
         "TypeName": "var",
@@ -144,6 +143,7 @@
         "Description": ""
       },
       "Id": "d51841240a1e4eabbf6663a733d325bd",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -161,7 +161,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list2",
         "TypeName": "var",
@@ -170,6 +169,7 @@
         "Description": ""
       },
       "Id": "9f85e4a813d549a3842e5ca1afefabeb",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -190,87 +190,93 @@
     {
       "Start": "ce8bc855cf6b4479bda460461411ad53",
       "End": "ca561f4e695a4763b3040f7a9423093b",
-      "Id": "d1491460de2548bc82c88ae0186f00bd"
+      "Id": "d1491460de2548bc82c88ae0186f00bd",
+      "IsHidden": "False"
     },
     {
       "Start": "5bbebaed2d9c476c9b15646badc8c1a9",
       "End": "727950f87d46493f88b6196b8d078267",
-      "Id": "7ff2c85733104e06a961a7df370124c8"
+      "Id": "7ff2c85733104e06a961a7df370124c8",
+      "IsHidden": "False"
     },
     {
       "Start": "927436c2963a4f94ab36953df5c82f7e",
       "End": "54bd61eec939472c9da60036cada8376",
-      "Id": "7dddae694d8248419ed5a1d934e4e932"
+      "Id": "7dddae694d8248419ed5a1d934e4e932",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 55.528221130371094,
-      "EyeY": 195.78382873535156,
-      "EyeZ": -51.284481048583984,
-      "LookX": -0.858967661857605,
-      "LookY": -87.94305419921875,
-      "LookZ": -60.708198547363281,
-      "UpX": -0.0096487114205956459,
-      "UpY": 0.73135370016098022,
-      "UpZ": -0.68193012475967407
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "c2c6a9daea5d4dd5a7c36eb25602b766",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 237.707201264039,
         "Y": 1.29397881431163
       },
       {
         "Id": "d9ba3069db454297b3a1a88666b5ed6f",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 665.357730906248,
-        "Y": 27.1735551005445
+        "ShowGeometry": true,
+        "X": 780.9531716514217,
+        "Y": 31.918144086353877
       },
       {
         "Id": "d51841240a1e4eabbf6663a733d325bd",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 92.1030739418237,
-        "Y": -2.46059096328239
+        "ShowGeometry": true,
+        "X": -72.2322354757551,
+        "Y": -94.33308677940913
       },
       {
         "Id": "9f85e4a813d549a3842e5ca1afefabeb",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 92.1030739418237,
-        "Y": 58.8143194828755
+        "ShowGeometry": true,
+        "X": -81.72141344737379,
+        "Y": 95.90837882647597
       }
     ],
     "Annotations": [],
-    "X": 231.837832954374,
-    "Y": 187.127009399648,
-    "Zoom": 1.545620359375
+    "X": 66.40094635658392,
+    "Y": 220.29428962171198,
+    "Zoom": 1.2198072017254968
   }
 }

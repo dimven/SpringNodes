@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Query",
   "Description": "Gets all the unique start and end points of the underlying curves in a sorted list.",
-  "Name": "ꟿ PolyCurve.Points",
+  "Name": "PolyCurve.Points",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -37,7 +37,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "polyCurve",
         "TypeName": "var",
@@ -46,6 +45,7 @@
         "Description": ""
       },
       "Id": "c64419ff75cc45ba8765dd9fc5f96ac2",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -63,10 +63,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "points",
       "Id": "1dde373a63504b1f899e4bfc1f12d3f7",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "b8a29afcdf7449f390444c737ec05010",
@@ -84,9 +84,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "pc;\nc = pc.Curves();\nsp = c.StartPoint;\npts = [Imperative]{\nif (!pc.IsClosed)\n{\nreturn = List.AddItemToEnd(\n  c[-1].EndPoint, sp);\n}\nreturn = sp;\n};",
       "Id": "5ba8a6d2d9424cc68518f83e582d4510",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "9dab8961be92430397435bc60616c002",
@@ -101,8 +100,8 @@
       "Outputs": [
         {
           "Id": "6e54f64a703c4ab7bc12fba45e5cddd5",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "pc",
+          "Description": "pc",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -110,8 +109,8 @@
         },
         {
           "Id": "c6c8e00ddad2495db71b629d7f204e66",
-          "Name": "",
-          "Description": "c",
+          "Name": "c",
+          "Description": "c = pc.Curves()",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -119,8 +118,8 @@
         },
         {
           "Id": "6c538a632e1247cda4bf2b3753436010",
-          "Name": "",
-          "Description": "sp",
+          "Name": "sp",
+          "Description": "sp = c.StartPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -128,8 +127,8 @@
         },
         {
           "Id": "3300ed56f7394011b4dbe641c6f104a2",
-          "Name": "",
-          "Description": "pts",
+          "Name": "pts",
+          "Description": "pts = [Imperative]\n{\nif(ProtoCore.AST.ImperativeAST.UnaryExpressionNode)\n{\nreturn = List.AddItemToEnd(DesignScript.Builtin.Get.ValueAtIndex(c, -1).EndPoint, sp);\n\n}\nreturn = sp;\n\n}\n",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -137,79 +136,85 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "pc;\nc = pc.Curves();\nsp = c.StartPoint;\npts = [Imperative]{\nif (!pc.IsClosed)\n{\nreturn = List.AddItemToEnd(\n  c[-1].EndPoint, sp);\n}\nreturn = sp;\n};"
     }
   ],
   "Connectors": [
     {
       "Start": "11ab30f99720422aa0ea4156cb4a09b6",
       "End": "9dab8961be92430397435bc60616c002",
-      "Id": "aa674873afdc46739261c854b832ad57"
+      "Id": "aa674873afdc46739261c854b832ad57",
+      "IsHidden": "False"
     },
     {
       "Start": "3300ed56f7394011b4dbe641c6f104a2",
       "End": "b8a29afcdf7449f390444c737ec05010",
-      "Id": "bedcfd26b06e4ec28a4b6139d041934b"
+      "Id": "bedcfd26b06e4ec28a4b6139d041934b",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -156.52970886230469,
-      "EyeY": 1251.3790283203125,
-      "EyeZ": 348.07293701171875,
-      "LookX": 151.56260681152344,
-      "LookY": -1250.5142822265625,
-      "LookZ": -315.07342529296875,
-      "UpX": 0.38275063037872314,
-      "UpY": 0.46947157382965088,
-      "UpZ": -0.79567486047744751
+      "Name": "_Background Preview",
+      "EyeX": 6.618462562561035,
+      "EyeY": 5.735320568084717,
+      "EyeZ": 4.578579902648926,
+      "LookX": -4.003187656402588,
+      "LookY": -3.5679640769958496,
+      "LookZ": -5.252922534942627,
+      "UpX": -0.16707319021224976,
+      "UpY": 0.9612618088722229,
+      "UpZ": -0.2192314714193344
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "c64419ff75cc45ba8765dd9fc5f96ac2",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 112.115703400363,
-        "Y": -5.94096822146747
+        "ShowGeometry": true,
+        "X": 21.537186398547902,
+        "Y": -3.3530105928441856
       },
       {
         "Id": "1dde373a63504b1f899e4bfc1f12d3f7",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 569.942148299819,
-        "Y": -0.101542460150718
+        "ShowGeometry": true,
+        "X": 639.8170042726478,
+        "Y": 43.893737226445175
       },
       {
         "Id": "5ba8a6d2d9424cc68518f83e582d4510",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 270.63596805958,
         "Y": -4.30270653967476
       }
     ],
     "Annotations": [],
-    "X": -85.8421777378049,
-    "Y": 116.257206916268,
-    "Zoom": 1.545620359375
+    "X": 138.20829722437009,
+    "Y": 378.1714434434133,
+    "Zoom": 1.4425890929331344
   }
 }

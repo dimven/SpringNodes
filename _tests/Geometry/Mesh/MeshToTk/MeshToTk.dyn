@@ -1,0 +1,626 @@
+{
+  "Uuid": "b0143dca-de40-4fe7-acb0-b0eb7d3e4247",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "MeshToTk",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "DesignScript.Builtin.Dictionary": {
+        "Key": "DesignScript.Builtin.Dictionary",
+        "Value": "DesignScriptBuiltin.dll"
+      },
+      "List.__Create": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "54f7597d-ba52-40ed-b001-65a328dbbe1f",
+      "FunctionType": "Graph",
+      "Id": "4a218ced2e5143e9bb6595d93b7426a3",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "656db353e2734509ac1dede70b03e284",
+          "Name": "mesh",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2036cec0537d4395a55d82ebc04d2e70",
+          "Name": "volume",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5e19a87bc57347e489b56c0796f67d63",
+          "Name": "area",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Gets the volume and the area of a mesh. Works with both built in meshes and toolkit meshes. Based on math from geometry3sharp.\r\n\r\nNote that if triangles don't define closed region, volume is probably nonsense."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "bcc7125698d5497fa84dc8f81c612210",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "86dd24c15f9e4c3f8877b813b936fba9",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "464940bf36774000bea2efc1f137e050",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "ed565e18edb543b6a4c8e338cbd0c8cb",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "257b7ac5f97044df922e97cf927c52e8",
+          "Name": "origin",
+          "Description": "Point\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d977165d3eff41edbbb97b9033ff4fdc",
+          "Name": "length",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f1e8a010c09e435292b1f6458ad707ec",
+          "Name": "width",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c76ab96283c04e389f97e146905f74ee",
+          "Name": "height",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "813a0a3ea2c34a0c9c1d0423bfba2c15",
+          "Name": "xDivisions",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f1a34ddad9b2416196c133b8733b5232",
+          "Name": "yDivisions",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1f544154b0c34b04a1df7c41622e56ed",
+          "Name": "zDivisions",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ab1f2057a6ba425ea3b2dc82b7acee65",
+          "Name": "mesh",
+          "Description": "mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Mesh.Cuboid@Autodesk.DesignScript.Geometry.Point,double,double,double,int,int,int",
+      "Replication": "Auto",
+      "Description": "Create a mesh cuboid based on the current settings.\n\nMesh.Cuboid (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), length: double = 1, width: double = 1, height: double = 1, xDivisions: int = 0, yDivisions: int = 0, zDivisions: int = 0): Mesh"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "54f7597d-ba52-40ed-b001-65a328dbbe1f",
+      "FunctionType": "Graph",
+      "Id": "724c5e05a60c4ae391ab7749b46081b0",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "c9909dc1d85c47cdba4893a279a2dde7",
+          "Name": "mesh",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dc18f8bdc73944a8a71a63a1f02c346d",
+          "Name": "volume",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f4d2dcf632134abd92763ba239ab8ed6",
+          "Name": "area",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Gets the volume and the area of a mesh. Works with both built in meshes and toolkit meshes. Based on math from geometry3sharp.\r\n\r\nNote that if triangles don't define closed region, volume is probably nonsense."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 210.0,
+      "WatchHeight": 122.66666666666667,
+      "Id": "7eca7c5c42224e0d848693f76d20c8dc",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "42f152295d364beba1cb033ce88843f1",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6c79b2112d2647428a8a53f5204dc683",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "eadcc6c2ac8e4dc6979d234291664fb4",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "8d6c41ece06f4ed489be6e4477503155",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0bd648a2ccbe4101a753667e631bca16",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 97.33333333333333,
+      "Id": "12c776ac2e1147c9adcf5141286f126a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "3a1992d1c23f4fa38aaba8192fc46cdd",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e48872f6f97c45ca8648c3bfd823a8f0",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "a8f5b58c9f564a7d81ca7c228a8e5fde",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "5189ce17857045c79a9ab14456f195fc",
+          "Name": "origin",
+          "Description": "Point\nDefault value : Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0)",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ad36b5cf65e447b68902a2c3d8ad2009",
+          "Name": "xWidth",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cb837b1f48f447cb946da7565971c338",
+          "Name": "yWidth",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c64e0cf297814f6c81595f93d5948d3c",
+          "Name": "xDivisions",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0a222e6c5b0f48d4812fdbbea00b3b0f",
+          "Name": "yDivisions",
+          "Description": "int\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2d9bebdc4113453ca8a6e2d86397e40e",
+          "Name": "mesh",
+          "Description": "mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Mesh.Plane@Autodesk.DesignScript.Geometry.Point,double,double,int,int",
+      "Replication": "Auto",
+      "Description": "Create a mesh plane based on the current settings.\n\nMesh.Plane (origin: Point = Autodesk.DesignScript.Geometry.Point.ByCoordinates(0, 0, 0), xWidth: double = 1, yWidth: double = 1, xDivisions: int = 0, yDivisions: int = 0): Mesh"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2036cec0537d4395a55d82ebc04d2e70",
+      "End": "86dd24c15f9e4c3f8877b813b936fba9",
+      "Id": "a05b80318cf24323982408c3bb159849",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5e19a87bc57347e489b56c0796f67d63",
+      "End": "3a1992d1c23f4fa38aaba8192fc46cdd",
+      "Id": "173787832056425b92a67e5866fa5ec6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ab1f2057a6ba425ea3b2dc82b7acee65",
+      "End": "c9909dc1d85c47cdba4893a279a2dde7",
+      "Id": "b9da391d45624d0b9863d5e212de1d06",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "dc18f8bdc73944a8a71a63a1f02c346d",
+      "End": "42f152295d364beba1cb033ce88843f1",
+      "Id": "fdd3e4a60b5249c3aaabe6aa5245ed79",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f4d2dcf632134abd92763ba239ab8ed6",
+      "End": "8d6c41ece06f4ed489be6e4477503155",
+      "Id": "a4a46a1253c74178b43b2b06e7e86680",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2d9bebdc4113453ca8a6e2d86397e40e",
+      "End": "656db353e2734509ac1dede70b03e284",
+      "Id": "0006c14572eb4948a449ba4c59a5fe65",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "54f7597d-ba52-40ed-b001-65a328dbbe1f"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Mesh.VolumeArea.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "4a218ced2e5143e9bb6595d93b7426a3",
+        "724c5e05a60c4ae391ab7749b46081b0"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -1.6276273727416992,
+      "EyeY": 19.6348819732666,
+      "EyeZ": 36.345855712890625,
+      "LookX": 8.628253936767578,
+      "LookY": -9.347274780273438,
+      "LookZ": -41.7032356262207,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "4a218ced2e5143e9bb6595d93b7426a3",
+        "Name": "Mesh.VolumeArea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 818.7919871350869,
+        "Y": 345.2127032721182
+      },
+      {
+        "Id": "bcc7125698d5497fa84dc8f81c612210",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1262.6182641489936,
+        "Y": 258.51449776798347
+      },
+      {
+        "Id": "ed565e18edb543b6a4c8e338cbd0c8cb",
+        "Name": "Mesh.Cuboid",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 421.89709435150365,
+        "Y": 840.4527772374186
+      },
+      {
+        "Id": "724c5e05a60c4ae391ab7749b46081b0",
+        "Name": "Mesh.VolumeArea",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 767.9862994432497,
+        "Y": 838.4999664857137
+      },
+      {
+        "Id": "7eca7c5c42224e0d848693f76d20c8dc",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1267.132723357612,
+        "Y": 757.1988484840624
+      },
+      {
+        "Id": "eadcc6c2ac8e4dc6979d234291664fb4",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1273.5483521387187,
+        "Y": 1025.6475277434724
+      },
+      {
+        "Id": "12c776ac2e1147c9adcf5141286f126a",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1262.0735253286946,
+        "Y": 551.4715772352288
+      },
+      {
+        "Id": "a8f5b58c9f564a7d81ca7c228a8e5fde",
+        "Name": "Mesh.Plane",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 434.2942426563982,
+        "Y": 348.4358377378558
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "1713fe2b276f4895a767ef2a5de2cbff",
+        "Title": "Quad Mesh",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 491.19970524966766,
+        "Top": 293.9216635834722,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a7b366ed5f47460c8eef3e0511f4171d",
+        "Title": "Tri Mesh",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 497.3475158959411,
+        "Top": 784.7218801776372,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -140.9647397536416,
+    "Y": -123.48125514856486,
+    "Zoom": 0.8374916211018643
+  }
+}

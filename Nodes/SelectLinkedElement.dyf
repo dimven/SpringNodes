@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Select the linked instance first, followed by the element. If your selection fails, just press escape.\r\nTo refresh the node, connect a boolean switch node.",
-  "Name": "ꟿ SelectLinkedElement",
+  "Name": "SelectLinkedElement",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,7 +12,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -21,6 +20,7 @@
         "Description": ""
       },
       "Id": "34ef6e0ac18d47b5b63a65c6242531da",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -38,10 +38,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "element",
       "Id": "c92d542ecbf24c80994a96272bfa36a5",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "4a68f8701a184d469f251fbc0863318a",
@@ -59,10 +59,11 @@
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2019, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import Selection\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import RevitLinkInstance, Transform \r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nsel1 = uidoc.Selection\r\not = Selection.ObjectType.LinkedElement\r\nel_ref = sel1.PickObject(ot, \"Pick a linked element.\")\r\nlinkInst = doc.GetElement(el_ref.ElementId)\r\nlinkDoc = linkInst.GetLinkDocument()\r\nlinkEl = linkDoc.GetElement(el_ref.LinkedElementId).ToDSType(1)\r\ntf1 = linkInst.GetTotalTransform().ToCoordinateSystem(1)\r\nOUT = linkEl, tf1",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2019, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import Selection\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import RevitLinkInstance, Transform\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\ndoc = uidoc.Document\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ntry:\r\n    sel1 = uidoc.Selection\r\n    ot = Selection.ObjectType.LinkedElement\r\n    el_ref = sel1.PickObject(ot, \"Pick a linked element.\")\r\n\r\n    linkInst = doc.GetElement(el_ref.ElementId)\r\n    linkDoc = linkInst.GetLinkDocument()\r\n    linkEl = linkDoc.GetElement(el_ref.LinkedElementId).ToDSType(True)\r\n    tf1 = linkInst.GetTotalTransform().ToCoordinateSystem(True)\r\n\r\n    OUT = linkEl, tf1\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "4d84601c19ba4b069bf0318406c41c43",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "45c2af5cffa2445fba1b6ac6e6694507",
@@ -86,14 +87,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "transform",
       "Id": "42dc0505d8024be4a6e3e3b50b2ca879",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "6a2815a3a08841ae84a74a5689a747c4",
@@ -111,9 +112,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "r[0];\nr[1];",
       "Id": "476b1dc8f26e4879954986774545ab7f",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "6990e50a9e294748bf4fb15674ee6614",
@@ -128,8 +128,8 @@
       "Outputs": [
         {
           "Id": "6c8b76d5e0a14ab58eb71dc67087abb8",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(r, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -137,8 +137,8 @@
         },
         {
           "Id": "32158d1af9f3441c863b8d387cfaf009",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(r, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -146,109 +146,117 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "r[0];\nr[1];"
     }
   ],
   "Connectors": [
     {
       "Start": "9242f4ec323d4518b9e63259c460a2ec",
       "End": "45c2af5cffa2445fba1b6ac6e6694507",
-      "Id": "7463893a754047f39d30544734c9cee9"
+      "Id": "7463893a754047f39d30544734c9cee9",
+      "IsHidden": "False"
     },
     {
       "Start": "14fa6ba72b87475f8b28c47e42d7b27d",
       "End": "6990e50a9e294748bf4fb15674ee6614",
-      "Id": "f23832890e3c4376b25d27ccc7c2fe90"
+      "Id": "f23832890e3c4376b25d27ccc7c2fe90",
+      "IsHidden": "False"
     },
     {
       "Start": "6c8b76d5e0a14ab58eb71dc67087abb8",
       "End": "4a68f8701a184d469f251fbc0863318a",
-      "Id": "3059ada0a50340bb938da5c874ce8450"
+      "Id": "3059ada0a50340bb938da5c874ce8450",
+      "IsHidden": "False"
     },
     {
       "Start": "32158d1af9f3441c863b8d387cfaf009",
       "End": "6a2815a3a08841ae84a74a5689a747c4",
-      "Id": "c245a25aba304f289be0901baff81fef"
+      "Id": "c245a25aba304f289be0901baff81fef",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "34ef6e0ac18d47b5b63a65c6242531da",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 10.0,
-        "Y": 11.2492815284936
+        "ShowGeometry": true,
+        "X": -277.88647851022597,
+        "Y": 9.91027465170184
       },
       {
         "Id": "c92d542ecbf24c80994a96272bfa36a5",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 496.222095524882,
-        "Y": 14.4611694136143
+        "ShowGeometry": true,
+        "X": 585.928444848542,
+        "Y": -48.60511253514062
       },
       {
         "Id": "4d84601c19ba4b069bf0318406c41c43",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 225.6,
-        "Y": 7.99999999999999
+        "ShowGeometry": true,
+        "X": 88.12862731604716,
+        "Y": 10.6780137535835
       },
       {
         "Id": "42dc0505d8024be4a6e3e3b50b2ca879",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 495.121046079825,
-        "Y": 74.1955022361968
+        "ShowGeometry": true,
+        "X": 564.7114261612098,
+        "Y": 149.22263076143972
       },
       {
         "Id": "476b1dc8f26e4879954986774545ab7f",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 372.448275840627,
         "Y": 11.755622204754
       }
     ],
     "Annotations": [],
-    "X": -803.94666013091648,
-    "Y": 19.608218428046598,
-    "Zoom": 4.0
+    "X": 581.9926234820703,
+    "Y": 332.37328668461976,
+    "Zoom": 1.4936443080800197
   }
 }

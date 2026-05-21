@@ -1,0 +1,8 @@
+[0] Wall        123456
+[1] Floor        234567
+[2] [0] Door        345678
+[2] [1] Window        456789
+[3] [Room] Living Room        567890
+[3] [Area] 35.5
+[4] Empty List
+[5] null

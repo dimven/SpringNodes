@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Actions",
   "Description": "Attempts to modify the location of the input element. This can effectively add as a move comand in Revit. Works for both line based and point based elements.",
-  "Name": "ꟿ Element.SetLocation",
+  "Name": "Element.SetLocation",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,7 +12,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "element",
         "TypeName": "var",
@@ -21,6 +20,7 @@
         "Description": ""
       },
       "Id": "61e4699303f64a2e9726c414ed48bb4e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -38,7 +38,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "location",
         "TypeName": "var",
@@ -47,6 +46,7 @@
         "Description": ""
       },
       "Id": "ae6130ca546440758f5df9240228246a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -64,10 +64,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "element",
       "Id": "75586c6e832e4bda97b9da911b3c771e",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "e2c0c29d3be94d3a959f483598cb010a",
@@ -85,10 +85,11 @@
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc =  DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType\r\nFrU = StructuralFramingUtils\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nelements = UnwrapElement(tolist(IN[0]))\r\nnewloc = UnwrapElement(tolist(IN[1]))\r\nout1 = []\r\nframing = (\"Beam\", \"Brace\")\r\n\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i in xrange(len(elements)):\r\n\ttry:\r\n\t\tel_typ = elements[i].GetType().ToString()\r\n\t\tisWall, isBeam = False, False\r\n\t\tif el_typ == \"Autodesk.Revit.DB.Wall\":\r\n\t\t\tw_start = WallUtils.IsWallJoinAllowedAtEnd(elements[i],0)\r\n\t\t\tw_end = WallUtils.IsWallJoinAllowedAtEnd(elements[i],1)\r\n\t\t\tWallUtils.DisallowWallJoinAtEnd(elements[i],0)\r\n\t\t\tWallUtils.DisallowWallJoinAtEnd(elements[i],1)\r\n\t\t\tisWall = True\r\n\t\telif el_typ == \"Autodesk.Revit.DB.FamilyInstance\":\r\n\t\t\tif elements[i].StructuralType.ToString() in framing:\r\n\t\t\t\tb_start = FrU.IsJoinAllowedAtEnd(elements[i],0)\r\n\t\t\t\tb_end = FrU.IsJoinAllowedAtEnd(elements[i],1)\r\n\t\t\t\tFrU.DisallowJoinAtEnd(elements[i],0)\r\n\t\t\t\tFrU.DisallowJoinAtEnd(elements[i],1)\r\n\t\t\t\tisBeam = True\t\r\n\t\tnewloc1 = newloc[i].ToRevitType()\r\n\t\toldloc = elements[i].Location\r\n\t\tloc_typ = oldloc.GetType().ToString()\r\n\t\tif loc_typ == \"Autodesk.Revit.DB.LocationCurve\":\r\n\t\t\toldloc.Curve = newloc1\r\n\t\telif loc_typ == \"Autodesk.Revit.DB.LocationPoint\":\r\n\t\t\toldloc.Point = newloc1\r\n\t\tif isWall:\r\n\t\t\tif w_start: WallUtils.AllowWallJoinAtEnd(elements[i],0)\r\n\t\t\tif w_end: WallUtils.AllowWallJoinAtEnd(elements[i],1)\r\n\t\tif isBeam:\r\n\t\t\tif b_start: FrU.AllowJoinAtEnd(elements[i],0)\r\n\t\t\tif b_end: FrU.AllowJoinAtEnd(elements[i],1)\r\n\t\tout1.append(elements[i].ToDSType(True))\r\n\texcept:\r\n\t\tout1.append(None)\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\nOUT = out1",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.DB.Structure import StructuralFramingUtils, StructuralType\r\n\r\nFrU = StructuralFramingUtils\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    elements = UnwrapElement(tolist(IN[0]))\r\n    newloc = UnwrapElement(tolist(IN[1]))\r\n\r\n    framing = (\"Beam\", \"Brace\")\r\n    out1 = []\r\n\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    for i in range(len(elements)):\r\n        try:\r\n            el_typ = elements[i].GetType().ToString()\r\n            isWall, isBeam = False, False\r\n            if el_typ == \"Autodesk.Revit.DB.Wall\":\r\n                w_start = WallUtils.IsWallJoinAllowedAtEnd(elements[i], 0)\r\n                w_end = WallUtils.IsWallJoinAllowedAtEnd(elements[i], 1)\r\n                WallUtils.DisallowWallJoinAtEnd(elements[i], 0)\r\n                WallUtils.DisallowWallJoinAtEnd(elements[i], 1)\r\n                isWall = True\r\n            elif el_typ == \"Autodesk.Revit.DB.FamilyInstance\":\r\n                if elements[i].StructuralType.ToString() in framing:\r\n                    b_start = FrU.IsJoinAllowedAtEnd(elements[i], 0)\r\n                    b_end = FrU.IsJoinAllowedAtEnd(elements[i], 1)\r\n                    FrU.DisallowJoinAtEnd(elements[i], 0)\r\n                    FrU.DisallowJoinAtEnd(elements[i], 1)\r\n                    isBeam = True\r\n            newloc1 = newloc[i].ToRevitType()\r\n            oldloc = elements[i].Location\r\n            loc_typ = oldloc.GetType().ToString()\r\n            if loc_typ == \"Autodesk.Revit.DB.LocationCurve\":\r\n                oldloc.Curve = newloc1\r\n            elif loc_typ == \"Autodesk.Revit.DB.LocationPoint\":\r\n                oldloc.Point = newloc1\r\n            if isWall:\r\n                if w_start: WallUtils.AllowWallJoinAtEnd(elements[i], 0)\r\n                if w_end: WallUtils.AllowWallJoinAtEnd(elements[i], 1)\r\n            if isBeam:\r\n                if b_start: FrU.AllowJoinAtEnd(elements[i], 0)\r\n                if b_end: FrU.AllowJoinAtEnd(elements[i], 1)\r\n            out1.append(elements[i].ToDSType(True))\r\n        except:\r\n            out1.append(None)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n\r\n    OUT = out1 if is_list else out1[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "c2d8deac6440491395bd5d08d2a6f123",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "ad5280b394dc46d7b561d2fe7824fb6e",
@@ -121,42 +122,47 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     }
   ],
   "Connectors": [
     {
       "Start": "44699cf54e454814998c7ad44e2f3a84",
       "End": "ad5280b394dc46d7b561d2fe7824fb6e",
-      "Id": "72136750d1ac4e53925bc5d59e6ce3a2"
+      "Id": "72136750d1ac4e53925bc5d59e6ce3a2",
+      "IsHidden": "False"
     },
     {
       "Start": "e93a830457c94557b62a6a0f628bc9e5",
       "End": "dfc2b11c67974f5c90313edaec9c59b5",
-      "Id": "2f909749adf1456cbc11e625cd1e7c85"
+      "Id": "2f909749adf1456cbc11e625cd1e7c85",
+      "IsHidden": "False"
     },
     {
       "Start": "7c4ec790e9a8453ab16e28fbeea5ab63",
       "End": "e2c0c29d3be94d3a959f483598cb010a",
-      "Id": "bec0f438c8704af5aece7242f075946d"
+      "Id": "bec0f438c8704af5aece7242f075946d",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 28.121011734008789,
-      "EyeY": 51.148349761962891,
-      "EyeZ": 53.250408172607422,
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
       "LookX": 12.0,
       "LookY": -13.0,
       "LookZ": -58.0,
@@ -164,51 +170,52 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "61e4699303f64a2e9726c414ed48bb4e",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 62.4336804095385,
-        "Y": -2.05223349137634
+        "ShowGeometry": true,
+        "X": -54.96320940698911,
+        "Y": -107.44855234888112
       },
       {
         "Id": "ae6130ca546440758f5df9240228246a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 54.712030646603,
-        "Y": 60.7477665086237
+        "ShowGeometry": true,
+        "X": -61.641331260444375,
+        "Y": 127.53355271535943
       },
       {
         "Id": "75586c6e832e4bda97b9da911b3c771e",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 376.619736891699,
-        "Y": -1.2522334913763
+        "ShowGeometry": true,
+        "X": 516.4524767620519,
+        "Y": -3.8610532650769187
       },
       {
         "Id": "c2d8deac6440491395bd5d08d2a6f123",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 224.950259359426,
-        "Y": -0.150734336487744
+        "Y": -1.7160262007081428
       }
     ],
     "Annotations": [],
-    "X": -13.0706922006215,
-    "Y": 134.812825236355,
+    "X": 241.59597446604525,
+    "Y": 274.812825236355,
     "Zoom": 1.27771698410772
   }
 }

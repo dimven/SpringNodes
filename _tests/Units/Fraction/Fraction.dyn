@@ -1,0 +1,216 @@
+{
+  "Uuid": "67d01e7a-9d7b-4167-8834-ed41ceebd7e0",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Fraction",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 147.33333333333334,
+      "WatchHeight": 200.0,
+      "Id": "640f4ab7faf442f783a61515f8c21209",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "574960906b7e47aba529ab8de910e483",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "493d207f8e454749818d3ebc4506eca0",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1ef61c6d-ec1d-4a1f-b421-9ad87e5ca736",
+      "FunctionType": "Graph",
+      "Id": "a865345e4e444973884a7b57e1e37e3a",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d830910bf200423eb144a4ba27b032ca",
+          "Name": "fraction",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb9033a7ae5642bdb7881fe1ba94b0e3",
+          "Name": "number",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Converts a fractioned feet /inch string value into a decimal foot value."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "SerializedWidth": 0.0,
+      "SerializedHeight": 0.0,
+      "Id": "914b298652c841bfa77b59cabac082ed",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0b0ccf4604574463ad38d1c761e850c7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string.",
+      "InputValue": "10'-3 1/2"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "eb9033a7ae5642bdb7881fe1ba94b0e3",
+      "End": "574960906b7e47aba529ab8de910e483",
+      "Id": "0bd11d79dae04368baec6ceb41b2866f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0b0ccf4604574463ad38d1c761e850c7",
+      "End": "d830910bf200423eb144a4ba27b032ca",
+      "Id": "9b50dc52a9384a3bbade51e66113c8f0",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "1ef61c6d-ec1d-4a1f-b421-9ad87e5ca736"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Fraction.ToFeet.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "a865345e4e444973884a7b57e1e37e3a"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "640f4ab7faf442f783a61515f8c21209",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2495.082753592143,
+        "Y": 3912.993891352525
+      },
+      {
+        "Id": "a865345e4e444973884a7b57e1e37e3a",
+        "Name": "Fraction.ToFeet",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2196.0232649593745,
+        "Y": 3918.48251683905
+      },
+      {
+        "Id": "914b298652c841bfa77b59cabac082ed",
+        "Name": "String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1961.4318749242339,
+        "Y": 3917.2395366391124
+      }
+    ],
+    "Annotations": [],
+    "X": -2722.6382366468297,
+    "Y": -5349.326725090913,
+    "Zoom": 1.5072078723853852
+  }
+}

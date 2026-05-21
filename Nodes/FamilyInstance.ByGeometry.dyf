@@ -1,9 +1,9 @@
 {
-  "Uuid": "ecdb3729-0de2-4c50-bdca-28fe881027a2",
+  "Uuid": "153af86f-d222-4adc-9214-a6afd7626984",
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.\r\nThe provided category will be used only if the family template supports it. If not, the default template category will be used instead.\r\nLikewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (\"By Category\").\r\nFor void cuts, the material settings will be ignored.\r\nThe Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.\r\nThe node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest.",
-  "Name": "ꟿ FamilyInstance.ByGeometry",
+  "Name": "FamilyInstance.ByGeometry",
   "ElementResolver": {
     "ResolutionMap": {
       "PolyCurve": {
@@ -57,14 +57,14 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\nfrom itertools import repeat\r\n\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nimport sys\r\nsys.path.append('%s\\IronPython 2.7\\Lib' %pf_path)\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nfrom Autodesk.DesignScript.Geometry import Point as DynPoint\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.DB.Structure import StructuralType\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,'__iter__'): return obj1\r\n\telse: return [obj1]\r\n\r\ndef PadLists(lists):\r\n\tlen1 = len(lists[0])\r\n\tfor i in xrange(1,len(lists)):\r\n\t\tlen2 = len(lists[i])\r\n\t\tif len2 == len1 : continue\r\n\t\telif len2 > len1: lists[i] = lists[i][:len1]\r\n\t\telse : lists[i].extend(repeat(lists[i][-1],len1 - len2))\r\n\treturn lists\r\n\r\nclass FamOpt1(IFamilyLoadOptions):\r\n\tdef __init__(self):\r\n\t\tpass\r\n\tdef OnFamilyFound(self,familyInUse, overwriteParameterValues):\r\n\t\treturn True\r\n\tdef OnSharedFamilyFound(self,familyInUse, source, overwriteParameterValues):\r\n\t\treturn True\r\n\r\ngeom = tolist(IN[0])\r\nfam_path = IN[1]\r\nnames = tolist(IN[2])\r\ncategory = tolist(IN[3])\r\nmaterial = tolist(IN[4])\r\nisVoid = tolist(IN[5])\r\nsubcat = tolist(IN[6])\r\n\r\nif int(doc.Application.VersionNumber) > 2021:\r\n\tunits = doc.GetUnits().GetFormatOptions(ForgeTypeId(\"autodesk.spec.aec:length\")).GetUnitTypeId()\r\nelse:\r\n\tunits = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits\r\n\t\r\nfactor = UnitUtils.ConvertToInternalUnits(1,units)\r\nacceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')\r\norigin = XYZ.Zero\r\nstr_typ = StructuralType.NonStructural\r\nt1 = TransactionManager.Instance\r\ntemp_path = System.IO.Path.GetTempPath()\r\ninvalid_chars = System.IO.Path.GetInvalidFileNameChars()\r\nsatOpt = SATImportOptions()\r\nsatOpt.Placement = ImportPlacement.Origin\r\nsatOpt.Unit = ImportUnit.Foot\r\nopt1 = Options()\r\nopt1.ComputeReferences = True\r\nSaveAsOpt = SaveAsOptions()\r\nSaveAsOpt.OverwriteExistingFile = True\r\n\r\ndef NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):\r\n\ttry:\r\n\t\tenable_mat = False if mat1 is None else True\r\n\t\tenable_subcat = False if subcat1 is None else True\r\n\t\tif any( (c in name1 for c in invalid_chars) ):\r\n\t\t\traise Exception('Family name contains invalid characters')\r\n\t\tTransactionManager.ForceCloseTransaction(t1)\r\n\t\tfamdoc = doc.Application.NewFamilyDocument(fam_path)\r\n\t\tsat_path = '%s%s.sat' % (temp_path, name1)\r\n\t\tif factor != 1:\r\n\t\t\ts1 = s1.Scale(factor)\r\n\t\tvec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry(s1).MinPoint, DynPoint.Origin())\r\n\t\ts1 = s1.Translate(vec1)\r\n\t\tsat1 = Geometry.ExportToSAT(s1, sat_path)\r\n\t\tview_fec = FilteredElementCollector(famdoc).OfClass(View)\r\n\t\tview1 = None\r\n\t\tfor v in view_fec:\r\n\t\t\tif str(v.ViewType) in acceptable_views and not v.IsTemplate:\r\n\t\t\t\tview1 = v\r\n\t\t\t\tbreak\r\n\t\tt1.EnsureInTransaction(famdoc)\r\n\t\tsatId = famdoc.Import(sat1, satOpt, view1)\r\n\t\tel1 = famdoc.GetElement(satId)\r\n\t\tgeom1 = el1.get_Geometry(opt1)\r\n\t\tenum = geom1.GetEnumerator()\r\n\t\tenum.MoveNext()\r\n\t\tgeom2 = enum.Current.GetInstanceGeometry()\r\n\t\tenum2 = geom2.GetEnumerator()\r\n\t\tenum2.MoveNext()\r\n\t\ts1 = enum2.Current\r\n\t\tfamdoc.Delete(satId)\r\n\t\tSystem.IO.File.Delete(sat_path)\r\n\r\n\t\tsave_path = '%s%s.rfa' % (temp_path, name1)\r\n\t\ttry: #set the category\r\n\t\t\tfam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)\r\n\t\t\tfamdoc.OwnerFamily.FamilyCategory = fam_cat\r\n\t\texcept: pass\r\n\t\ts2 = FreeFormElement.Create(famdoc,s1)\r\n\t\tif isVoid1:\r\n\t\t\tvoid_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)\r\n\t\t\tvoid_par2 = famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)\r\n\t\telse: #voids do not have a material values or a sub-cateogry\r\n\t\t\tif enable_mat:\r\n\t\t\t\ttry:\r\n\t\t\t\t\tmat_fec = FilteredElementCollector(famdoc).OfClass(Material)\r\n\t\t\t\t\tfor m in mat_fec:\r\n\t\t\t\t\t\tif m.Name == mat1:\r\n\t\t\t\t\t\t\tfam_mat = m\r\n\t\t\t\t\t\t\tbreak\r\n\t\t\t\t\tmat_par = s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)\r\n\t\t\t\texcept: pass\r\n\t\t\tif enable_subcat: #create and assign the sub-category:\r\n\t\t\t\ttry:\r\n\t\t\t\t\tcurrent_fam_cat = famdoc.OwnerFamily.FamilyCategory\r\n\t\t\t\t\tfam_cat_subs = current_fam_cat.SubCategories\r\n\t\t\t\t\tif fam_cat_subs.Contains(subcat1):\r\n\t\t\t\t\t\tnew_subcat = fam_cat_subs[subcat1]\r\n\t\t\t\t\telse:\r\n\t\t\t\t\t\tnew_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)\r\n\t\t\t\t\ts2.Subcategory = new_subcat\r\n\t\t\t\texcept: pass\r\n\t\tTransactionManager.ForceCloseTransaction(t1)\r\n\t\tfamdoc.SaveAs(save_path, SaveAsOpt)\r\n\t\tfamily1 = famdoc.LoadFamily(doc, FamOpt1() )\r\n\t\tfamdoc.Close(False)\r\n\t\tSystem.IO.File.Delete(save_path)\r\n\t\tsymbols = family1.GetFamilySymbolIds().GetEnumerator()\r\n\t\tsymbols.MoveNext()\r\n\t\tsymbol1 = doc.GetElement(symbols.Current)\r\n\t\tt1.EnsureInTransaction(doc)\r\n\t\tif not symbol1.IsActive: symbol1.Activate()\r\n\t\tinst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)\r\n\t\tElementTransformUtils.MoveElement(doc,inst1.Id, vec1.Reverse().ToXyz() )\r\n\t\tTransactionManager.ForceCloseTransaction(t1)\r\n\t\treturn inst1.ToDSType(False), family1.ToDSType(False)\r\n\t\t\r\n\texcept:\r\n\t\treturn traceback.format_exc(),''\r\n\r\nif len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):\r\n\treturn1 = map(NewForm_background, geom, names, category, isVoid, material, subcat)\r\nelif len(geom) == len(names):\r\n\tpadded = PadLists([geom, category, isVoid, material,subcat])\r\n\tp_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]\r\n\treturn1 = map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat)\r\nelse : return1 = [('Make sure that each geometry\\nobject has a unique family name.', '')]\r\nOUT = [i[0] for i in return1], [i[1] for i in return1]\r\nsatOpt.Dispose()\r\nopt1.Dispose()\r\nSaveAsOpt.Dispose()",
-      "Engine": "IronPython2",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\nfrom System.Collections.Generic import *\r\nfrom itertools import repeat\r\nimport uuid\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Geometry as DynGeom\r\nfrom Autodesk.DesignScript.Geometry import Point as DynPoint\r\nfrom Autodesk.DesignScript.Geometry import Vector, BoundingBox\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import (\r\n    FilteredElementCollector, View, SATImportOptions,\r\n    ImportPlacement, ImportUnit, Options, SaveAsOptions,\r\n    FreeFormElement, BuiltInParameter, Material,\r\n    ElementId, UnitUtils, XYZ, ElementTransformUtils,\r\n    ForgeTypeId, IFamilyLoadOptions\r\n)\r\nfrom Autodesk.Revit.DB.Structure import StructuralType\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\ndef tolist(obj1):\r\n    if hasattr(obj1, '__iter__') and not isinstance(obj1, str):\r\n        return obj1\r\n    return [obj1]\r\n\r\ndef PadLists(lists):\r\n    len1 = len(lists[0])\r\n    for i in range(1, len(lists)):\r\n        len2 = len(lists[i])\r\n        if len2 == len1:\r\n            continue\r\n        elif len2 > len1:\r\n            lists[i] = lists[i][:len1]\r\n        else:\r\n            lists[i].extend(repeat(lists[i][-1], len1 - len2))\r\n    return lists\r\n\r\nclass FamOpt1(IFamilyLoadOptions):\r\n    __namespace__ = \"FamOpt_\" + str(uuid.uuid4()).replace('-', '')\r\n\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def OnFamilyFound(self, familyInUse, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n\r\n    def OnSharedFamilyFound(self, sharedFamily, familyInUse, source, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n\r\ngeom     = tolist(IN[0])\r\nfam_path = IN[1]\r\nnames    = tolist(IN[2])\r\ncategory = tolist(IN[3])\r\nmaterial = tolist(IN[4])\r\nisVoid   = tolist(IN[5])\r\nsubcat   = tolist(IN[6])\r\n\r\nif int(doc.Application.VersionNumber) > 2021:\r\n    units = doc.GetUnits().GetFormatOptions(ForgeTypeId(\"autodesk.spec.aec:length\")).GetUnitTypeId()\r\nelse:\r\n    units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits\r\n\r\nfactor = UnitUtils.ConvertToInternalUnits(1, units)\r\nacceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')\r\norigin = XYZ.Zero\r\nstr_typ = StructuralType.NonStructural\r\nt1 = TransactionManager.Instance\r\ntemp_path = System.IO.Path.GetTempPath()\r\ninvalid_chars = System.IO.Path.GetInvalidFileNameChars()\r\nsatOpt = SATImportOptions()\r\nsatOpt.Placement = ImportPlacement.Origin\r\nsatOpt.Unit = ImportUnit.Foot\r\nopt1 = Options()\r\nopt1.ComputeReferences = True\r\nSaveAsOpt = SaveAsOptions()\r\nSaveAsOpt.OverwriteExistingFile = True\r\n\r\ndef NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):\r\n    try:\r\n        enable_mat = False if mat1 is None else True\r\n        enable_subcat = False if subcat1 is None else True\r\n        if any(c in name1 for c in invalid_chars):\r\n            raise Exception('Family name contains invalid characters')\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc = doc.Application.NewFamilyDocument(fam_path)\r\n        sat_path = '%s%s.sat' % (temp_path, name1)\r\n        if factor != 1:\r\n            s1 = s1.Scale(factor)\r\n        vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry([s1]).MinPoint, DynPoint.Origin())\r\n        s1 = s1.Translate(vec1)\r\n        sat1 = DynGeom.ExportToSAT([s1], sat_path)\r\n        view_fec = FilteredElementCollector(famdoc).OfClass(View)\r\n        view1 = next((v for v in view_fec if str(v.ViewType) in acceptable_views and not v.IsTemplate), None)\r\n        t1.EnsureInTransaction(famdoc)\r\n        satId = famdoc.Import(sat1, satOpt, view1)\r\n        el1 = famdoc.GetElement(satId)\r\n        geom1 = el1.get_Geometry(opt1)\r\n        enum = geom1.GetEnumerator()\r\n        enum.MoveNext()\r\n        geom2 = enum.Current.GetInstanceGeometry()\r\n        enum2 = geom2.GetEnumerator()\r\n        enum2.MoveNext()\r\n        s1 = enum2.Current\r\n        System.IO.File.Delete(sat_path)\r\n        save_path = '%s%s.rfa' % (temp_path, name1)\r\n        try:\r\n            fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)\r\n            famdoc.OwnerFamily.FamilyCategory = fam_cat\r\n        except Exception:\r\n            pass\r\n        s2 = FreeFormElement.Create(famdoc, s1)\r\n        if isVoid1:\r\n            s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)\r\n            famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)\r\n        else:\r\n            if enable_mat:\r\n                try:\r\n                    mat_fec = FilteredElementCollector(famdoc).OfClass(Material)\r\n                    for m in mat_fec:\r\n                        if m.Name == mat1:\r\n                            fam_mat = m\r\n                            break\r\n                    s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)\r\n                except Exception:\r\n                    pass\r\n            if enable_subcat:\r\n                try:\r\n                    current_fam_cat = famdoc.OwnerFamily.FamilyCategory\r\n                    fam_cat_subs = current_fam_cat.SubCategories\r\n                    if fam_cat_subs.Contains(subcat1):\r\n                        new_subcat = fam_cat_subs[subcat1]\r\n                    else:\r\n                        new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)\r\n                    s2.Subcategory = new_subcat\r\n                except Exception:\r\n                    pass\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc.SaveAs(save_path, SaveAsOpt)\r\n        family1 = famdoc.LoadFamily(doc, FamOpt1())\r\n        famdoc.Close(False)\r\n        System.IO.File.Delete(save_path)\r\n        symbols = family1.GetFamilySymbolIds().GetEnumerator()\r\n        symbols.MoveNext()\r\n        symbol1 = doc.GetElement(symbols.Current)\r\n        t1.EnsureInTransaction(doc)\r\n        if not symbol1.IsActive:\r\n            symbol1.Activate()\r\n        inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)\r\n        rev_vec = XYZ(-vec1.X, -vec1.Y, -vec1.Z)\r\n        ElementTransformUtils.MoveElement(doc, inst1.Id, rev_vec)\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        return inst1, family1\r\n\r\n    except Exception as e:\r\n        return traceback.format_exc(), ''\r\n\r\nif len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):\r\n    return1 = list(map(NewForm_background, geom, names, category, isVoid, material, subcat))\r\nelif len(geom) == len(names):\r\n    padded = PadLists([geom, category, isVoid, material, subcat])\r\n    p_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]\r\n    return1 = list(map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat))\r\nelse:\r\n    return1 = [('Make sure that each geometry\\nobject has a unique family name.', '')]\r\n\r\nOUT = [i[0] for i in return1], [i[1] for i in return1]\r\nsatOpt.Dispose()\r\nopt1.Dispose()\r\nSaveAsOpt.Dispose()",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
-      "Id": "1cc92fa8a1b14217a3360a638867f39c",
+      "Id": "8961e9569bcd43199c84bfab7ddfca19",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
-          "Id": "939eefe079c74829bae7079c90f58a0c",
+          "Id": "e1c42eba154f4346a2b9d1abb3726204",
           "Name": "IN[0]",
           "Description": "Input #0",
           "UsingDefaultValue": false,
@@ -73,7 +73,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "9a644768b2344f83902fbc9df798e175",
+          "Id": "5c58796d92734903b9f09c833ad691ee",
           "Name": "IN[1]",
           "Description": "Input #1",
           "UsingDefaultValue": false,
@@ -82,7 +82,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "793e32f3a7af4d309258cb1edcdb0d71",
+          "Id": "f881168fbedb4dc2ab116493968ffc19",
           "Name": "IN[2]",
           "Description": "Input #2",
           "UsingDefaultValue": false,
@@ -91,7 +91,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3d0175120fdb415897231fa6c0e5b1c4",
+          "Id": "8e9309f77f2d45f2ab13a6e73ec8d79a",
           "Name": "IN[3]",
           "Description": "Input #3",
           "UsingDefaultValue": false,
@@ -100,7 +100,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1f8ef7cdee0844d081911214ada7b90f",
+          "Id": "3649dca78d50469f8c4f331ab9faaf52",
           "Name": "IN[4]",
           "Description": "Input #4",
           "UsingDefaultValue": false,
@@ -109,7 +109,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "19c0c57344774e899456999b3ed6a61c",
+          "Id": "e25b28c22fd64346bb15c64b876d747b",
           "Name": "IN[5]",
           "Description": "Input #5",
           "UsingDefaultValue": false,
@@ -118,7 +118,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1f88e780fc4a42618a76d3dffd1f3f86",
+          "Id": "56ea67092cde424885a81496ae42a5ae",
           "Name": "IN[6]",
           "Description": "Input #6",
           "UsingDefaultValue": false,
@@ -129,7 +129,7 @@
       ],
       "Outputs": [
         {
-          "Id": "3a5ce7620b8e4718a8767ac540628dc1",
+          "Id": "8955645b4f86425cbc5f6d29806d8047",
           "Name": "OUT",
           "Description": "Result of the python script",
           "UsingDefaultValue": false,
@@ -143,7 +143,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geometry",
         "TypeName": "var",
@@ -151,11 +150,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "7971abd8ecd24e2fa28e52027545f3f6",
+      "Id": "532d65d841f547c09647800aa3c5b9b3",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "66708527105d446e8cf270cf97ab8d63",
+          "Id": "809ee0ca90c5402e9c65a952463da9a4",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -169,7 +169,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "familyTemplatePath",
         "TypeName": "var",
@@ -177,11 +176,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "487f04110bdf4764973dcae73f53aff1",
+      "Id": "73f878bce6a24ea9b1a7a5d4cc801c2e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "956a510767bc41da8487107f2a3845be",
+          "Id": "d5a1d3716dfb466286c34169cc39aa5f",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -195,7 +195,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "familyName",
         "TypeName": "var",
@@ -203,11 +202,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "5923b814be994137acdd60f1a8177b72",
+      "Id": "c73bcbb5b41e437fa1334e6104be8536",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "0508ba41137d417295eb934c87542d2b",
+          "Id": "2910665ba1d14f9fb5150da251405a2c",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -221,7 +221,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "category",
         "TypeName": "var",
@@ -229,11 +228,12 @@
         "DefaultValue": "Revit.Elements.Category.ByName(\"OST_GenericModel\")",
         "Description": ""
       },
-      "Id": "3ab553258be4494083412396cfdb6443",
+      "Id": "3608cc08b29e465f9b78e809ab3d8533",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "c6fe1672a79f47c6ab0125c8d038d888",
+          "Id": "4e5752dd88d7472aa34c17e6d629597b",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -247,13 +247,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "instance",
-      "Id": "325026eade93449a9cffbea72f2165f3",
+      "Id": "23b636e866b6486c8bfafbaf5d1d1e0f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "469d93ae0aae487ba4bb94bccfb10d95",
+          "Id": "ae81809e8f804dbd970e2aa1562c0038",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -268,7 +268,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "materialName",
         "TypeName": "var",
@@ -276,11 +275,12 @@
         "DefaultValue": "null",
         "Description": ""
       },
-      "Id": "aff75132a3454885beeefdf45692a2f1",
+      "Id": "df397bace9b14bf5a3386082dc6aa342",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d15d9190cb9e4f91b36194f749dd6403",
+          "Id": "0918f79db15a4b0185ecab89e0c435e0",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -294,7 +294,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "isVoid",
         "TypeName": "var",
@@ -302,11 +301,12 @@
         "DefaultValue": "false",
         "Description": ""
       },
-      "Id": "5340671de4f14bcc946dd88da17a3e84",
+      "Id": "9c73e149435740d0ad740392c1f4bda0",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "1fed08e6b7394a07ada4317004114183",
+          "Id": "137c679b1c49453b93cbcc3d0df762fd",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -320,13 +320,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "family",
-      "Id": "e35db8a4f8ae40deae1cdf5ba7ae6bb5",
+      "Id": "17ae28cef9e7415d9e5896ce0500330d",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "6737717c4909469aaa65683bac42c376",
+          "Id": "6c3eae3e96a64d8cbeb2a3f8200139f2",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -341,12 +341,11 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "82a873b5c5e148489305a8285ae88500",
       "NodeType": "CodeBlockNode",
-      "Code": "res[0];\nres[1];",
-      "Id": "fba20a1f96ab4c49b5cc89d6e5b024aa",
       "Inputs": [
         {
-          "Id": "df5fbce5e7d043f98dd2f3d3d6dccdcc",
+          "Id": "7ef2a847cbda4399aed4cc4b846a1c62",
           "Name": "res",
           "Description": "res",
           "UsingDefaultValue": false,
@@ -357,18 +356,18 @@
       ],
       "Outputs": [
         {
-          "Id": "235b97695fb649fda75218c8270b2e93",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Id": "d0528aa158044fb6a0180dbfedabe1ac",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(res, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "baa4f524f40148de8b35d20cec441e08",
-          "Name": "",
-          "Description": "Value of expression at line 2",
+          "Id": "3b14ca4a74dc4546991db28520a06ee3",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(res, 1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -376,11 +375,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "res[0];\nres[1];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "subcategoryName",
         "TypeName": "var",
@@ -388,11 +387,12 @@
         "DefaultValue": "null",
         "Description": ""
       },
-      "Id": "9934ac47c94d4bb18e0da2ae0a86a302",
+      "Id": "fe73ef2e6137430fa1d811a0c995ce91",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "57e6b9a700c14781bc4325adbf69356a",
+          "Id": "50837258d8f546c78dd858e4839a7c8b",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -407,195 +407,207 @@
   ],
   "Connectors": [
     {
-      "Start": "3a5ce7620b8e4718a8767ac540628dc1",
-      "End": "df5fbce5e7d043f98dd2f3d3d6dccdcc",
-      "Id": "7d33569cf47647c4a549a1b1fc0e4765"
+      "Start": "8955645b4f86425cbc5f6d29806d8047",
+      "End": "7ef2a847cbda4399aed4cc4b846a1c62",
+      "Id": "2c5ead841f154ed1a0036e6c395b672d",
+      "IsHidden": "False"
     },
     {
-      "Start": "66708527105d446e8cf270cf97ab8d63",
-      "End": "939eefe079c74829bae7079c90f58a0c",
-      "Id": "0beaf8c48ea6435eadc995a1069713ac"
+      "Start": "809ee0ca90c5402e9c65a952463da9a4",
+      "End": "e1c42eba154f4346a2b9d1abb3726204",
+      "Id": "8f7ecac6ec9a4ac7b87c4bad0961ded7",
+      "IsHidden": "False"
     },
     {
-      "Start": "956a510767bc41da8487107f2a3845be",
-      "End": "9a644768b2344f83902fbc9df798e175",
-      "Id": "203a6c85efef4a52bd4a404da56be668"
+      "Start": "d5a1d3716dfb466286c34169cc39aa5f",
+      "End": "5c58796d92734903b9f09c833ad691ee",
+      "Id": "a7fc411842364053a13070b285ac019d",
+      "IsHidden": "False"
     },
     {
-      "Start": "0508ba41137d417295eb934c87542d2b",
-      "End": "793e32f3a7af4d309258cb1edcdb0d71",
-      "Id": "3d17fb5b18f9458b8b7b09805a07b6c9"
+      "Start": "2910665ba1d14f9fb5150da251405a2c",
+      "End": "f881168fbedb4dc2ab116493968ffc19",
+      "Id": "ef5ae0f9604346f2bbcdb35b543cc483",
+      "IsHidden": "False"
     },
     {
-      "Start": "c6fe1672a79f47c6ab0125c8d038d888",
-      "End": "3d0175120fdb415897231fa6c0e5b1c4",
-      "Id": "4936d3297da74e57aa96931b425e4e76"
+      "Start": "4e5752dd88d7472aa34c17e6d629597b",
+      "End": "8e9309f77f2d45f2ab13a6e73ec8d79a",
+      "Id": "9508c4eaa46e4e12b7b097da6b12ecc1",
+      "IsHidden": "False"
     },
     {
-      "Start": "d15d9190cb9e4f91b36194f749dd6403",
-      "End": "1f8ef7cdee0844d081911214ada7b90f",
-      "Id": "13e76ced9e7d46ba83b05f36e02172e5"
+      "Start": "0918f79db15a4b0185ecab89e0c435e0",
+      "End": "3649dca78d50469f8c4f331ab9faaf52",
+      "Id": "bc3a89e1c1ad445ba6c123717cdc8ab6",
+      "IsHidden": "False"
     },
     {
-      "Start": "1fed08e6b7394a07ada4317004114183",
-      "End": "19c0c57344774e899456999b3ed6a61c",
-      "Id": "232abea36c3f4f8a8898e2cfc1000251"
+      "Start": "137c679b1c49453b93cbcc3d0df762fd",
+      "End": "e25b28c22fd64346bb15c64b876d747b",
+      "Id": "212c7ca861034f308766b769b83667ec",
+      "IsHidden": "False"
     },
     {
-      "Start": "235b97695fb649fda75218c8270b2e93",
-      "End": "469d93ae0aae487ba4bb94bccfb10d95",
-      "Id": "01defea0fb2343b2a76fe26cfba40751"
+      "Start": "d0528aa158044fb6a0180dbfedabe1ac",
+      "End": "ae81809e8f804dbd970e2aa1562c0038",
+      "Id": "ee98f083db664760af84b6a8884627c6",
+      "IsHidden": "False"
     },
     {
-      "Start": "baa4f524f40148de8b35d20cec441e08",
-      "End": "6737717c4909469aaa65683bac42c376",
-      "Id": "3f47f91bc2254382a75ecb7acfef9dd0"
+      "Start": "3b14ca4a74dc4546991db28520a06ee3",
+      "End": "6c3eae3e96a64d8cbeb2a3f8200139f2",
+      "Id": "55bdc32467ce4bc980cb5b5cef991e8f",
+      "IsHidden": "False"
     },
     {
-      "Start": "57e6b9a700c14781bc4325adbf69356a",
-      "End": "1f88e780fc4a42618a76d3dffd1f3f86",
-      "Id": "861829842577460eb691cadc3e449426"
+      "Start": "50837258d8f546c78dd858e4839a7c8b",
+      "End": "56ea67092cde424885a81496ae42a5ae",
+      "Id": "e6ac49b82a854ed89c33ee2a3c8c9330",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
   "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.10.1.3976",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 2081.2275390625,
-      "EyeY": 3163.685546875,
-      "EyeZ": 4833.69287109375,
-      "LookX": -2086.2275390625,
-      "LookY": -3152.685546875,
-      "LookZ": -4841.69287109375,
-      "UpX": -0.12556251883506775,
-      "UpY": 0.94832360744476318,
-      "UpZ": -0.29140403866767883
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
+        "Id": "8961e9569bcd43199c84bfab7ddfca19",
         "Name": "Python Script",
-        "Id": "1cc92fa8a1b14217a3360a638867f39c",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 345.54386564948459,
+        "ShowGeometry": true,
+        "X": 345.5438656494846,
         "Y": 111.69562759250758
       },
       {
-        "ShowGeometry": true,
+        "Id": "532d65d841f547c09647800aa3c5b9b3",
         "Name": "Input",
-        "Id": "7971abd8ecd24e2fa28e52027545f3f6",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -30.8885079751855,
-        "Y": 2.71239964797083
+        "ShowGeometry": true,
+        "X": -53.592973025830275,
+        "Y": -178.33287223584406
       },
       {
-        "ShowGeometry": true,
+        "Id": "73f878bce6a24ea9b1a7a5d4cc801c2e",
         "Name": "Input",
-        "Id": "487f04110bdf4764973dcae73f53aff1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -96.8885079751855,
-        "Y": 61.096959630846
+        "ShowGeometry": true,
+        "X": -102.98352531791551,
+        "Y": -44.01940844535859
       },
       {
-        "ShowGeometry": true,
+        "Id": "c73bcbb5b41e437fa1334e6104be8536",
         "Name": "Input",
-        "Id": "5923b814be994137acdd60f1a8177b72",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -47.8885079751855,
-        "Y": 119.481519613721
+        "ShowGeometry": true,
+        "X": -56.356303561903275,
+        "Y": 92.66683358911445
       },
       {
-        "ShowGeometry": true,
+        "Id": "3608cc08b29e465f9b78e809ab3d8533",
         "Name": "Input",
-        "Id": "3ab553258be4494083412396cfdb6443",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -344.888507975185,
-        "Y": 177.866079596596
+        "ShowGeometry": true,
+        "X": -439.96270946745824,
+        "Y": 216.30279528165454
       },
       {
-        "ShowGeometry": true,
+        "Id": "23b636e866b6486c8bfafbaf5d1d1e0f",
         "Name": "Output",
-        "Id": "325026eade93449a9cffbea72f2165f3",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 680.82051601800674,
-        "Y": 112.09523834581771
+        "ShowGeometry": true,
+        "X": 793.1263654807477,
+        "Y": 28.439370110709376
       },
       {
-        "ShowGeometry": true,
+        "Id": "df397bace9b14bf5a3386082dc6aa342",
         "Name": "Input",
-        "Id": "aff75132a3454885beeefdf45692a2f1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -121.888507975185,
-        "Y": 236.250639579471
+        "ShowGeometry": true,
+        "X": -112.5604667319941,
+        "Y": 349.42986995014587
       },
       {
-        "ShowGeometry": true,
+        "Id": "9c73e149435740d0ad740392c1f4bda0",
         "Name": "Input",
-        "Id": "5340671de4f14bcc946dd88da17a3e84",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -80.8885079751855,
-        "Y": 294.635199562346
+        "ShowGeometry": true,
+        "X": -64.44213200003111,
+        "Y": 525.266953010418
       },
       {
-        "ShowGeometry": true,
+        "Id": "17ae28cef9e7415d9e5896ce0500330d",
         "Name": "Output",
-        "Id": "e35db8a4f8ae40deae1cdf5ba7ae6bb5",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 681.5603115346488,
-        "Y": 171.34593745430291
+        "ShowGeometry": true,
+        "X": 807.0548431229196,
+        "Y": 259.96722948392625
       },
       {
-        "ShowGeometry": true,
+        "Id": "82a873b5c5e148489305a8285ae88500",
         "Name": "Code Block",
-        "Id": "fba20a1f96ab4c49b5cc89d6e5b024aa",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 533.59702027127469,
-        "Y": 116.34877280226091
+        "ShowGeometry": true,
+        "X": 554.4063874881534,
+        "Y": 111.82499732033075
       },
       {
-        "ShowGeometry": true,
+        "Id": "fe73ef2e6137430fa1d811a0c995ce91",
         "Name": "Input",
-        "Id": "9934ac47c94d4bb18e0da2ae0a86a302",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -146.888507975185,
-        "Y": 353.019759545222
+        "ShowGeometry": true,
+        "X": -123.32379726806721,
+        "Y": 656.0212494349224
       }
     ],
     "Annotations": [],
-    "X": 134.40018792104098,
-    "Y": 175.042783848514,
-    "Zoom": 1.21316139457394
+    "X": 351.9970285054505,
+    "Y": 328.3117040389428,
+    "Zoom": 0.7302959097074813
   }
 }

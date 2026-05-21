@@ -1,0 +1,242 @@
+{
+  "Uuid": "74b83d1a-8c6a-4d18-9c70-f5f6c03c5127",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "FormByGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 320.0,
+      "WatchHeight": 200.0,
+      "Id": "f7226303d76e4b16924fbc0987eb5a73",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "f30e521ebe6c4612ae6fd6b1659885c7",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7c78b9835e674cde888967e2d029b877",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "268c3e45-41fa-4d94-a91c-1a45a41b45aa",
+      "FunctionType": "Graph",
+      "Id": "69c8af72875b488d8e889b8df5e8b53a",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "0a7eb2dee6f44ace9a001850d14c345c",
+          "Name": "geometry",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a3145163cd0c4125967436315d8ea270",
+          "Name": "isVoid",
+          "Description": "var[]\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "31dcd0db3b634bd5b536053ad23398b5",
+          "Name": "Form",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "e7edfcb09bcb4869bea6c366c175326c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "fe30f95886fb4f33a39e88fb1560bdf6",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "938b6b0a13fe4158a8308517f0d62edd",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d40de79b3ba546f9ba0cc41ac334ee50",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3b8f54bcd3404caeb9b8fd2e01c00101",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at WCS origin, with width, length, and height.\n\nCuboid.ByLengths (width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "31dcd0db3b634bd5b536053ad23398b5",
+      "End": "f30e521ebe6c4612ae6fd6b1659885c7",
+      "Id": "168d112c7dd44f739909afbc1644ff98",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3b8f54bcd3404caeb9b8fd2e01c00101",
+      "End": "0a7eb2dee6f44ace9a001850d14c345c",
+      "Id": "f6471ab5a8f74e2aba2b296cef74ac25",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "268c3e45-41fa-4d94-a91c-1a45a41b45aa"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Form.ByGeometry.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "69c8af72875b488d8e889b8df5e8b53a"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f7226303d76e4b16924fbc0987eb5a73",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 677.7019532472154,
+        "Y": 1015.5283176998795
+      },
+      {
+        "Id": "69c8af72875b488d8e889b8df5e8b53a",
+        "Name": "Form.ByGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 313.00645600477105,
+        "Y": 1013.8534303571764
+      },
+      {
+        "Id": "e7edfcb09bcb4869bea6c366c175326c",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 17.438122122141976,
+        "Y": 1014.6693833424049
+      }
+    ],
+    "Annotations": [],
+    "X": 189.04249147548984,
+    "Y": -526.9827759965891,
+    "Zoom": 0.9606779043047243
+  }
+}

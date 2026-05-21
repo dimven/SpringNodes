@@ -1,0 +1,205 @@
+{
+  "Uuid": "04337036-7769-43af-ae8b-9b3f150fdf3f",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "ActiveView",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "e8e580e866a34be9bbb5714f3b85801c",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4ed4b605e3c74f67a2068257630a982b",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 245.33333333333334,
+      "WatchHeight": 200.0,
+      "Id": "a236ad44cc55454295d269ee4ebf7876",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "ed12ce622fe44d98aed64211eb3faed6",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "842b066f720b493e93af45a135e3de3f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "58849545-7510-4baf-99da-98c0b1e184fd",
+      "FunctionType": "Graph",
+      "Id": "0c3cbcc9739a4457bd649b553c8943ed",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d7c9e62c35c242d4bd8568d89837d9d2",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "45c39a8540f84790a9692615e7e58297",
+          "Name": "view",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Selects the current document's active view. Supports more view types than the built-in option.\r\nWill be depreciated once the bult in node works with all plan types."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4ed4b605e3c74f67a2068257630a982b",
+      "End": "d7c9e62c35c242d4bd8568d89837d9d2",
+      "Id": "72ce3be69c7b404dbc2f86ec58245c90",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "45c39a8540f84790a9692615e7e58297",
+      "End": "ed12ce622fe44d98aed64211eb3faed6",
+      "Id": "e3642db3f22b4abba9a09ac3c6069903",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "58849545-7510-4baf-99da-98c0b1e184fd"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Document.ActiveView.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "0c3cbcc9739a4457bd649b553c8943ed"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "e8e580e866a34be9bbb5714f3b85801c",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 252.0428974098287,
+        "Y": 1959.532506730536
+      },
+      {
+        "Id": "a236ad44cc55454295d269ee4ebf7876",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 949.643879081912,
+        "Y": 1954.36867482623
+      },
+      {
+        "Id": "0c3cbcc9739a4457bd649b553c8943ed",
+        "Name": "Document.ActiveView",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 588.5439218519634,
+        "Y": 1955.3769202728397
+      }
+    ],
+    "Annotations": [],
+    "X": -89.50470006169314,
+    "Y": -1526.3649534283563,
+    "Zoom": 0.888803594835857
+  }
+}

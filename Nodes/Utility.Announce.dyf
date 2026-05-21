@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Uses the standard windows speech synthesiser to make an announcement when the note gets executed. Useful when placed after a long running task.",
-  "Name": "ꟿ Utility.Announce",
+  "Name": "Utility.Announce",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -21,10 +21,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import clr\r\nclr.AddReference('System.Speech')\r\nimport System.Speech as sp\r\nimport System.Speech.Synthesis as sy\r\n\r\nse = sy.SpeechSynthesizer()\r\nse.SelectVoiceByHints(sy.VoiceGender.Female, sy.VoiceAge.Adult)\r\nse.Rate = 3\r\nse.SpeakAsync(IN[0])",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\n\r\nimport clr\r\nimport System\r\nfrom System.Diagnostics import ProcessStartInfo, Process\r\n\r\ntry:\r\n    if IN[1]:\r\n        text = IN[0]\r\n        script = \"Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Rate = 3; $s.Speak('%s')\" % text\r\n        \r\n        psi = ProcessStartInfo()\r\n        psi.FileName = \"powershell\"\r\n        psi.Arguments = \"-WindowStyle Hidden -Command \\\"%s\\\"\" % script\r\n        psi.CreateNoWindow = True\r\n        psi.UseShellExecute = False\r\n        Process.Start(psi)\r\n        OUT = \"Speaking: %s\" % text\r\n    else:\r\n        OUT = \"Set trigger to True\"\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "784a1732a14844e8b1b22aa5520b69ab",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "1208254d936042c4a71b842f1886cc62",
@@ -57,11 +58,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "passThrough",
         "TypeName": "var",
@@ -70,6 +70,7 @@
         "Description": ""
       },
       "Id": "605a24c4529c4a4d82f997fb271c9645",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -87,10 +88,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "passThrough",
       "Id": "d5dc5dc79e3145808ff04d6d09032328",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "15df63063cde4ace8c14276eb39ec18e",
@@ -108,9 +109,8 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
-      "NodeType": "FunctionNode",
-      "FunctionSignature": "DSCore.List.Count@var[]..[]",
       "Id": "d252a7e685f1489aa7734e3b2c672ada",
+      "NodeType": "FunctionNode",
       "Inputs": [
         {
           "Id": "471171c341c34e7598ccd325c902b1e0",
@@ -125,7 +125,7 @@
       "Outputs": [
         {
           "Id": "42239881c88241bda0e113ed45dce8f6",
-          "Name": "count",
+          "Name": "int",
           "Description": "List length.",
           "UsingDefaultValue": false,
           "Level": 2,
@@ -133,12 +133,12 @@
           "KeepListStructure": false
         }
       ],
+      "FunctionSignature": "DSCore.List.Count@var[]..[]",
       "Replication": "Auto",
       "Description": "Returns the number of items stored in the given list.\n\nList.Count (list: var[]..[]): int"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "message",
         "TypeName": "string",
@@ -147,6 +147,7 @@
         "Description": ""
       },
       "Id": "f6a61e870e1c4b749d03fe55c792deb2",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -167,101 +168,109 @@
     {
       "Start": "f4d0514d99994ecb990dd3158228f230",
       "End": "471171c341c34e7598ccd325c902b1e0",
-      "Id": "f1c59b91945d4af584ac251d21780fcc"
+      "Id": "f1c59b91945d4af584ac251d21780fcc",
+      "IsHidden": "False"
     },
     {
       "Start": "f4d0514d99994ecb990dd3158228f230",
       "End": "15df63063cde4ace8c14276eb39ec18e",
-      "Id": "f36330ae1ba74461b207d24c8e756689"
+      "Id": "f36330ae1ba74461b207d24c8e756689",
+      "IsHidden": "False"
     },
     {
       "Start": "42239881c88241bda0e113ed45dce8f6",
       "End": "5682183ee5a0452b8bd63610ba6e8002",
-      "Id": "3e3fe422f5b646418360c9f4826cbab4"
+      "Id": "3e3fe422f5b646418360c9f4826cbab4",
+      "IsHidden": "False"
     },
     {
       "Start": "c459667946804cf5baf12a0f813f6f6c",
       "End": "1208254d936042c4a71b842f1886cc62",
-      "Id": "6f41b710738145b195c4eeea3c2ce98a"
+      "Id": "6f41b710738145b195c4eeea3c2ce98a",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "ShowGeometry": true,
-        "Name": "Python Script",
         "Id": "784a1732a14844e8b1b22aa5520b69ab",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 311.17116847852151,
-        "Y": -11.804962337960291
+        "ShowGeometry": true,
+        "X": 335.4965454173488,
+        "Y": -49.72393227201454
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "605a24c4529c4a4d82f997fb271c9645",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": -195.82202443042766,
         "Y": 155.43760834692654
       },
       {
-        "ShowGeometry": true,
-        "Name": "Output",
         "Id": "d5dc5dc79e3145808ff04d6d09032328",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 508.02481168980137,
         "Y": 154.53768878784368
       },
       {
-        "ShowGeometry": true,
-        "Name": "List.Count",
         "Id": "d252a7e685f1489aa7734e3b2c672ada",
+        "Name": "List.Count",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 107.03073082859493,
         "Y": 54.12257563799831
       },
       {
-        "ShowGeometry": true,
-        "Name": "Input",
         "Id": "f6a61e870e1c4b749d03fe55c792deb2",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -241.62239318304918,
-        "Y": -8.7550162277691044
+        "ShowGeometry": true,
+        "X": -361.10292108846534,
+        "Y": -52.39760426507685
       }
     ],
     "Annotations": [],
-    "X": 338.53210310600235,
-    "Y": 152.37550320241709,
-    "Zoom": 0.93181152849833082
+    "X": 566.8148427481475,
+    "Y": 558.9473073426965,
+    "Zoom": 0.8476185719982269
   }
 }

@@ -1,0 +1,253 @@
+{
+  "Uuid": "c0ca4d0d-cdca-4789-b4f6-f4a614479364",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DifferentiateDisplay",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "c018f3a9-1a3e-4393-9a23-ed97ab89f2a6",
+      "FunctionType": "Graph",
+      "Id": "9b2b7c1e08d042a7b9b195dba4dc8adb",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "3b76307e0b1342fb8617e9892f85e71d",
+          "Name": "In",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d73da1d7ea724fd29d52cd799ee9f0c5",
+          "Name": "Out",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f8103dd6048b4b908221401b2cc79932",
+          "Name": "mask",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0bc01c4ee92645f5a960589a45099e55",
+          "Name": "list",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Merge two lists by a boolean mask list. The true count in the mask should be the same as the length of the true list and vice versa for the false list."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "48e5d00b76cd4f1f9c357e0ed7f1c127",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "502fb8120a8f4fbbbe900147e82d77d8",
+          "Name": "range",
+          "Description": "0..4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "de8c294df85b4ac3a8967ddee5f88289",
+          "Name": "range",
+          "Description": "\"A\"..\"D\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "00ecbe4f56384f1bbf0524807e36c12b",
+          "Name": "list",
+          "Description": "[true, false, true, false, false, true, true, false]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..4;\n\"A\"..\"D\";\n[true, false, true, false, false, true, true, false];"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 352.6666666666667,
+      "WatchHeight": 231.33333333333334,
+      "Id": "7af7c0625fe847858effd3883f7cf7bd",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "673cf5a72961409a9d49408f9bae9be5",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "242ad643d2044083906d0937f8a9ee02",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "0bc01c4ee92645f5a960589a45099e55",
+      "End": "673cf5a72961409a9d49408f9bae9be5",
+      "Id": "a7728381a5e745a8bb693a1fc03dca8a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "502fb8120a8f4fbbbe900147e82d77d8",
+      "End": "3b76307e0b1342fb8617e9892f85e71d",
+      "Id": "8d58a8e1a5b6428a82384d4ad0aaa967",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "de8c294df85b4ac3a8967ddee5f88289",
+      "End": "d73da1d7ea724fd29d52cd799ee9f0c5",
+      "Id": "8df721283dea400f81e3a47cf92b0f57",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "00ecbe4f56384f1bbf0524807e36c12b",
+      "End": "f8103dd6048b4b908221401b2cc79932",
+      "Id": "d091ce8d342c49ba9761689b0b74366b",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "c018f3a9-1a3e-4393-9a23-ed97ab89f2a6"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.MergeByBoolMask.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "9b2b7c1e08d042a7b9b195dba4dc8adb"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -10.111864566802979,
+      "EyeY": 16.069793701171875,
+      "EyeZ": 22.581520080566406,
+      "LookX": 6.20389461517334,
+      "LookY": -6.720888137817383,
+      "LookZ": -29.985492706298828,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "9b2b7c1e08d042a7b9b195dba4dc8adb",
+        "Name": "List.MergeByBoolMask",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 601.4307781603015,
+        "Y": 292.9911612076478
+      },
+      {
+        "Id": "48e5d00b76cd4f1f9c357e0ed7f1c127",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 31.53258579668909,
+        "Y": 291.39558584720476
+      },
+      {
+        "Id": "7af7c0625fe847858effd3883f7cf7bd",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 918.6938301961958,
+        "Y": 292.8012341704351
+      }
+    ],
+    "Annotations": [],
+    "X": 83.49740748423403,
+    "Y": 34.48362965599483,
+    "Zoom": 0.9830967034567601
+  }
+}

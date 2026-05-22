@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Utility.Query",
   "Description": "Select the level closest to the input height from the list of input levels",
-  "Name": "ꟿ RelativeLevel.AtHeight",
+  "Name": "RelativeLevel.AtHeight",
   "ElementResolver": {
     "ResolutionMap": {
       "String": {
@@ -29,10 +29,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nfrom itertools import izip\r\n\r\nheights, elevs, names, belowOnly = IN\r\nBIG_VAL = float('inf')\r\n\r\ndef evalHeight(e, belowOnly=belowOnly):\r\n\tif belowOnly:\r\n\t\tif e > z:\r\n\t\t\treturn BIG_VAL\r\n\treturn abs(z - e)\r\n\r\nlvl_dict = dict(izip(map(int,elevs), names))\r\nOUT = [lvl_dict[min(lvl_dict, key=evalHeight)] for z in heights]",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n\r\n\r\n\r\n\r\n\r\ntry:\r\n    heights, elevs, names, belowOnly = IN\r\n    BIG_VAL = float('inf')\r\n\r\n    def evalHeight(e, z, belowOnly=belowOnly):\r\n        if belowOnly:\r\n            if e > z:\r\n                return BIG_VAL\r\n        return abs(z - e)\r\n\r\n    lvl_dict = dict(zip(map(int, elevs), names))\r\n    OUT = [lvl_dict[min(lvl_dict, key=lambda e: evalHeight(e, z))] for z in heights]\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "63294923bb1041eea42f7fda0dd44eb4",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "54d282fa9fb2434ea187f9e19094e93a",
@@ -83,11 +84,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "zHeight",
         "TypeName": "var",
@@ -96,6 +96,7 @@
         "Description": ""
       },
       "Id": "67c242946e7b4c52ae19f3bd0ea475a0",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -113,7 +114,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "elevations",
         "TypeName": "var",
@@ -122,6 +122,7 @@
         "Description": ""
       },
       "Id": "a03b0c3937954b7db8d9111cd7265b70",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -139,7 +140,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "levels",
         "TypeName": "var",
@@ -148,6 +148,7 @@
         "Description": ""
       },
       "Id": "c28149579be4483ba6872b50973a1faa",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -165,7 +166,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "belowOnly",
         "TypeName": "bool",
@@ -174,6 +174,7 @@
         "Description": ""
       },
       "Id": "1f39ffc7484b4781a52e86940550863c",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -191,10 +192,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "level",
       "Id": "a681571a6ce2405691f8781196436b66",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "270d0bec614647dbb988cf8a0c5ce93c",
@@ -215,112 +216,120 @@
     {
       "Start": "9ff56b812ca84a31bd8a1b64c4cd5ae3",
       "End": "270d0bec614647dbb988cf8a0c5ce93c",
-      "Id": "74abc4462c654675b64dfc9c0d06f7fd"
+      "Id": "74abc4462c654675b64dfc9c0d06f7fd",
+      "IsHidden": "False"
     },
     {
       "Start": "44b29afc32814df5b5f67a65f3fd9189",
       "End": "54d282fa9fb2434ea187f9e19094e93a",
-      "Id": "c8ef82db77ea44f387392e5f84950f70"
+      "Id": "c8ef82db77ea44f387392e5f84950f70",
+      "IsHidden": "False"
     },
     {
       "Start": "5b111228c2774ec1ad86e78be15bb68f",
       "End": "bef0f423fb854353a270c487746567ad",
-      "Id": "db56bf75c09d4ca8a558aee99143514a"
+      "Id": "db56bf75c09d4ca8a558aee99143514a",
+      "IsHidden": "False"
     },
     {
       "Start": "1142ea7be1884937985ad8d01f3000be",
       "End": "884fbf1b60d14b619202f87e0d90008a",
-      "Id": "164f85ef245e4008a59b7111cd73416c"
+      "Id": "164f85ef245e4008a59b7111cd73416c",
+      "IsHidden": "False"
     },
     {
       "Start": "a910bf43805b480c821b516e8b525736",
       "End": "310b2ceb0bcc4fbfa0383285bbd60e91",
-      "Id": "8036b4f7d6684d238032aff44d677aec"
+      "Id": "8036b4f7d6684d238032aff44d677aec",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -36555.27734375,
-      "EyeY": 12205.77734375,
-      "EyeZ": -33330.23828125,
-      "LookX": 15394.3037109375,
-      "LookY": -10407.5703125,
-      "LookZ": 16329.966796875,
-      "UpX": 0.14846748113632202,
-      "UpY": 0.97629600763320923,
-      "UpZ": 0.15749131143093109
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "63294923bb1041eea42f7fda0dd44eb4",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 278.680908865482,
-        "Y": 3.44170906385784
+        "Y": 2.676884827444951
       },
       {
         "Id": "67c242946e7b4c52ae19f3bd0ea475a0",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 1.72085453192892
+        "ShowGeometry": true,
+        "X": -9.942715073367026,
+        "Y": -60.99473285392523
       },
       {
         "Id": "a03b0c3937954b7db8d9111cd7265b70",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -0.486220447289043,
-        "Y": 62.9665399352649
+        "ShowGeometry": true,
+        "X": -28.40230507635829,
+        "Y": 65.64342476270991
       },
       {
         "Id": "c28149579be4483ba6872b50973a1faa",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.486220447289043,
-        "Y": 122.043316292218
+        "ShowGeometry": true,
+        "X": -6.014785562220254,
+        "Y": 191.6423218057878
       },
       {
         "Id": "1f39ffc7484b4781a52e86940550863c",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 180.973074841778
+        "ShowGeometry": true,
+        "X": -85.66031447823991,
+        "Y": 319.78867375071115
       },
       {
         "Id": "a681571a6ce2405691f8781196436b66",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 442.411054581523,
-        "Y": 3.44170906385784
+        "ShowGeometry": true,
+        "X": 520.8055388138407,
+        "Y": 3.8241211820642604
       }
     ],
     "Annotations": [],

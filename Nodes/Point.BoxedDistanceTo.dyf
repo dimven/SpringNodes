@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Query",
   "Description": "Computes the minimal distance between a point and the axis-aligned bounding boxe of a geometry element. Works directly with a bounding box input for the geometry.",
-  "Name": "ꟿ Point.BoxedDistanceTo",
+  "Name": "Point.BoxedDistanceTo",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -33,9 +33,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "s2 = DSCore.Object.Type(g2);\nt2 = String.Contains(s2, \"BoundingBox\");\nb = t2 ? g2 : BoundingBox.ByGeometry(g2);\nbm = b.MinPoint;\nbM = b.MaxPoint;\nap = [a.X, a.Y, a.Z];\nbmin = [bm.X, bm.Y, bm.Z];\nbmax = [bM.X, bM.Y, bM.Z];\ndist = [Imperative]{\nsqDist = 0;\nfor (i in GetKeys(ap) )\n{\n\tif (ap[i] < bmin[i])\n\t{\n\t\td = ap[i] - bmin[i];\n\t\tsqDist = sqDist + d * d;\n\t}\n\telseif (ap[i] > bmax[i])\n\t{\n\t\td = ap[i] - bmax[i];\n\t\tsqDist = sqDist + d * d;\n\t}\n}\nreturn = Math.Sqrt(sqDist);\n};",
       "Id": "391d6c908f52430687415898428c37c5",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "3eaf4c8f8c4343788db89ceaf9a19f00",
@@ -59,8 +58,8 @@
       "Outputs": [
         {
           "Id": "9b1be9adbf9546b7a7fccdf1de2a9a0d",
-          "Name": "",
-          "Description": "s2",
+          "Name": "s2",
+          "Description": "s2 = DSCore.Object.Type(g2)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -68,8 +67,8 @@
         },
         {
           "Id": "a20d76b9f4d04a3fb54f559a2780ef5c",
-          "Name": "",
-          "Description": "t2",
+          "Name": "t2",
+          "Description": "t2 = DSCore.String.Contains(s2, \"BoundingBox\")",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -77,8 +76,8 @@
         },
         {
           "Id": "97fe0bc799d746a6af027890ae9a5025",
-          "Name": "",
-          "Description": "b",
+          "Name": "b",
+          "Description": "b = ((t2 ? g2 : Autodesk.DesignScript.Geometry.BoundingBox.ByGeometry(g2)))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -86,8 +85,8 @@
         },
         {
           "Id": "f95c02df45ad47a0aa239b12ae18dc4a",
-          "Name": "",
-          "Description": "bm",
+          "Name": "bm",
+          "Description": "bm = b.MinPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -95,8 +94,8 @@
         },
         {
           "Id": "4d564fda30af4251bec086ed3d8e2a4d",
-          "Name": "",
-          "Description": "bM",
+          "Name": "bM",
+          "Description": "bM = b.MaxPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -104,8 +103,8 @@
         },
         {
           "Id": "754907141a7e49eca61440e4c6f3ede9",
-          "Name": "",
-          "Description": "ap",
+          "Name": "ap",
+          "Description": "ap = [a.X, a.Y, a.Z]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -113,8 +112,8 @@
         },
         {
           "Id": "205df95677ca429195b8b5c474b562ab",
-          "Name": "",
-          "Description": "bmin",
+          "Name": "bmin",
+          "Description": "bmin = [bm.X, bm.Y, bm.Z]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -122,8 +121,8 @@
         },
         {
           "Id": "8723572d9bdf4e3e81be0c4401a21649",
-          "Name": "",
-          "Description": "bmax",
+          "Name": "bmax",
+          "Description": "bmax = [bM.X, bM.Y, bM.Z]",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -131,8 +130,8 @@
         },
         {
           "Id": "d340f5e68fc84e01b085ea51f31a847a",
-          "Name": "",
-          "Description": "dist",
+          "Name": "dist",
+          "Description": "dist = [Imperative]\n{\nsqDist = 0;\nfor(i in GetKeys(ap))\n{\nif(DesignScript.Builtin.Get.ValueAtIndex(ap, i) < DesignScript.Builtin.Get.ValueAtIndex(bmin, i))\n{\nd = (DesignScript.Builtin.Get.ValueAtIndex(ap, i) - DesignScript.Builtin.Get.ValueAtIndex(bmin, i));\nsqDist = (sqDist + (d * d));\n\n}\nelseif(DesignScript.Builtin.Get.ValueAtIndex(ap, i) > DesignScript.Builtin.Get.ValueAtIndex(bmax, i))\n{\nd = (DesignScript.Builtin.Get.ValueAtIndex(ap, i) - DesignScript.Builtin.Get.ValueAtIndex(bmax, i));\ns...",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -140,11 +139,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "s2 = DSCore.Object.Type(g2);\nt2 = String.Contains(s2, \"BoundingBox\");\nb = t2 ? g2 : BoundingBox.ByGeometry(g2);\nbm = b.MinPoint;\nbM = b.MaxPoint;\nap = [a.X, a.Y, a.Z];\nbmin = [bm.X, bm.Y, bm.Z];\nbmax = [bM.X, bM.Y, bM.Z];\ndist = [Imperative]{\nsqDist = 0;\nfor (i in GetKeys(ap) )\n{\n\tif (ap[i] < bmin[i])\n\t{\n\t\td = ap[i] - bmin[i];\n\t\tsqDist = sqDist + d * d;\n\t}\n\telseif (ap[i] > bmax[i])\n\t{\n\t\td = ap[i] - bmax[i];\n\t\tsqDist = sqDist + d * d;\n\t}\n}\nreturn = Math.Sqrt(sqDist);\n};"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "point",
         "TypeName": "var",
@@ -153,6 +152,7 @@
         "Description": ""
       },
       "Id": "7190d424a1bb442b992891a3a54e9886",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -170,10 +170,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "distance",
       "Id": "081044bc40da4b1baaaa6b104d5ed773",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2f7fbc5b0bed4225893ac4369b9ec111",
@@ -191,7 +191,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geometry",
         "TypeName": "var",
@@ -200,6 +199,7 @@
         "Description": ""
       },
       "Id": "68f9db7ea5de454692a1f96155e19345",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -220,87 +220,93 @@
     {
       "Start": "d340f5e68fc84e01b085ea51f31a847a",
       "End": "2f7fbc5b0bed4225893ac4369b9ec111",
-      "Id": "45a33b5a17ad4f5e9f938f2fdbff970b"
+      "Id": "45a33b5a17ad4f5e9f938f2fdbff970b",
+      "IsHidden": "False"
     },
     {
       "Start": "79ece7465abc4d0dbb55adcf832e38af",
       "End": "3b6ffb9636b34e68bbcf56c4d4782693",
-      "Id": "7efd9c92f81a43898236ad435975503a"
+      "Id": "7efd9c92f81a43898236ad435975503a",
+      "IsHidden": "False"
     },
     {
       "Start": "ca46c5ffc96a4e45acd6eb060adc23e9",
       "End": "3eaf4c8f8c4343788db89ceaf9a19f00",
-      "Id": "c2856c28ff27487684e802dbe01e32fd"
+      "Id": "c2856c28ff27487684e802dbe01e32fd",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -6.4689822196960449,
-      "EyeY": 20.569091796875,
-      "EyeZ": 18.448749542236328,
-      "LookX": 13.736084938049316,
-      "LookY": -9.3274745941162109,
-      "LookZ": -15.975666999816895,
-      "UpX": 0.1299794614315033,
-      "UpY": 0.97992467880249023,
-      "UpZ": -0.15117178857326508
+      "Name": "_Background Preview",
+      "EyeX": 13.959798812866211,
+      "EyeY": 6.73392391204834,
+      "EyeZ": 17.14632797241211,
+      "LookX": -9.455400466918945,
+      "LookY": -1.2376365661621094,
+      "LookZ": -13.105117797851562,
+      "UpX": 0.08143164962530136,
+      "UpY": 0.9902681112289429,
+      "UpZ": 0.11286293715238571
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "391d6c908f52430687415898428c37c5",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 167.801949401495,
         "Y": -30.637455223079
       },
       {
         "Id": "7190d424a1bb442b992891a3a54e9886",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -14.1978451033781,
-        "Y": -44.2863014146471
+        "ShowGeometry": true,
+        "X": -91.91236566923688,
+        "Y": 82.74704951031447
       },
       {
         "Id": "081044bc40da4b1baaaa6b104d5ed773",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 642.285479434141,
-        "Y": -15.69235511426
+        "ShowGeometry": true,
+        "X": 685.6262697497161,
+        "Y": 100.13217072908735
       },
       {
         "Id": "68f9db7ea5de454692a1f96155e19345",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -16.6486406964417,
-        "Y": 17.7582349836771
+        "ShowGeometry": true,
+        "X": -102.58296632215092,
+        "Y": -77.89040571276453
       }
     ],
     "Annotations": [],
-    "X": 372.148590294276,
-    "Y": 129.055890132289,
+    "X": 234.148590294276,
+    "Y": 229.055890132289,
     "Zoom": 1.33823125
   }
 }

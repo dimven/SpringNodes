@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "A temporary replacement for the broken built-in node. For best results, make sure the loops are convex.",
-  "Name": "ꟿ Surface.TrimWithLoopsFix",
+  "Name": "Surface.TrimWithLoopsFix",
   "ElementResolver": {
     "ResolutionMap": {
       "Rectangle": {
@@ -41,10 +41,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Point\r\n\r\nsurf, trims = IN\r\noriginal = True\r\nfor t in trims:\r\n\tbb = t.BoundingBox\r\n\ta, b = bb.MinPoint, bb.MaxPoint\r\n\tc = Point.ByCoordinates((a.X + b.X)/2, (a.Y + b.Y)/2, (a.Z + b.Z)/2)\r\n\ttemp = surf.Trim(t, c)[0]\r\n\tif original:\r\n\t\toriginal = False\r\n\telse:\r\n\t\tsurf.Dispose()\r\n\tsurf = temp\r\nOUT = surf",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Point\r\n\r\n\r\ntry:\r\n    surf, trims = IN\r\n    original = True\r\n    for t in trims:\r\n\t    bb = t.BoundingBox\r\n\t    a, b = bb.MinPoint, bb.MaxPoint\r\n\t    c = Point.ByCoordinates((a.X + b.X)/2, (a.Y + b.Y)/2, (a.Z + b.Z)/2)\r\n\t    temp = surf.Trim(t, c)[0]\r\n\t    if original:\r\n\t\t    original = False\r\n\t    else:\r\n\t\t    surf.Dispose()\r\n\t    surf = temp\r\n    OUT = surf\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )\r\n",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "b2344a2c87fd45b4a955b38047c7ee02",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "6d6ddf5509874ee6b272d3c8b8e34be6",
@@ -77,11 +78,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "surf",
         "TypeName": "var",
@@ -90,6 +90,7 @@
         "Description": ""
       },
       "Id": "4f99e6c12d4d4616a8149600f3c188e3",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -107,7 +108,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "loops",
         "TypeName": "var",
@@ -116,6 +116,7 @@
         "Description": ""
       },
       "Id": "86a6e7ae7ec34fceb1377be80012ce9a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -133,10 +134,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "surface",
       "Id": "4342083af23346f0b9b6c4656651742c",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "9c2fa3b6ddb94112a733b64c97efa638",
@@ -157,32 +158,37 @@
     {
       "Start": "dadf401f58354dfe9360807e73da46aa",
       "End": "9c2fa3b6ddb94112a733b64c97efa638",
-      "Id": "a39547d84e574a16b8fad829dede14cd"
+      "Id": "a39547d84e574a16b8fad829dede14cd",
+      "IsHidden": "False"
     },
     {
       "Start": "0f87817ec5e54889a6152048677da3e9",
       "End": "6d6ddf5509874ee6b272d3c8b8e34be6",
-      "Id": "c3b53903144a4484911e3231b2ef10e7"
+      "Id": "c3b53903144a4484911e3231b2ef10e7",
+      "IsHidden": "False"
     },
     {
       "Start": "2a592ad309ce4461a2cbd2106f8e6e45",
       "End": "be36c53b6e4b4d4e9285c506bcb5ea74",
-      "Id": "dcdb546820344d99854c6955d15371dc"
+      "Id": "dcdb546820344d99854c6955d15371dc",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -193,46 +199,47 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "b2344a2c87fd45b4a955b38047c7ee02",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 196.436285097192,
-        "Y": -0.863930885529157
+        "Y": -0.8639308855291574
       },
       {
         "Id": "4f99e6c12d4d4616a8149600f3c188e3",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -54.13966882649379,
+        "Y": -71.41828653707705
       },
       {
         "Id": "86a6e7ae7ec34fceb1377be80012ce9a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -0.863930885529157,
-        "Y": 59.2872570194384
+        "ShowGeometry": true,
+        "X": -75.73794096472272,
+        "Y": 89.81281497480192
       },
       {
         "Id": "4342083af23346f0b9b6c4656651742c",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 356.55939524838,
-        "Y": -0.863930885529157
+        "ShowGeometry": true,
+        "X": 478.6616270698341,
+        "Y": -2.0158387329013863
       }
     ],
     "Annotations": [],

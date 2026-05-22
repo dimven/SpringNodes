@@ -1,0 +1,521 @@
+{
+  "Uuid": "fea82135-2ea2-4483-8f0e-c79e3990991a",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "CurveOffset",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d3a34323f96641069232856e5366065b",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6af7a3b9649c456a92412c744d580c93",
+          "Name": "double",
+          "Description": "0.3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0.3;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "a8d64d3cc3694efcaff95f2590abd4d3",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "617acf1230c046de9f5e59937c0a08ce",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a64e4871194540a1b23525e756b77ea5",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "26272d3bb60d48e3875014aa8b88db98",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "Auto",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "cca51817473c4b5eab1070732c14da41",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "51096264ca6d40158235b7d5a9aefdee",
+          "Name": "integer",
+          "Description": "1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "1;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "969d349db95247c7a2f2aed7271928eb",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "c530816546964ddd9dc7c0524801a7f9",
+          "Name": "startPoint",
+          "Description": "Line start point\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "21f0defc2dba40f6878542e6b23b75b8",
+          "Name": "endPoint",
+          "Description": "Line end point\n\nPoint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "47ce93c7e4db4a33a3647cf10dd15c15",
+          "Name": "Line",
+          "Description": "Line from start and end point",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Line.ByStartPointEndPoint@Autodesk.DesignScript.Geometry.Point,Autodesk.DesignScript.Geometry.Point",
+      "Replication": "Auto",
+      "Description": "Creates a straight Line between two input Points.\n\nLine.ByStartPointEndPoint (startPoint: Point, endPoint: Point): Line"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "ff710090d0c4434fadfe83ab1cad9a9c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d17e14a9d5094e0d9b26828065a31319",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bafd461777da486485f1142599955934",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4a617c1777b643a2867a38b3c9d7a425",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "Auto",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "dcdc9520f2f2485ab13565ee9a17ec89",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "f9e461ad210d454086da75ae79ef0c2d",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1adfc9dcbf5a4ccc8850849171fc5bb9",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e5cccbc22fe0428f93f6d7a5ded67203",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "Auto",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "49f87708a619419189deaff3f9b3ae37",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f8dccfb06dea4e45861a1d9adc4230bb",
+          "Name": "integer",
+          "Description": "2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "2;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "a060f329-f8ce-48da-a862-7bbfd9550950",
+      "FunctionType": "Graph",
+      "Id": "1afd7b1a55b3414d80899dc0ed804d50",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "22d2c9af462e4b65951c6ef56fa0f15d",
+          "Name": "curve",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e19820dd1bdc415fbe3eeb1df16fa5c2",
+          "Name": "distance",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "17e7f0737728478897c8eb1c31d0dd29",
+          "Name": "point",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0201f83759e7496bbab3d38114e81a85",
+          "Name": "curve",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Offsets a curve towards the specified point"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 40.0,
+      "Id": "82240748558f4847a41241798521ecf7",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "cd61bbd7d08c4ea5bc1058a6f74c8d3f",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3038236fe4824cb6ab4989317643cf56",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "6af7a3b9649c456a92412c744d580c93",
+      "End": "e19820dd1bdc415fbe3eeb1df16fa5c2",
+      "Id": "13a862b9221f421688c1af12827fa247",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "26272d3bb60d48e3875014aa8b88db98",
+      "End": "17e7f0737728478897c8eb1c31d0dd29",
+      "Id": "dd0831f604334fa2bfc3670eb9a04c83",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "51096264ca6d40158235b7d5a9aefdee",
+      "End": "617acf1230c046de9f5e59937c0a08ce",
+      "Id": "047f7759c9174fc9a32e7ca86e53ee29",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "47ce93c7e4db4a33a3647cf10dd15c15",
+      "End": "22d2c9af462e4b65951c6ef56fa0f15d",
+      "Id": "8c38239d768845ae90af9d9e03251810",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4a617c1777b643a2867a38b3c9d7a425",
+      "End": "21f0defc2dba40f6878542e6b23b75b8",
+      "Id": "37067d58841243f88a7062cf37effc87",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e5cccbc22fe0428f93f6d7a5ded67203",
+      "End": "c530816546964ddd9dc7c0524801a7f9",
+      "Id": "f0e2bbfc4eb4456fafb93b55cfee9087",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f8dccfb06dea4e45861a1d9adc4230bb",
+      "End": "bafd461777da486485f1142599955934",
+      "Id": "67e6885229d643a5a1d8d9ce95dd4d57",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f8dccfb06dea4e45861a1d9adc4230bb",
+      "End": "d17e14a9d5094e0d9b26828065a31319",
+      "Id": "f34c118878ab41afbfa1460984b3ddf2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0201f83759e7496bbab3d38114e81a85",
+      "End": "cd61bbd7d08c4ea5bc1058a6f74c8d3f",
+      "Id": "369d3017841c4b4a9edea2c277590539",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "a060f329-f8ce-48da-a862-7bbfd9550950"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Curve.Offset+.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "1afd7b1a55b3414d80899dc0ed804d50"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -3.992735981941223,
+      "EyeY": 3.79479718208313,
+      "EyeZ": 6.006906032562256,
+      "LookX": 2.306159257888794,
+      "LookY": -2.498338460922241,
+      "LookZ": -11.146438598632812,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d3a34323f96641069232856e5366065b",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 449.0,
+        "Y": 446.0
+      },
+      {
+        "Id": "a8d64d3cc3694efcaff95f2590abd4d3",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 392.0,
+        "Y": 722.0
+      },
+      {
+        "Id": "cca51817473c4b5eab1070732c14da41",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 140.0,
+        "Y": 726.0
+      },
+      {
+        "Id": "969d349db95247c7a2f2aed7271928eb",
+        "Name": "Line.ByStartPointEndPoint",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 296.0,
+        "Y": 285.0
+      },
+      {
+        "Id": "ff710090d0c4434fadfe83ab1cad9a9c",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 40.0,
+        "Y": 479.0
+      },
+      {
+        "Id": "dcdc9520f2f2485ab13565ee9a17ec89",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 34.0,
+        "Y": 202.0
+      },
+      {
+        "Id": "49f87708a619419189deaff3f9b3ae37",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -177.0,
+        "Y": 513.0
+      },
+      {
+        "Id": "1afd7b1a55b3414d80899dc0ed804d50",
+        "Name": "Curve.Offset+",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 791.6666666666669,
+        "Y": 413.3333333333333
+      },
+      {
+        "Id": "82240748558f4847a41241798521ecf7",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1105.3333333333333,
+        "Y": 412.00000000000006
+      }
+    ],
+    "Annotations": [],
+    "X": 264.9073338038561,
+    "Y": 27.334218075865778,
+    "Zoom": 0.7476928171233254
+  }
+}

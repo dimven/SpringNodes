@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Actions",
   "Description": "Removes the void cut between the input elements, if such exists.",
-  "Name": "ꟿ Element.RemoveVoidCut",
+  "Name": "Element.RemoveVoidCut",
   "ElementResolver": {
     "ResolutionMap": {
       "Cuboid": {
@@ -37,10 +37,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\ndef singleton(x):\r\n\tif hasattr(x,'__iter__'): return x[0]\r\n\telse : return x\r\n\r\nelem = UnwrapElement(singleton(IN[0]) )\r\ncuts = UnwrapElement(tolist(IN[1]) )\r\nout1 = []\r\n\r\ncutU = InstanceVoidCutUtils\r\nOUT = 0\r\nif cutU.CanBeCutWithVoid(elem):\r\n\tTransactionManager.Instance.EnsureInTransaction(doc)\r\n\tfor c in cuts:\r\n\t\tif cutU.IsVoidInstanceCuttingElement(c) and \\\r\n\t\tcutU.InstanceVoidCutExists(elem, c):\r\n\t\t\ttry:\r\n\t\t\t\tcutU.RemoveInstanceVoidCut(doc,ToBeCut[i],Cuts[j])\r\n\t\t\t\tOUT += 1\r\n\t\t\texcept:\r\n\t\t\t\tpass\r\n\tTransactionManager.Instance.TransactionTaskDone()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    elem = UnwrapElement(tolist(IN[0])[0])\r\n    cuts = UnwrapElement(tolist(IN[1]))\r\n\r\n    cutU = InstanceVoidCutUtils\r\n    OUT = 0\r\n\r\n    if cutU.CanBeCutWithVoid(elem):\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        for c in cuts:\r\n            if cutU.IsVoidInstanceCuttingElement(c) and \\\r\n            cutU.InstanceVoidCutExists(elem, c):\r\n                try:\r\n                    cutU.RemoveInstanceVoidCut(doc, elem, c)\r\n                    OUT += 1\r\n                except:\r\n                    pass\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "6451a46772c7440fb8c54bd2791f6c5d",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "71458f63a30548758740bb27f19a90d0",
@@ -73,11 +74,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "elementBeingCut",
         "TypeName": "var",
@@ -86,6 +86,7 @@
         "Description": ""
       },
       "Id": "9ff9dc4c45aa4c03a2a56de0b141d8c3",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -103,7 +104,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "cuttingElement",
         "TypeName": "var",
@@ -112,6 +112,7 @@
         "Description": ""
       },
       "Id": "eb7e5e335f474d5f8ae3c16b6a9acf02",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -129,10 +130,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "uncutCount",
       "Id": "4426ed9635ed4c7d9f75caaf24685997",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "c2b50e289a6849eaa5fb2fdb70db1998",
@@ -153,32 +154,37 @@
     {
       "Start": "3960b4403a1245c1b3178d9d56044c45",
       "End": "c2b50e289a6849eaa5fb2fdb70db1998",
-      "Id": "61af90eea1bb47db8f824bac13422819"
+      "Id": "61af90eea1bb47db8f824bac13422819",
+      "IsHidden": "False"
     },
     {
       "Start": "4a51271ee3f3478da89e78fdf258af6c",
       "End": "71458f63a30548758740bb27f19a90d0",
-      "Id": "acabd616663c4de9bd723af3338a65d2"
+      "Id": "acabd616663c4de9bd723af3338a65d2",
+      "IsHidden": "False"
     },
     {
       "Start": "5a45874a2b3b4f88adb40f867a888037",
       "End": "8f4598fb44334bd39d4d214441921be5",
-      "Id": "b2352bb9bf794c50ac3530d955afc9e3"
+      "Id": "f64381e80ba54810b21b8e3c6a051c40",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -189,51 +195,52 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "6451a46772c7440fb8c54bd2791f6c5d",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 225.155606765216,
-        "Y": -1.55277457717398
+        "Y": -1.5527745771739774
       },
       {
         "Id": "9ff9dc4c45aa4c03a2a56de0b141d8c3",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -8.79905593731912,
-        "Y": 2.8421709430404E-14
+        "ShowGeometry": true,
+        "X": -109.72940345362741,
+        "Y": -53.053131386777395
       },
       {
         "Id": "eb7e5e335f474d5f8ae3c16b6a9acf02",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -17.0805203489137,
-        "Y": 59.421482998185
+        "ShowGeometry": true,
+        "X": -106.36505853641717,
+        "Y": 127.13970761382771
       },
       {
         "Id": "4426ed9635ed4c7d9f75caaf24685997",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 381.477918604345,
-        "Y": -1.55277457717398
+        "ShowGeometry": true,
+        "X": 466.0178678060392,
+        "Y": -2.846753391485638
       }
     ],
     "Annotations": [],
-    "X": 211.182559200034,
-    "Y": 97.6636844236248,
-    "Zoom": 1.545620359375
+    "X": 272.02822184000877,
+    "Y": 216.35331745304498,
+    "Zoom": 1.2777169841077238
   }
 }

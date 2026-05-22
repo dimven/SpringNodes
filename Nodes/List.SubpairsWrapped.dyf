@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Wrap the list and pair up each list item with the next one.",
-  "Name": "ꟿ List.SubpairsWrapped",
+  "Name": "List.SubpairsWrapped",
   "ElementResolver": {
     "ResolutionMap": {
       "PolyCurve": {
@@ -21,9 +21,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "DSCore.List.DropItems(DSCore.\n  List.Sublists(List.AddItemToEnd(l1[0],\n  l1),0..1,1),-1);",
       "Id": "2c5efa3783b84ac7bc1ecdc9deeb755a",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "9ced07828b8f472b977a0887e4e0aed3",
@@ -38,8 +37,8 @@
       "Outputs": [
         {
           "Id": "c8c2b019f20f41bbb5803cac9089fb97",
-          "Name": "",
-          "Description": "Value of expression at line 1",
+          "Name": "function",
+          "Description": "DSCore.List.DropItems(DSCore.List.Sublists(List.AddItemToEnd(DesignScript.Builtin.Get.ValueAtIndex(l1, 0), l1), 0..1, 1), -1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -47,11 +46,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "DSCore.List.DropItems(DSCore.\n  List.Sublists(List.AddItemToEnd(l1[0],\n  l1),0..1,1),-1);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list",
         "TypeName": "var",
@@ -60,6 +59,7 @@
         "Description": ""
       },
       "Id": "097ce8e999be425c8f348ae598c944ea",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -77,10 +77,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "lists",
       "Id": "05472ebe7f734c8e97f0b4d5ac6b2285",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "da4277e33a1e43239d02e578bbaae2b7",
@@ -101,26 +101,31 @@
     {
       "Start": "c8c2b019f20f41bbb5803cac9089fb97",
       "End": "da4277e33a1e43239d02e578bbaae2b7",
-      "Id": "aba5f20678a849d09f6e3c1c52d44114"
+      "Id": "aba5f20678a849d09f6e3c1c52d44114",
+      "IsHidden": "False"
     },
     {
       "Start": "d00237b58e9f46e1b194ffee55136614",
       "End": "9ced07828b8f472b977a0887e4e0aed3",
-      "Id": "8aa1df2d36434a28974c4b4c278531a6"
+      "Id": "8aa1df2d36434a28974c4b4c278531a6",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.3.8810",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -131,41 +136,42 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "2c5efa3783b84ac7bc1ecdc9deeb755a",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 0.0,
         "Y": 0.0
       },
       {
         "Id": "097ce8e999be425c8f348ae598c944ea",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -292.66666666666663,
+        "Y": -0.6666666666666856
       },
       {
         "Id": "05472ebe7f734c8e97f0b4d5ac6b2285",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": 612.6666666666665,
+        "Y": -2.0
       }
     ],
     "Annotations": [],
-    "X": 0.0,
-    "Y": 0.0,
+    "X": 350.66666666666663,
+    "Y": 300.66666666666663,
     "Zoom": 1.0
   }
 }

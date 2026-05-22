@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Selection.Actions",
   "Description": "Selects all elements visible in the input view.",
-  "Name": "ꟿ Collect.ElementsInView",
+  "Name": "Collect.ElementsInView",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2018, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import FilteredElementCollector, ElementMulticategoryFilter, ElementId\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nviews = UnwrapElement(tolist(IN[0]) )\r\ncat = UnwrapElement(IN[1])\r\nOUT = []\r\n\r\nueWrapper = None\r\nwrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\nfor w in wrappers:\r\n\tif w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n\t\tueWrapper = w\r\n\t\tbreak\r\n\r\nif cat is not None:\r\n\tcatId = List[ElementId]()\r\n\tfor c in tolist(cat):\r\n\t\tcatId.Add(c.Id)\r\n\tcatFil = ElementMulticategoryFilter(catId)\r\nelse:\r\n\tcatFil = None\r\n\r\nfor v in views:\r\n\tfec = FilteredElementCollector(doc, v.Id).WhereElementIsNotElementType()\r\n\tif catFil is not None:\r\n\t\tfec = fec.WherePasses(catFil)\r\n\tviewEl = []\r\n\tfor e in fec:\r\n\t\ttry:\r\n\t\t\tviewEl.append(e.ToDSType(True) )\r\n\t\texcept:\r\n\t\t\tif ueWrapper:\r\n\t\t\t\tviewEl.append(ueWrapper.Invoke(None, (e, True) ) )\r\n\tOUT.append(viewEl)\r\n\tfec.Dispose()\r\nif catFil is not None:\r\n\tcatFil.Dispose()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2018, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import FilteredElementCollector, ElementMulticategoryFilter, ElementId\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    views = UnwrapElement(tolist(IN[0]))\r\n    cat = UnwrapElement(IN[1]) if IN[1] is not None else None\r\n\r\n    ueWrapper = None\r\n    wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\n    for w in wrappers:\r\n        if w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n            ueWrapper = w\r\n            break\r\n\r\n    if cat is not None:\r\n        catId = List[ElementId]()\r\n        for c in tolist(cat):\r\n            catId.Add(c.Id)\r\n        catFil = ElementMulticategoryFilter(catId)\r\n    else:\r\n        catFil = None\r\n\r\n    OUT = []\r\n    for v in views:\r\n        fec = FilteredElementCollector(doc, v.Id).WhereElementIsNotElementType()\r\n        if catFil is not None:\r\n            fec = fec.WherePasses(catFil)\r\n        viewEl = []\r\n        for e in fec:\r\n            try:\r\n                viewEl.append(e.ToDSType(True))\r\n            except:\r\n                if ueWrapper:\r\n                    viewEl.append(ueWrapper.Invoke(None, (e, True)))\r\n        OUT.append(viewEl)\r\n        fec.Dispose()\r\n\r\n    if catFil is not None:\r\n        catFil.Dispose()\r\n\r\n    OUT = OUT if is_list else OUT[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "73ecd3f50bbc420b93a8bf519b6c8b50",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "4c207d481f18460b82f46e5a13fb9cf0",
@@ -57,14 +58,14 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "elements",
       "Id": "9b4fce8f07d74c34aee2a2ebd75460eb",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "a8f49235e6014629aa46ee9f4d635215",
@@ -82,7 +83,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "view",
         "TypeName": "var",
@@ -91,6 +91,7 @@
         "Description": ""
       },
       "Id": "552eab9b833342d49d3aafe5928c2d4b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -108,7 +109,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "category",
         "TypeName": "var",
@@ -117,6 +117,7 @@
         "Description": ""
       },
       "Id": "79e7a498ca8d4741bab2f803ed22952d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -134,7 +135,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "refresh",
         "TypeName": "bool",
@@ -143,6 +143,7 @@
         "Description": ""
       },
       "Id": "2740782b610f4dda97015a30b80e2ad0",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -163,102 +164,109 @@
     {
       "Start": "66354f6552c0477190c0ba71a9a5b300",
       "End": "a8f49235e6014629aa46ee9f4d635215",
-      "Id": "d2497520c2f14e3a84dca381589a6d62"
+      "Id": "d2497520c2f14e3a84dca381589a6d62",
+      "IsHidden": "False"
     },
     {
       "Start": "ca316b6d02e24ee6a79931c030d380ce",
       "End": "4c207d481f18460b82f46e5a13fb9cf0",
-      "Id": "fb01c96140a04a1f95c67967cef2ab9c"
+      "Id": "fb01c96140a04a1f95c67967cef2ab9c",
+      "IsHidden": "False"
     },
     {
       "Start": "42528cc3aae747a6b30048b6b32119ca",
       "End": "76dcd5e20bfa47f4b9ceecea19056d36",
-      "Id": "e094274028994d9d93e8feb22c3c2f44"
+      "Id": "e094274028994d9d93e8feb22c3c2f44",
+      "IsHidden": "False"
     },
     {
       "Start": "778b597009774cfaaa1d23f3c795f07b",
       "End": "36bf650cac2c4e2aaf1a8430268febec",
-      "Id": "d294b8c5487e4c128038b18e81468410"
+      "Id": "d294b8c5487e4c128038b18e81468410",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 130826.03125,
-      "EyeY": 7004.34130859375,
-      "EyeZ": 320512.0625,
-      "LookX": -124409.5546875,
-      "LookY": -65890.03125,
-      "LookZ": -235857.640625,
-      "UpX": -0.012212896719574928,
-      "UpY": 0.99965733289718628,
-      "UpZ": -0.023153344169259071
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "73ecd3f50bbc420b93a8bf519b6c8b50",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 259.215662595275,
-        "Y": 30.1076912147001
+        "Y": 30.107691214700097
       },
       {
         "Id": "9b4fce8f07d74c34aee2a2ebd75460eb",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 409.819196669608,
-        "Y": 30.4406120891186
+        "ShowGeometry": true,
+        "X": 539.6576430119147,
+        "Y": 29.211857076415395
       },
       {
         "Id": "552eab9b833342d49d3aafe5928c2d4b",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -23.4663928737709,
-        "Y": -0.293562884699298
+        "ShowGeometry": true,
+        "X": -44.75309163170081,
+        "Y": -94.05640265177172
       },
       {
         "Id": "79e7a498ca8d4741bab2f803ed22952d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -26.4023600387249,
+        "ShowGeometry": true,
+        "X": -136.38363695469633,
         "Y": 63.1925674059953
       },
       {
         "Id": "2740782b610f4dda97015a30b80e2ad0",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -25.6630293132252,
-        "Y": 127.242120271322
+        "ShowGeometry": true,
+        "X": -117.39856443668515,
+        "Y": 207.320653694011
       }
     ],
     "Annotations": [],
-    "X": 85.992772892219,
-    "Y": 207.756611773401,
-    "Zoom": 1.62766375666706
+    "X": 353.56749039599265,
+    "Y": 277.8403264503473,
+    "Zoom": 1.3153754050082154
   }
 }

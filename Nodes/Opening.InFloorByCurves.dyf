@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Create",
   "Description": "Create hosted floor opeinngs through the input floors. The second input is a list of sub-lists of the boundary curves.",
-  "Name": "ꟿ Opening.InFloorByCurves",
+  "Name": "Opening.InFloorByCurves",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc =  DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\nflr = UnwrapElement(tolist(IN[0]) )\r\nhole = UnwrapElement(IN[1])\r\n\r\nopenings = []\r\nnewhl = []\r\n\r\nif not any(hasattr(h,\"__iter__\") for h in hole):\r\n\thole = [hole]\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nfor i in xrange(len(hole)):\r\n\tz = CurveArray()\r\n\t[z.Append(j.ToRevitType()) for j in hole[i] ]\r\n\tnewhl.append(z)\r\nif len(flr) == 1 :\r\n\tfor i in xrange(len(newhl)):\r\n\t\ttry:\r\n\t\t\tx = doc.Create.NewOpening(flr[0],newhl[i],True)\r\n\t\t\topenings.append(x.ToDSType(False))\r\n\t\texcept:\r\n\t\t\topenings.append(None)\r\nelse:\r\n\tfor f, h in zip(flr, newhl):\r\n\t\ttry:\r\n\t\t\tx = doc.Create.NewOpening(f,h,True)\r\n\t\t\topenings.append(x.ToDSType(False))\r\n\t\texcept:\r\n\t\t\topenings.append(None)\r\nTransactionManager.Instance.TransactionTaskDone()\r\nOUT = openings",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    flr = UnwrapElement(tolist(IN[0]))\r\n    hole = IN[1]\r\n\r\n    if not any(hasattr(h, \"__iter__\") for h in tolist(hole)):\r\n        hole = [hole]\r\n    else:\r\n        hole = tolist(hole)\r\n\r\n    newhl = []\r\n    for h in hole:\r\n        z = CurveArray()\r\n        for j in h:\r\n            z.Append(j.ToRevitType())\r\n        newhl.append(z)\r\n\r\n    openings = []\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    if len(flr) == 1:\r\n        for h in newhl:\r\n            try:\r\n                x = doc.Create.NewOpening(flr[0], h, True)\r\n                openings.append(x.ToDSType(False))\r\n            except:\r\n                openings.append(None)\r\n    else:\r\n        for f, h in zip(flr, newhl):\r\n            try:\r\n                x = doc.Create.NewOpening(f, h, True)\r\n                openings.append(x.ToDSType(False))\r\n            except:\r\n                openings.append(None)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n\r\n    OUT = openings if is_list else openings[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "08386b5da7cd40899db9aa0d26f7fb79",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "9372be7dfea44724b4ebec258d1976ec",
@@ -48,11 +49,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "host",
         "TypeName": "var",
@@ -61,6 +61,7 @@
         "Description": ""
       },
       "Id": "bb64368f2a6847ec95e7ad20e3da1242",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -78,7 +79,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "curves",
         "TypeName": "var",
@@ -87,6 +87,7 @@
         "Description": ""
       },
       "Id": "b6701db7f7d94f688cbbc685415b99c4",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -104,10 +105,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "opening",
       "Id": "64e0b81fb59043c3874ff83b616a8fe0",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "730789e10a324b2e8716636664728ce4",
@@ -128,87 +129,93 @@
     {
       "Start": "0faddb21e8f74159a3595e302e32dcaa",
       "End": "730789e10a324b2e8716636664728ce4",
-      "Id": "3956972a67744457ae33764e1843215d"
+      "Id": "3956972a67744457ae33764e1843215d",
+      "IsHidden": "False"
     },
     {
       "Start": "05ca613c193f4afda62e8e2abb0b7c7f",
       "End": "9372be7dfea44724b4ebec258d1976ec",
-      "Id": "2dcd4a31e44a40b6ac1856748785a558"
+      "Id": "2dcd4a31e44a40b6ac1856748785a558",
+      "IsHidden": "False"
     },
     {
       "Start": "49ae6cb86ffc40568ac7c0bc06306b0f",
       "End": "1b12ee25890d487cbd7964c39a0b6fe4",
-      "Id": "3a8f17e37f544a4dbd4e8846046d8493"
+      "Id": "3a8f17e37f544a4dbd4e8846046d8493",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 81.9612045288086,
-      "EyeY": 60.6141242980957,
-      "EyeZ": 62.268115997314453,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "08386b5da7cd40899db9aa0d26f7fb79",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 189.815155433563,
-        "Y": -4.13004992656373
+        "Y": -4.716088239423797
       },
       {
         "Id": "bb64368f2a6847ec95e7ad20e3da1242",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 44.7857308328682,
-        "Y": -0.727861240233327
+        "ShowGeometry": true,
+        "X": -135.714069528023,
+        "Y": -80.42907178919819
       },
       {
         "Id": "b6701db7f7d94f688cbbc685415b99c4",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 15.5999923101452,
-        "Y": 56.5330657438434
+        "ShowGeometry": true,
+        "X": -166.65792298932598,
+        "Y": 142.09465942140866
       },
       {
         "Id": "64e0b81fb59043c3874ff83b616a8fe0",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 358.227521834068,
-        "Y": -7.45910139737037
+        "ShowGeometry": true,
+        "X": 470.1608395903349,
+        "Y": -6.873063084510356
       }
     ],
     "Annotations": [],
-    "X": 135.630256836723,
-    "Y": 154.670134606384,
+    "X": 493.6302568367229,
+    "Y": 390.67013460638407,
     "Zoom": 1.13758205229474
   }
 }

@@ -1,0 +1,205 @@
+{
+  "Uuid": "fe7be40c-4a8b-4959-9e20-bdb919ded29f",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SelectElementsInOrder",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "4af3f490-3741-496b-8452-e65601451ae1",
+      "FunctionType": "Graph",
+      "Id": "7c7aa5ea6f5d4abd80f5a1d816ac418c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "7c5707c696dc4696900371eb432d8c4b",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "187c850e7db24a16a4f707ed1488f00d",
+          "Name": "elements",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "84c73b6703084710bcac784694d00f57",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6fecd76f59e84ec7a4990365e5625d9a",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "17227cb48714406d9699c61e5c3d0537",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "1d9683bd76cc41eabdda1d1de83cebc9",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2bc80e9065ec4b478643cb0db0749645",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "187c850e7db24a16a4f707ed1488f00d",
+      "End": "1d9683bd76cc41eabdda1d1de83cebc9",
+      "Id": "dcf6d99a5b774fdf8305fd4a6145124d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6fecd76f59e84ec7a4990365e5625d9a",
+      "End": "7c5707c696dc4696900371eb432d8c4b",
+      "Id": "a7652d7e06874524a25fe129f896165a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "4af3f490-3741-496b-8452-e65601451ae1"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "SelectElementsInOrder.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "7c7aa5ea6f5d4abd80f5a1d816ac418c"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "7c7aa5ea6f5d4abd80f5a1d816ac418c",
+        "Name": "SelectElementsInOrder",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1050.8128363251317,
+        "Y": 289.5346105101894
+      },
+      {
+        "Id": "84c73b6703084710bcac784694d00f57",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 698.3228594946405,
+        "Y": 288.4401528933661
+      },
+      {
+        "Id": "17227cb48714406d9699c61e5c3d0537",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1460.5166600903217,
+        "Y": 289.68814027628235
+      }
+    ],
+    "Annotations": [],
+    "X": -415.43911375054506,
+    "Y": 201.57798364679343,
+    "Zoom": 1.048559838855818
+  }
+}

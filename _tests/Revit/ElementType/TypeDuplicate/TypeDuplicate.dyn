@@ -1,0 +1,251 @@
+{
+  "Uuid": "8f6255f3-b98f-4a6b-b795-7ec6abc1741a",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "TypeDuplicate",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 626.0,
+      "WatchHeight": 108.66666666666667,
+      "Id": "36f6ca7a6aff405188ff7da09a690068",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "30c3a437cdb240a992193ac2354d0c37",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "48309905b8cd46fe8eae06697ff62d88",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2f100688-f6ca-4fa0-af85-e130ec1b400f",
+      "FunctionType": "Graph",
+      "Id": "890bd22c32524b4ba27ef67bcc718aa5",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "181dfe4b5b8f4b89ac6912d68031aced",
+          "Name": "elementType",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fa995fda6cfd4a41b49db3381b765ae9",
+          "Name": "newName",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "33d7ddb3be5143f3b1088a284d65ecbb",
+          "Name": "ElementType",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create duplicate element types. If the type exists, it will be appended instead."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.FamilyTypes, DSRevitNodesUI",
+      "SelectedIndex": 190,
+      "SelectedString": "Windows_Sgl_Plain:910x910mm",
+      "Id": "f3264f66f85946e98c8a90df277a1ba7",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "64d192c8e3d74d87ae833e4eaed6da8d",
+          "Name": "Family Type",
+          "Description": "The selected Family Type",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All family types available in the document."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "929bc4b4e4f0420fb4c09c252b6d098a",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c0726d35deb94d479b9c7f7b431e4384",
+          "Name": "string",
+          "Description": "\"SpringsAwesomeWindowType\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"SpringsAwesomeWindowType\";"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "33d7ddb3be5143f3b1088a284d65ecbb",
+      "End": "30c3a437cdb240a992193ac2354d0c37",
+      "Id": "8a8d99cb775e4304a96f4a1908719012",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "64d192c8e3d74d87ae833e4eaed6da8d",
+      "End": "181dfe4b5b8f4b89ac6912d68031aced",
+      "Id": "1416b1ade367410a92585ce508c544d2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c0726d35deb94d479b9c7f7b431e4384",
+      "End": "fa995fda6cfd4a41b49db3381b765ae9",
+      "Id": "b82599336a0249e6aeafdf8d22f51da4",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "2f100688-f6ca-4fa0-af85-e130ec1b400f"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "ElementType.Duplicate.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "890bd22c32524b4ba27ef67bcc718aa5"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -14735.748046875,
+      "EyeY": 5990.63671875,
+      "EyeZ": 3944.71826171875,
+      "LookX": 10275.509765625,
+      "LookY": -4838.8046875,
+      "LookZ": -3466.8740234375,
+      "UpX": 0.38609033823013306,
+      "UpY": 0.9132171869277954,
+      "UpZ": -0.1302638202905655
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "36f6ca7a6aff405188ff7da09a690068",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1093.8227890591277,
+        "Y": 814.5579651191285
+      },
+      {
+        "Id": "890bd22c32524b4ba27ef67bcc718aa5",
+        "Name": "ElementType.Duplicate",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 761.5070115595975,
+        "Y": 838.948516580642
+      },
+      {
+        "Id": "f3264f66f85946e98c8a90df277a1ba7",
+        "Name": "Family Types",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 333.63953693967926,
+        "Y": 776.5235067343721
+      },
+      {
+        "Id": "929bc4b4e4f0420fb4c09c252b6d098a",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 386.3410890222036,
+        "Y": 947.1943208414491
+      }
+    ],
+    "Annotations": [],
+    "X": -82.27036625556991,
+    "Y": -69.20428089239942,
+    "Zoom": 0.739645573917625
+  }
+}

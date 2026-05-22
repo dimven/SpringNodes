@@ -1,0 +1,454 @@
+{
+  "Uuid": "7c4ec68c-9035-4c58-931e-a45a24d0c4f6",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "PolyCurveFillet+",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      },
+      "DesignScript.Builtin.Dictionary": {
+        "Key": "DesignScript.Builtin.Dictionary",
+        "Value": "DesignScriptBuiltin.dll"
+      },
+      "List.__Create": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "fc0b1973bbd34954b4a3533448fe14c2",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "1ac63ca7c0c9419f84194026570d3dbe",
+          "Name": "width",
+          "Description": "Width of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4b495ace9c4240a897d8891ebe71e07a",
+          "Name": "length",
+          "Description": "Length of rectangle\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "18183fd7895d4da996704ca5875448cc",
+          "Name": "Rectangle",
+          "Description": "Rectangle created by width and length",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Rectangle.ByWidthLength@double,double",
+      "Replication": "Auto",
+      "Description": "Create a Rectangle centered at the WCS origin in the WCS XY Plane, with specified width (X Axis length), and length (Y Axis length).\n\nRectangle.ByWidthLength (width: double = 1, length: double = 1): Rectangle"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d6d7f3f0a22c42288d6e71c1a2c2570b",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d3d16932795349ae9c5f5e68c3458958",
+          "Name": "integer",
+          "Description": "5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "5;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "2ae601b9324041b5ab63a951865a40ed",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7ebc0fc11fa442a1bb2921e74d4037d8",
+          "Name": "double",
+          "Description": "0.5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0.5;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 238.0,
+      "WatchHeight": 200.0,
+      "Id": "93f746697ec8423593dbf76404f9f39c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "26334b9bd6764d0cb201504d3523a6f3",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "65f753d16d4d4ce08d9d4113b6e97736",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Watch3DNodeModels.Watch3D, Watch3DNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "WasExecuted": true,
+      "Camera": {
+        "Name": "cd3f3c16-f349-494d-aa19-261ff560282a Preview",
+        "EyeX": -2.8123581409454346,
+        "EyeY": 1.1104331016540527,
+        "EyeZ": 2.2987499237060547,
+        "LookX": 2.2836244106292725,
+        "LookY": -5.54017448425293,
+        "LookZ": -0.6237614154815674,
+        "UpX": 0.7851870059967041,
+        "UpY": 0.580933690071106,
+        "UpZ": -0.2144702821969986
+      },
+      "VariableInputPorts": true,
+      "Id": "0bedf9da1592424785dddf5eb8ed26c5",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "49cb9a9f88534e7c821c76519c44e8af",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f326622c3eb141c9b4cbb140882c4909",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Shows a dynamic preview of geometry"
+    },
+    {
+      "ConcreteType": "Watch3DNodeModels.Watch3D, Watch3DNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "WasExecuted": true,
+      "Camera": {
+        "Name": "a8201951-17c7-4463-a290-f11e811431a9 Preview",
+        "EyeX": -2.3877594470977783,
+        "EyeY": 1.3494234085083008,
+        "EyeZ": 2.4057998657226562,
+        "LookX": 1.2249207496643066,
+        "LookY": -10.33621883392334,
+        "LookZ": -0.8103773593902588,
+        "UpX": 0.7813592553138733,
+        "UpY": 0.34966400265693665,
+        "UpZ": -0.5169264078140259
+      },
+      "VariableInputPorts": true,
+      "Id": "8ab3fbe9fcd14bf78d0fd4762fa2ce85",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "7d2dd04da54e48ea96865a356da1c649",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b0ad811eac7047afbb2d8b18ce001f2f",
+          "Name": "",
+          "Description": "Incoming geometry objects.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Shows a dynamic preview of geometry"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0b9d3fd1-345f-400b-8108-78f42054de88",
+      "FunctionType": "Graph",
+      "Id": "e88392f04e6b4d548642f4429fecfcc1",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "cedd7894211f43c883367cd4e48a5321",
+          "Name": "polycurve",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8cb9fdecf8a04dc8a474295c53dad964",
+          "Name": "radius",
+          "Description": "var",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5205ad731e9f4e04b527806313dd1ebc",
+          "Name": "polycurve",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Fillet a polycurve in its plane. Unlike the built in node, this works in both in the CW and the CCW direction."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "18183fd7895d4da996704ca5875448cc",
+      "End": "49cb9a9f88534e7c821c76519c44e8af",
+      "Id": "3a64cc1596f14157a36b0b83b611006f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "18183fd7895d4da996704ca5875448cc",
+      "End": "cedd7894211f43c883367cd4e48a5321",
+      "Id": "8465b900ee6a44648c0b4660efeda910",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d3d16932795349ae9c5f5e68c3458958",
+      "End": "1ac63ca7c0c9419f84194026570d3dbe",
+      "Id": "5e90926722ff44008c874fd8e0afd3c3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d3d16932795349ae9c5f5e68c3458958",
+      "End": "4b495ace9c4240a897d8891ebe71e07a",
+      "Id": "a9bc2470ba224238b1ea3744b56ef7a4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7ebc0fc11fa442a1bb2921e74d4037d8",
+      "End": "8cb9fdecf8a04dc8a474295c53dad964",
+      "Id": "a45c3dc2978a42e39ba02014691b9629",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5205ad731e9f4e04b527806313dd1ebc",
+      "End": "7d2dd04da54e48ea96865a356da1c649",
+      "Id": "eacc40d26e9b4c1dba98343c8b9cc48e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5205ad731e9f4e04b527806313dd1ebc",
+      "End": "26334b9bd6764d0cb201504d3523a6f3",
+      "Id": "70ab69a6f7104c0cba560f05d391a620",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0b9d3fd1-345f-400b-8108-78f42054de88"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "PolyCurve.Fillet+.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "e88392f04e6b4d548642f4429fecfcc1"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.6.1.9895",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 6.618462562561035,
+      "EyeY": 5.735320568084717,
+      "EyeZ": 4.578579902648926,
+      "LookX": -4.003187656402588,
+      "LookY": -3.5679640769958496,
+      "LookZ": -5.252922534942627,
+      "UpX": -0.16707319021224976,
+      "UpY": 0.9612618088722229,
+      "UpZ": -0.2192314714193344
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "fc0b1973bbd34954b4a3533448fe14c2",
+        "Name": "Rectangle.ByWidthLength",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -74.09501068202894,
+        "Y": 580.2791416522131
+      },
+      {
+        "Id": "d6d7f3f0a22c42288d6e71c1a2c2570b",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -306.146311585597,
+        "Y": 584.557947479339
+      },
+      {
+        "Id": "2ae601b9324041b5ab63a951865a40ed",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 34.402267930444395,
+        "Y": 758.9894523654174
+      },
+      {
+        "Id": "93f746697ec8423593dbf76404f9f39c",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 668.4671054483231,
+        "Y": 706.1639519005632
+      },
+      {
+        "Id": "0bedf9da1592424785dddf5eb8ed26c5",
+        "Name": "Watch 3D",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 363.8546135982361,
+        "Y": 220.36040408832184
+      },
+      {
+        "Id": "8ab3fbe9fcd14bf78d0fd4762fa2ce85",
+        "Name": "Watch 3D",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 849.7084842367856,
+        "Y": 249.30401123369
+      },
+      {
+        "Id": "e88392f04e6b4d548642f4429fecfcc1",
+        "Name": "PolyCurve.Fillet+",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 345.15661687857477,
+        "Y": 572.254911253259
+      }
+    ],
+    "Annotations": [],
+    "X": 420.67907834417565,
+    "Y": -104.91635987763425,
+    "Zoom": 0.870087724638748
+  }
+}

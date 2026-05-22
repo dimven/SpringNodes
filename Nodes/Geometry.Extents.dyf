@@ -1,9 +1,9 @@
 {
-  "Uuid": "ffe00c3f-aef8-46f1-a72c-92ece348130e",
+  "Uuid": "72639f1f-0e32-4de7-b03b-74067c706a90",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Query",
   "Description": "Gets the dimensions of the geometry's bounding box.",
-  "Name": "ꟿ Geometry.Extents",
+  "Name": "Geometry.Extents",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -29,6 +29,14 @@
       "String": {
         "Key": "DSCore.String",
         "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
       }
     }
   },
@@ -37,12 +45,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "09490ce01f55498b8111daf3d719246d",
       "NodeType": "CodeBlockNode",
-      "Code": "s1 = DSCore.Object.Type(g);\nt1 = String.Contains(s1, \"BoundingBox\");\nbb = t1 ? g : BoundingBox.ByGeometry(g);\nmin = bb.MinPoint;\nmax = bb.MaxPoint;\nw = Math.Abs(min.X - max.X);\nl = Math.Abs(min.Y - max.Y);\nh = Math.Abs(min.Z - max.Z);",
-      "Id": "eda2153487a14daabfeff33510f2d8ee",
       "Inputs": [
         {
-          "Id": "33082181b3004c1983663bc733bf17d7",
+          "Id": "e606b5759e6544da9fb4b1d158a45b43",
           "Name": "g",
           "Description": "g",
           "UsingDefaultValue": false,
@@ -53,7 +60,7 @@
       ],
       "Outputs": [
         {
-          "Id": "1376a58b1f40470fa70ca40961b9dbe0",
+          "Id": "681dba90d92b4dfb9f81acbb784214dc",
           "Name": "",
           "Description": "s1",
           "UsingDefaultValue": false,
@@ -62,7 +69,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "70be7b32febb4cc49fdbe21dc62bfe06",
+          "Id": "e3ebb82e316a4fa6b55bed9ea1910399",
           "Name": "",
           "Description": "t1",
           "UsingDefaultValue": false,
@@ -71,7 +78,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a61cc0b59215468eb94a8e11fb0fc714",
+          "Id": "6eb6d371d8f2489481a6341a958788bb",
           "Name": "",
           "Description": "bb",
           "UsingDefaultValue": false,
@@ -80,7 +87,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "65cf1edce0234475928d8b0332d4a812",
+          "Id": "d3a84e05d6f743bab0a45912298c2a1b",
           "Name": "",
           "Description": "min",
           "UsingDefaultValue": false,
@@ -89,7 +96,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "020c626c7bd24af28c48410847ff4af0",
+          "Id": "214bebf7458f44ec861f664507e572c5",
           "Name": "",
           "Description": "max",
           "UsingDefaultValue": false,
@@ -98,7 +105,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "f17e3b969c17432bab030d879b8eec6a",
+          "Id": "6a3dca130b6e4e03869fd99c781dc11f",
           "Name": "",
           "Description": "w",
           "UsingDefaultValue": false,
@@ -107,7 +114,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "e4e6d5540dbf4415818e0a2bd37f60b1",
+          "Id": "adb09bcfcb2f4542a6ad0e4ae4c7c86e",
           "Name": "",
           "Description": "l",
           "UsingDefaultValue": false,
@@ -116,7 +123,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "16ce92ad3dc8413a8e2a85e762474f76",
+          "Id": "37119f83d3c44dbc99fcb1ed3d281a32",
           "Name": "",
           "Description": "h",
           "UsingDefaultValue": false,
@@ -126,11 +133,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "s1 = DSCore.Object.Type(g);\nt1 = DSCore.String.Contains(s1, \"BoundingBox\");\nbb = t1 ? g : BoundingBox.ByGeometry(g);\nmin = bb.MinPoint;\nmax = bb.MaxPoint;\nw = DSCore.Math.Abs(min.X - max.X);\nl = DSCore.Math.Abs(min.Y - max.Y);\nh = DSCore.Math.Abs(min.Z - max.Z);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "geometry",
         "TypeName": "var",
@@ -138,11 +145,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "7b5c9be509ba4c12aa93e4bb29f3104c",
+      "Id": "682e0133c8084e838c490a6997a8a54b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "01ee69944ae24af9b205195597363c6b",
+          "Id": "d732eaa04ca24dccbdd65e5a7bd8d21e",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -156,13 +164,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "width",
-      "Id": "2722c97fa5904f5dba74ebaf31654bd0",
+      "Id": "3a1985b6524d4335b6e89d0168b0a64f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "b0f0c93a9b55479ab1f794c49570275b",
+          "Id": "f17cd9220f9e432ba3dae1cfee8e17b5",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -177,13 +185,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "length",
-      "Id": "9631374f606b41a28f335d81288ce094",
+      "Id": "628070e56efd4b10892417ab7a87958f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "ff341f0c2b1944cab14e7a31819ee066",
+          "Id": "6e975bf554334b5e90519f7f8b82cf3e",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -198,13 +206,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "height",
-      "Id": "2955bc6cee364d4a91e10125861e8853",
+      "Id": "786d0c9b215d48379aca97d298a9f5aa",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "b79b157f1bb74b6aa9129e2803cd252e",
+          "Id": "0fe09a322cf64099a0c404d60e2ef6c3",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -220,104 +228,111 @@
   ],
   "Connectors": [
     {
-      "Start": "f17e3b969c17432bab030d879b8eec6a",
-      "End": "b0f0c93a9b55479ab1f794c49570275b",
-      "Id": "18f3237468a54b87b83075a2b2b85584"
+      "Start": "6a3dca130b6e4e03869fd99c781dc11f",
+      "End": "f17cd9220f9e432ba3dae1cfee8e17b5",
+      "Id": "8ad08948c21f42a5ae0145c8d41d4d4a",
+      "IsHidden": "False"
     },
     {
-      "Start": "e4e6d5540dbf4415818e0a2bd37f60b1",
-      "End": "ff341f0c2b1944cab14e7a31819ee066",
-      "Id": "4b9cbb9a9ee748daa58b43ea529cc322"
+      "Start": "adb09bcfcb2f4542a6ad0e4ae4c7c86e",
+      "End": "6e975bf554334b5e90519f7f8b82cf3e",
+      "Id": "7a99dfdfbafe4fdb95b34356a1249707",
+      "IsHidden": "False"
     },
     {
-      "Start": "16ce92ad3dc8413a8e2a85e762474f76",
-      "End": "b79b157f1bb74b6aa9129e2803cd252e",
-      "Id": "e5a35802f0ae4001b9bb47ebf7d2fe56"
+      "Start": "37119f83d3c44dbc99fcb1ed3d281a32",
+      "End": "0fe09a322cf64099a0c404d60e2ef6c3",
+      "Id": "bb5093c4b29a42f1b6880896c4fdd469",
+      "IsHidden": "False"
     },
     {
-      "Start": "01ee69944ae24af9b205195597363c6b",
-      "End": "33082181b3004c1983663bc733bf17d7",
-      "Id": "dd9003fa04934fbc91435c63ff76bc4d"
+      "Start": "d732eaa04ca24dccbdd65e5a7bd8d21e",
+      "End": "e606b5759e6544da9fb4b1d158a45b43",
+      "Id": "dfda9931adbd4a9fbbfd07fb408ccad6",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 57.7320442199707,
-      "EyeY": 150.33596801757813,
-      "EyeZ": -3.2739827632904053,
-      "LookX": -2.2557609081268311,
-      "LookY": -111.63055419921875,
-      "LookZ": -55.904861450195313,
-      "UpX": -0.031332336366176605,
-      "UpY": 0.62932038307189941,
-      "UpZ": -0.77651411294937134
+      "Name": "_Background Preview",
+      "EyeX": -13.054098129272461,
+      "EyeY": 13.571005821228027,
+      "EyeZ": 4.5806803703308105,
+      "LookX": 6.763647079467773,
+      "LookY": -5.281354904174805,
+      "LookZ": -3.7199783325195312,
+      "UpX": 0.328236848115921,
+      "UpY": 0.9271839261054993,
+      "UpZ": -0.18052901327610016
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "eda2153487a14daabfeff33510f2d8ee",
+        "Id": "09490ce01f55498b8111daf3d719246d",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.727861771058,
         "Y": 1.40820734341253
       },
       {
-        "Id": "7b5c9be509ba4c12aa93e4bb29f3104c",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "682e0133c8084e838c490a6997a8a54b",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 91.0,
-        "Y": -2.0
-      },
-      {
-        "Id": "2722c97fa5904f5dba74ebaf31654bd0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 725.695464362851,
-        "Y": 0.239740820734312
+        "ShowGeometry": true,
+        "X": -25.630669546436252,
+        "Y": 2.319654427645787
       },
       {
-        "Id": "9631374f606b41a28f335d81288ce094",
+        "Id": "3a1985b6524d4335b6e89d0168b0a64f",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 723.695464362851,
-        "Y": 58.2397408207343
+        "ShowGeometry": true,
+        "X": 825.0475161987042,
+        "Y": -59.37149028077755
       },
       {
-        "Id": "2955bc6cee364d4a91e10125861e8853",
+        "Id": "628070e56efd4b10892417ab7a87958f",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 726.695464362851,
-        "Y": 118.239740820734
+        "ShowGeometry": true,
+        "X": 829.9589632829375,
+        "Y": 104.89200863930886
+      },
+      {
+        "Id": "786d0c9b215d48379aca97d298a9f5aa",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 832.9589632829375,
+        "Y": 244.37365010799095
       }
     ],
     "Annotations": [],
-    "X": -96.7529999999999,
-    "Y": 199.328,
+    "X": 158.2470000000001,
+    "Y": 173.328,
     "Zoom": 1.1575
   }
 }

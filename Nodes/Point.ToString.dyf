@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Serialization.Actions",
   "Description": "Serilize a point to a string. You can use a custom delimier  between the coordinates and apply an optional rounding. Works great with Revit text based parameters or Excel.",
-  "Name": "ꟿ Point.ToString",
+  "Name": "Point.ToString",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -57,7 +57,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "point",
         "TypeName": "var",
@@ -66,6 +65,7 @@
         "Description": ""
       },
       "Id": "443164700a034627a93f10b0989496e9",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -83,10 +83,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "string",
       "Id": "7ee7501f1fbe48f8b757dd039a8c6e32",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "11a5aeaf26474962b0ba77722f93302d",
@@ -104,7 +104,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "separator",
         "TypeName": "string",
@@ -113,6 +112,7 @@
         "Description": ""
       },
       "Id": "b2cab7350578419a8e698e1383665250",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -130,10 +130,11 @@
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "# Copyright(c) 2017, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\ndef n2s(n, digits):\r\n\tif digits is not None:\r\n\t\tn = round(n, digits)\r\n\ts1 = str(n)\r\n\tif s1[-2:] == '.0':\r\n\t\ts1 = s1[:-2]\r\n\treturn s1\r\ndef p2s(p, sep=IN[1], digits=IN[2]):\r\n\tx = n2s(p.X, digits)\r\n\ty = n2s(p.Y, digits)\r\n\tz = n2s(p.Z, digits)\r\n\treturn ''.join( (x, sep, y, sep, z) )\r\n\r\npts = tolist(IN[0])\r\n\r\nOUT = map(p2s, pts)",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\ndef n2s(n, digits):\r\n\tif digits is not None:\r\n\t\tn = round(n, digits)\r\n\ts1 = str(n)\r\n\tif s1[-2:] == '.0':\r\n\t\ts1 = s1[:-2]\r\n\treturn s1\r\ndef p2s(p, sep=IN[1], digits=IN[2]):\r\n\tx = n2s(p.X, digits)\r\n\ty = n2s(p.Y, digits)\r\n\tz = n2s(p.Z, digits)\r\n\treturn ''.join( (x, sep, y, sep, z) )\r\n    \r\ntry:\r\n    pts = tolist(IN[0])\r\n\r\n    OUT = map(p2s, pts)\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "7c5eed836b6a4d0ab81d931a66655c95",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "e00d9b582d764a6289fb65f1040b32ad",
@@ -175,11 +176,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "digits",
         "TypeName": "int",
@@ -188,6 +188,7 @@
         "Description": ""
       },
       "Id": "0f9e299c71224b56a29610b3fa77de63",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -208,37 +209,43 @@
     {
       "Start": "b8584db9a75e480c957cd23acd0d859c",
       "End": "e00d9b582d764a6289fb65f1040b32ad",
-      "Id": "58ee09dcd29a4c9faa9aec884f08d323"
+      "Id": "58ee09dcd29a4c9faa9aec884f08d323",
+      "IsHidden": "False"
     },
     {
       "Start": "e8eb7929d9dc47f2a975810938b7eee7",
       "End": "ef33fb3dd64446319e11ad373a4f53e0",
-      "Id": "e55a2c02a06840d995504b2beef23829"
+      "Id": "e55a2c02a06840d995504b2beef23829",
+      "IsHidden": "False"
     },
     {
       "Start": "d087b64d722f480fa5589511a8c95eec",
       "End": "11a5aeaf26474962b0ba77722f93302d",
-      "Id": "9579ef9dcfa54d679904cfe9eb09b827"
+      "Id": "9579ef9dcfa54d679904cfe9eb09b827",
+      "IsHidden": "False"
     },
     {
       "Start": "093fbe6cea0e4713909f6d9d5eb32ea3",
       "End": "390e08e6dca84aaa8447786f6303d23e",
-      "Id": "ff1a7bedb5b1461585fa2fdf73971142"
+      "Id": "ff1a7bedb5b1461585fa2fdf73971142",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -249,61 +256,62 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "443164700a034627a93f10b0989496e9",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 104.571015353626,
-        "Y": 14.0097209263743
+        "ShowGeometry": true,
+        "X": 79.43043033061033,
+        "Y": -93.11103264995303
       },
       {
         "Id": "7ee7501f1fbe48f8b757dd039a8c6e32",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 480.901150137583,
-        "Y": 14.7282438425295
+        "ShowGeometry": true,
+        "X": 609.8832819947934,
+        "Y": 13.088640471463258
       },
       {
         "Id": "b2cab7350578419a8e698e1383665250",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.288144026376273,
-        "Y": 76.2030908062402
+        "ShowGeometry": true,
+        "X": -1.89799380171209,
+        "Y": 48.329833498114226
       },
       {
         "Id": "7c5eed836b6a4d0ab81d931a66655c95",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 327.974166341127,
-        "Y": 14.8269906374472
+        "ShowGeometry": true,
+        "X": 327.42763188410504,
+        "Y": 14.82699063744721
       },
       {
         "Id": "0f9e299c71224b56a29610b3fa77de63",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 57.0055630132291,
-        "Y": 138.590708616564
+        "ShowGeometry": true,
+        "X": 12.736271994440813,
+        "Y": 233.68770413840556
       }
     ],
     "Annotations": [],
-    "X": -17.178294283466,
-    "Y": 145.164573226229,
+    "X": 282.15503904986724,
+    "Y": 369.16457322622904,
     "Zoom": 1.2198072017255
   }
 }

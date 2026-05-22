@@ -1,0 +1,498 @@
+{
+  "Uuid": "cf9163ed-36c6-464b-9f59-5b42d3bfe28d",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DwgGeometryByInstance",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "07835590-2ccc-4d8b-a42d-12f71fb21a40-0006ae42"
+      ],
+      "Id": "1c7952719a844b88aa6f12b0258ac636",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d3d67fa9d2b94d16a391b9b385671fc9",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "3f99511cbdff4caa97619b81bb9b6667",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "ca9300889e2d4e4fa229e81cb849f967",
+          "Name": "list",
+          "Description": "List to get the rest of.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ce9fe5eb6ab44f7a9fd0e5557463630e",
+          "Name": "rest",
+          "Description": "Rest of the list.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.RestOfItems@var[]..[]",
+      "Replication": "Auto",
+      "Description": "Removes the first item from the given list.\n\nList.RestOfItems (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 312.6666666666667,
+      "WatchHeight": 770.6666666666666,
+      "Id": "3bb2035555ce4b0cb95e1649e89fc67f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "6183bf8b62364a0582a4d86797d0e92c",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a021b8d34f43423fbfef2ac17008fb8d",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "7f0c2c8e-0c44-4e3b-9c3c-2a4c1b0f6d91",
+      "FunctionType": "Graph",
+      "Id": "760319d6d63c427e8820f2a190051996",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "56c5313adece4cefb7a0dcba5c0dd38b",
+          "Name": "linkInstance",
+          "Description": "ImportInstance",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "58dfe2f5a4384313818748d8a8cd2cf5",
+          "Name": "Refresh",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "67a2bf4d349249e39f3bcae57ed9c251",
+          "Name": "lines",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "063141d855294b92a6197bdafcd31b11",
+          "Name": "solidSurfaces",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Retrieves DWG Geometry from an Instance, attempts to parse to Dynamo geometry, where it can't, it returns the original."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "2c9036914bb8429f97ee0323e8230ae3",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d51fe19f06c34a3f80383643cadece30",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 673.3333333333334,
+      "WatchHeight": 550.6666666666666,
+      "Id": "33e99e4887674115b92169d0ef34d057",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "15ddf7c29b164a5698ab548f14156853",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3c15472e90204aca81b05f76a2f14ee4",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d3d67fa9d2b94d16a391b9b385671fc9",
+      "End": "56c5313adece4cefb7a0dcba5c0dd38b",
+      "Id": "0e4b208fba8448c6b6f0d0d28eebd92f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ce9fe5eb6ab44f7a9fd0e5557463630e",
+      "End": "6183bf8b62364a0582a4d86797d0e92c",
+      "Id": "87b9e9740b524f50a6860c3789efc9d3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "67a2bf4d349249e39f3bcae57ed9c251",
+      "End": "15ddf7c29b164a5698ab548f14156853",
+      "Id": "3755cf3e39e94c0e9f73711a74b42d2d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "063141d855294b92a6197bdafcd31b11",
+      "End": "ca9300889e2d4e4fa229e81cb849f967",
+      "Id": "15bd3c0620c443a5b5067ff52afc6fd1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d51fe19f06c34a3f80383643cadece30",
+      "End": "58dfe2f5a4384313818748d8a8cd2cf5",
+      "Id": "3eee491f139349a7b65503c74a5a25d9",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "7f0c2c8e-0c44-4e3b-9c3c-2a4c1b0f6d91"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "RevitLinkType.DwgGeometryByInstance.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "760319d6d63c427e8820f2a190051996"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.6",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "9.1",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 100.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 1006296.1875,
+      "EyeY": 438977.84375,
+      "EyeZ": -29763.0859375,
+      "LookX": -205256.6875,
+      "LookY": -422257.59375,
+      "LookZ": 82928.9921875,
+      "UpX": -0.8211733102798462,
+      "UpY": 0.4643271267414093,
+      "UpZ": 0.33177512884140015
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "1c7952719a844b88aa6f12b0258ac636",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 839.5857712525633,
+        "Y": 955.9753915761215
+      },
+      {
+        "Id": "3f99511cbdff4caa97619b81bb9b6667",
+        "Name": "List.RestOfItems",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": false,
+        "X": 1977.1630977046627,
+        "Y": 1729.5074059195458
+      },
+      {
+        "Id": "3bb2035555ce4b0cb95e1649e89fc67f",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2404.5423531583933,
+        "Y": 1726.130732376871
+      },
+      {
+        "Id": "760319d6d63c427e8820f2a190051996",
+        "Name": "RevitLinkType.DwgGeometryByInstance",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1473.2368499128913,
+        "Y": 957.6148123758877
+      },
+      {
+        "Id": "2c9036914bb8429f97ee0323e8230ae3",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1197.4292200461834,
+        "Y": 1124.6188996573633
+      },
+      {
+        "Id": "33e99e4887674115b92169d0ef34d057",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2018.249031285237,
+        "Y": 956.4270042245722
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "632989d0963f45a6b8e51ad9e82e3035",
+        "Title": "Get DWG geometry",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [
+          "760319d6d63c427e8820f2a190051996"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1463.2368499128913,
+        "Top": 884.2814790425543,
+        "Width": 392.66666666666674,
+        "Height": 238.33333333333326,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 957.6148123758877,
+        "InitialHeight": 144.9999999999999,
+        "TextblockHeight": 63.333333333333336,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "038838d043a64bb28393bdf6665740ad",
+        "Title": "Split out solids",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [
+          "3f99511cbdff4caa97619b81bb9b6667",
+          "ed933e26f561453a8cd1ad965a39e4af",
+          "49cec334bc0f4d1d81f6f501d376d410"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1935.682001240205,
+        "Top": 1656.1740725862126,
+        "Width": 319.3333333333335,
+        "Height": 612.3383228007958,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 1729.5074059195458,
+        "InitialHeight": 938.2132905154076,
+        "TextblockHeight": 63.333333333333336,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FF87CEFA"
+      },
+      {
+        "Id": "6698132a6ca14d369d49e29a292392ed",
+        "Title": "Select DWG Link Instance",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [
+          "1c7952719a844b88aa6f12b0258ac636"
+        ],
+        "HasNestedGroups": false,
+        "Left": 829.5857712525633,
+        "Top": 839.3087249094549,
+        "Width": 255.33333333333326,
+        "Height": 267.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 955.9753915761215,
+        "InitialHeight": 180.33333333333337,
+        "TextblockHeight": 106.66666666666667,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FF87CEFA"
+      },
+      {
+        "Id": "ed933e26f561453a8cd1ad965a39e4af",
+        "Title": "So, this is super fun.\n\nAll of the various solids in the dwg related to the chambers get mashed into 1 solid. also, the surfaces of the titleblock do as well!\n\nSo, once we isolate the chamber surfaces from the topo surface using the layer key text, we are left with a flat list of surfaces to reconstruct.\n\nSo once we've tidied up our list structure, we run code that finds shared edges and groups surfaces accordingly,\n\nThen we attempt to union them back together.\n\nNow we have relatively few polysurfaces to clash against the line end points to see if the point should shift because it is the bottom rather than the top of the pipe.",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1945.682001240205,
+        "Top": 1878.6988439870297,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "49cec334bc0f4d1d81f6f501d376d410",
+        "Title": "And another thing!  If the surfaces are on multiple layers, they appear to be merged onto 1 layer",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "UserSetWidth": 0.0,
+        "UserSetHeight": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1948.152003434626,
+        "Top": 2212.845728720342,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -215.86841493841177,
+    "Y": -380.0909585249941,
+    "Zoom": 0.499393283894304
+  }
+}

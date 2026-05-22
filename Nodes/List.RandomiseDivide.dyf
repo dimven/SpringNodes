@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Create",
   "Description": "Shiffles the input list and divides it into sub-lists based on ratios(1/4 + 1/2 + 1/4 will give you three lists split accordingly) The smalest ratio will always be 1 / the list length and the largest ratio will be 1. A seed input can shuffle the list further.",
-  "Name": "ꟿ List.RandomiseDivide",
+  "Name": "List.RandomiseDivide",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -17,7 +17,6 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list",
         "TypeName": "var",
@@ -26,6 +25,7 @@
         "Description": ""
       },
       "Id": "116d2008e229415086768d3bfa1a0e90",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -43,7 +43,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "ratios",
         "TypeName": "var",
@@ -52,6 +51,7 @@
         "Description": ""
       },
       "Id": "5d07b00ff10b4df4b21cccb2679c1e3a",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -69,7 +69,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "seed",
         "TypeName": "var",
@@ -78,6 +77,7 @@
         "Description": ""
       },
       "Id": "15ea685660304ed8a29c5416c8cbb50e",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -95,10 +95,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "lists",
       "Id": "e09cece1b8ca443aa61131063a0ce94e",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "4ae059b9570a4f2685ec16e60ad09216",
@@ -116,10 +116,11 @@
     },
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "import System\r\npf_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86)\r\nimport sys\r\nsys.path.append('%s\\IronPython 2.7\\Lib' %pf_path)\r\nimport random\r\n\r\ndef tolist(x):\r\n\tif hasattr(x,'__iter__'): return x\r\n\telse : return [x]\r\n\r\nl1, rat, seed = IN\r\nl1 = tolist(l1)\r\nr = random.Random()\r\nr.seed(seed)\r\nr.shuffle(l1)\r\nlen1 = len(l1)\r\nOUT = []\r\nif len(rat) < 2:\r\n\trat.append(1.0 - rat[0])\r\nif sum(rat) < 1.0:\r\n\trat.append(1.0 - sum(rat) )\r\nstart, end = 0, int(round(rat[0] * len1) )\r\nlen2 = len(rat)\r\nfor i in xrange(len2):\r\n\tOUT.append(l1[start : end])\r\n\tstart = end\r\n\tj = (i + 1) % len2\r\n\tend += int(round(rat[j] * len1) )\r\nif not OUT[-1]:\r\n\tdel(OUT[-1])",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport random\r\n\r\ndef tolist(obj1):\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n \r\ntry:    \r\n    l1, rat, seed = IN\r\n    l1 = tolist(l1)\r\n    r = random.Random()\r\n    r.seed(seed)\r\n    r.shuffle(l1)\r\n    len1 = len(l1)\r\n    OUT = []\r\n    if len(rat) < 2:\r\n\t    rat.append(1.0 - rat[0])\r\n    if sum(rat) < 1.0:\r\n\t    rat.append(1.0 - sum(rat) )\r\n    start, end = 0, int(round(rat[0] * len1) )\r\n    len2 = len(rat)\r\n    for i in range(len2):\r\n\t    OUT.append(l1[start : end])\r\n\t    start = end\r\n\t    j = (i + 1) % len2\r\n\t    end += int(round(rat[j] * len1) )\r\n    if not OUT[-1]:\r\n\t    del(OUT[-1])\r\n    remaining = len1 - sum(len(i) for i in OUT)\r\n    if remaining > 0:\r\n        OUT.append(l1[-remaining:])\r\n    \r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "4163b50f4fbe490ebf6d079c3e8abcfb",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "05898b2eb6a1490784e6bee5ae2ef2f9",
@@ -161,108 +162,115 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     }
   ],
   "Connectors": [
     {
       "Start": "c168915582424acc89af83b35952c8a2",
       "End": "05898b2eb6a1490784e6bee5ae2ef2f9",
-      "Id": "5781588fb3044cb38be278c835ed8553"
+      "Id": "5781588fb3044cb38be278c835ed8553",
+      "IsHidden": "False"
     },
     {
       "Start": "02a91482c4ba41c89cda1f44dd7bdb31",
       "End": "10d42105c861405897defdeba4c4d5db",
-      "Id": "f0b45875b49c42459d9534fceb61580b"
+      "Id": "f0b45875b49c42459d9534fceb61580b",
+      "IsHidden": "False"
     },
     {
       "Start": "b986bb778bd9443f870f48c0c0892983",
       "End": "d5da564b43f24edd969a19f369b87caf",
-      "Id": "52b34ee86ca2445d85735e89e9babf0c"
+      "Id": "52b34ee86ca2445d85735e89e9babf0c",
+      "IsHidden": "False"
     },
     {
       "Start": "fdeccd28b55a406f9d3f032d035d87ec",
       "End": "4ae059b9570a4f2685ec16e60ad09216",
-      "Id": "5003b69b322243e2aa51ca7b778c19eb"
+      "Id": "5003b69b322243e2aa51ca7b778c19eb",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "Name": "_Background Preview",
+      "EyeX": 215.1671142578125,
+      "EyeY": 102.30821228027344,
+      "EyeZ": 10.132331848144531,
+      "LookX": -31.701919555664062,
+      "LookY": -66.85600280761719,
+      "LookZ": -104.93148803710938,
+      "UpX": -0.14709115028381348,
+      "UpY": 0.8338867425918579,
+      "UpZ": -0.4868629276752472
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "116d2008e229415086768d3bfa1a0e90",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 67.456289222038,
-        "Y": 386.35856464917
+        "ShowGeometry": true,
+        "X": 58.43181978764321,
+        "Y": 313.63195803081214
       },
       {
         "Id": "5d07b00ff10b4df4b21cccb2679c1e3a",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 66.9169523676851,
-        "Y": 445.996037899929
+        "ShowGeometry": true,
+        "X": 27.103116627708232,
+        "Y": 449.18114475912716
       },
       {
         "Id": "15ea685660304ed8a29c5416c8cbb50e",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 65.5821888801271,
-        "Y": 502.80197261803
+        "ShowGeometry": true,
+        "X": 40.63218514974156,
+        "Y": 595.700922677976
       },
       {
         "Id": "e09cece1b8ca443aa61131063a0ce94e",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 481.535170711628,
-        "Y": 418.788887476506
+        "ShowGeometry": true,
+        "X": 579.7426322035709,
+        "Y": 417.19633404690694
       },
       {
         "Id": "4163b50f4fbe490ebf6d079c3e8abcfb",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 324.061392003564,
         "Y": 416.838266056668
       }
     ],
     "Annotations": [],
-    "X": -36.261289015779823,
+    "X": -36.26128901577982,
     "Y": -322.354698725511,
     "Zoom": 1.2558448356131442
   }

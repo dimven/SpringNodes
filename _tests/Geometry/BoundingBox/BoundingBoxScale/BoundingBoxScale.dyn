@@ -1,0 +1,354 @@
+{
+  "Uuid": "049282b1-c21d-47d2-a5f6-cadd5afcff9e",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "BoundingBoxScale",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "119ce04d4b5d43dc9c893ea1368d04f4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "abd373d7feda40e481f9e2e17ad66aa1",
+          "Name": "width",
+          "Description": "Width of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "260cb725701941c69e51d44568925de6",
+          "Name": "length",
+          "Description": "Length of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dc9e1e89ef1c43389772442697382986",
+          "Name": "height",
+          "Description": "Height of cuboid\n\ndouble\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2c32c278dd3e46ec8e9b2b9d628de286",
+          "Name": "Cuboid",
+          "Description": "Cuboid created by lengths",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Cuboid.ByLengths@double,double,double",
+      "Replication": "Auto",
+      "Description": "Create a Cuboid centered at WCS origin, with width, length, and height.\n\nCuboid.ByLengths (width: double = 1, length: double = 1, height: double = 1): Cuboid"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "420a531715314c909631edfd5fe2b6e2",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "efd36a37e9474e1b8306cb1f8d89ca98",
+          "Name": "geom",
+          "Description": "Geometry[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "89eac93eeb41490da6a91f6baebd4ce2",
+          "Name": "BoundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.BoundingBox.ByGeometry@Autodesk.DesignScript.Geometry.Geometry[]",
+      "Replication": "Auto",
+      "Description": "Create an axis-aligned BoundingBox around input Geometry.\n\nBoundingBox.ByGeometry (geom: Geometry[]): BoundingBox"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d8533b9a5aaf445c92e9f99bd2fe204d",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "490fa114d3e24d709730d2a66f0c86e6",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "1.5;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "ba731d0004e242428bc4301b0de7e14d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "b47356028235474da9b9a2e8fae571f5",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bca4e9a4f5c04e5e946b5de71d139ebf",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "0b7f918e-34e3-4f20-b2db-da1f0865e385",
+      "FunctionType": "Graph",
+      "Id": "fed38f8dda2e40828acf1668623bed23",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "34dbe77a6ef6444f8b4861a513bf29bd",
+          "Name": "boundingBox",
+          "Description": "BoundingBox",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2fa4f9dbd9854f03a0e5e2d48937da80",
+          "Name": "xAmmount",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "90e7d54201ab487189e53d08a9a3c9f6",
+          "Name": "yAmmount",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1fc81a65b459410f9365ce70833d805f",
+          "Name": "zAmmount",
+          "Description": "double\nDefault value : 1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "783da08e520e467bba4ba4c51d5426b4",
+          "Name": "boundingBox",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Scales the bounding box in three dimensions according to it's center."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2c32c278dd3e46ec8e9b2b9d628de286",
+      "End": "efd36a37e9474e1b8306cb1f8d89ca98",
+      "Id": "e3de68f68b3b4b269a9a21e33a5a72a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "89eac93eeb41490da6a91f6baebd4ce2",
+      "End": "34dbe77a6ef6444f8b4861a513bf29bd",
+      "Id": "bd0c6e0724d341799c19b64d1b2bb7bd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "490fa114d3e24d709730d2a66f0c86e6",
+      "End": "1fc81a65b459410f9365ce70833d805f",
+      "Id": "1d79051ac90a428da150462f36f21bf1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "490fa114d3e24d709730d2a66f0c86e6",
+      "End": "90e7d54201ab487189e53d08a9a3c9f6",
+      "Id": "f0db93e93d0749cb8d22d13c04e59465",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "490fa114d3e24d709730d2a66f0c86e6",
+      "End": "2fa4f9dbd9854f03a0e5e2d48937da80",
+      "Id": "49b83d2f19104a83a95a6b8bedb0101d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "783da08e520e467bba4ba4c51d5426b4",
+      "End": "b47356028235474da9b9a2e8fae571f5",
+      "Id": "5a17b49f5e674c06b620247eb540ff37",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "0b7f918e-34e3-4f20-b2db-da1f0865e385"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "BoundingBox.Scale.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "fed38f8dda2e40828acf1668623bed23"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "119ce04d4b5d43dc9c893ea1368d04f4",
+        "Name": "Cuboid.ByLengths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 97.0,
+        "Y": 452.0
+      },
+      {
+        "Id": "420a531715314c909631edfd5fe2b6e2",
+        "Name": "BoundingBox.ByGeometry",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 386.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "d8533b9a5aaf445c92e9f99bd2fe204d",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 496.0,
+        "Y": 617.0
+      },
+      {
+        "Id": "ba731d0004e242428bc4301b0de7e14d",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1162.0,
+        "Y": 447.0
+      },
+      {
+        "Id": "fed38f8dda2e40828acf1668623bed23",
+        "Name": "BoundingBox.Scale",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 760.0,
+        "Y": 451.0
+      }
+    ],
+    "Annotations": [],
+    "X": -74.0,
+    "Y": -99.0,
+    "Zoom": 1.0
+  }
+}

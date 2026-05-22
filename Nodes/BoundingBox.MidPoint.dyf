@@ -1,9 +1,9 @@
 {
-  "Uuid": "74b59bed-610f-4fc1-a3b7-8b69fd6fb160",
+  "Uuid": "102b6285-f9b8-45ab-8367-d1592eafe735",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Query",
   "Description": "Fetches the mid point of the bounding box.",
-  "Name": "ꟿ BoundingBox.MidPoint",
+  "Name": "BoundingBox.MidPoint",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -33,12 +33,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "e41cd17dac004507a3238884cc64bb2a",
       "NodeType": "CodeBlockNode",
-      "Code": "a = bb1.MinPoint;\nb = bb1.MaxPoint;\npt = Point.ByCoordinates(\n  (a.X + b.X) / 2,\n  (a.Y + b.Y) / 2,\n  (a.Z + b.Z) / 2);",
-      "Id": "b34fc205a81248afa27afb28b6679f91",
       "Inputs": [
         {
-          "Id": "3b95917e485c41bfa21dbbe503c593af",
+          "Id": "dd49012b63f14d9086c744170fe5842b",
           "Name": "bb1",
           "Description": "bb1",
           "UsingDefaultValue": false,
@@ -49,7 +48,7 @@
       ],
       "Outputs": [
         {
-          "Id": "308864bfba464ad589bc04d5bacc6687",
+          "Id": "dd536986dfab46aa9e72b741acb04048",
           "Name": "",
           "Description": "a",
           "UsingDefaultValue": false,
@@ -58,7 +57,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "1641b62766434853886670bff4081737",
+          "Id": "68cfaabd3be8406a9a369ac362c6ab3a",
           "Name": "",
           "Description": "b",
           "UsingDefaultValue": false,
@@ -67,7 +66,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "64ebcb297b964deaafdb97b3616ee611",
+          "Id": "344c0646a614474da398db06239b3e09",
           "Name": "",
           "Description": "pt",
           "UsingDefaultValue": false,
@@ -77,17 +76,18 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "a = bb1.MinPoint;\nb = bb1.MaxPoint;\npt = Point.ByCoordinates(\n  (a.X + b.X) / 2,\n  (a.Y + b.Y) / 2,\n  (a.Z + b.Z) / 2);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "point",
-      "Id": "7a3088350ca5404f81118e8b4053c99a",
+      "Id": "aea6592a57b64ceab7ec3578841c771a",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "4458d07ddf424db3a6abeaf1a09f9cd2",
+          "Id": "84c53f1be1f942bcba4ccccf059ff9e2",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -102,7 +102,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "boundingBox",
         "TypeName": "Autodesk.DesignScript.Geometry.BoundingBox",
@@ -110,11 +109,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "a6b9731d45da427e9e1e4cfa445f7154",
+      "Id": "a3dd02050b3a4d259a7d5c80078c63d9",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "45bd6702e5f54631857efc158d31e4ad",
+          "Id": "7ae7de9b50ac432bace5d3714681b607",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -129,74 +129,79 @@
   ],
   "Connectors": [
     {
-      "Start": "64ebcb297b964deaafdb97b3616ee611",
-      "End": "4458d07ddf424db3a6abeaf1a09f9cd2",
-      "Id": "df01a99c29654ae99cd6bd2a15a53de7"
+      "Start": "344c0646a614474da398db06239b3e09",
+      "End": "84c53f1be1f942bcba4ccccf059ff9e2",
+      "Id": "603f472d46d642018823c563cfe738fa",
+      "IsHidden": "False"
     },
     {
-      "Start": "45bd6702e5f54631857efc158d31e4ad",
-      "End": "3b95917e485c41bfa21dbbe503c593af",
-      "Id": "d354a496277f4a1f8052f207a39e1c52"
+      "Start": "7ae7de9b50ac432bace5d3714681b607",
+      "End": "dd49012b63f14d9086c744170fe5842b",
+      "Id": "a12dc524aef648ddbdb1d9c44f0fb3b6",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 5.1678590774536133,
-      "EyeY": 17.185787200927734,
-      "EyeZ": 11.863565444946289,
-      "LookX": -0.16785901784896851,
-      "LookY": -17.185787200927734,
-      "LookZ": -11.863565444946289,
-      "UpX": -0.0096487114205956459,
-      "UpY": 0.73135370016098022,
-      "UpZ": -0.68193012475967407
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "b34fc205a81248afa27afb28b6679f91",
+        "Id": "e41cd17dac004507a3238884cc64bb2a",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 289.503519128146,
         "Y": -1.85239653609521
       },
       {
-        "Id": "7a3088350ca5404f81118e8b4053c99a",
+        "Id": "aea6592a57b64ceab7ec3578841c771a",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 589.463402498948,
-        "Y": 29.5160411555558
+        "ShowGeometry": true,
+        "X": 669.7305266104008,
+        "Y": 33.41791524430698
       },
       {
-        "Id": "a6b9731d45da427e9e1e4cfa445f7154",
+        "Id": "a3dd02050b3a4d259a7d5c80078c63d9",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 48.1892543960068,
-        "Y": -8.30844816367064
+        "ShowGeometry": true,
+        "X": -272.8792420498045,
+        "Y": -0.5046999861683048
       }
     ],
     "Annotations": [],
-    "X": -51.5249644173419,
-    "Y": 298.339342348057,
-    "Zoom": 1.79400970938055
+    "X": 454.80852130031906,
+    "Y": 288.7568149344987,
+    "Zoom": 1.0360578756006031
   }
 }

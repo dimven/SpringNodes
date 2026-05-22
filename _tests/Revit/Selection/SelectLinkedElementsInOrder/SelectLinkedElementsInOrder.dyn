@@ -1,0 +1,270 @@
+{
+  "Uuid": "d9fcc8af-87fb-46a3-9fdb-7d441ffe907a",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "SelectLinkedElementsInOrder",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "4a2700fd6e064ab2a9800d9c774a5cbc",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "88d001450b014301ad5cbd9116312940",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "c0c945673b6c4a848718fd6be9463f90",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "aeed4f72bd4d45d690903a19f05a5ba9",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3c099d9617fb47b4b907758eaabda05b",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "17c707805c1a4f67b95bfb742735efc9",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "20579b153cfe448a976f1a64011d7b4d",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b61bc777bd0d440dab361b7f4b6a406f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "b1c08346-4bd4-4548-bce5-c6504f7a9586",
+      "FunctionType": "Graph",
+      "Id": "88c78560883145958347456e22319378",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "a2c55c5599354ecdbc3b5897415dda58",
+          "Name": "dialog",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ff3468d9c19f497382a8b418aefda3b6",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "07767b00494345ea80406d9ab4e2cc39",
+          "Name": "elements",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "725fd2cb8b184242adbe544fb973d7dc",
+          "Name": "transform",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Select the linked instance first. Then select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "88d001450b014301ad5cbd9116312940",
+      "End": "ff3468d9c19f497382a8b418aefda3b6",
+      "Id": "e0ac8396ba144026b3762346b3371c71",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "07767b00494345ea80406d9ab4e2cc39",
+      "End": "20579b153cfe448a976f1a64011d7b4d",
+      "Id": "a01fad77d5bd4ed488f863bde37f5c0a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "725fd2cb8b184242adbe544fb973d7dc",
+      "End": "aeed4f72bd4d45d690903a19f05a5ba9",
+      "Id": "ad4ccb591b3f4a3b90fc26e4ccdabcc4",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "b1c08346-4bd4-4548-bce5-c6504f7a9586"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "SelectLinkedElementsInOrder.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "88c78560883145958347456e22319378"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "4a2700fd6e064ab2a9800d9c774a5cbc",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 673.8211308154604,
+        "Y": 324.87862118548014
+      },
+      {
+        "Id": "c0c945673b6c4a848718fd6be9463f90",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1409.2444210674857,
+        "Y": 606.1919491985541
+      },
+      {
+        "Id": "17c707805c1a4f67b95bfb742735efc9",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1409.528454324788,
+        "Y": 291.33499058309303
+      },
+      {
+        "Id": "88c78560883145958347456e22319378",
+        "Name": "SelectLinkedElementsInOrder",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 959.8165371958121,
+        "Y": 290.32064117495
+      }
+    ],
+    "Annotations": [],
+    "X": -579.8997648643885,
+    "Y": 98.86888201209183,
+    "Zoom": 1.0611496168469554
+  }
+}

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Actions",
   "Description": "Copy the input DirectShape element with the help of a translation vector, similarly to the Geometry.Translate node. This method should prove more efficient than Element.Copy",
-  "Name": "ꟿ DirectShape.Translate",
+  "Name": "DirectShape.Translate",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\napp = DocumentManager.Instance.CurrentUIApplication.Application\r\nisRvt2017 = int(app.VersionNumber) > 2016\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\r\ndsTyped, vecs = UnwrapElement(IN[0]), tolist(IN[1])\r\n\r\ntransforms = []\r\nfor i in xrange(len(vecs)):\r\n\ttry: transforms.append(Transform.CreateTranslation(vecs[i].ToXyz(True)))\r\n\texcept: pass\r\ncat = dsTyped.Category\r\nTypeId = dsTyped.GetTypeId()\r\nLib_TypeId = TypeId.ToString()\r\ndsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)\r\nif not dsLib.ContainsType(Lib_TypeId): dsLib.AddDefinitionType(Lib_TypeId, TypeId)\r\n\r\ndef CopyDS(transf):\r\n\ttry:\r\n\t\tif isRvt2017:\r\n\t\t\tds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf)\r\n\t\telse:\r\n\t\t\tds1 = DirectShape.CreateElementInstance(doc, TypeId, cat.Id, Lib_TypeId, transf, \"Dynamo\",\"spring nodes\")\r\n\t\tds1.SetTypeId(TypeId)\r\n\t\treturn ds1.ToDSType(False)\r\n\texcept: return None\r\n\t\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\nOUT = map(CopyDS, transforms)\r\nTransactionManager.Instance.TransactionTaskDone()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    is_list = isinstance(IN[0], list)\r\n    dsTyped = tolist(UnwrapElement(IN[0]))\r\n    vecs = tolist(IN[1])\r\n\r\n    if len(dsTyped) != len(vecs):\r\n        OUT = \"Error: number of shapes ({}) must match number of vectors ({}).\".format(\r\n            len(dsTyped), len(vecs)\r\n        )\r\n    else:\r\n        dsLib = DirectShapeLibrary.GetDirectShapeLibrary(doc)\r\n\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        output = []\r\n        for ds, vec in zip(dsTyped, vecs):\r\n            try:\r\n                transf = Transform.CreateTranslation(vec.ToXyz(True))\r\n                TypeId = ds.GetTypeId()\r\n                cat_id = ds.Category.Id\r\n                Lib_TypeId = TypeId.ToString()\r\n                if not dsLib.ContainsType(Lib_TypeId):\r\n                    dsLib.AddDefinitionType(Lib_TypeId, TypeId)\r\n                ds1 = DirectShape.CreateElementInstance(doc, TypeId, cat_id, Lib_TypeId, transf)\r\n                ds1.SetTypeId(TypeId)\r\n                output.append(ds1.ToDSType(False))\r\n            except Exception as inner_e:\r\n                import traceback\r\n                output.append(\"Error on element: {0}\".format(traceback.format_exc()))\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n        OUT = output if is_list else output[0]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "ed190f5b44d348eaa62a8b384a18b745",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "3ef001940d5d4f0fa78b1c540346f5de",
@@ -48,11 +49,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "directShape",
         "TypeName": "var",
@@ -61,6 +61,7 @@
         "Description": ""
       },
       "Id": "4ca4c19b307b45f1a336f33ffb32fafc",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -78,7 +79,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "vector",
         "TypeName": "var",
@@ -87,6 +87,7 @@
         "Description": ""
       },
       "Id": "a7b9689eda6646e8aa2e9c8fde08e6cf",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -104,10 +105,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "directShape",
       "Id": "eedcb69447154797aeedb620d370055f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "53a050d9dff34503b92abb84e041f819",
@@ -128,32 +129,37 @@
     {
       "Start": "149c5c53cd584c34b50f8980c847ad5f",
       "End": "53a050d9dff34503b92abb84e041f819",
-      "Id": "b4519f0b12d146d9be4be7bed5ffa33e"
+      "Id": "b4519f0b12d146d9be4be7bed5ffa33e",
+      "IsHidden": "False"
     },
     {
       "Start": "82b7a2cd1498429c8613534adca0fbf9",
       "End": "3ef001940d5d4f0fa78b1c540346f5de",
-      "Id": "9c6e4a20ad7f4402837cf34b7737ec73"
+      "Id": "9c6e4a20ad7f4402837cf34b7737ec73",
+      "IsHidden": "False"
     },
     {
       "Start": "182a3619e3484ce991c718d19439140e",
       "End": "6b482f9c01944b1986abd04a2827fca4",
-      "Id": "0448d292063442f3b8286eb37e828aa4"
+      "Id": "0448d292063442f3b8286eb37e828aa4",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
+      "Name": "_Background Preview",
       "EyeX": -17.0,
       "EyeY": 24.0,
       "EyeZ": 50.0,
@@ -164,51 +170,52 @@
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "ed190f5b44d348eaa62a8b384a18b745",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 456.912369917016,
+        "ShowGeometry": true,
+        "X": 459.6220661272805,
         "Y": -20.0
       },
       {
         "Id": "4ca4c19b307b45f1a336f33ffb32fafc",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 281.2,
-        "Y": -17.2
+        "ShowGeometry": true,
+        "X": 197.1994174817998,
+        "Y": -106.16835890368527
       },
       {
         "Id": "a7b9689eda6646e8aa2e9c8fde08e6cf",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 301.2,
-        "Y": 48.4
+        "ShowGeometry": true,
+        "X": 205.4574005706533,
+        "Y": 100.78746006511423
       },
       {
         "Id": "eedcb69447154797aeedb620d370055f",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 615.6,
-        "Y": -18.8
+        "ShowGeometry": true,
+        "X": 755.307341854379,
+        "Y": -23.338057508030875
       }
     ],
     "Annotations": [],
-    "X": -648.793609287779,
-    "Y": 190.885295621425,
-    "Zoom": 2.05668026833428
+    "X": 163.61957408149055,
+    "Y": 440.15457935577393,
+    "Zoom": 1.4761802392636152
   }
 }

@@ -1,9 +1,9 @@
 {
-  "Uuid": "fbfba0b2-62c4-4639-9f83-4af9665a373d",
+  "Uuid": "a060f329-f8ce-48da-a862-7bbfd9550950",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Offsets a curve towards the specified point",
-  "Name": "ꟿ Curve.Offset+",
+  "Name": "Curve.Offset+",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -29,12 +29,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "ea909dd3594a4e73a1122d29e00ffd0e",
       "NodeType": "CodeBlockNode",
-      "Code": "d1 = [- dist, dist];\ncl1 = c.Offset(d1<1>);\nc1 = MinimumItemByKey(cl1, fn1);",
-      "Id": "ab369845d66c47389147442cd820b6b5",
       "Inputs": [
         {
-          "Id": "c5ee2a8f67434b22a55bd919e2c84b83",
+          "Id": "a98867eb2f564ecda4444b44b9d05fb7",
           "Name": "dist",
           "Description": "dist",
           "UsingDefaultValue": false,
@@ -43,7 +42,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "cbe59d3436b6478f828d592a727a4a91",
+          "Id": "592b59ebfa58409f8972c0cda9c3a54c",
           "Name": "c",
           "Description": "c",
           "UsingDefaultValue": false,
@@ -52,7 +51,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "65da5180059643e19177995449f518de",
+          "Id": "6456f239989646ffbaa05cfc689e7fc4",
           "Name": "fn1",
           "Description": "fn1",
           "UsingDefaultValue": false,
@@ -63,7 +62,7 @@
       ],
       "Outputs": [
         {
-          "Id": "8a29f3ea432a42ae986d4a0fb93a9da1",
+          "Id": "17f760f6caf1455b9ffb6c7fda1fb48b",
           "Name": "",
           "Description": "d1",
           "UsingDefaultValue": false,
@@ -72,7 +71,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "09fe8dc8a7bf4187a18c5423110e08f8",
+          "Id": "fdddf1c704f94e3bbecc6c5a63f3da55",
           "Name": "",
           "Description": "cl1",
           "UsingDefaultValue": false,
@@ -81,7 +80,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "239cd8ef4e0c4b9ba769d08b48769e31",
+          "Id": "591f9bb1c1ad4418b64fd777c2296597",
           "Name": "",
           "Description": "c1",
           "UsingDefaultValue": false,
@@ -91,16 +90,16 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "d1 = [- dist, dist];\ncl1 = c.Offset(d1<1>);\nc1 = MinimumItemByKey(cl1, fn1);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "3d8799e6f1cb4af4a8072a412306287b",
       "NodeType": "FunctionNode",
-      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.DistanceTo@Autodesk.DesignScript.Geometry.Geometry",
-      "Id": "9bd8451fb5ec4026932de2e620899a66",
       "Inputs": [
         {
-          "Id": "9f2bebe7fe624bcb8d521faaf580b86a",
+          "Id": "8c9bcdd746f54370a4674cd4a55cee26",
           "Name": "geometry",
           "Description": "Autodesk.DesignScript.Geometry.Geometry",
           "UsingDefaultValue": false,
@@ -109,7 +108,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0bc6ed7a47424808b42572e5d362b8b4",
+          "Id": "737aec7a7b5b47eba891216979155663",
           "Name": "other",
           "Description": "The other Geometry\n\nGeometry",
           "UsingDefaultValue": false,
@@ -120,7 +119,7 @@
       ],
       "Outputs": [
         {
-          "Id": "0ee2e1f657f3431db97c2231f5bc1bd5",
+          "Id": "2707398242f0409e96ff0c088bc8fba9",
           "Name": "double",
           "Description": "The distance",
           "UsingDefaultValue": false,
@@ -129,12 +128,12 @@
           "KeepListStructure": false
         }
       ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Geometry.DistanceTo@Autodesk.DesignScript.Geometry.Geometry",
       "Replication": "Auto",
       "Description": "Obtain the distance from this Geometry to another\n\nGeometry.DistanceTo (other: Geometry): double"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "curve",
         "TypeName": "var",
@@ -142,11 +141,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "f92b7735db774782b432dc62a23c6f50",
+      "Id": "c34e848b63f24b3c85f453ff231d4673",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "2daf40e7821e4c52bdec99ed795bb5ec",
+          "Id": "190375fd53764c15a4e41d65d6582dc9",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -160,7 +160,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "distance",
         "TypeName": "var",
@@ -168,11 +167,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "bc484a1a109340adb28c99f568e84dd0",
+      "Id": "8f0d31c273274b96b93e8efe032b5fad",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "cf4ff0fe1e9e408a8c4654effc6734e5",
+          "Id": "56840e939d9c4a9d9d46dd2fd0a10959",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -186,13 +186,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "curve",
-      "Id": "f057e0f6a2df46a5b9a199be52d1e869",
+      "Id": "ee24d58823cd4356bafd25181eacec7f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "097c4d0180c9483eade41e60c0e4be18",
+          "Id": "ecde0401d3bd40629d6ab0180d9661b8",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -207,7 +207,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "point",
         "TypeName": "var",
@@ -215,11 +214,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "1705570fb0734ff3a99ecb39b3f1f5a1",
+      "Id": "c10ee62ee9d9489a8ae013896e65ac73",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "90f4eec47567458fa2746a83f99cea50",
+          "Id": "9f3e15b956704fdfbd7e2ba9f7941220",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -234,119 +234,127 @@
   ],
   "Connectors": [
     {
-      "Start": "239cd8ef4e0c4b9ba769d08b48769e31",
-      "End": "097c4d0180c9483eade41e60c0e4be18",
-      "Id": "87a1420f697d47b99c0df43a49676cd8"
+      "Start": "591f9bb1c1ad4418b64fd777c2296597",
+      "End": "ecde0401d3bd40629d6ab0180d9661b8",
+      "Id": "c42be219a6994df6a7c2b92f75605503",
+      "IsHidden": "False"
     },
     {
-      "Start": "0ee2e1f657f3431db97c2231f5bc1bd5",
-      "End": "65da5180059643e19177995449f518de",
-      "Id": "d48e3324f5a642a09586c2287dd0f91d"
+      "Start": "2707398242f0409e96ff0c088bc8fba9",
+      "End": "6456f239989646ffbaa05cfc689e7fc4",
+      "Id": "5aac85b5a477449ea9d1eda453372be3",
+      "IsHidden": "False"
     },
     {
-      "Start": "2daf40e7821e4c52bdec99ed795bb5ec",
-      "End": "cbe59d3436b6478f828d592a727a4a91",
-      "Id": "7cdabe1dbd48414c9ace2d44d5798a41"
+      "Start": "190375fd53764c15a4e41d65d6582dc9",
+      "End": "592b59ebfa58409f8972c0cda9c3a54c",
+      "Id": "46186e84ae964421a08726637dfc4b42",
+      "IsHidden": "False"
     },
     {
-      "Start": "cf4ff0fe1e9e408a8c4654effc6734e5",
-      "End": "c5ee2a8f67434b22a55bd919e2c84b83",
-      "Id": "2472816a4ceb43fca14d5d530fda9d86"
+      "Start": "56840e939d9c4a9d9d46dd2fd0a10959",
+      "End": "a98867eb2f564ecda4444b44b9d05fb7",
+      "Id": "e983b1d878024f68b9c97b246dec4b00",
+      "IsHidden": "False"
     },
     {
-      "Start": "90f4eec47567458fa2746a83f99cea50",
-      "End": "0bc6ed7a47424808b42572e5d362b8b4",
-      "Id": "83973979126c4a198e70f9aca685a53e"
+      "Start": "9f3e15b956704fdfbd7e2ba9f7941220",
+      "End": "737aec7a7b5b47eba891216979155663",
+      "Id": "9a064022995b4b958576c72d0e7ecef0",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 14.848381996154785,
-      "EyeY": 14.656919479370117,
-      "EyeZ": 12.203851699829102,
-      "LookX": -8.12502384185791,
-      "LookY": -10.863901138305664,
-      "LookZ": -15.083101272583008,
-      "UpX": -0.1622035950422287,
-      "UpY": 0.93969261646270752,
-      "UpZ": -0.3011108934879303
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "ab369845d66c47389147442cd820b6b5",
+        "Id": "ea909dd3594a4e73a1122d29e00ffd0e",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 289.056443991798,
         "Y": -2.40809777821374
       },
       {
-        "Id": "9bd8451fb5ec4026932de2e620899a66",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "3d8799e6f1cb4af4a8072a412306287b",
         "Name": "Geometry.DistanceTo",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 54.9899968766821,
-        "Y": 86.0724820375427
-      },
-      {
-        "Id": "f92b7735db774782b432dc62a23c6f50",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -90.58160145907105,
+        "Y": 66.66293559277554
+      },
+      {
+        "Id": "c34e848b63f24b3c85f453ff231d4673",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": -49.1666621437864,
-        "Y": -30.4264819200407
-      },
-      {
-        "Id": "bc484a1a109340adb28c99f568e84dd0",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -30.500692538358436,
+        "Y": -67.18358172014229
+      },
+      {
+        "Id": "8f0d31c273274b96b93e8efe032b5fad",
         "Name": "Input",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": -61.89038450474,
-        "Y": 26.871037129324
-      },
-      {
-        "Id": "f057e0f6a2df46a5b9a199be52d1e869",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -65.64874558227577,
+        "Y": -226.65554899167668
+      },
+      {
+        "Id": "ee24d58823cd4356bafd25181eacec7f",
         "Name": "Output",
-        "ShowGeometry": true,
-        "Excluded": false,
-        "X": 640.673909217829,
-        "Y": 27.8075177544638
-      },
-      {
-        "Id": "1705570fb0734ff3a99ecb39b3f1f5a1",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -70.1681597291677,
-        "Y": 111.433908730436
+        "ShowGeometry": true,
+        "X": 770.3019515453806,
+        "Y": 29.193913929090012
+      },
+      {
+        "Id": "c10ee62ee9d9489a8ae013896e65ac73",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -375.14627912026293,
+        "Y": 102.45907192335935
       }
     ],
     "Annotations": [],
-    "X": 238.930451979491,
-    "Y": 306.258320778078,
-    "Zoom": 1.44258909293313
+    "X": 523.6707762198872,
+    "Y": 374.53866162651457,
+    "Zoom": 0.867977507649013
   }
 }

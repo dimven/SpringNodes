@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Actions",
   "Description": "Fillet a polycurve in its plane. Unlike the built in node, this works in both in the CW and the CCW direction.",
-  "Name": "ꟿ PolyCurve.Fillet+",
+  "Name": "PolyCurve.Fillet+",
   "ElementResolver": {
     "ResolutionMap": {
       "Point": {
@@ -53,9 +53,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "c = pc.Curves();\nisClosed = pc.IsClosed;\nshift = isClosed ? 1 : 0;\nc0 = DSCore.List.ShiftIndices(c, shift);\ndrop = isClosed ? 0 : 1;\nc0f = DSCore.List.DropItems(c0, drop);\na1 = Arc.ByFillet(c, c0f, r);\np1 = a1.StartPoint;\nshift1 = isClosed ? -1 : 1;\np2 = DSCore.List.ShiftIndices(a1.EndPoint, shift1);\npar1 = c.ParameterAtPoint(p1);\npar2 = c.ParameterAtPoint(p2);\npar1f = isClosed ? par1 : par2;\npar2f = isClosed ? par2 : par1;\npar1f[0] = isClosed ? par1f[0] : 0;\nc1 = c.TrimByParameter(par1f, par2f);\nc2 = [Imperative]{\nif (isClosed)\n{\nreturn = PolyCurve.ByJoinedCurves(Flatten(\n  List.Transpose([c1, a1]) ) );\n}\nelse\n{\n  parE = c[-1].ParameterAtPoint(p2[0]);\n  cE = c[-1].TrimByParameter(parE,1);\n  return = PolyCurve.ByJoinedCurves(Flatten(\n    [List.Transpose([c1, a1]), cE]) );\n}\n};",
       "Id": "138a213920714f8ea9c514d697e79f6d",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "209f036905804995a078d1f41b411df4",
@@ -79,8 +78,8 @@
       "Outputs": [
         {
           "Id": "4b7cb8d87ef54c22b52c8663006db136",
-          "Name": "",
-          "Description": "c",
+          "Name": "c",
+          "Description": "c = pc.Curves()",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -88,8 +87,8 @@
         },
         {
           "Id": "bedc1ef2071a48a59d4a21890c5dd5ba",
-          "Name": "",
-          "Description": "isClosed",
+          "Name": "isClosed",
+          "Description": "isClosed = pc.IsClosed",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -97,8 +96,8 @@
         },
         {
           "Id": "4904a49cdbb64da09f3d87d05ad1437d",
-          "Name": "",
-          "Description": "shift",
+          "Name": "shift",
+          "Description": "shift = ((isClosed ? 1 : 0))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -106,8 +105,8 @@
         },
         {
           "Id": "3314f662d82d4e50a27a2e183ab31ba4",
-          "Name": "",
-          "Description": "c0",
+          "Name": "c0",
+          "Description": "c0 = DSCore.List.ShiftIndices(c, shift)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -115,8 +114,8 @@
         },
         {
           "Id": "4465d86e8ede4540ae79595cc5c84a5a",
-          "Name": "",
-          "Description": "drop",
+          "Name": "drop",
+          "Description": "drop = ((isClosed ? 0 : 1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -124,8 +123,8 @@
         },
         {
           "Id": "4f99e7b8e18b4dcbb1b766a3d6045d76",
-          "Name": "",
-          "Description": "c0f",
+          "Name": "c0f",
+          "Description": "c0f = DSCore.List.DropItems(c0, drop)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -133,8 +132,8 @@
         },
         {
           "Id": "a3565f437c894e93ad4b678954939015",
-          "Name": "",
-          "Description": "a1",
+          "Name": "a1",
+          "Description": "a1 = Autodesk.DesignScript.Geometry.Arc.ByFillet(c, c0f, r)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -142,8 +141,8 @@
         },
         {
           "Id": "29ffd2772abf4c739999aa04fc1e42fb",
-          "Name": "",
-          "Description": "p1",
+          "Name": "p1",
+          "Description": "p1 = a1.StartPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -151,8 +150,8 @@
         },
         {
           "Id": "3ca23911dcc343ea856c47d162b887ad",
-          "Name": "",
-          "Description": "shift1",
+          "Name": "shift1",
+          "Description": "shift1 = ((isClosed ? -1 : 1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -160,8 +159,8 @@
         },
         {
           "Id": "092c7fdcbfb7413580d0b743be5abd14",
-          "Name": "",
-          "Description": "p2",
+          "Name": "p2",
+          "Description": "p2 = DSCore.List.ShiftIndices(a1.EndPoint, shift1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -169,8 +168,8 @@
         },
         {
           "Id": "d534dd5d489c4cbf933109c12c1900f9",
-          "Name": "",
-          "Description": "par1",
+          "Name": "par1",
+          "Description": "par1 = c.ParameterAtPoint(p1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -178,8 +177,8 @@
         },
         {
           "Id": "80daf58bf7e341938b022e078bb81292",
-          "Name": "",
-          "Description": "par2",
+          "Name": "par2",
+          "Description": "par2 = c.ParameterAtPoint(p2)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -187,8 +186,8 @@
         },
         {
           "Id": "fa5714dde8854d95975670fff74be1f2",
-          "Name": "",
-          "Description": "par1f",
+          "Name": "par1f",
+          "Description": "par1f[0] = ((isClosed ? DesignScript.Builtin.Get.ValueAtIndex(par1f, 0) : 0))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -196,8 +195,8 @@
         },
         {
           "Id": "a91ecf5b379e46fd8639c18dafef25f3",
-          "Name": "",
-          "Description": "par2f",
+          "Name": "par2f",
+          "Description": "par2f = ((isClosed ? par2 : par1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -206,7 +205,7 @@
         {
           "Id": "e82078a9c46e4cff91c2bf51b36131fa",
           "Name": "",
-          "Description": "par1f[0]",
+          "Description": "",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -214,8 +213,8 @@
         },
         {
           "Id": "6486944ed33f461f891608d902a95f22",
-          "Name": "",
-          "Description": "c1",
+          "Name": "c1",
+          "Description": "c1 = c.TrimByParameter(par1f, par2f)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -223,8 +222,8 @@
         },
         {
           "Id": "b61098bcb5b142358373e63e68e9b202",
-          "Name": "",
-          "Description": "c2",
+          "Name": "c2",
+          "Description": "c2 = [Imperative]\n{\nif(isClosed)\n{\nreturn = PolyCurve.ByJoinedCurves(Flatten(List.Transpose([c1, a1])));\n\n}\nelse\n{\nparE = DesignScript.Builtin.Get.ValueAtIndex(c, -1).ParameterAtPoint(DesignScript.Builtin.Get.ValueAtIndex(p2, 0));\ncE = DesignScript.Builtin.Get.ValueAtIndex(c, -1).TrimByParameter(parE, 1);\nreturn = PolyCurve.ByJoinedCurves(Flatten([List.Transpose([c1, a1]), cE]));\n\n}\n\n}\n",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -232,11 +231,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "c = pc.Curves();\nisClosed = pc.IsClosed;\nshift = isClosed ? 1 : 0;\nc0 = DSCore.List.ShiftIndices(c, shift);\ndrop = isClosed ? 0 : 1;\nc0f = DSCore.List.DropItems(c0, drop);\na1 = Arc.ByFillet(c, c0f, r);\np1 = a1.StartPoint;\nshift1 = isClosed ? -1 : 1;\np2 = DSCore.List.ShiftIndices(a1.EndPoint, shift1);\npar1 = c.ParameterAtPoint(p1);\npar2 = c.ParameterAtPoint(p2);\npar1f = isClosed ? par1 : par2;\npar2f = isClosed ? par2 : par1;\npar1f[0] = isClosed ? par1f[0] : 0;\nc1 = c.TrimByParameter(par1f, par2f);\nc2 = [Imperative]{\nif (isClosed)\n{\nreturn = PolyCurve.ByJoinedCurves(Flatten(\n  List.Transpose([c1, a1]) ) );\n}\nelse\n{\n  parE = c[-1].ParameterAtPoint(p2[0]);\n  cE = c[-1].TrimByParameter(parE,1);\n  return = PolyCurve.ByJoinedCurves(Flatten(\n    [List.Transpose([c1, a1]), cE]) );\n}\n};"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "polycurve",
         "TypeName": "var",
@@ -245,6 +244,7 @@
         "Description": ""
       },
       "Id": "286a9ba4ced44f9e8384fa16eac85e45",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -262,7 +262,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "radius",
         "TypeName": "var",
@@ -271,6 +270,7 @@
         "Description": ""
       },
       "Id": "431330cc53eb4fc69a3e514dd298a74c",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -288,10 +288,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "polycurve",
       "Id": "e9d8de89bf4147c9951569f0b392af19",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "ec42a74373614a2484a7a5f61ce7f1ab",
@@ -312,82 +312,88 @@
     {
       "Start": "b61098bcb5b142358373e63e68e9b202",
       "End": "ec42a74373614a2484a7a5f61ce7f1ab",
-      "Id": "c739686a0e014bb7a056e2e2108b2d43"
+      "Id": "c739686a0e014bb7a056e2e2108b2d43",
+      "IsHidden": "False"
     },
     {
       "Start": "fb1b15f281c644a39231aecce746860c",
       "End": "209f036905804995a078d1f41b411df4",
-      "Id": "44fc49c758f8422d865a48a026091740"
+      "Id": "44fc49c758f8422d865a48a026091740",
+      "IsHidden": "False"
     },
     {
       "Start": "f5cfbe42933d43e2b56e168b32d64de1",
       "End": "7472b43c0a514c69818485eb79bc218d",
-      "Id": "e075ef86d62e4e6e88adf6f66284e7ec"
+      "Id": "e075ef86d62e4e6e88adf6f66284e7ec",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.6.1.9895",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 39212.46484375,
-      "EyeY": 25630.599609375,
-      "EyeZ": 12235.50390625,
-      "LookX": -16158.62109375,
-      "LookY": -31416.072265625,
-      "LookZ": -17443.23046875,
-      "UpX": -0.44135022163391113,
-      "UpY": 0.760405957698822,
-      "UpZ": -0.47643753886222839
+      "Name": "_Background Preview",
+      "EyeX": 6.618462562561035,
+      "EyeY": 5.735320568084717,
+      "EyeZ": 4.578579902648926,
+      "LookX": -4.003187656402588,
+      "LookY": -3.5679640769958496,
+      "LookZ": -5.252922534942627,
+      "UpX": -0.16707319021224976,
+      "UpY": 0.9612618088722229,
+      "UpZ": -0.2192314714193344
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "138a213920714f8ea9c514d697e79f6d",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 250.0,
         "Y": 0.0
       },
       {
         "Id": "286a9ba4ced44f9e8384fa16eac85e45",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 0.0,
         "Y": 0.0
       },
       {
         "Id": "431330cc53eb4fc69a3e514dd298a74c",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 2.69940132814327,
-        "Y": 63.619157499416
+        "ShowGeometry": true,
+        "X": 15.296607526145067,
+        "Y": 148.20039911457135
       },
       {
         "Id": "e9d8de89bf4147c9951569f0b392af19",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 792.102195130141,
-        "Y": -1.79960088542879
+        "ShowGeometry": true,
+        "X": 862.2866296618657,
+        "Y": 260.04232794446705
       }
     ],
     "Annotations": [],

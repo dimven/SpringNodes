@@ -1,9 +1,9 @@
 {
-  "Uuid": "256691b0-0f18-4ec7-9668-afecd29c935f",
+  "Uuid": "2511b535-8941-4f13-a8db-cbf22f255924",
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Create",
   "Description": "Create a delaunay triangulation of a set of planar points. You can get the result as points or as lines.",
-  "Name": "ꟿ Delaunay2D.ByPoints",
+  "Name": "Delaunay2D.ByPoints",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -33,12 +33,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "15283b5d1f81428983356e31837b7f4f",
       "NodeType": "CodeBlockNode",
-      "Code": "p0 = Point.ByCoordinates(12345.6789,12345.6789,12345.6789);\npts1 = DSCore.List.AddItemToEnd(p0, pts0);\nc1 = DSCore.List.Chop(Delaunay.ByPoints(pts1), 3);\np1 = c1.StartPoint;\nm1 = AllFalse(p0.IsAlmostEqualTo(p1)<1>);\nr1 = asPts ? p1 : c1;\nres = DSCore.List.FilterByBoolMask(r1, m1)[\"in\"];",
-      "Id": "0c214bbe233c4c2fb309a4a673907710",
       "Inputs": [
         {
-          "Id": "542af1f44fcc40f1be003de9cd40db96",
+          "Id": "156e703a0cef4e99b7863f565062ff1e",
           "Name": "pts0",
           "Description": "pts0",
           "UsingDefaultValue": false,
@@ -47,7 +46,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0a073f6842764c27bd3e8ec389a98c3c",
+          "Id": "0cd13e90a8e1492eb2bbcf537cdc324f",
           "Name": "asPts",
           "Description": "asPts",
           "UsingDefaultValue": false,
@@ -58,7 +57,7 @@
       ],
       "Outputs": [
         {
-          "Id": "5c20f48c558e4c59816636e6c03bb799",
+          "Id": "580d268593f04aef8de13c75d86e1c19",
           "Name": "",
           "Description": "p0",
           "UsingDefaultValue": false,
@@ -67,7 +66,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "91dfb4b9e5ea457f911299b426864a4b",
+          "Id": "02360d4dbd934919b1ed331fdb57ac41",
           "Name": "",
           "Description": "pts1",
           "UsingDefaultValue": false,
@@ -76,7 +75,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "a4a03736c1a4444f89fd9aa29d1e1453",
+          "Id": "b500fd79f518493caffc7ad2636c2c64",
           "Name": "",
           "Description": "c1",
           "UsingDefaultValue": false,
@@ -85,7 +84,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "84b566e8a82d4935a8f1ed121b638df1",
+          "Id": "7473211c9a734f0faeb858cceab4a94a",
           "Name": "",
           "Description": "p1",
           "UsingDefaultValue": false,
@@ -94,7 +93,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "3e7b683b7ab34a18981484b1ac5b3dda",
+          "Id": "d7d8cb036ca94defaf594bd4ec51a4f5",
           "Name": "",
           "Description": "m1",
           "UsingDefaultValue": false,
@@ -103,7 +102,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "0ced920a8a6a47108729744ea45aacb0",
+          "Id": "1983f7ade0544ae2b1d42e26e0ee7e87",
           "Name": "",
           "Description": "r1",
           "UsingDefaultValue": false,
@@ -112,7 +111,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "2a478a28ebb2440cbc7b5ab9d12788e2",
+          "Id": "9fc92f4a2b16488182fb62348cc60cdb",
           "Name": "",
           "Description": "res",
           "UsingDefaultValue": false,
@@ -122,11 +121,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "p0 = Point.ByCoordinates(12345.6789,12345.6789,12345.6789);\npts1 = DSCore.List.AddItemToEnd(p0, pts0);\nc1 = DSCore.List.Chop(Delaunay.ByPoints(pts1), 3);\np1 = c1.StartPoint;\nm1 = AllFalse(p0.IsAlmostEqualTo(p1)<1>);\nr1 = asPts ? p1 : c1;\nres = DSCore.List.FilterByBoolMask(r1, m1)[\"in\"];"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "points",
         "TypeName": "var",
@@ -134,11 +133,12 @@
         "DefaultValue": null,
         "Description": ""
       },
-      "Id": "2e3f9a00a5b64a5090aa02bf1fe85f35",
+      "Id": "1b30d4ee01db4ed78d43f1aab6c770de",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "b62764e7461a4f00912ba75b477851ea",
+          "Id": "95ecb0a1de094f6d99372add80937720",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -152,7 +152,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "asPoints",
         "TypeName": "bool",
@@ -160,11 +159,12 @@
         "DefaultValue": "false",
         "Description": ""
       },
-      "Id": "2fe249bf6daa4718a03855f02d94ad44",
+      "Id": "1d7cde24391d436294de7ce44e78325d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "84e1791883074f119513677153e57ed5",
+          "Id": "352b5266527e4ce29795e104e8da219d",
           "Name": "",
           "Description": "Symbol",
           "UsingDefaultValue": false,
@@ -178,13 +178,13 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "pts/lines",
-      "Id": "8e1e2c9c00f84bb69f392cd4fb931df2",
+      "Id": "fc41cf49b9b049d2adddb66e444f958f",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
-          "Id": "e7bd257436374d4fb68bfbc169ef9a41",
+          "Id": "79db0e0260f34268942148057093e99e",
           "Name": "",
           "Description": "",
           "UsingDefaultValue": false,
@@ -200,89 +200,95 @@
   ],
   "Connectors": [
     {
-      "Start": "2a478a28ebb2440cbc7b5ab9d12788e2",
-      "End": "e7bd257436374d4fb68bfbc169ef9a41",
-      "Id": "2b3ab52840ca46428accf4febf20f485"
+      "Start": "9fc92f4a2b16488182fb62348cc60cdb",
+      "End": "79db0e0260f34268942148057093e99e",
+      "Id": "144348f9f02245a38785d7fae1740dea",
+      "IsHidden": "False"
     },
     {
-      "Start": "b62764e7461a4f00912ba75b477851ea",
-      "End": "542af1f44fcc40f1be003de9cd40db96",
-      "Id": "8214eeccd3594c73928a06487ad146db"
+      "Start": "95ecb0a1de094f6d99372add80937720",
+      "End": "156e703a0cef4e99b7863f565062ff1e",
+      "Id": "06c60e425e6c4d8d965400b753910ffa",
+      "IsHidden": "False"
     },
     {
-      "Start": "84e1791883074f119513677153e57ed5",
-      "End": "0a073f6842764c27bd3e8ec389a98c3c",
-      "Id": "bf07ef71541c46f8840c82b6760660ed"
+      "Start": "352b5266527e4ce29795e104e8da219d",
+      "End": "0cd13e90a8e1492eb2bbcf537cdc324f",
+      "Id": "6f041b6fd76c4691a7952b61f73bbd53",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "3.3.0.6316",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 14.848381996154785,
-      "EyeY": 14.656919479370117,
-      "EyeZ": 12.203851699829102,
-      "LookX": -8.12502384185791,
-      "LookY": -10.863901138305664,
-      "LookZ": -15.083101272583008,
-      "UpX": -0.1622035950422287,
-      "UpY": 0.93969261646270752,
-      "UpZ": -0.3011108934879303
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
-        "Id": "0c214bbe233c4c2fb309a4a673907710",
+        "Id": "15283b5d1f81428983356e31837b7f4f",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 250.819027021493,
         "Y": 3.40193702015219
       },
       {
-        "Id": "2e3f9a00a5b64a5090aa02bf1fe85f35",
+        "Id": "1b30d4ee01db4ed78d43f1aab6c770de",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.0,
-        "Y": 0.0
+        "ShowGeometry": true,
+        "X": -16.396033710662266,
+        "Y": -94.2771938363085
       },
       {
-        "Id": "2fe249bf6daa4718a03855f02d94ad44",
+        "Id": "1d7cde24391d436294de7ce44e78325d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 0.819027021493071,
-        "Y": 62.3641087002425
+        "ShowGeometry": true,
+        "X": -79.52153816075247,
+        "Y": 37.77005813424901
       },
       {
-        "Id": "8e1e2c9c00f84bb69f392cd4fb931df2",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
+        "Id": "fc41cf49b9b049d2adddb66e444f958f",
         "Name": "Output",
-        "ShowGeometry": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 850.562124670343,
-        "Y": 4.24399852945685
+        "ShowGeometry": true,
+        "X": 919.4254662551247,
+        "Y": 100.16079573683156
       }
     ],
     "Annotations": [],
-    "X": 40.4174276155268,
-    "Y": 220.325108977636,
+    "X": 208.4174276155268,
+    "Y": 277.325108977636,
     "Zoom": 1.2198072017255
   }
 }

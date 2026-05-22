@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Geometry.Create",
   "Description": "Create a voronoi tessellation of a set of planar points. The cell lines will be culled to the bounding extent of the points.",
-  "Name": "ꟿ Voronoi2D.ByPoints",
+  "Name": "Voronoi2D.ByPoints",
   "ElementResolver": {
     "ResolutionMap": {
       "Math": {
@@ -85,12 +85,11 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "bb = BoundingBox.ByGeometry(pts);\na0 = bb.MinPoint;\nb0 = bb.MaxPoint;\nx = a0.DistanceTo(b0) * 0.1;\nv1 = Autodesk.Vector.ByCoordinates(x, x, 0);\na = a0.Subtract(v1);\nb = b0.Add(v1);\nf1 = Autodesk.Surface.ByPerimeterPoints([\n  Point.ByCoordinates(a.X, a.Y),\n  Point.ByCoordinates(b.X, a.Y),\n  Point.ByCoordinates(b.X, b.Y),\n  Point.ByCoordinates(a.X, b.Y)]);\nuv1 = f1.UVParameterAtPoint(pts);\nln0 = Voronoi.ByParametersOnSurface(uv1, f1);\nmask = ln0.StartPoint.DoesIntersect(f1) &&\n  ln0.EndPoint.DoesIntersect(f1);\nln1 = List.FilterByBoolMask(ln0, mask)[\"in\"];\nln2 = Flatten(List.FilterByBoolMask(ln0, mask)[\"out\"].\n  Intersect(f1) );\nList.Join([ln1, ln2]);",
       "Id": "1f2c77e7c4b54fe5adddb922b70d0047",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "1ec723b9caa4410a93ce8bc1266111af",
+          "Id": "5327adb6f6e743cf992b8d324795d9d7",
           "Name": "pts",
           "Description": "pts",
           "UsingDefaultValue": false,
@@ -101,126 +100,126 @@
       ],
       "Outputs": [
         {
-          "Id": "5cde715887594726885d2074dc67c4d3",
-          "Name": "",
-          "Description": "bb",
+          "Id": "6ef2b5ff6d2346b1acb8bf1ebb1d8220",
+          "Name": "bb",
+          "Description": "bb = Autodesk.DesignScript.Geometry.BoundingBox.ByGeometry(pts)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "41c5b1648fef4b83b8b99ec386df1802",
-          "Name": "",
-          "Description": "a0",
+          "Id": "ab17711e544a42b6b2b3818ed6936b2a",
+          "Name": "a0",
+          "Description": "a0 = bb.MinPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "c843bf46c9fd46668bd0ff5316ab4258",
-          "Name": "",
-          "Description": "b0",
+          "Id": "fc556f55a47f4de9b24d7d1e68b3bdf9",
+          "Name": "b0",
+          "Description": "b0 = bb.MaxPoint",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "fbe3679c4cdd43c6969f6dcff3459473",
-          "Name": "",
-          "Description": "x",
+          "Id": "899b4ac26dbb4fa3864112d09fe0d88c",
+          "Name": "x",
+          "Description": "x = (a0.DistanceTo(b0)) * 0.1",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "03771b32885e41cd9d96e5440cd95926",
-          "Name": "",
-          "Description": "v1",
+          "Id": "92e42150ce0b45f9b924fa19f8bf4bdc",
+          "Name": "v1",
+          "Description": "v1 = Autodesk.DesignScript.Geometry.Vector.ByCoordinates(x, x, 0)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "c54c0045be194e9f9e9b61699ecf6f50",
-          "Name": "",
-          "Description": "a",
+          "Id": "99fe6fca62204090a862cf283b56c3a1",
+          "Name": "a",
+          "Description": "a = a0.Subtract(v1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "90f2fa16eb2c4df991b8f5ece3645917",
-          "Name": "",
-          "Description": "b",
+          "Id": "84f88c8359194b6e9db3d621a03ee8b8",
+          "Name": "b",
+          "Description": "b = b0.Add(v1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "8eef99713762461581c12425ec362724",
-          "Name": "",
-          "Description": "f1",
+          "Id": "5a8a9301a8d549608db1b7a549fa2d41",
+          "Name": "f1",
+          "Description": "f1 = Autodesk.DesignScript.Geometry.Surface.ByPerimeterPoints([Autodesk.DesignScript.Geometry.Point.ByCoordinates(a.X, a.Y), Autodesk.DesignScript.Geometry.Point.ByCoordinates(b.X, a.Y), Autodesk.DesignScript.Geometry.Point.ByCoordinates(b.X, b.Y), Autodesk.DesignScript.Geometry.Point.ByCoordinates(a.X, b.Y)])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "3068f1e263a045e0b2f34af434cb4b26",
-          "Name": "",
-          "Description": "uv1",
+          "Id": "881852be17d24b5b8b017ea7c17d5961",
+          "Name": "uv1",
+          "Description": "uv1 = f1.UVParameterAtPoint(pts)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "87f1574f8cfe4d139f070c15d39beb38",
-          "Name": "",
-          "Description": "ln0",
+          "Id": "3dbe4d1b050a46279128a37dc6127025",
+          "Name": "ln0",
+          "Description": "ln0 = Tessellation.Voronoi.ByParametersOnSurface(uv1, f1)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "5cf6aeeefc0d4724aa63adb413c2eeb9",
-          "Name": "",
-          "Description": "mask",
+          "Id": "d6df1f00fce741c1a4747cdb3f7136a0",
+          "Name": "mask",
+          "Description": "mask = (ln0.StartPoint.DoesIntersect(f1)) && (ln0.EndPoint.DoesIntersect(f1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "e131457aedca471ba16218ee2c4d788e",
-          "Name": "",
-          "Description": "ln1",
+          "Id": "422b189cbd9b43f19549466ffee7a308",
+          "Name": "ln1",
+          "Description": "ln1 = DesignScript.Builtin.Get.ValueAtIndex(List.FilterByBoolMask(ln0, mask), \"in\")",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "c914214234f741629f95c4c53fe2c4d3",
-          "Name": "",
-          "Description": "ln2",
+          "Id": "2e63384ec538439d92a1312b3aa927b5",
+          "Name": "ln2",
+          "Description": "ln2 = DSCore.List.Flatten(DesignScript.Builtin.Get.ValueAtIndex(List.FilterByBoolMask(ln0, mask), \"out\").Intersect(f1))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "19e4ea7d9bc743deadeaf54a044a33e7",
-          "Name": "",
-          "Description": "Value of expression at line 20",
+          "Id": "f2499d022f604068aeb012a76bcad9d9",
+          "Name": "function",
+          "Description": "DSCore.List.Join([ln1, ln2])",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -228,11 +227,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "bb = BoundingBox.ByGeometry(pts);\na0 = bb.MinPoint;\nb0 = bb.MaxPoint;\nx = a0.DistanceTo(b0) * 0.1;\nv1 = Autodesk.Vector.ByCoordinates(x, x, 0);\na = a0.Subtract(v1);\nb = b0.Add(v1);\nf1 = Autodesk.Surface.ByPerimeterPoints([\n  Point.ByCoordinates(a.X, a.Y),\n  Point.ByCoordinates(b.X, a.Y),\n  Point.ByCoordinates(b.X, b.Y),\n  Point.ByCoordinates(a.X, b.Y)]);\nuv1 = f1.UVParameterAtPoint(pts);\nln0 = Voronoi.ByParametersOnSurface(uv1, f1);\nmask = ln0.StartPoint.DoesIntersect(f1) &&\n  ln0.EndPoint.DoesIntersect(f1);\nln1 = List.FilterByBoolMask(ln0, mask)[\"in\"];\nln2 = DSCore.List.Flatten(List.FilterByBoolMask(ln0, mask)[\"out\"].\n  Intersect(f1) );\nList.Join([ln1, ln2]);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "points",
         "TypeName": "var",
@@ -241,6 +240,7 @@
         "Description": ""
       },
       "Id": "3e10561470c34ffd8139df796d59e0b8",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -258,10 +258,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "lines",
       "Id": "46c77c1ecc8a4a87a20078f4daccf531",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "2f0f6b149bc240dc9518f797144e942a",
@@ -280,67 +280,72 @@
   ],
   "Connectors": [
     {
-      "Start": "19e4ea7d9bc743deadeaf54a044a33e7",
+      "Start": "f2499d022f604068aeb012a76bcad9d9",
       "End": "2f0f6b149bc240dc9518f797144e942a",
-      "Id": "54d1e86fb5df41859cafe7b0b39f7484"
+      "Id": "4acba8d806a0495798fbbc1bcd481ecd",
+      "IsHidden": "False"
     },
     {
       "Start": "30586a8eefb744c6bfd2982b8eff866a",
-      "End": "1ec723b9caa4410a93ce8bc1266111af",
-      "Id": "bac2ccb7c3c74b97939542657b55755c"
+      "End": "5327adb6f6e743cf992b8d324795d9d7",
+      "Id": "4f85ec9e8f714aebab9d4dab5ff27791",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
+      "Name": "_Background Preview",
+      "EyeX": 1.8443180322647095,
+      "EyeY": 1.9083207845687866,
+      "EyeZ": 3.3019278049468994,
+      "LookX": 1.485518455505371,
+      "LookY": -1.6093120574951172,
+      "LookZ": -7.1800079345703125,
       "UpX": 0.0,
       "UpY": 1.0,
       "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "1f2c77e7c4b54fe5adddb922b70d0047",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": false,
         "Excluded": false,
+        "ShowGeometry": false,
         "X": 250.0,
         "Y": 0.0
       },
       {
         "Id": "3e10561470c34ffd8139df796d59e0b8",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 92.0,
-        "Y": -5.0
+        "ShowGeometry": true,
+        "X": -8.0,
+        "Y": -0.3333333333333428
       },
       {
         "Id": "46c77c1ecc8a4a87a20078f4daccf531",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 883.0,
         "Y": 9.0
       }

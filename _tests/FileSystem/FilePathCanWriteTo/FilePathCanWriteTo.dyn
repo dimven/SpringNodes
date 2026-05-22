@@ -1,0 +1,346 @@
+{
+  "Uuid": "48b810c7-c7b2-4cce-b724-b507f719fbcf",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "FilePathCanWriteTo",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "e31f2ba0780d4e8b8eeff3bceaa90dc8",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a81ceb22c2784344b3432a6b5c4c1955",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "C:\\Users\\Public\\Documents\\Autodesk\\test.txt",
+      "InputValue": "..\\..\\..\\..\\..\\..\\..\\Users\\Public\\Documents\\Autodesk\\test.txt"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 472.6666666666667,
+      "WatchHeight": 152.0,
+      "Id": "e4fb164ea51f45c78b4631149efe964d",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "2efb687c654242fa813e988f6c21f665",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0c53c3da322b4ba5b0d7cd08961d7ee5",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "499c1950-fa4e-4a62-9778-4d888a01e7b4",
+      "FunctionType": "Graph",
+      "Id": "e764f55cbd894670bd13f80947cd3e2f",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "adbc753eedac46038d7421fc6949fa9e",
+          "Name": "path",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5bd8642f11d64a5a86ab0d69c85fd1a7",
+          "Name": "bool",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Checks if the user and application has write access to the specified path's directory"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "499c1950-fa4e-4a62-9778-4d888a01e7b4",
+      "FunctionType": "Graph",
+      "Id": "e5e8e2309fec46ddb11837fea7957e3d",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "56e5c0c693234756ac4af01a00a97d42",
+          "Name": "path",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b1f2f3e8271f481ca7b7dc9c602119b9",
+          "Name": "bool",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Checks if the user and application has write access to the specified path's directory"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "Id": "e0e5291178834d58913448834934fa55",
+      "NodeType": "ExtensionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ad0dd5aef5304d1db37d6d6457d4cdcc",
+          "Name": "",
+          "Description": "File Path",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system and returns its file path",
+      "HintPath": "C:\\test.txt",
+      "InputValue": "..\\..\\..\\..\\..\\..\\..\\test.txt"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 520.0,
+      "WatchHeight": 98.66666666666667,
+      "Id": "fe169018dc4947ff949249c8f52f0b74",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "fb2a88c5c8cc4e738efaa0b92d6590e3",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cd8c156d5cb947abac841bb5209c36fa",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a81ceb22c2784344b3432a6b5c4c1955",
+      "End": "adbc753eedac46038d7421fc6949fa9e",
+      "Id": "60c392b9548340daa809185f218d4171",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5bd8642f11d64a5a86ab0d69c85fd1a7",
+      "End": "2efb687c654242fa813e988f6c21f665",
+      "Id": "e6bf3d65b3ac4612a27ec741ad081f4f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b1f2f3e8271f481ca7b7dc9c602119b9",
+      "End": "fb2a88c5c8cc4e738efaa0b92d6590e3",
+      "Id": "d5d98f629e9344d29777fd0f29692929",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ad0dd5aef5304d1db37d6d6457d4cdcc",
+      "End": "56e5c0c693234756ac4af01a00a97d42",
+      "Id": "28633a47e0d449088d030791e27308e7",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "499c1950-fa4e-4a62-9778-4d888a01e7b4"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "FilePath.CanWriteTo.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "e764f55cbd894670bd13f80947cd3e2f",
+        "e5e8e2309fec46ddb11837fea7957e3d"
+      ]
+    },
+    {
+      "Name": "test.txt",
+      "ReferenceType": "External",
+      "Nodes": [
+        "e31f2ba0780d4e8b8eeff3bceaa90dc8"
+      ]
+    },
+    {
+      "Name": "test.txt",
+      "ReferenceType": "External",
+      "Nodes": [
+        "e0e5291178834d58913448834934fa55"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "e31f2ba0780d4e8b8eeff3bceaa90dc8",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 212.66666666666663,
+        "Y": 447.00000000000006
+      },
+      {
+        "Id": "e4fb164ea51f45c78b4631149efe964d",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 985.333333333333,
+        "Y": 446.0
+      },
+      {
+        "Id": "e764f55cbd894670bd13f80947cd3e2f",
+        "Name": "FilePath.CanWriteTo",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 656.0,
+        "Y": 446.0
+      },
+      {
+        "Id": "e5e8e2309fec46ddb11837fea7957e3d",
+        "Name": "FilePath.CanWriteTo",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 648.666666666667,
+        "Y": 716.3333333333333
+      },
+      {
+        "Id": "e0e5291178834d58913448834934fa55",
+        "Name": "File Path",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 205.33333333333348,
+        "Y": 717.3333333333333
+      },
+      {
+        "Id": "fe169018dc4947ff949249c8f52f0b74",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 978.0,
+        "Y": 716.3333333333333
+      }
+    ],
+    "Annotations": [],
+    "X": -69.66666666666663,
+    "Y": -75.0,
+    "Zoom": 1.0
+  }
+}

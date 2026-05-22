@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Simple utility node to get both the first and last items of a list as separate outputs. This avoids the unnecessary sublist when using the List.Deconstruct node.",
-  "Name": "ꟿ List.FirstLast",
+  "Name": "List.FirstLast",
   "ElementResolver": {
     "ResolutionMap": {
       "DSCore.Color": {

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Identical to the built in node but works with negative indices",
-  "Name": "ꟿ List.ItemAtIndex+",
+  "Name": "List.ItemAtIndex+",
   "ElementResolver": {
     "ResolutionMap": {}
   },

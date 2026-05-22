@@ -1,0 +1,296 @@
+{
+  "Uuid": "9f8b7d56-3ef1-4726-90d1-2e53ab6517c6",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "CommonPaths",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "0e2e704405c5418994593235b68c92c1",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "9994aad4f61643f4aa382d0c50806582",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7e0d4dedb45e4db692f75406d7e38634",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "62eb34f04f8d49789d7831402376d7a8",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "fa80f283c0204f56b46c2b21dd9d7dfa",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "202dec643b0442faa73fdaf6e95acf80",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2eb60ce7-b5ce-4cb4-891c-1bfaf088b4ea",
+      "FunctionType": "Graph",
+      "Id": "56f9002654474b8995ca21aefc901732",
+      "NodeType": "FunctionNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fbb8214f03304c53a65b01a8daf9ff59",
+          "Name": "FamilyTemplateFolder",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "274475d6a84e475bb6b27c64a6326ae0",
+          "Name": "GenericModelTemplate",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d6d0c0c78c5340818f434d4c7ba16914",
+          "Name": "MassFamilyTemplate",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Fetches the default family template paths"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 200.0,
+      "Id": "b94351a0538647f997651a44b86c3e0b",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c5e1e54c5387418290acd30d3e5f256c",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ef3ccd6780d74f349b2cca4ce4dfbc39",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fbb8214f03304c53a65b01a8daf9ff59",
+      "End": "9994aad4f61643f4aa382d0c50806582",
+      "Id": "0ae4e2e20dfc4455a51cff55f33babb9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "274475d6a84e475bb6b27c64a6326ae0",
+      "End": "fa80f283c0204f56b46c2b21dd9d7dfa",
+      "Id": "ac05252ff6f6456885e1c1e56e898f08",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d6d0c0c78c5340818f434d4c7ba16914",
+      "End": "c5e1e54c5387418290acd30d3e5f256c",
+      "Id": "e9126295c4d8484a95132b71086c38dd",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "2eb60ce7-b5ce-4cb4-891c-1bfaf088b4ea"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "FamilyTemplatePaths.CommonPaths.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "56f9002654474b8995ca21aefc901732"
+      ]
+    },
+    {
+      "Name": "Metric Generic Model.rft",
+      "ReferenceType": "External",
+      "Nodes": [
+        "62eb34f04f8d49789d7831402376d7a8",
+        "56f9002654474b8995ca21aefc901732"
+      ]
+    },
+    {
+      "Name": "Metric Mass.rft",
+      "ReferenceType": "External",
+      "Nodes": [
+        "56f9002654474b8995ca21aefc901732",
+        "b94351a0538647f997651a44b86c3e0b"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "0e2e704405c5418994593235b68c92c1",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2367.6527191791993,
+        "Y": 1386.6691374817356
+      },
+      {
+        "Id": "62eb34f04f8d49789d7831402376d7a8",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2370.349956650924,
+        "Y": 1719.192525483971
+      },
+      {
+        "Id": "56f9002654474b8995ca21aefc901732",
+        "Name": "FamilyTemplatePaths.CommonPaths",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1740.3620879369253,
+        "Y": 1691.2235074810915
+      },
+      {
+        "Id": "b94351a0538647f997651a44b86c3e0b",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2376.887293992206,
+        "Y": 2016.1268862090446
+      }
+    ],
+    "Annotations": [],
+    "X": -1400.3125157701581,
+    "Y": -951.2242946919912,
+    "Zoom": 0.8599904007593555
+  }
+}

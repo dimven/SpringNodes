@@ -1,0 +1,283 @@
+{
+  "Uuid": "31f4ad37-1d38-4f53-8816-d21b02a69d93",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Delaunay2DByPoints",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "d9f41fd53ed245caa7b5bb9d9c095462",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e55ad0f16f144b709da87f0855c3272e",
+          "Name": "range",
+          "Description": "0..5..0.1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0..5..0.1;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "9abb689e67e148d8be6093cd0a64a657",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "b331f99eba174262b66617ce179d7b89",
+          "Name": "x",
+          "Description": "X coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7698e4d4a4be403f8bf2d90a7418dc41",
+          "Name": "y",
+          "Description": "Y coordinate\n\ndouble\nDefault value : 0",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bde0093a338c49b3b1bca001407fd505",
+          "Name": "Point",
+          "Description": "Point created by coordinates",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double",
+      "Replication": "CrossProduct",
+      "Description": "Form a Point in the XY plane given two 2 cartesian coordinates. The Z component is 0.\n\nPoint.ByCoordinates (x: double = 0, y: double = 0): Point"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "b86a7f549ef1472e8ea840f5a45b542a",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4cd4a426baaf4820a3864792646321c0",
+          "Name": "list",
+          "Description": "List to flatten.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ba7a120b707c401ab616f96461f7520a",
+          "Name": "amount",
+          "Description": "Layers of list nesting to remove (-1 will remove all list nestings)\n\nint\nDefault value : -1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d4f5997040cb4018bea53c09ae313464",
+          "Name": "list",
+          "Description": "Flattened list by amount",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.Flatten@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Flattens a nested list of lists by a certain amount.\n\nList.Flatten (list: var[]..[], amount: int = -1): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "2511b535-8941-4f13-a8db-cbf22f255924",
+      "FunctionType": "Graph",
+      "Id": "8a4529685910407f907e692f35d05e24",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "82164afaf2b54130b1f4716db1c10179",
+          "Name": "points",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f9dfc9ce84f4477da4e0c8bbd836ef53",
+          "Name": "asPoints",
+          "Description": "bool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "73dc3c8e2e7346d3b77f936760a379b5",
+          "Name": "pts/lines",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Create a delaunay triangulation of a set of planar points. You can get the result as points or as lines."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e55ad0f16f144b709da87f0855c3272e",
+      "End": "b331f99eba174262b66617ce179d7b89",
+      "Id": "73f2efa8efb64989afa4aa3697698994",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e55ad0f16f144b709da87f0855c3272e",
+      "End": "7698e4d4a4be403f8bf2d90a7418dc41",
+      "Id": "a53aee00bc364dfbaff5fad37110633a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "bde0093a338c49b3b1bca001407fd505",
+      "End": "4cd4a426baaf4820a3864792646321c0",
+      "Id": "c17264771ffc4d50b1db6fc05c3a2eed",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d4f5997040cb4018bea53c09ae313464",
+      "End": "82164afaf2b54130b1f4716db1c10179",
+      "Id": "ebfb9c2baec646c68dd435e33f96dab5",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "2511b535-8941-4f13-a8db-cbf22f255924"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Delaunay2D.ByPoints.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "8a4529685910407f907e692f35d05e24"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 1.8443180322647095,
+      "EyeY": 1.9083207845687866,
+      "EyeZ": 3.3019278049468994,
+      "LookX": 1.485518455505371,
+      "LookY": -1.6093120574951172,
+      "LookZ": -7.1800079345703125,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d9f41fd53ed245caa7b5bb9d9c095462",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 86.4129751796421,
+        "Y": 250.9827044528197
+      },
+      {
+        "Id": "9abb689e67e148d8be6093cd0a64a657",
+        "Name": "Point.ByCoordinates",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 350.12756985724616,
+        "Y": 239.48216376701242
+      },
+      {
+        "Id": "b86a7f549ef1472e8ea840f5a45b542a",
+        "Name": "List.Flatten",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 637.0380382799223,
+        "Y": 240.540596391917
+      },
+      {
+        "Id": "8a4529685910407f907e692f35d05e24",
+        "Name": "Delaunay2D.ByPoints",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 928.2992972353641,
+        "Y": 240.0234789404558
+      }
+    ],
+    "Annotations": [],
+    "X": 20.761151646868257,
+    "Y": 20.04746233801302,
+    "Zoom": 0.97676875
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "Uuid": "dbe1954b-aeee-4d97-b175-a98c87c4e205",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Median",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "fc151c25884d42089e3bf5c0c289819a",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "ce43a5ac3c2440f3b3e099797d5a3eea",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "06e91c1a2cd348bd86c9cf34af71a249",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "cc03b59007e94cf492f7cdfe5bfdbbc7",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "55c89834f0c84c678daa60559815001d",
+          "Name": "list",
+          "Description": "[6, 5, 2, 3, 4, 1, 0]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "[6, 5, 2, 3, 4, 1, 0];"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "9160abeb-ce13-4b7e-8752-0403a6658b50",
+      "FunctionType": "Graph",
+      "Id": "ae62efbfe2a74631908f23ccfd0330a8",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "f2c4c22ecb36418b8cbee52f620ae515",
+          "Name": "list",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ea8d848d94134615843ae660b4a6c251",
+          "Name": "median",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Calculate a median value from a list of numbers"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 27.333333333333332,
+      "WatchHeight": 40.0,
+      "Id": "6d30b8ca523a41fb9e666d9ad07f958c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "4156cbd8cc9f4fbdb684578070347c94",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c33b7507151448c3aaaacaca8d6225ec",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "55c89834f0c84c678daa60559815001d",
+      "End": "f2c4c22ecb36418b8cbee52f620ae515",
+      "Id": "ee97c8cd1c774a3dbeae5373df9cd994",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ea8d848d94134615843ae660b4a6c251",
+      "End": "4156cbd8cc9f4fbdb684578070347c94",
+      "Id": "368f4ac2977a4ceaa09b5050df00e134",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "9160abeb-ce13-4b7e-8752-0403a6658b50"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Math.Median.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "ae62efbfe2a74631908f23ccfd0330a8"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "fc151c25884d42089e3bf5c0c289819a",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 255.7331064470955,
+        "Y": 1204.0081277002432
+      },
+      {
+        "Id": "cc03b59007e94cf492f7cdfe5bfdbbc7",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 115.92482356128261,
+        "Y": 688.5615505017053
+      },
+      {
+        "Id": "ae62efbfe2a74631908f23ccfd0330a8",
+        "Name": "Math.Median",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 461.61140307606826,
+        "Y": 689.566237093766
+      },
+      {
+        "Id": "6d30b8ca523a41fb9e666d9ad07f958c",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 737.8777352970388,
+        "Y": 688.6926510314421
+      }
+    ],
+    "Annotations": [],
+    "X": 97.79711831709858,
+    "Y": -492.33585955037506,
+    "Zoom": 1.0461121047439308
+  }
+}

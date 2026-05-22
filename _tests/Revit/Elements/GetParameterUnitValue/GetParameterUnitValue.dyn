@@ -1,0 +1,252 @@
+{
+  "Uuid": "fd0cd69d-dcfb-4e48-a40b-aa503ab50949",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "GetParameterUnitValue",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "d9ffb52d-f99b-4d21-bec9-28e42ad7dc59-0004fa15"
+      ],
+      "Id": "f8eb4fdc0d344622bd63b93f2ba34edb",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d71d65d290664b5ab8fefb2b892f9da7",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "555a427a61884687bb88488e5f59c0e4",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c5397686258640c0aa83394d875d8ccd",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4339946ef858434784d54c2ab7c54b53",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "f3efb191-f9bd-4981-bf88-df0312399f21",
+      "FunctionType": "Graph",
+      "Id": "46544c85144d4346b3a6ea01a85936d4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "4e4466be8ff94ee5aaeb596d97515dd5",
+          "Name": "element",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8823663315df4a3e92c7875d7394e3ed",
+          "Name": "paramName",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5659daab86314341a7538a0bc7378452",
+          "Name": "value",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Converts from internal units to the currently set Revit display units. Useful only for parameters with numeric values. If no Value is found, will return a blank string."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3aa13c1a04a14b16a3c033271a4608bf",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "34afd33bd1f24382a124456227fd8d2d",
+          "Name": "string",
+          "Description": "\"Length\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"Length\";"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d71d65d290664b5ab8fefb2b892f9da7",
+      "End": "4e4466be8ff94ee5aaeb596d97515dd5",
+      "Id": "3e93830468e548c282ed2e1d0c3d2c54",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5659daab86314341a7538a0bc7378452",
+      "End": "c5397686258640c0aa83394d875d8ccd",
+      "Id": "30ddcc1025df43eb8e93538d0cf3e740",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "34afd33bd1f24382a124456227fd8d2d",
+      "End": "8823663315df4a3e92c7875d7394e3ed",
+      "Id": "71c288a8d9bb4ec0930e859b75f9a310",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "f3efb191-f9bd-4981-bf88-df0312399f21"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Element.GetParameterUnitValue.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "46544c85144d4346b3a6ea01a85936d4"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f8eb4fdc0d344622bd63b93f2ba34edb",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 372.0340778057273,
+        "Y": 621.8538869960566
+      },
+      {
+        "Id": "555a427a61884687bb88488e5f59c0e4",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1138.2825899784896,
+        "Y": 623.2969347490434
+      },
+      {
+        "Id": "46544c85144d4346b3a6ea01a85936d4",
+        "Name": "Element.GetParameterUnitValue",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 753.1622323053003,
+        "Y": 622.9911931141089
+      },
+      {
+        "Id": "3aa13c1a04a14b16a3c033271a4608bf",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 372.0,
+        "Y": 827.0
+      }
+    ],
+    "Annotations": [],
+    "X": -224.99364357913004,
+    "Y": -300.24895491041514,
+    "Zoom": 0.7988254250495587
+  }
+}

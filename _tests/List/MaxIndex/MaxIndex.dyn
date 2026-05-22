@@ -1,0 +1,348 @@
+{
+  "Uuid": "f4e5ba35-fb59-4c24-8c63-b9680995eca4",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "MaxIndex",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "1e280588-b4c1-45e4-9f8d-e45cfaa2012a",
+      "FunctionType": "Graph",
+      "Id": "a77db6050c664a2080667ead11f6afd9",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "17bbc5e84d6d4ae78b27ad7a807243c8",
+          "Name": "list",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "288127879a1c4f259dd408da980eef71",
+          "Name": "idx",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "14b863823903454aa8c3f61327a53294",
+          "Name": "val",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Gets the maximum index of a list. Good for use with floating point values"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 40.0,
+      "Id": "e27cac221dc64d208e4ba3363b27273c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "3b2378412be94df589653c2256d1a711",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a580ad70ee3446a4ba3cee6fd5eb7369",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 154.66666666666666,
+      "WatchHeight": 40.0,
+      "Id": "010176e3163944d184a8bb35067de6bb",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "328b866d0be34381b6c0db1d89863401",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9c0470dbe3da4e5ab61169bdd8c95690",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 27.333333333333332,
+      "WatchHeight": 40.0,
+      "Id": "5bc0752775c24fe4a06cbb3939c9b68e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "85123e61f4fa404bab749f588c642dc8",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ae0992edbe854e8d9f4dbd964c17c1f8",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "c7010d12799c4783b217f2795ace8723",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "c7c4e36e1dc445cd8dbcb59d7bd723e7",
+          "Name": "amount",
+          "Description": "Amount of random numbers the result list will contain.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e07ed43be7dd4be7879b46bdc07c3169",
+          "Name": "number",
+          "Description": "List of random numbers between 0 and 1.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.Math.RandomList@int",
+      "Replication": "Auto",
+      "Description": "Produces a list containing the given amount of random doubles in the range of [0, 1).\n\nMath.RandomList (amount: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "8a87c26068df4e21913f0168f4cfdafd",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "10014dc51395484988439f200a94d060",
+          "Name": "integer",
+          "Description": "5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "5;"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "288127879a1c4f259dd408da980eef71",
+      "End": "85123e61f4fa404bab749f588c642dc8",
+      "Id": "ebe55a5f89a44bb5a72e8cb7669fc979",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "14b863823903454aa8c3f61327a53294",
+      "End": "328b866d0be34381b6c0db1d89863401",
+      "Id": "1941615d95824b00b5ea742cdaf8adb8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e07ed43be7dd4be7879b46bdc07c3169",
+      "End": "17bbc5e84d6d4ae78b27ad7a807243c8",
+      "Id": "72e492814709464e99e8e90c6e90a59b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "10014dc51395484988439f200a94d060",
+      "End": "c7c4e36e1dc445cd8dbcb59d7bd723e7",
+      "Id": "b015d1457a6246f1be2c345602273bae",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "1e280588-b4c1-45e4-9f8d-e45cfaa2012a"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.MaxIndex.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "a77db6050c664a2080667ead11f6afd9"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a77db6050c664a2080667ead11f6afd9",
+        "Name": "List.MaxIndex",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 764.7799576723085,
+        "Y": 737.2053229956641
+      },
+      {
+        "Id": "e27cac221dc64d208e4ba3363b27273c",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 274.02233499147434,
+        "Y": 1242.786277288027
+      },
+      {
+        "Id": "010176e3163944d184a8bb35067de6bb",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1018.4515905171688,
+        "Y": 885.5286962264431
+      },
+      {
+        "Id": "5bc0752775c24fe4a06cbb3939c9b68e",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1014.088546157566,
+        "Y": 690.1394092128106
+      },
+      {
+        "Id": "c7010d12799c4783b217f2795ace8723",
+        "Name": "Math.RandomList",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 491.69358139107095,
+        "Y": 737.2053229956641
+      },
+      {
+        "Id": "8a87c26068df4e21913f0168f4cfdafd",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 285.2738717765001,
+        "Y": 737.2053229956641
+      }
+    ],
+    "Annotations": [],
+    "X": -191.47972050309085,
+    "Y": -645.6207591091196,
+    "Zoom": 1.2315350734128387
+  }
+}

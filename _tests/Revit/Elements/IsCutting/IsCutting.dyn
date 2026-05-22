@@ -1,0 +1,263 @@
+{
+  "Uuid": "e05c651b-8647-43ca-9209-3be4beca01eb",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "IsCutting",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "d9ffb52d-f99b-4d21-bec9-28e42ad7dc59-0004fdf8"
+      ],
+      "Id": "537b346479234d1eb66654948d7a744f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "408df3119913454da9b67022635d2e5c",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a model element from the document."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "a16f606f57204316a57592fb249f42da",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "79f405cc885e40e99c84e0f049f329ae",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c539db2ef9eb40c7908b73e8cb3a9f2d",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "81fab5e2000749aeb4ddd05eb00833b3",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "3b5febaea4fd444592fa34762d1ef518",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e8f7b2ba5ef2446f908ad3f8d6e38bb2",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "88c455c9-dee7-4336-8e35-382e0b86018a",
+      "FunctionType": "Graph",
+      "Id": "fb0866e9abdc4db986afe811482cdbc8",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "8c7d6bcf57ee4d95ad4b881ff1334399",
+          "Name": "element",
+          "Description": "var[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0286174c2a6a47eea354829b1300df00",
+          "Name": "bool",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "70230242d0584b3d96188604ff051597",
+          "Name": "cutElements",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Tests if the input element (or elements) is a void cut and if it is cutting any elements. In such cases, the cut elements will be provided."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "408df3119913454da9b67022635d2e5c",
+      "End": "8c7d6bcf57ee4d95ad4b881ff1334399",
+      "Id": "2c8cc4f9486e465cb01572f5b770b214",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0286174c2a6a47eea354829b1300df00",
+      "End": "79f405cc885e40e99c84e0f049f329ae",
+      "Id": "650c982762074f239fdf30922e519481",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "70230242d0584b3d96188604ff051597",
+      "End": "3b5febaea4fd444592fa34762d1ef518",
+      "Id": "d0149a7867fe4a6b94c66a8ed3e7c0c8",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "88c455c9-dee7-4336-8e35-382e0b86018a"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Element.IsCutting.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "fb0866e9abdc4db986afe811482cdbc8"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "537b346479234d1eb66654948d7a744f",
+        "Name": "Select Model Element",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 372.86863645366384,
+        "Y": 626.0266802357391
+      },
+      {
+        "Id": "a16f606f57204316a57592fb249f42da",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1138.2825899784896,
+        "Y": 623.2969347490434
+      },
+      {
+        "Id": "81fab5e2000749aeb4ddd05eb00833b3",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1137.0782006044826,
+        "Y": 917.491605292373
+      },
+      {
+        "Id": "fb0866e9abdc4db986afe811482cdbc8",
+        "Name": "Element.IsCutting",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 720.2896748363869,
+        "Y": 627.973273334595
+      }
+    ],
+    "Annotations": [],
+    "X": -26.42259478516928,
+    "Y": -233.46359681881597,
+    "Zoom": 0.7258333509649404
+  }
+}

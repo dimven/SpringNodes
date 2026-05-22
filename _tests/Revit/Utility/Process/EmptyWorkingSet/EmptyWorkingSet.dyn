@@ -1,0 +1,214 @@
+{
+  "Uuid": "fbaf9923-3bdf-4afb-a9bb-e9805167b329",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "EmptyWorkingSet",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "50751b2decab42df9ae3996fb2dc47f0",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c4a47de287a945f99441c0a8f1f313a7",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2b67c3ea78cd43d2bc946e03d575788f",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "37fdeeb1-18bb-42e0-a045-891143b93891",
+      "FunctionType": "Graph",
+      "Id": "d7cf368bc8534e8796f0cb5993fc348c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "33d4a1d4870749a4a074fe8961dd2151",
+          "Name": "refresh",
+          "Description": "bool\nDefault value : true (disabled)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "330e992d6d4f42528b0edb9b75a1ae74",
+          "Name": "success",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Use at your own risk! Removes as many pages as possible from the working set of the active Revit session."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "c418f23d29ef4b0880681ce5f508fba0",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "eb6355e5436948d1a1151c667fe07f6b",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "330e992d6d4f42528b0edb9b75a1ae74",
+      "End": "c4a47de287a945f99441c0a8f1f313a7",
+      "Id": "ee31c7c8148045428a5ce1921bb06ad1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "eb6355e5436948d1a1151c667fe07f6b",
+      "End": "33d4a1d4870749a4a074fe8961dd2151",
+      "Id": "6dbd925f85c14c008ebb05d5c0ba9130",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "37fdeeb1-18bb-42e0-a045-891143b93891"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Process.EmptyWorkingSet.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "d7cf368bc8534e8796f0cb5993fc348c"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.0",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "10.3",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "50751b2decab42df9ae3996fb2dc47f0",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2365.4061173007935,
+        "Y": 2311.6352091799527
+      },
+      {
+        "Id": "d7cf368bc8534e8796f0cb5993fc348c",
+        "Name": "Process.EmptyWorkingSet",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2019.3220496948843,
+        "Y": 2308.649325384736
+      },
+      {
+        "Id": "c418f23d29ef4b0880681ce5f508fba0",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1737.4287415243048,
+        "Y": 2307.121987721262
+      }
+    ],
+    "Annotations": [],
+    "X": -2014.5264088048289,
+    "Y": -2326.8292955033985,
+    "Zoom": 1.2093693544104995
+  }
+}

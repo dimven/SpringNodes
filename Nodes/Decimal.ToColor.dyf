@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Revit.Actions",
   "Description": "Converts a revit colour decimal value to its Dynamo equivalent.",
-  "Name": "ꟿ Decimal.ToColor",
+  "Name": "Decimal.ToColor",
   "ElementResolver": {
     "ResolutionMap": {
       "List": {
@@ -25,9 +25,8 @@
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
-      "NodeType": "CodeBlockNode",
-      "Code": "r = x % 256;\nx1 = ((x - r)/256);\ng = x1 % 256;\nb = (x1 - g)/256;\nc = Color.ByARGB(255,r,g,b);",
       "Id": "872edf86c81245e1b1bcdcffb196ac64",
+      "NodeType": "CodeBlockNode",
       "Inputs": [
         {
           "Id": "1031aa8b20ca4e2f8a6d347b87b10315",
@@ -42,8 +41,8 @@
       "Outputs": [
         {
           "Id": "c22bc5f1002b4356975f86272d296a5c",
-          "Name": "",
-          "Description": "r",
+          "Name": "r",
+          "Description": "r = x % 256",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -51,8 +50,8 @@
         },
         {
           "Id": "6881b4a5ae7e4b8183884ea978919237",
-          "Name": "",
-          "Description": "x1",
+          "Name": "x1",
+          "Description": "x1 = (x - r) / 256",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -60,8 +59,8 @@
         },
         {
           "Id": "46ea2df1ef67403eb30cd5e7c6f28b77",
-          "Name": "",
-          "Description": "g",
+          "Name": "g",
+          "Description": "g = x1 % 256",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -69,8 +68,8 @@
         },
         {
           "Id": "e43ced1e28af46d5a14f33cb402ff631",
-          "Name": "",
-          "Description": "b",
+          "Name": "b",
+          "Description": "b = (x1 - g) / 256",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -78,8 +77,8 @@
         },
         {
           "Id": "3406c32538404d37b2d9e0b52cd84862",
-          "Name": "",
-          "Description": "c",
+          "Name": "c",
+          "Description": "c = DSCore.Color.ByARGB(255, r, g, b)",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -87,11 +86,11 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Allows for DesignScript code to be authored directly"
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "r = x % 256;\nx1 = ((x - r)/256);\ng = x1 % 256;\nb = (x1 - g)/256;\nc = Color.ByARGB(255,r,g,b);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "decimal",
         "TypeName": "var",
@@ -100,6 +99,7 @@
         "Description": ""
       },
       "Id": "b107c22092ab4f978edc16e964dd19b9",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -117,10 +117,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "color",
       "Id": "2e087ca51fae4298a35e39af97fd54fe",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "db088207218f42ab848f39d853953175",
@@ -141,67 +141,72 @@
     {
       "Start": "3406c32538404d37b2d9e0b52cd84862",
       "End": "db088207218f42ab848f39d853953175",
-      "Id": "d2f6f6adaaa9479393616dfcf8b3cbc3"
+      "Id": "d2f6f6adaaa9479393616dfcf8b3cbc3",
+      "IsHidden": "False"
     },
     {
       "Start": "436b000bb0fe4859adab7d0f20ae98e7",
       "End": "1031aa8b20ca4e2f8a6d347b87b10315",
-      "Id": "13a8ed175f2e4e1b9d0c6e93a38c1005"
+      "Id": "13a8ed175f2e4e1b9d0c6e93a38c1005",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 55.528221130371094,
-      "EyeY": 195.78382873535156,
-      "EyeZ": -51.284481048583984,
-      "LookX": -0.858967661857605,
-      "LookY": -87.94305419921875,
-      "LookZ": -60.708198547363281,
-      "UpX": -0.0096487114205956459,
-      "UpY": 0.73135370016098022,
-      "UpZ": -0.68193012475967407
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "872edf86c81245e1b1bcdcffb196ac64",
+        "Name": "Code Block",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Code Block",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 227.558290936142,
         "Y": -153.852763645381
       },
       {
         "Id": "b107c22092ab4f978edc16e964dd19b9",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 82.9911360910862,
-        "Y": -157.87172842291
+        "ShowGeometry": true,
+        "X": -10.317420751282114,
+        "Y": -154.43001935905212
       },
       {
         "Id": "2e087ca51fae4298a35e39af97fd54fe",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 537.80223342098,
-        "Y": -88.3371993056848
+        "ShowGeometry": true,
+        "X": 612.3725964712335,
+        "Y": -89.48443566030411
       }
     ],
     "Annotations": [],

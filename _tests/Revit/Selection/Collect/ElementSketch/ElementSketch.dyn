@@ -122,7 +122,7 @@
       "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
       "NodeType": "ExtensionNode",
       "InstanceId": [
-        "3609393c-bd24-4f03-bc82-811c7512372a-0004fa13"
+        "b264bc7b-1a32-4b24-a0e3-d0b3f8c7e49f-0004f9a2"
       ],
       "Id": "a5ac1389126040a7aca451f6d97cb790",
       "Inputs": [],
@@ -170,6 +170,26 @@
       ],
       "Replication": "Disabled",
       "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "f97996632da14746b791f7bd3dcbb5a4",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f71243918c5844b1a4929f2ef64db1ab",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
     }
   ],
   "Connectors": [
@@ -195,6 +215,12 @@
       "Start": "c06d0ece61224d5ab7ffd798ced07a68",
       "End": "bd2bbc2d8bac45238f430ff92d560ce2",
       "Id": "82f5f795850b45e9a7801165aee4948a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f71243918c5844b1a4929f2ef64db1ab",
+      "End": "bb9b774673fb4b7aa2ba91658ae8cdc7",
+      "Id": "588d3f64f4ac46768b68587ad92e647a",
       "IsHidden": "False"
     }
   ],
@@ -246,12 +272,12 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -22097.466796875,
-      "EyeY": 28607.990234375,
-      "EyeZ": -2637.763671875,
-      "LookX": 19701.869140625,
-      "LookY": -21681.78515625,
-      "LookZ": -12783.443359375,
+      "EyeX": -49877.7109375,
+      "EyeY": 59179.9609375,
+      "EyeZ": 15387.28125,
+      "LookX": 47482.1171875,
+      "LookY": -52253.7578125,
+      "LookZ": -30808.48828125,
       "UpX": 0.4236624836921692,
       "UpY": 0.8631019592285156,
       "UpZ": -0.2748910188674927
@@ -266,7 +292,7 @@
         "Excluded": false,
         "ShowGeometry": true,
         "X": 837.1659886766607,
-        "Y": 480.68448560693287
+        "Y": 482.6350371295872
       },
       {
         "Id": "c946ce37897b426d82f8bec36350d142",
@@ -307,11 +333,21 @@
         "ShowGeometry": true,
         "X": 1638.7268134430888,
         "Y": 526.3002861218968
+      },
+      {
+        "Id": "f97996632da14746b791f7bd3dcbb5a4",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 852.209733365931,
+        "Y": 336.8381577039793
       }
     ],
     "Annotations": [],
-    "X": -518.5664315310553,
-    "Y": 154.20221534542523,
-    "Zoom": 1.0611496168469554
+    "X": -418.9978779933509,
+    "Y": -3.917255132118754,
+    "Zoom": 0.700610015778802
   }
 }

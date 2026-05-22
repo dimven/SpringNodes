@@ -16,7 +16,7 @@
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "f462ac8641d24139806cd2b83d9704b6",
+          "Id": "65aa0c3cf0bd401db8a7ac089982f328",
           "Name": "function",
           "Description": "\"T\" + (0..50)",
           "UsingDefaultValue": false,
@@ -25,7 +25,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "5fc467fcff33442c9bb01290f976cca1",
+          "Id": "afc8e0f13804490aa9ae1627fbff191a",
           "Name": "string",
           "Description": "\"NewSpringsItemName\"",
           "UsingDefaultValue": false,
@@ -34,18 +34,9 @@
           "KeepListStructure": false
         },
         {
-          "Id": "9a8595cdb60349b383114a7c0df17f77",
+          "Id": "347132d28a2148f6b48724df26b3ccf0",
           "Name": "string",
           "Description": "\"SpringsReorderDialog\"",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "1a43043dbdd8411f88a3f1c438e0ed2e",
-          "Name": "boolean",
-          "Description": "true",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -54,7 +45,7 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly",
-      "Code": "\"T\" + (0..50);\n\"NewSpringsItemName\";\n\"SpringsReorderDialog\";\ntrue;"
+      "Code": "\"T\" + (0..50);\n\"NewSpringsItemName\";\n\"SpringsReorderDialog\";"
     },
     {
       "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
@@ -144,37 +135,57 @@
       ],
       "Replication": "Auto",
       "Description": "Press and hold on an item to move it up or down the list. To confirm and close the window, select \"Save Order\". The optional names input will override the object representation."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "3074a61d8c0647ff877ada42fdfe6d4e",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0ccc0eeae18a4448b40f50a5aa7615a3",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
     }
   ],
   "Connectors": [
     {
-      "Start": "f462ac8641d24139806cd2b83d9704b6",
+      "Start": "65aa0c3cf0bd401db8a7ac089982f328",
       "End": "93458e9d102c401fbc81a59c5f80528c",
-      "Id": "6a6ec4f5220a46ac8aadfb34f36154a8",
+      "Id": "f009891a60f74381a59bf6cd141f3c8f",
       "IsHidden": "False"
     },
     {
-      "Start": "5fc467fcff33442c9bb01290f976cca1",
+      "Start": "afc8e0f13804490aa9ae1627fbff191a",
       "End": "c2c2be48195644cba751fa433c034423",
-      "Id": "b1e78f98b8d94beaae3c47e70475cd36",
+      "Id": "391307c6cd6842afadd274b6abb1f096",
       "IsHidden": "False"
     },
     {
-      "Start": "9a8595cdb60349b383114a7c0df17f77",
+      "Start": "347132d28a2148f6b48724df26b3ccf0",
       "End": "fbecd8aefd454237b8f3e5af1a0f35e7",
-      "Id": "4f28e4194ec14dbb84fdd4660a75f31a",
-      "IsHidden": "False"
-    },
-    {
-      "Start": "1a43043dbdd8411f88a3f1c438e0ed2e",
-      "End": "bad6970188c547049493c34d0579a7b8",
-      "Id": "d4d1909cc4f84352986ace20e35d6354",
+      "Id": "c81664d0c26e4ae3b4ba2718582e231a",
       "IsHidden": "False"
     },
     {
       "Start": "052f84ec73564d5386f3754a01ff6bf5",
       "End": "919aa5b0786b473c86e97bbf4bb1c93e",
       "Id": "ce92509c40ce4c6d843fadfb21af349b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0ccc0eeae18a4448b40f50a5aa7615a3",
+      "End": "bad6970188c547049493c34d0579a7b8",
+      "Id": "0399ab037aab4188a6e33926034944c9",
       "IsHidden": "False"
     }
   ],
@@ -220,7 +231,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "4.0.2.3852",
+      "Version": "4.0.0.3277",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -245,8 +256,8 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": 415.2773291672322,
-        "Y": 463.08301720996604
+        "X": 423.1363584566805,
+        "Y": 390.92283918866946
       },
       {
         "Id": "536cc35718004a79a9a3a8ab6da1d8ce",
@@ -255,8 +266,8 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": 1084.1540836525937,
-        "Y": 449.1680824679035
+        "X": 1110.5890003534648,
+        "Y": 389.1536769848449
       },
       {
         "Id": "de86e9b1b9044e71a7c4edeeb0cef078",
@@ -265,13 +276,23 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": 773.9396709050147,
-        "Y": 439.98059841124814
+        "X": 800.3745876058856,
+        "Y": 389.254136633901
+      },
+      {
+        "Id": "3074a61d8c0647ff877ada42fdfe6d4e",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 528.9479544254767,
+        "Y": 645.6682893580379
       }
     ],
     "Annotations": [],
-    "X": -580.5900579359784,
-    "Y": -355.628509845586,
-    "Zoom": 1.436093667282766
+    "X": -138.0858517056218,
+    "Y": -170.98232790321526,
+    "Zoom": 0.9331093018293442
   }
 }

@@ -56,92 +56,6 @@
   "Outputs": [],
   "Nodes": [
     {
-      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\nfrom System.Collections.Generic import *\r\nfrom itertools import repeat\r\nimport uuid\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Geometry as DynGeom\r\nfrom Autodesk.DesignScript.Geometry import Point as DynPoint\r\nfrom Autodesk.DesignScript.Geometry import Vector, BoundingBox\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import (\r\n    FilteredElementCollector, View, SATImportOptions,\r\n    ImportPlacement, ImportUnit, Options, SaveAsOptions,\r\n    FreeFormElement, BuiltInParameter, Material,\r\n    ElementId, UnitUtils, XYZ, ElementTransformUtils,\r\n    ForgeTypeId, IFamilyLoadOptions\r\n)\r\nfrom Autodesk.Revit.DB.Structure import StructuralType\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\ndef tolist(obj1):\r\n    if hasattr(obj1, '__iter__') and not isinstance(obj1, str):\r\n        return obj1\r\n    return [obj1]\r\n\r\ndef PadLists(lists):\r\n    len1 = len(lists[0])\r\n    for i in range(1, len(lists)):\r\n        len2 = len(lists[i])\r\n        if len2 == len1:\r\n            continue\r\n        elif len2 > len1:\r\n            lists[i] = lists[i][:len1]\r\n        else:\r\n            lists[i].extend(repeat(lists[i][-1], len1 - len2))\r\n    return lists\r\n\r\nclass FamOpt1(IFamilyLoadOptions):\r\n    __namespace__ = \"FamOpt_\" + str(uuid.uuid4()).replace('-', '')\r\n\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def OnFamilyFound(self, familyInUse, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n\r\n    def OnSharedFamilyFound(self, sharedFamily, familyInUse, source, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n\r\ngeom     = tolist(IN[0])\r\nfam_path = IN[1]\r\nnames    = tolist(IN[2])\r\ncategory = tolist(IN[3])\r\nmaterial = tolist(IN[4])\r\nisVoid   = tolist(IN[5])\r\nsubcat   = tolist(IN[6])\r\n\r\nif int(doc.Application.VersionNumber) > 2021:\r\n    units = doc.GetUnits().GetFormatOptions(ForgeTypeId(\"autodesk.spec.aec:length\")).GetUnitTypeId()\r\nelse:\r\n    units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits\r\n\r\nfactor = UnitUtils.ConvertToInternalUnits(1, units)\r\nacceptable_views = ('ThreeD', 'FloorPlan', 'EngineeringPlan', 'CeilingPlan', 'Elevation', 'Section')\r\norigin = XYZ.Zero\r\nstr_typ = StructuralType.NonStructural\r\nt1 = TransactionManager.Instance\r\ntemp_path = System.IO.Path.GetTempPath()\r\ninvalid_chars = System.IO.Path.GetInvalidFileNameChars()\r\nsatOpt = SATImportOptions()\r\nsatOpt.Placement = ImportPlacement.Origin\r\nsatOpt.Unit = ImportUnit.Foot\r\nopt1 = Options()\r\nopt1.ComputeReferences = True\r\nSaveAsOpt = SaveAsOptions()\r\nSaveAsOpt.OverwriteExistingFile = True\r\n\r\ndef NewForm_background(s1, name1, cat1, isVoid1, mat1, subcat1):\r\n    try:\r\n        enable_mat = False if mat1 is None else True\r\n        enable_subcat = False if subcat1 is None else True\r\n        if any(c in name1 for c in invalid_chars):\r\n            raise Exception('Family name contains invalid characters')\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc = doc.Application.NewFamilyDocument(fam_path)\r\n        sat_path = '%s%s.sat' % (temp_path, name1)\r\n        if factor != 1:\r\n            s1 = s1.Scale(factor)\r\n        vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry([s1]).MinPoint, DynPoint.Origin())\r\n        s1 = s1.Translate(vec1)\r\n        sat1 = DynGeom.ExportToSAT([s1], sat_path)\r\n        view_fec = FilteredElementCollector(famdoc).OfClass(View)\r\n        view1 = next((v for v in view_fec if str(v.ViewType) in acceptable_views and not v.IsTemplate), None)\r\n        t1.EnsureInTransaction(famdoc)\r\n        satId = famdoc.Import(sat1, satOpt, view1)\r\n        el1 = famdoc.GetElement(satId)\r\n        geom1 = el1.get_Geometry(opt1)\r\n        enum = geom1.GetEnumerator()\r\n        enum.MoveNext()\r\n        geom2 = enum.Current.GetInstanceGeometry()\r\n        enum2 = geom2.GetEnumerator()\r\n        enum2.MoveNext()\r\n        s1 = enum2.Current\r\n        System.IO.File.Delete(sat_path)\r\n        save_path = '%s%s.rfa' % (temp_path, name1)\r\n        try:\r\n            fam_cat = famdoc.Settings.Categories.get_Item(cat1.Name)\r\n            famdoc.OwnerFamily.FamilyCategory = fam_cat\r\n        except Exception:\r\n            pass\r\n        s2 = FreeFormElement.Create(famdoc, s1)\r\n        if isVoid1:\r\n            s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)\r\n            famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)\r\n        else:\r\n            if enable_mat:\r\n                try:\r\n                    mat_fec = FilteredElementCollector(famdoc).OfClass(Material)\r\n                    for m in mat_fec:\r\n                        if m.Name == mat1:\r\n                            fam_mat = m\r\n                            break\r\n                    s2.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(fam_mat.Id)\r\n                except Exception:\r\n                    pass\r\n            if enable_subcat:\r\n                try:\r\n                    current_fam_cat = famdoc.OwnerFamily.FamilyCategory\r\n                    fam_cat_subs = current_fam_cat.SubCategories\r\n                    if fam_cat_subs.Contains(subcat1):\r\n                        new_subcat = fam_cat_subs[subcat1]\r\n                    else:\r\n                        new_subcat = famdoc.Settings.Categories.NewSubcategory(current_fam_cat, subcat1)\r\n                    s2.Subcategory = new_subcat\r\n                except Exception:\r\n                    pass\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc.SaveAs(save_path, SaveAsOpt)\r\n        family1 = famdoc.LoadFamily(doc, FamOpt1())\r\n        famdoc.Close(False)\r\n        System.IO.File.Delete(save_path)\r\n        symbols = family1.GetFamilySymbolIds().GetEnumerator()\r\n        symbols.MoveNext()\r\n        symbol1 = doc.GetElement(symbols.Current)\r\n        t1.EnsureInTransaction(doc)\r\n        if not symbol1.IsActive:\r\n            symbol1.Activate()\r\n        inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)\r\n        rev_vec = XYZ(-vec1.X, -vec1.Y, -vec1.Z)\r\n        ElementTransformUtils.MoveElement(doc, inst1.Id, rev_vec)\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        return inst1, family1\r\n\r\n    except Exception as e:\r\n        return traceback.format_exc(), ''\r\n\r\nif len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(subcat):\r\n    return1 = list(map(NewForm_background, geom, names, category, isVoid, material, subcat))\r\nelif len(geom) == len(names):\r\n    padded = PadLists([geom, category, isVoid, material, subcat])\r\n    p_category, p_isVoid, p_material, p_subcat = padded[1], padded[2], padded[3], padded[4]\r\n    return1 = list(map(NewForm_background, geom, names, p_category, p_isVoid, p_material, p_subcat))\r\nelse:\r\n    return1 = [('Make sure that each geometry\\nobject has a unique family name.', '')]\r\n\r\nOUT = [i[0] for i in return1], [i[1] for i in return1]\r\nsatOpt.Dispose()\r\nopt1.Dispose()\r\nSaveAsOpt.Dispose()",
-      "Engine": "PythonNet3",
-      "VariableInputPorts": true,
-      "Id": "8961e9569bcd43199c84bfab7ddfca19",
-      "NodeType": "PythonScriptNode",
-      "Inputs": [
-        {
-          "Id": "e1c42eba154f4346a2b9d1abb3726204",
-          "Name": "IN[0]",
-          "Description": "Input #0",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "5c58796d92734903b9f09c833ad691ee",
-          "Name": "IN[1]",
-          "Description": "Input #1",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "f881168fbedb4dc2ab116493968ffc19",
-          "Name": "IN[2]",
-          "Description": "Input #2",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "8e9309f77f2d45f2ab13a6e73ec8d79a",
-          "Name": "IN[3]",
-          "Description": "Input #3",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "3649dca78d50469f8c4f331ab9faaf52",
-          "Name": "IN[4]",
-          "Description": "Input #4",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "e25b28c22fd64346bb15c64b876d747b",
-          "Name": "IN[5]",
-          "Description": "Input #5",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        },
-        {
-          "Id": "56ea67092cde424885a81496ae42a5ae",
-          "Name": "IN[6]",
-          "Description": "Input #6",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Outputs": [
-        {
-          "Id": "8955645b4f86425cbc5f6d29806d8047",
-          "Name": "OUT",
-          "Description": "Result of the python script",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "Runs an embedded Python script."
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
       "Parameter": {
         "Name": "geometry",
@@ -293,32 +207,6 @@
       "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
     },
     {
-      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "Parameter": {
-        "Name": "isVoid",
-        "TypeName": "var",
-        "TypeRank": 1,
-        "DefaultValue": "false",
-        "Description": ""
-      },
-      "Id": "9c73e149435740d0ad740392c1f4bda0",
-      "NodeType": "InputNode",
-      "Inputs": [],
-      "Outputs": [
-        {
-          "Id": "137c679b1c49453b93cbcc3d0df762fd",
-          "Name": "",
-          "Description": "Symbol",
-          "UsingDefaultValue": false,
-          "Level": 2,
-          "UseLevels": false,
-          "KeepListStructure": false
-        }
-      ],
-      "Replication": "Disabled",
-      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
-    },
-    {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
       "ElementResolver": null,
       "Symbol": "family",
@@ -379,6 +267,153 @@
       "Code": "res[0];\nres[1];"
     },
     {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\nfrom System.Collections.Generic import *\r\nfrom itertools import repeat\r\nimport uuid\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Geometry as DynGeom\r\nfrom Autodesk.DesignScript.Geometry import Point as DynPoint\r\nfrom Autodesk.DesignScript.Geometry import Vector, BoundingBox\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import (\r\n    FilteredElementCollector, Family, SaveAsOptions,\r\n    FreeFormElement, BuiltInParameter, Material,\r\n    ElementId, UnitUtils, XYZ, ElementTransformUtils,\r\n    ForgeTypeId, IFamilyLoadOptions, ShapeImporter\r\n)\r\nfrom Autodesk.Revit.DB.Structure import StructuralType\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef PadLists(lists):\r\n    len1 = len(lists[0])\r\n    for i in range(1, len(lists)):\r\n        len2 = len(lists[i])\r\n        if len2 == len1:\r\n            continue\r\n        elif len2 > len1:\r\n            lists[i] = lists[i][:len1]\r\n        else:\r\n            lists[i].extend(repeat(lists[i][-1], len1 - len2))\r\n    return lists\r\n\r\nclass FamOpt1(IFamilyLoadOptions):\r\n    __namespace__ = \"FamOpt_\" + str(uuid.uuid4()).replace('-', '')\r\n    def __init__(self): super().__init__()\r\n    def OnFamilyFound(self, familyInUse, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n    def OnSharedFamilyFound(self, sharedFamily, familyInUse, source, overwriteParameterValues):\r\n        overwriteParameterValues = True\r\n        return (True, overwriteParameterValues)\r\n\r\ngeom      = tolist(IN[0])\r\nfam_path  = IN[1]\r\nnames     = tolist(IN[2])\r\ncategory  = tolist(IN[3])\r\nmaterial  = tolist(IN[4])\r\nmat_param = tolist(IN[5])\r\nisVoid    = [str(x).lower() == 'true' for x in tolist(IN[6])]\r\nsubcat    = tolist(IN[7])\r\n\r\nif int(doc.Application.VersionNumber) > 2021:\r\n    units = doc.GetUnits().GetFormatOptions(ForgeTypeId(\"autodesk.spec.aec:length\")).GetUnitTypeId()\r\nelse:\r\n    units = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits\r\n\r\nfactor        = UnitUtils.ConvertToInternalUnits(1, units)\r\norigin        = XYZ.Zero\r\nstr_typ       = StructuralType.NonStructural\r\nt1            = TransactionManager.Instance\r\ntemp_path     = System.IO.Path.GetTempPath()\r\ninvalid_chars = System.IO.Path.GetInvalidFileNameChars()\r\nSaveAsOpt     = SaveAsOptions()\r\nSaveAsOpt.OverwriteExistingFile = True\r\n\r\ndef NewForm_background(s1, name1, cat1, isVoid1, mat1, mat_param1, subcat1):\r\n    try:\r\n        if mat1 is not None and mat_param1 is not None:\r\n            return 'Provide material name (to hard-set) or parameter name (to associate), not both', ''\r\n\r\n        if not isinstance(name1, str):\r\n            return 'Expected a string for family name, got %s' % type(name1).__name__, ''\r\n\r\n        if any(c in name1 for c in invalid_chars):\r\n            raise Exception('Family name contains invalid characters')\r\n\r\n        s1 = list(s1) if hasattr(s1, '__iter__') and not isinstance(s1, str) else [s1]\r\n\r\n        existing = next(\r\n            (f for f in FilteredElementCollector(doc).OfClass(Family)\r\n             if f.Name == name1),\r\n            None\r\n        )\r\n        if existing is not None:\r\n            return 'Family \"%s\" already exists - rename or delete it first' % name1, ''\r\n\r\n        enable_mat    = mat1      is not None\r\n        enable_param  = mat_param1 is not None\r\n        enable_subcat = subcat1   is not None\r\n\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc = doc.Application.NewFamilyDocument(fam_path)\r\n\r\n        fam_mat_id = None\r\n        if enable_mat:\r\n            for m in FilteredElementCollector(famdoc).OfClass(Material):\r\n                if m.Name == mat1:\r\n                    fam_mat_id = m.Id\r\n                    break\r\n            if fam_mat_id is None:\r\n                famdoc.Close(False)\r\n                return 'Material \"%s\" not found in family template' % mat1, ''\r\n\r\n        sat_path = '%s%s.sat' % (temp_path, name1)\r\n\r\n        if factor != 1:\r\n            s1 = [x.Scale(factor) for x in s1]\r\n\r\n        vec1 = Vector.ByTwoPoints(BoundingBox.ByGeometry(s1).MinPoint, DynPoint.Origin())\r\n        s1   = [x.Translate(vec1) for x in s1]\r\n        sat1 = DynGeom.ExportToSAT(s1, sat_path)\r\n\r\n        t1.EnsureInTransaction(famdoc)\r\n        solids = ShapeImporter().Convert(famdoc, sat1)\r\n        System.IO.File.Delete(sat_path)\r\n\r\n        save_path = '%s%s.rfa' % (temp_path, name1)\r\n\r\n        try:\r\n            famdoc.OwnerFamily.FamilyCategory = famdoc.Settings.Categories.get_Item(cat1.Name)\r\n        except Exception:\r\n            pass\r\n\r\n        new_subcat = None\r\n        if enable_subcat:\r\n            try:\r\n                fam_cat      = famdoc.OwnerFamily.FamilyCategory\r\n                fam_cat_subs = fam_cat.SubCategories\r\n                new_subcat   = fam_cat_subs[subcat1] if fam_cat_subs.Contains(subcat1) \\\r\n                               else famdoc.Settings.Categories.NewSubcategory(fam_cat, subcat1)\r\n            except Exception:\r\n                pass\r\n\r\n        fam_param = None\r\n        if enable_param:\r\n            fam_param = next(\r\n                (p for p in famdoc.FamilyManager.Parameters\r\n                 if p.Definition.Name == mat_param1),\r\n                None\r\n            )\r\n            if fam_param is None:\r\n                famdoc.Close(False)\r\n                return 'Family parameter \"%s\" not found in template' % mat_param1, ''\r\n\r\n        allow_cut_set = False\r\n        for solid in solids:\r\n            s2 = FreeFormElement.Create(famdoc, solid)\r\n            if isVoid1:\r\n                s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(1)\r\n                if not allow_cut_set:\r\n                    famdoc.OwnerFamily.get_Parameter(BuiltInParameter.FAMILY_ALLOW_CUT_WITH_VOIDS).Set(1)\r\n                    allow_cut_set = True\r\n            else:\r\n                s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING).Set(0)\r\n                if fam_mat_id is not None:\r\n                    p = s2.LookupParameter(\"Material\")\r\n                    if p is not None:\r\n                        try:\r\n                            p.Set(fam_mat_id)\r\n                        except Exception:\r\n                            pass\r\n                if fam_param is not None:\r\n                    elem_mat_p = s2.LookupParameter(\"Material\")\r\n                    if elem_mat_p is not None:\r\n                        try:\r\n                            famdoc.FamilyManager.AssociateElementParameterToFamilyParameter(elem_mat_p, fam_param)\r\n                        except Exception:\r\n                            pass\r\n                if new_subcat is not None:\r\n                    try:\r\n                        s2.Subcategory = new_subcat\r\n                    except Exception:\r\n                        pass\r\n\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n        famdoc.SaveAs(save_path, SaveAsOpt)\r\n        family1 = famdoc.LoadFamily(doc, FamOpt1())\r\n        famdoc.Close(False)\r\n        System.IO.File.Delete(save_path)\r\n\r\n        symbols = family1.GetFamilySymbolIds().GetEnumerator()\r\n        symbols.MoveNext()\r\n        symbol1 = doc.GetElement(symbols.Current)\r\n\r\n        t1.EnsureInTransaction(doc)\r\n        if not symbol1.IsActive:\r\n            symbol1.Activate()\r\n        inst1 = doc.Create.NewFamilyInstance(origin, symbol1, str_typ)\r\n        ElementTransformUtils.MoveElement(doc, inst1.Id, XYZ(-vec1.X, -vec1.Y, -vec1.Z))\r\n        TransactionManager.ForceCloseTransaction(t1)\r\n\r\n        return inst1, family1\r\n\r\n    except Exception:\r\n        return traceback.format_exc(), ''\r\n\r\n# Dispatch\r\nif len(geom) == len(names) == len(category) == len(isVoid) == len(material) == len(mat_param) == len(subcat):\r\n    return1 = list(map(NewForm_background, geom, names, category, isVoid, material, mat_param, subcat))\r\nelif len(geom) == len(names):\r\n    padded  = PadLists([geom, category, isVoid, material, mat_param, subcat])\r\n    return1 = list(map(NewForm_background, geom, names, padded[1], padded[2], padded[3], padded[4], padded[5]))\r\nelif len(names) == 1:\r\n    return1 = [NewForm_background(geom, names[0], category[0], isVoid[0], material[0], mat_param[0], subcat[0])]\r\nelse:\r\n    return1 = [('Make sure each geometry entry has exactly one family name.', '')]\r\n\r\nOUT = [i[0] for i in return1], [i[1] for i in return1]\r\nSaveAsOpt.Dispose()",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "73d635d74b8f4b9493daa594e51d1dbe",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "8746380f0c4340399df51c4209daf9ba",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e275cb4ffc9040ceadaa88625dc4c820",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "702adee2086a47dc8ee3dfe7e9753591",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cd8702ebf6194336b5a862cff45e0adf",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1417519c772e4debbddecdfb9582885e",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "298056effc9c47cc92748e097874f549",
+          "Name": "IN[5]",
+          "Description": "Input #5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b70059e61b9040a58d018f97f7054a36",
+          "Name": "IN[6]",
+          "Description": "Input #6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "604a3f2909354ccc80b2d7532193b15d",
+          "Name": "IN[7]",
+          "Description": "Input #7",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "de81abb5c6ef4111aa8df7c76beee393",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "materialParameterName",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": "null",
+        "Description": ""
+      },
+      "Id": "1a143bd4528647088b108cb14f6d9899",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "048abba45d874a7680439333f6803cd1",
+          "Name": "",
+          "Description": "Input Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "isVoid",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "60f44d8601da483caf3f5fcf1580c527",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "34a5424f6d2c492bac1102b374fc9cac",
+          "Name": "",
+          "Description": "Input Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
       "Parameter": {
         "Name": "subcategoryName",
@@ -387,14 +422,14 @@
         "DefaultValue": "null",
         "Description": ""
       },
-      "Id": "fe73ef2e6137430fa1d811a0c995ce91",
+      "Id": "fce7ef686a0e4795b65db0f234420525",
       "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "50837258d8f546c78dd858e4839a7c8b",
+          "Id": "ba2516b200964126b444bbb4da5f03b4",
           "Name": "",
-          "Description": "Symbol",
+          "Description": "Input Data",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
@@ -407,45 +442,33 @@
   ],
   "Connectors": [
     {
-      "Start": "8955645b4f86425cbc5f6d29806d8047",
-      "End": "7ef2a847cbda4399aed4cc4b846a1c62",
-      "Id": "2c5ead841f154ed1a0036e6c395b672d",
-      "IsHidden": "False"
-    },
-    {
       "Start": "809ee0ca90c5402e9c65a952463da9a4",
-      "End": "e1c42eba154f4346a2b9d1abb3726204",
-      "Id": "8f7ecac6ec9a4ac7b87c4bad0961ded7",
+      "End": "8746380f0c4340399df51c4209daf9ba",
+      "Id": "e2bcf45aba8b46b490eedd3100120b26",
       "IsHidden": "False"
     },
     {
       "Start": "d5a1d3716dfb466286c34169cc39aa5f",
-      "End": "5c58796d92734903b9f09c833ad691ee",
-      "Id": "a7fc411842364053a13070b285ac019d",
+      "End": "e275cb4ffc9040ceadaa88625dc4c820",
+      "Id": "3853f898d60147609820fc1f56fb3a05",
       "IsHidden": "False"
     },
     {
       "Start": "2910665ba1d14f9fb5150da251405a2c",
-      "End": "f881168fbedb4dc2ab116493968ffc19",
-      "Id": "ef5ae0f9604346f2bbcdb35b543cc483",
+      "End": "702adee2086a47dc8ee3dfe7e9753591",
+      "Id": "35f9a0049ec5475d8f13eda11f65db84",
       "IsHidden": "False"
     },
     {
       "Start": "4e5752dd88d7472aa34c17e6d629597b",
-      "End": "8e9309f77f2d45f2ab13a6e73ec8d79a",
-      "Id": "9508c4eaa46e4e12b7b097da6b12ecc1",
+      "End": "cd8702ebf6194336b5a862cff45e0adf",
+      "Id": "3936fe2de6384fb2bf6b3d1db11f69a1",
       "IsHidden": "False"
     },
     {
       "Start": "0918f79db15a4b0185ecab89e0c435e0",
-      "End": "3649dca78d50469f8c4f331ab9faaf52",
-      "Id": "bc3a89e1c1ad445ba6c123717cdc8ab6",
-      "IsHidden": "False"
-    },
-    {
-      "Start": "137c679b1c49453b93cbcc3d0df762fd",
-      "End": "e25b28c22fd64346bb15c64b876d747b",
-      "Id": "212c7ca861034f308766b769b83667ec",
+      "End": "1417519c772e4debbddecdfb9582885e",
+      "Id": "b7ff234e5a3847a0b714b2fbb34bbaf8",
       "IsHidden": "False"
     },
     {
@@ -461,9 +484,27 @@
       "IsHidden": "False"
     },
     {
-      "Start": "50837258d8f546c78dd858e4839a7c8b",
-      "End": "56ea67092cde424885a81496ae42a5ae",
-      "Id": "e6ac49b82a854ed89c33ee2a3c8c9330",
+      "Start": "de81abb5c6ef4111aa8df7c76beee393",
+      "End": "7ef2a847cbda4399aed4cc4b846a1c62",
+      "Id": "b3744e8f26b344ed8f7fcc9f2459b4b9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "048abba45d874a7680439333f6803cd1",
+      "End": "298056effc9c47cc92748e097874f549",
+      "Id": "f74dd3f40a104db4bfefab5481c6255b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "34a5424f6d2c492bac1102b374fc9cac",
+      "End": "b70059e61b9040a58d018f97f7054a36",
+      "Id": "c7b74863d0b245debd04fa0025a0a634",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ba2516b200964126b444bbb4da5f03b4",
+      "End": "604a3f2909354ccc80b2d7532193b15d",
+      "Id": "a1bb1797b8c74985b43866fb854f6c8f",
       "IsHidden": "False"
     }
   ],
@@ -482,28 +523,18 @@
     },
     "Camera": {
       "Name": "_Background Preview",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+      "EyeX": 1500.26025390625,
+      "EyeY": 1524.0198974609375,
+      "EyeZ": 1310.0283203125,
+      "LookX": -1570.4351806640625,
+      "LookY": -1499.83154296875,
+      "LookZ": -1334.46875,
+      "UpX": -0.3058924674987793,
+      "UpY": 0.9158962965011597,
+      "UpZ": -0.25993046164512634
     },
     "ConnectorPins": [],
     "NodeViews": [
-      {
-        "Id": "8961e9569bcd43199c84bfab7ddfca19",
-        "Name": "Python Script",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "ShowGeometry": true,
-        "X": 345.5438656494846,
-        "Y": 111.69562759250758
-      },
       {
         "Id": "532d65d841f547c09647800aa3c5b9b3",
         "Name": "Input",
@@ -511,8 +542,8 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": -53.592973025830275,
-        "Y": -178.33287223584406
+        "X": -48.115741198525825,
+        "Y": -195.67743968897454
       },
       {
         "Id": "73f878bce6a24ea9b1a7a5d4cc801c2e",
@@ -561,18 +592,8 @@
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": -112.5604667319941,
-        "Y": 349.42986995014587
-      },
-      {
-        "Id": "9c73e149435740d0ad740392c1f4bda0",
-        "Name": "Input",
-        "IsSetAsInput": false,
-        "IsSetAsOutput": false,
-        "Excluded": false,
-        "ShowGeometry": true,
-        "X": -64.44213200003111,
-        "Y": 525.266953010418
+        "X": -97.69035215929546,
+        "Y": 336.4185196990346
       },
       {
         "Id": "17ae28cef9e7415d9e5896ce0500330d",
@@ -595,19 +616,49 @@
         "Y": 111.82499732033075
       },
       {
-        "Id": "fe73ef2e6137430fa1d811a0c995ce91",
+        "Id": "73d635d74b8f4b9493daa594e51d1dbe",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 333.20233838547824,
+        "Y": 112.76930561025728
+      },
+      {
+        "Id": "1a143bd4528647088b108cb14f6d9899",
         "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
         "ShowGeometry": true,
-        "X": -123.32379726806721,
-        "Y": 656.0212494349224
+        "X": -168.18050892498974,
+        "Y": 475.53571301284165
+      },
+      {
+        "Id": "60f44d8601da483caf3f5fcf1580c527",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -59.21212317029688,
+        "Y": 626.0756571151605
+      },
+      {
+        "Id": "fce7ef686a0e4795b65db0f234420525",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -122.0305832317539,
+        "Y": 790.9841981441971
       }
     ],
     "Annotations": [],
-    "X": 351.9970285054505,
-    "Y": 328.3117040389428,
-    "Zoom": 0.7302959097074813
+    "X": 814.4563856889339,
+    "Y": 111.77095529353181,
+    "Zoom": 0.9660137882745192
   }
 }

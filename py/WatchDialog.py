@@ -1,122 +1,149 @@
-# Copyright(c) 2020, Dimitar Venkov
-# @5devene, dimitar.ven@gmail.com
-# www.badmonkeys.net
+#-Reope----------------------------------------#
+#                                              #
+#      Copyright(c) 2020, Dimitar Venkov       #
+#                                              #
+# https://github.com/dimven/SpringNodes/issues #
+# https://www.reope.com/                       #
+#                                              #
+#    ____    _____   _____   ____    _____     #
+#   |  _ \ *|  ___|*|  _  |*|  _ \ *|  ___|    #
+#   | |_) |*| |___ *| | | |*| |_) |*| |___     #
+#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #
+#   | | | |*| |___ *| |_| |*| |    *| |___     #
+#   |_| \_|*|_____|*|_____|*|_|    *|_____|    #
+#                                              #
+#                                              #
+#-Reope-----Updated by Mark Ackerley-----------#
 
+
+import sys
 import clr
 
-clr.AddReference('System.Windows.Forms')
 clr.AddReference('System.Drawing')
+clr.AddReference('System.Windows.Forms')
+
+import System
+from System.Windows.Forms import Application, Form, RichTextBox, RichTextBoxScrollBars, AnchorStyles
 from System.Drawing import Point, Color, Font
-from System.Windows.Forms import *
-from cStringIO import StringIO
+from io import StringIO
+import traceback
+
+import ctypes
+DWMWA_USE_IMMERSIVE_DARK_MODE = 20
+
 
 str_file = StringIO()
-size1 = [30, 23] #height, width
+size1 = [30, 23]  # height, width
 
 def tolist(obj1):
-	if hasattr(obj1,"__iter__"): return obj1
-	else: return [obj1]
+    return obj1 if isinstance(obj1, list) else [obj1]
 
 def write_str(str1, GCL, str_file=str_file, size1=size1):
-	ln1 = len(str1)
-	if ln1 > size1[1]:
-		size1[1] = ln1
-	
-	str_file.write("%s%s\n" % ("".join(GCL), str1) )
+    ln1 = len(str1)
+    if ln1 > size1[1]:
+        size1[1] = ln1
+    str_file.write("%s%s\n" % ("".join([x for x in GCL if x]), str1))
+
+def safe_type_name(x):
+    try:
+        return x.GetType().ToString()
+    except AttributeError:
+        return type(x).__name__
+
+def safe_to_string(x):
+    try:
+        return x.ToString()
+    except AttributeError:
+        return str(x)
 
 def list2str(l1, writeInd, GCL=None, GCint=-1, size1=size1, isDict=False):
-	if GCL is None:
-		GCL = []
-	GCint += 1
-	GCL.append(None)
-	for i, x in enumerate(l1):
-		if isDict:
-			i, x = x, l1[x]
-			GCL[GCint] = "[%s] " % i if writeInd else "  "
-		else:
-			GCL[GCint] = "[%i] " % i if writeInd else "  "
-		if hasattr(x, "Id"): #is element
-			write_str("%s        %i" % (x.ToString(), x.Id), GCL)
-		elif hasattr(x, "__iter__"):
-			if not x:
-				write_str("Empty List", GCL)
-			else:
-				list2str(x, writeInd, GCL, GCint, size1)
-		elif "Dictionary" in x.GetType().ToString():
-			d = x.Components()
-			k, v = d["keys"], d["values"]
-			list2str(dict(zip(k, v)), writeInd, GCL, GCint, size1, True)
-		elif x is None:
-			write_str("null", GCL)
-		else:
-			write_str(x.ToString(), GCL)
-		size1[0] += 19
-	GCL.pop(GCint)
-	GCint -= 1
+    if GCL is None:
+        GCL = []
+    GCint += 1
+    GCL.append(None)
+    for i, x in enumerate(l1):
+        if isDict:
+            i, x = x, l1[x]
+            GCL[GCint] = "[%s] " % i if writeInd else "  "
+        else:
+            GCL[GCint] = "[%i] " % i if writeInd else "  "
+
+        if hasattr(x, "Id"):
+            write_str("%s        %i" % (x.ToString(), x.Id), GCL)
+        elif isinstance(x, list):
+            if not x:
+                write_str("Empty List", GCL)
+            else:
+                list2str(x, writeInd, GCL, GCint, size1)
+        elif "Dictionary" in safe_type_name(x):
+            d = x.Components()
+            k, v = d["keys"], d["values"]
+            list2str(dict(zip(k, v)), writeInd, GCL, GCint, size1, True)
+        elif x is None:
+            write_str("null", GCL)
+        else:
+            write_str(safe_to_string(x), GCL)
+
+        size1[0] += 19
+
+    GCL.pop(GCint)
+    GCint -= 1
+
 
 class WatchBox(Form):
-	def __init__(self, t1):
-		self.Text = "SpringNodes: Expandable Watch Window"
-		self.BackColor = Color.FromArgb(40,40,40)
-		self.ControlBox = False
-		self.TopMost = True
-		self.FormBorderStyle = FormBorderStyle.Sizable
-		self.StartPosition = FormStartPosition.CenterScreen
-		self.Resize += self.resize1
-		self.text1 = None
+    def __init__(self, t1):
+        super().__init__()  # REQUIRED in PythonNet3
+        self.Load += self.on_load
+        self.Text = "SpringNodes: Watch Window"
+        self.BackColor = Color.FromArgb(40, 40, 40)
+        self.ControlBox = True
+        self.TopMost = True
+        self.Width = 800
+        self.Height = 600
 
-		self.button1 = Button()
-		self.button1.Text = 'Close'
-		self.button1.Font = Font(IN[3], 10)
-		self.button1.AutoSize = True
-		self.button1.Width = 200
-		self.button1.ForeColor = Color.FromArgb(234,234,234)
-		self.button1.Click += self.save
-		self.Controls.Add(self.button1)
-		
-		self.box1 = RichTextBox()
-		self.box1.Multiline = True
-		self.box1.Location = Point(5, 5)
-		self.box1.Font = Font(IN[3], 12)
-		self.box1.BackColor = Color.FromArgb(53,53,53)
-		self.box1.ForeColor = Color.FromArgb(234,234,234)
-		self.box1.DetectUrls = True
-		self.box1.Text = t1
-		self.Controls.Add(self.box1)
+        self.box1 = RichTextBox()
+        self.box1.Multiline = True
+        self.box1.Location = Point(5, 5)
+        self.box1.Font = Font("Arial", 12)
+        self.box1.BackColor = Color.FromArgb(53, 53, 53)
+        self.box1.ForeColor = Color.FromArgb(234, 234, 234)
+        self.box1.DetectUrls = True
+        self.box1.WordWrap = False
+        self.box1.Text = t1
+        self.box1.Width = self.ClientSize.Width - 10
+        self.box1.Height = self.ClientSize.Height - 10
+        self.box1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+        self.Controls.Add(self.box1)
 
-	def adjust_controls(self, height1, width1):
-		if height1 > 800:
-			height1 = 800
-			self.box1.ScrollBars = RichTextBoxScrollBars.Vertical
-		if width1 < 23 : width1 = 23
-		if width1 > 88: width1 = 88
-		self.Width = 10 + (width1 + 2) * 9 #character width seems to vary between PCs
-		self.Height = height1 + 90
-		self.box1.Width = self.Width - 17
-		self.box1.Height = self.Height - 80
-		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
-	
-	def resize1(self, sender, event):
-		if self.Width < 210: self.Width = 230
-		if self.Height < 120: self.Height = 120
-		self.box1.Width = self.Width - 17
-		self.box1.Height = self.Height - 80
-		self.button1.Location = Point(self.Width/2 - 103, self.Height - 70)
-	
-	def save(self, sender, event):
-		self.text1 = self.box1.Text
-		self.Close()
+    def on_load(self, sender, event):
+        value = ctypes.c_int(1)
+        ctypes.windll.dwmapi.DwmSetWindowAttribute(
+            int(self.Handle.ToInt64()),
+            DWMWA_USE_IMMERSIVE_DARK_MODE,
+            ctypes.byref(value),
+            ctypes.sizeof(value)
+        )
+        ctypes.windll.uxtheme.SetWindowTheme(
+            int(self.box1.Handle.ToInt64()),
+            "DarkMode_Explorer",
+            None
+        )
 
-l1 = [] if IN[0] is None else tolist(IN[0])
-list2str(l1, IN[1])
-str_content = str_file.getvalue()
-str_file.close()
 
-width1 = 100
-form = WatchBox(str_content)
-form.adjust_controls(*size1)
+try:
+    l1 = [] if IN[0] is None else tolist(IN[0])
+    list2str(l1, IN[1])
+    str_content = str_file.getvalue()
+    str_file.close()
 
-Application.Run(form)
-OUT = form.text1
-Application.Exit()
-form.Dispose()
+    form = WatchBox(str_content)
+    # form.FormClosing += on_close  # removed: on_close was undefined
+
+    Application.Run(form)
+    OUT = str_content
+
+except Exception as e:
+    OUT = "Exception:\n{0}\n\nTraceback:\n{1}".format(
+        str(e),
+        traceback.format_exc()
+    )

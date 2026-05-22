@@ -1,0 +1,603 @@
+{
+  "Uuid": "16e97d6d-2081-42f2-a01c-96933317111b",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first.",
+  "Name": "Mesh.ToTkMesh",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Surface": {
+        "Key": "Autodesk.DesignScript.Geometry.Surface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "mesh",
+        "TypeName": "var",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fee22551bb0b4bf09d8046b848aeff1c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "tkMesh",
+      "Id": "222f59234a694f7b8e69b21234c0cbbb",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "12853c97845945178910338aca597265",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "f95f8d5b49f440e0842a768c85122e4b",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "68e3d093dd654c6d81ac09d2b8dcc8f7",
+          "Name": "m1",
+          "Description": "m1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "66ff847496954453aa345f702b9b5230",
+          "Name": "",
+          "Description": "mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9d2625f7325041f186ae31da6211b5c7",
+          "Name": "",
+          "Description": "fi",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ff1e1566981745b3ae88e9a94b15da22",
+          "Name": "",
+          "Description": "quads",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "mesh = m1;\nfi = mesh.FaceIndices;\nquads = DSCore.List.Flatten(fi.D != null);"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c60409d044784358945f081910fcb585",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "5b4982bf851e4353a110b324ff7f9042",
+          "Name": "m1",
+          "Description": "m1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3aaeffa668cc48448adb50ff6e62a9b0",
+          "Name": "",
+          "Description": "fi",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d59cdb7e2194b9a8df20e0ec5c3d0e6",
+          "Name": "",
+          "Description": "vp",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e83f87638506457c98e15ecd6ddb9f2b",
+          "Name": "",
+          "Description": "s1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e7eec51ef0014d1fb153c58192ebf292",
+          "Name": "",
+          "Description": "fi2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3051fc81aeb44b92ae042e31812db897",
+          "Name": "",
+          "Description": "tkMesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "fi = m1.FaceIndices;\nvp = m1.VertexPositions;\ns1 = DSCore.List.Transpose([fi.A,fi.B,fi.C]);\nfi2 = DSCore.List.Flatten(s1);\ntkMesh = Dynamo.Mesh.ByVerticesAndIndices(vp,fi2);"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "be4b322d6b0d4ed3bb0b370721b73520",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "0ea0b181e19e478bb356b57e783df5fd",
+          "Name": "m1",
+          "Description": "m1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cc35d725aaa3478797e093d450534724",
+          "Name": "",
+          "Description": "fi",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e115db05ca7149b7822cd7ef4c3c7026",
+          "Name": "",
+          "Description": "vp",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "32a9b61d9e314e78b03f8e163ffd46f7",
+          "Name": "",
+          "Description": "fis",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a6619e6abe8f483e802175a99cf6e6f1",
+          "Name": "",
+          "Description": "vp1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fa8592e7dc274309a62c84c98b64da66",
+          "Name": "",
+          "Description": "vp2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c310c9b0c977465cac1bedeb0fd39eda",
+          "Name": "",
+          "Description": "vp3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1d4ea24c085442119105dade72d59dc7",
+          "Name": "",
+          "Description": "vps1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "058526bb094e4d53baa16d097c0bcfc0",
+          "Name": "",
+          "Description": "vp4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7a387fcb339f43eab8248bd4dc01e252",
+          "Name": "",
+          "Description": "vp5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "62715cb1430e49b99e28b94049a6047a",
+          "Name": "",
+          "Description": "vp6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d5f4c721aba740e2948ddd67bff5381c",
+          "Name": "",
+          "Description": "vps2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "119ad8be6b7e4d12ae7173bc8e1e21a5",
+          "Name": "",
+          "Description": "vpt1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6ea0761a3cb34d6b96bc22b297958bb2",
+          "Name": "",
+          "Description": "vpt2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ed43d6a381b247c8ad8d28c84df01ffc",
+          "Name": "",
+          "Description": "vpLots",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d6ffed2700a34d3bb4196dea81ec8ba8",
+          "Name": "",
+          "Description": "fif",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "baa575cbe3e640e288139d537fa10b75",
+          "Name": "",
+          "Description": "fifT",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "031fe8b7e6cc412fa1a9ca99cafeb804",
+          "Name": "",
+          "Description": "tkMesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "fi = m1.FaceIndices;\nvp =DSCore.List.Flatten(m1.VertexPositions);\nfis = DSCore.List.Flatten(fi);\n// mesh vertiex positions are points\n// we need to convert 1 list of 4 points into\n// 2 lists of 3 points, this translation should work\nvp1 = List.GetItemAtIndex(vp@L2<1>, 0);\nvp2 = List.GetItemAtIndex(vp@L2<1>, 1);\nvp3 = List.GetItemAtIndex(vp@L2<1>, 2);\nvps1 = [vp1, vp2, vp3];\nvp4 = List.GetItemAtIndex(vp@L2<1>, 0);\nvp5 = List.GetItemAtIndex(vp@L2<1>, 2);\nvp6 = List.GetItemAtIndex(vp@L2<1>, 3);\nvps2 = [vp4, vp5, vp6];\n// we transpose to give us the points for each mesh\n// in their own sub list\nvpt1 = List.Transpose(vps1);\nvpt2= List.Transpose(vps2);\n// these are now the 2 tri-meshes from the quad\nvpLots = [vpt1, vpt2];\n// face indices are the number we want to place\n// tk meshes are only tri-face, so we don't want\n// a list containing 4... we just need as many lists\n// of 3 as we are providing points for.\n// the translation from 4 to 3 is primarily governed by\n// the point positions\nfif = List.Flatten(fi, -1);\nfifT = List.Transpose([fif.A, fif.B, fif.C]);\ntkMesh = Dynamo.Mesh.ByVerticesAndIndices(vpLots,fifT);"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "QuadMesh",
+      "Id": "2d3ec711d9d74d19ac39a4f1a3cd6aeb",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "36c94f6893f742029e022ebd9828ccd7",
+          "Name": "",
+          "Description": "Output Data",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Logic.RefactoredIf, CoreNodeModels",
+      "Id": "a9d712dff5b04c2cb3d99586b6e5c27f",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "d878b2539e70481ebe5dfdec2242af0e",
+          "Name": "test",
+          "Description": "Boolean test",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "79e405db3acf43b5896cfbfd8e7aaaba",
+          "Name": "true",
+          "Description": "Returned if test is true",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "379de1c242344762ae509abc656264c5",
+          "Name": "false",
+          "Description": "Returned if test is false",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f3337ccb2fe74027822be364b5304892",
+          "Name": "result",
+          "Description": "Result block produced",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Returns the result of either True or False input depending on what boolean value is toggled in the test input. Supports recursion which requires that only a single branch be executed. It's critical that that both True and False branches are isolated and do not interact with each other!"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fee22551bb0b4bf09d8046b848aeff1c",
+      "End": "68e3d093dd654c6d81ac09d2b8dcc8f7",
+      "Id": "28c0f6a5af5a4b74a0ffa3f2474b9231",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "66ff847496954453aa345f702b9b5230",
+      "End": "0ea0b181e19e478bb356b57e783df5fd",
+      "Id": "e234e3414ed44f28960b0b08be66690c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ff1e1566981745b3ae88e9a94b15da22",
+      "End": "5b4982bf851e4353a110b324ff7f9042",
+      "Id": "fbea319b1d304a0c83e2b31206a39ee9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ff1e1566981745b3ae88e9a94b15da22",
+      "End": "36c94f6893f742029e022ebd9828ccd7",
+      "Id": "4c44acc76a814aa8a482e4454bc99384",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ff1e1566981745b3ae88e9a94b15da22",
+      "End": "d878b2539e70481ebe5dfdec2242af0e",
+      "Id": "2981f093685e4c75a96da3584de13245",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3051fc81aeb44b92ae042e31812db897",
+      "End": "379de1c242344762ae509abc656264c5",
+      "Id": "0785f299e4804fd0894e1ffcd2c50ad1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "031fe8b7e6cc412fa1a9ca99cafeb804",
+      "End": "79e405db3acf43b5896cfbfd8e7aaaba",
+      "Id": "d2826aaab58c4aa1900fb063327f189e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f3337ccb2fe74027822be364b5304892",
+      "End": "12853c97845945178910338aca597265",
+      "Id": "a77e4f9ab6c14dc78de87737a375c864",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -1.6276273727416992,
+      "EyeY": 19.6348819732666,
+      "EyeZ": 36.345855712890625,
+      "LookX": 8.628253936767578,
+      "LookY": -9.347274780273438,
+      "LookZ": -41.7032356262207,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -858.2355357500113,
+        "Y": 294.10307529244943
+      },
+      {
+        "Id": "222f59234a694f7b8e69b21234c0cbbb",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1013.8405993316549,
+        "Y": 767.8974833213797
+      },
+      {
+        "Id": "f95f8d5b49f440e0842a768c85122e4b",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -570.7869405237337,
+        "Y": 293.63872894055095
+      },
+      {
+        "Id": "c60409d044784358945f081910fcb585",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 95.6015993068304,
+        "Y": 1007.1612542442574
+      },
+      {
+        "Id": "be4b322d6b0d4ed3bb0b370721b73520",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 103.76943977826568,
+        "Y": 288.6077495005739
+      },
+      {
+        "Id": "2d3ec711d9d74d19ac39a4f1a3cd6aeb",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -480.34216050629425,
+        "Y": 540.9540444370066
+      },
+      {
+        "Id": "a9d712dff5b04c2cb3d99586b6e5c27f",
+        "Name": "If",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 771.4998664285795,
+        "Y": 619.2996485131346
+      }
+    ],
+    "Annotations": [],
+    "X": 730.4401866072399,
+    "Y": -194.60624325340166,
+    "Zoom": 0.93267652361852
+  }
+}

@@ -3,7 +3,7 @@
   "IsCustomNode": true,
   "Category": "Springs.Actions",
   "Description": "Check the items that you'd like to filter in.  Unchecked items will be sent to the out list. The optional names input will override the object representation.",
-  "Name": "ꟿ List.FilterBySelection",
+  "Name": "List.FilterBySelection",
   "ElementResolver": {
     "ResolutionMap": {}
   },
@@ -12,10 +12,11 @@
   "Nodes": [
     {
       "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
-      "NodeType": "PythonScriptNode",
-      "Code": "#Copyright(c) 2016, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n\r\nimport clr\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nfrom System.Drawing import Point, Color, Font\r\nfrom System.Windows.Forms import *\r\n\r\ndef tolist(obj1):\r\n\tif hasattr(obj1,\"__iter__\"): return obj1\r\n\telse: return [obj1]\r\n\t\r\ndef hasInd(l1, i):\r\n\ttry: l1[i] ; return True\r\n\texcept: return False\r\n\r\nclass CheckBoxForm(Form):\r\n\tdef __init__(self, cm1):\r\n\t\tself.Text = \"SpringNodes: Filter By Selection\"\r\n\t\tself.Width = 367\r\n\t\tself.BackColor = Color.FromArgb(40,40,40)\r\n\t\tself.output1 = []\r\n\t\tself.ControlBox = False\r\n\t\tself.TopMost = True\r\n\t\tself.FormBorderStyle = FormBorderStyle.FixedDialog\r\n\t\tself.StartPosition = FormStartPosition.CenterScreen\r\n\t\t\r\n\t\tself.label = Label()\r\n\t\tself.label.Text = cm1\r\n\t\tself.label.Location = Point(5, 5)\r\n\t\tself.label.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.label.Font = Font(\"Calibri\", 10)\r\n\t\tself.label.AutoSize = True\r\n\t\tself.Controls.Add(self.label)\r\n\r\n\t\tself.button1 = Button()\r\n\t\tself.button1.Text = 'Save Selection'\r\n\t\tself.button1.AutoSize = True\r\n\t\tself.button1.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.button1.Font = Font(\"Calibri\", 10)\r\n\t\tself.button1.Click += self.save\r\n\t\tself.Controls.Add(self.button1)\r\n\r\n\t\tself.button2 = Button()\r\n\t\tself.button2.Text = 'Uncheck All'\r\n\t\tself.button2.AutoSize = True\r\n\t\tself.button2.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.button2.Font = Font(\"Calibri\", 10)\r\n\t\tself.button2.Click += self.uncheckAll\r\n\t\tself.Controls.Add(self.button2)\r\n\r\n\t\tself.button3 = Button()\r\n\t\tself.button3.Text = 'Check All'\r\n\t\tself.button3.AutoSize = True\r\n\t\tself.button3.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.button3.Font = Font(\"Calibri\", 10)\r\n\t\tself.button3.Click += self.checkAll\r\n\t\tself.Controls.Add(self.button3)\r\n\t\t\r\n\t\tself.panel1 = Panel()\r\n\t\tself.panel1.Location = Point(5, 31)\r\n\t\tself.panel1.Width = 350\r\n\t\tself.panel1.BackColor = Color.FromArgb(53,53,53)\r\n\t\tself.panel1.ForeColor = Color.FromArgb(234,234,234)\r\n\t\tself.Controls.Add(self.panel1)\r\n\t\t\r\n\tdef add_check(self, text1, y1, b1):\r\n\t\tself.check1 = CheckBox()\r\n\t\tself.check1.Text = text1\r\n\t\tself.check1.Location = Point(5, y1)\r\n\t\tself.check1.AutoSize = True\r\n\t\tself.check1.Font = Font(\"Calibri\", 10)\r\n\t\tself.check1.Checked = b1\r\n\t\tself.panel1.Controls.Add(self.check1)\r\n\t\r\n\tdef btn_adjust(self,y1):\r\n\t\tif y1 > 700:\r\n\t\t\ty1 = 700\r\n\t\t\tself.panel1.AutoScroll = True\r\n\t\t\tself.panel1.Focus()\r\n\t\tself.panel1.Height = y1\r\n\t\tself.button1.Location = Point(5,   y1 + 38)\r\n\t\tself.button2.Location = Point(170, y1 + 38)\r\n\t\tself.button3.Location = Point(275, y1 + 38)\r\n\t\tself.Height = y1 + 100\r\n\t\t\t\r\n\tdef save(self, sender, event):\r\n\t\tctrl1 = self.panel1.Controls\r\n\t\tcount1 = ctrl1.Count\r\n\t\tloc = 0\r\n\t\tself.output1 = [c.Checked == 1 for c in ctrl1]\r\n\t\t#for i in xrange(count1):\r\n\t\t#\tif ctrl1[i].Checked == 1:\r\n\t\t#\t\tself.output1.append(l1[loc])\r\n\t\t#\telse:\r\n\t\t#\t\tself.output2.append(l1[loc])\r\n\t\t#\tloc += 1\r\n\t\tself.Close()\r\n\t\r\n\tdef uncheckAll(self, sender, event):\r\n\t\tctrl1 = self.panel1.Controls\r\n\t\tcount1 = ctrl1.Count\r\n\t\tfor i in xrange(count1):\r\n\t\t\tctrl1[i].Checked = False\r\n\t\r\n\tdef checkAll(self, sender, event):\r\n\t\tctrl1 = self.panel1.Controls\r\n\t\tcount1 = ctrl1.Count\r\n\t\tfor i in xrange(count1):\r\n\t\t\tctrl1[i].Checked = True\r\n\r\nl1 = tolist(IN[0])\r\nif IN[1] == None: names = None\r\nelse: names = tolist(IN[1])\r\n\r\nform = CheckBoxForm(IN[2])\r\ny1 = 5\r\nfor i in xrange(len(l1)):\r\n\ttry:\r\n\t\tif hasInd(names, i): val1 = names[i].ToString()\r\n\t\telse: val1 = l1[i].ToString()\r\n\t\tform.add_check(val1, y1, IN[3])\r\n\t\ty1 += 25\r\n\texcept: pass\r\nform.btn_adjust(y1)\r\n\r\nApplication.Run(form)\r\nOUT = form.output1#, form.output2\r\nApplication.Exit()",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nfrom System.Drawing import Point, Color, Font\r\nfrom System.Windows.Forms import *\r\n\r\nimport ctypes\r\nDWMWA_USE_IMMERSIVE_DARK_MODE = 20\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef hasInd(l1, i):\r\n    try: l1[i]; return True\r\n    except: return False\r\n\r\nclass CheckBoxForm(Form):\r\n    def __init__(self, cm1):\r\n        super().__init__()\r\n        self.Load += self.on_load\r\n        self.Text = \"SpringNodes: Filter By Selection\"\r\n        self.Width = 450\r\n        self.BackColor = Color.FromArgb(40, 40, 40)\r\n        self.output1 = None\r\n        self.objects = []\r\n        self.ControlBox = True\r\n        self.TopMost = True\r\n        self.FormBorderStyle = FormBorderStyle.Sizable\r\n        self.Resize += self.on_resize\r\n        self.StartPosition = FormStartPosition.CenterScreen\r\n        self.FormClosing += self.DisableForceClose\r\n\r\n        self.label = Label()\r\n        self.label.Text = cm1\r\n        self.label.Location = Point(5, 5)\r\n        self.label.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.label.Font = Font(\"Calibri\", 10)\r\n        self.label.AutoSize = True\r\n        self.Controls.Add(self.label)\r\n\r\n        self.clb = CheckedListBox()\r\n        self.clb.Location = Point(5, 31)\r\n        self.clb.Width = self.Width - 20\r\n        self.clb.BackColor = Color.FromArgb(53, 53, 53)\r\n        self.clb.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.clb.Font = Font(\"Calibri\", 10)\r\n        self.clb.BorderStyle = getattr(BorderStyle, 'None')\r\n        self.clb.CheckOnClick = True\r\n        self.clb.IntegralHeight = False\r\n        self.clb.Anchor = AnchorStyles.Top | AnchorStyles.Left\r\n        self.Controls.Add(self.clb)\r\n\r\n        self.button1 = Button()\r\n        self.button1.Text = 'Save Selection'\r\n        self.button1.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.button1.Font = Font(\"Calibri\", 10)\r\n        self.button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left\r\n        self.button1.Click += self.save\r\n        self.Controls.Add(self.button1)\r\n\r\n        self.button2 = Button()\r\n        self.button2.Text = 'Uncheck All'\r\n        self.button2.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.button2.Font = Font(\"Calibri\", 10)\r\n        self.button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left\r\n        self.button2.Click += self.uncheckAll\r\n        self.Controls.Add(self.button2)\r\n\r\n        self.button3 = Button()\r\n        self.button3.Text = 'Check All'\r\n        self.button3.ForeColor = Color.FromArgb(234, 234, 234)\r\n        self.button3.Font = Font(\"Calibri\", 10)\r\n        self.button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left\r\n        self.button3.Click += self.checkAll\r\n        self.Controls.Add(self.button3)\r\n\r\n    def on_load(self, sender, event):\r\n        value = ctypes.c_int(1)\r\n        ctypes.windll.dwmapi.DwmSetWindowAttribute(\r\n            int(self.Handle.ToInt64()),\r\n            DWMWA_USE_IMMERSIVE_DARK_MODE,\r\n            ctypes.byref(value),\r\n            ctypes.sizeof(value)\r\n        )\r\n        ctypes.windll.uxtheme.SetWindowTheme(\r\n            int(self.clb.Handle.ToInt64()),\r\n            \"DarkMode_Explorer\",\r\n            None\r\n        )\r\n\r\n    def btn_adjust(self, count):\r\n        clb_h = min(count * 20 + 10, 300)\r\n        self.clb.Height = clb_h\r\n        self.clb.ScrollAlwaysVisible = True\r\n        btn_y = 31 + clb_h + 8\r\n        btn_width = (self.Width - 40) // 3\r\n        self.button1.Width = btn_width\r\n        self.button2.Width = btn_width\r\n        self.button3.Width = btn_width\r\n        self.button1.Location = Point(5, btn_y)\r\n        self.button2.Location = Point(5 + btn_width + 5, btn_y)\r\n        self.button3.Location = Point(5 + (btn_width + 5) * 2, btn_y)\r\n        self.Height = btn_y + 70\r\n        self.clb.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom\r\n                         | AnchorStyles.Left | AnchorStyles.Right)\r\n\r\n    def on_resize(self, sender, event):\r\n        self.clb.Width = self.Width - 20\r\n        btn_width = (self.Width - 40) // 3\r\n        btn_y = self.clb.Bottom + 8\r\n        self.button1.Width = btn_width\r\n        self.button2.Width = btn_width\r\n        self.button3.Width = btn_width\r\n        self.button1.Location = Point(5, btn_y)\r\n        self.button2.Location = Point(5 + btn_width + 5, btn_y)\r\n        self.button3.Location = Point(5 + (btn_width + 5) * 2, btn_y)\r\n\r\n    def save(self, sender, event):\r\n        self.output1 = [self.objects[i] for i in range(self.clb.Items.Count)\r\n                        if self.clb.GetItemChecked(i)]\r\n        self.Close()\r\n\r\n    def uncheckAll(self, sender, event):\r\n        for i in range(self.clb.Items.Count):\r\n            self.clb.SetItemChecked(i, False)\r\n\r\n    def checkAll(self, sender, event):\r\n        for i in range(self.clb.Items.Count):\r\n            self.clb.SetItemChecked(i, True)\r\n\r\n    def DisableForceClose(self, sender, event):\r\n        if self.output1 is None:\r\n            self.output1 = None\r\n\r\ntry:\r\n    l1 = tolist(IN[0])\r\n    if IN[1] is None: names = None\r\n    else: names = tolist(IN[1])\r\n\r\n    form = CheckBoxForm(IN[2])\r\n    for i in range(len(l1)):\r\n        try:\r\n            if hasInd(names, i):\r\n                candidate = names[i]\r\n                val1 = candidate if isinstance(candidate, str) else str(l1[i])\r\n            else:\r\n                val1 = str(l1[i])\r\n            form.clb.Items.Add(val1)\r\n            form.clb.SetItemChecked(i, IN[3])\r\n            form.objects.append(l1[i])\r\n        except: pass\r\n    form.btn_adjust(len(l1))\r\n\r\n    form.ShowDialog()\r\n\r\n    if form.output1 is None:\r\n        OUT = \"No selection\"\r\n    else:\r\n        OUT = form.output1\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
       "VariableInputPorts": true,
       "Id": "03382455ddfd4730a3aaa5cad2b3ce54",
+      "NodeType": "PythonScriptNode",
       "Inputs": [
         {
           "Id": "f0971ab97e244a4eb82f441f804ab889",
@@ -75,11 +76,10 @@
         }
       ],
       "Replication": "Disabled",
-      "Description": "Runs an embedded IronPython script."
+      "Description": "Runs an embedded Python script."
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "list",
         "TypeName": "var",
@@ -88,6 +88,7 @@
         "Description": ""
       },
       "Id": "ae79b1a258e148848bc6fe747f932d25",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -105,7 +106,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "names",
         "TypeName": "var",
@@ -114,6 +114,7 @@
         "Description": ""
       },
       "Id": "a19c71ba34064731bfa0111f993aecdc",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -131,10 +132,10 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
-      "NodeType": "OutputNode",
       "ElementResolver": null,
       "Symbol": "bool",
       "Id": "c67ccb3e716d4b56976eabb93193c86b",
+      "NodeType": "OutputNode",
       "Inputs": [
         {
           "Id": "f55dab910f8f4d0bb951b805b1abef4e",
@@ -152,7 +153,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "customMsg",
         "TypeName": "string",
@@ -161,6 +161,7 @@
         "Description": ""
       },
       "Id": "da124c1f175b426888b3b3832474ea2d",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -178,7 +179,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "checkAll",
         "TypeName": "bool",
@@ -187,6 +187,7 @@
         "Description": ""
       },
       "Id": "f8dce7e0227d43439b2d28d5116c8e0b",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -204,7 +205,6 @@
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
-      "NodeType": "InputNode",
       "Parameter": {
         "Name": "reset",
         "TypeName": "bool",
@@ -213,6 +213,7 @@
         "Description": ""
       },
       "Id": "9ad465d9b0ec486fae959f692ab84b41",
+      "NodeType": "InputNode",
       "Inputs": [],
       "Outputs": [
         {
@@ -233,132 +234,141 @@
     {
       "Start": "f924ed1eba5547378e830e1ad028df4d",
       "End": "f55dab910f8f4d0bb951b805b1abef4e",
-      "Id": "18aff30a3a714787b47ae8b90676bac7"
+      "Id": "18aff30a3a714787b47ae8b90676bac7",
+      "IsHidden": "False"
     },
     {
       "Start": "805dcb58f3b14619ad775b608d69d629",
       "End": "f0971ab97e244a4eb82f441f804ab889",
-      "Id": "cbc0fcc8604c420ca3c38ceef69cc395"
+      "Id": "cbc0fcc8604c420ca3c38ceef69cc395",
+      "IsHidden": "False"
     },
     {
       "Start": "f97d5d85e55649fabe0b5edbbf9760d4",
       "End": "574c0b26d34146c587394d39770c009c",
-      "Id": "41420f2158864f78aabc1d3e78f2e368"
+      "Id": "41420f2158864f78aabc1d3e78f2e368",
+      "IsHidden": "False"
     },
     {
       "Start": "ab0ae8a8b9864e1bb7d1054d9a43d0c4",
       "End": "a4e39729d674411d81eedc03efca7fc5",
-      "Id": "a16434dae9474492869d1a5260d4bf05"
+      "Id": "a16434dae9474492869d1a5260d4bf05",
+      "IsHidden": "False"
     },
     {
       "Start": "33a5a0b353024d13bbbc6e06a98b5134",
       "End": "78f6d67ad17d4e4ebe89fa32879a6d72",
-      "Id": "a5e9e11d3d7444a8aaef28f679b1e04b"
+      "Id": "a5e9e11d3d7444a8aaef28f679b1e04b",
+      "IsHidden": "False"
     },
     {
       "Start": "61455930a81641baa71ac37d21efe700",
       "End": "6dc6d1312e83487394e7dc0d699590e3",
-      "Id": "8c690ef2752c4bc081fe07c1574ed1c1"
+      "Id": "8c690ef2752c4bc081fe07c1574ed1c1",
+      "IsHidden": "False"
     }
   ],
   "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
   "Bindings": [],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "2.0.2.6826",
+      "Version": "4.0.2.3852",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
-      "Name": "Background Preview",
-      "EyeX": 159863.25,
-      "EyeY": 174402.59375,
-      "EyeZ": 57137.6328125,
-      "LookX": -29756.88671875,
-      "LookY": -66413.96875,
-      "LookZ": -203711.40625,
-      "UpX": -0.013853524811565876,
-      "UpY": 0.99539613723754883,
-      "UpZ": -0.094839282333850861
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
     },
+    "ConnectorPins": [],
     "NodeViews": [
       {
         "Id": "03382455ddfd4730a3aaa5cad2b3ce54",
+        "Name": "Python Script",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Python Script",
-        "ShowGeometry": true,
         "Excluded": false,
+        "ShowGeometry": true,
         "X": 246.740142128329,
-        "Y": 4.88978680750637
+        "Y": 4.215397642809364
       },
       {
         "Id": "ae79b1a258e148848bc6fe747f932d25",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 112.103380990011,
-        "Y": -22.4821036913729
+        "ShowGeometry": true,
+        "X": -70.91845155330853,
+        "Y": -231.02692150150293
       },
       {
         "Id": "a19c71ba34064731bfa0111f993aecdc",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -44.6966190099891,
-        "Y": 37.0518980907398
+        "ShowGeometry": true,
+        "X": -145.18060454985226,
+        "Y": -81.64059489594413
       },
       {
         "Id": "c67ccb3e716d4b56976eabb93193c86b",
+        "Name": "Output",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Output",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 400.856832683944,
-        "Y": 5.16887701005855
+        "ShowGeometry": true,
+        "X": 515.6872212059791,
+        "Y": 3.947277132164558
       },
       {
         "Id": "da124c1f175b426888b3b3832474ea2d",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -374.296619009989,
-        "Y": 96.5858998728525
+        "ShowGeometry": true,
+        "X": -447.1306487972723,
+        "Y": 50.72743667345189
       },
       {
         "Id": "f8dce7e0227d43439b2d28d5116c8e0b",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": -44.6966190099891,
-        "Y": 156.119901654965
+        "ShowGeometry": true,
+        "X": -131.0184320912138,
+        "Y": 187.14180323103002
       },
       {
         "Id": "9ad465d9b0ec486fae959f692ab84b41",
+        "Name": "Input",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
-        "Name": "Input",
-        "ShowGeometry": true,
         "Excluded": false,
-        "X": 4.90338099001085,
-        "Y": 215.653903437078
+        "ShowGeometry": true,
+        "X": -97.60377204394356,
+        "Y": 328.27689394148814
       }
     ],
     "Annotations": [],
-    "X": 11.878195970462,
-    "Y": 62.5152890657978,
-    "Zoom": 1.63719728218044
+    "X": 337.6076154051396,
+    "Y": 288.3133973591713,
+    "Zoom": 0.9885488996047703
   }
 }

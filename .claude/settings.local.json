@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"C:\\\\Me\\\\CODE\\\\Github\\\\SpringNodes\"; Get-ChildItem -Recurse \"_tests\" -File | ForEach-Object { $mb = [math]::Round\\($_.Length/1MB,2\\); $flag = if \\($_.Length -gt 1048576\\) { \" LARGE\" } else { \"\" }; $rflag = if \\($_.Name -match '\\\\.\\(rvt|rfa|rte|rft|sat\\)$'\\) { \" REVIT/CAD\" } else { \"\" }; if \\($flag -or $rflag\\) { Write-Host \"${mb}MB`t$\\($_.FullName\\)$flag$rflag\" } })",
+      "PowerShell(Get-ChildItem *)",
+      "Bash(dir *)",
+      "PowerShell($items = Get-ChildItem \"C:\\\\Me\\\\CODE\\\\Github\\\\SpringNodes\\\\Nodes\" -Recurse -File; Write-Host \"Total files: $\\($items.Count\\)\"; $items | Group-Object Extension | Sort-Object Count -Descending | Format-Table Name, Count)"
+    ]
+  }
+}

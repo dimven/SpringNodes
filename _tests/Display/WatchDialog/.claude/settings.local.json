@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python test_family_geom_input.py)",
+      "Bash(python *)"
+    ]
+  }
+}

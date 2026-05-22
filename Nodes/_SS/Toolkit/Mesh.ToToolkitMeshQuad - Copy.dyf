@@ -1,0 +1,264 @@
+{
+  "Uuid": "16e97d6d-2081-42f2-a01c-96933317111b",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Converts a Dynamo mesh to a toolkit mesh. You obviously need to have the appropriate version of the mesh toolkit package downloaded first.",
+  "Name": "Mesh.ToTkMesh",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Surface": {
+        "Key": "Autodesk.DesignScript.Geometry.Surface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Dynamo.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "Autodesk.Dynamo.MeshToolkit.Mesh": {
+        "Key": "Autodesk.Dynamo.MeshToolkit.Mesh",
+        "Value": "MeshToolkit.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "mesh",
+        "TypeName": "var",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fee22551bb0b4bf09d8046b848aeff1c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "tkMesh",
+      "Id": "222f59234a694f7b8e69b21234c0cbbb",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "12853c97845945178910338aca597265",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c60409d044784358945f081910fcb585",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "b87a3517eb3f4ab3a69b9255d59af96d",
+          "Name": "mesh",
+          "Description": "mesh",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2993b3d4cde84b308f53cee70142ead8",
+          "Name": "indices",
+          "Description": "indices = mesh.FaceIndices",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "adb8b5e8ff534eb7852643d7c4e3d490",
+          "Name": "vrtx_positions",
+          "Description": "vrtx_positions = mesh.VertexPositions",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d1f9551d919549a38749b00a52e98f32",
+          "Name": "vrtx_positions_flat",
+          "Description": "vrtx_positions_flat = DSCore.List.Flatten(vrtx_positions, 1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "35775344572e47dc9f1f87cadd5f3d0b",
+          "Name": "indices_flat",
+          "Description": "indices_flat = DSCore.List.Flatten(indices, 2)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9c7611a69ebe43e5b94e04ed4ddff840",
+          "Name": "indices_new_list",
+          "Description": "indices_new_list = [indices_flat.A, indices_flat.B, indices_flat.C]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "baeb48fd21f442f5bc9ee64d75e0f13e",
+          "Name": "indices_transposed",
+          "Description": "indices_transposed = DSCore.List.Transpose(indices_new_list)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "db8436a6ec2749aa8f0ac79306481401",
+          "Name": "tkMesh",
+          "Description": "tkMesh = Autodesk.Dynamo.MeshToolkit.Mesh.ByVerticesAndIndices(vrtx_positions_flat, indices_transposed)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ea82b077594541f1bb1e356441f51a16",
+          "Name": "tkMesh_Flat",
+          "Description": "tkMesh_Flat = DSCore.List.Flatten(tkMesh, 1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "indices = mesh.FaceIndices;\n\nvrtx_positions = mesh.VertexPositions;\nvrtx_positions_flat = DSCore.List.Flatten(vrtx_positions, 1);\n\nindices_flat = DSCore.List.Flatten(indices, 2);\nindices_new_list = [indices_flat.A,indices_flat.B,indices_flat.C];\nindices_transposed = DSCore.List.Transpose(indices_new_list);\n\ntkMesh = Dynamo.Mesh.ByVerticesAndIndices(vrtx_positions_flat, indices_transposed);\ntkMesh_Flat = DSCore.List.Flatten(tkMesh, 1);"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "fee22551bb0b4bf09d8046b848aeff1c",
+      "End": "b87a3517eb3f4ab3a69b9255d59af96d",
+      "Id": "748c3ec2ed744dd9acb0f0902a898fc6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ea82b077594541f1bb1e356441f51a16",
+      "End": "12853c97845945178910338aca597265",
+      "Id": "e82848ab325844d19484cc04f869f2d8",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.6.1.9895",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -1.6276273727416992,
+      "EyeY": 19.6348819732666,
+      "EyeZ": 36.345855712890625,
+      "LookX": 8.628253936767578,
+      "LookY": -9.347274780273438,
+      "LookZ": -41.7032356262207,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "6c4cc81eddb44230bf5718bbe4bf932b",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -857.5734595138458,
+        "Y": 292.77892282011845
+      },
+      {
+        "Id": "222f59234a694f7b8e69b21234c0cbbb",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 680.816252540398,
+        "Y": 450.7629661980953
+      },
+      {
+        "Id": "c60409d044784358945f081910fcb585",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -464.51489648920074,
+        "Y": 288.146461768502
+      }
+    ],
+    "Annotations": [],
+    "X": 1102.9022382817245,
+    "Y": 153.215563886447,
+    "Zoom": 1.0069333865956762
+  }
+}

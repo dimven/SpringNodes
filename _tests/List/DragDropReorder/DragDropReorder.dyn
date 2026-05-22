@@ -1,0 +1,298 @@
+{
+  "Uuid": "7d928751-387e-402d-9c0b-2e96fdd51760",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "DragDropReorder",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3ff3de76a4344a0a9f94af0626a7491e",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "65aa0c3cf0bd401db8a7ac089982f328",
+          "Name": "function",
+          "Description": "\"T\" + (0..50)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "afc8e0f13804490aa9ae1627fbff191a",
+          "Name": "string",
+          "Description": "\"NewSpringsItemName\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "347132d28a2148f6b48724df26b3ccf0",
+          "Name": "string",
+          "Description": "\"SpringsReorderDialog\"",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"T\" + (0..50);\n\"NewSpringsItemName\";\n\"SpringsReorderDialog\";"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 200.0,
+      "WatchHeight": 200.0,
+      "Id": "536cc35718004a79a9a3a8ab6da1d8ce",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "919aa5b0786b473c86e97bbf4bb1c93e",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1e4fd38e9a524ccea6d0187e1585b56b",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Function, DynamoCore",
+      "FunctionSignature": "747d5ee1-bd7c-4ae8-adee-863ef266d10a",
+      "FunctionType": "Graph",
+      "Id": "de86e9b1b9044e71a7c4edeeb0cef078",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "93458e9d102c401fbc81a59c5f80528c",
+          "Name": "list",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c2c2be48195644cba751fa433c034423",
+          "Name": "names",
+          "Description": "var[]..[]\nDefault value : null",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fbecd8aefd454237b8f3e5af1a0f35e7",
+          "Name": "customMsg",
+          "Description": "string\nDefault value : \"Reorder the items by dragging & dropping them.\"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bad6970188c547049493c34d0579a7b8",
+          "Name": "reset",
+          "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "052f84ec73564d5386f3754a01ff6bf5",
+          "Name": "list",
+          "Description": "return value",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Press and hold on an item to move it up or down the list. To confirm and close the window, select \"Save Order\". The optional names input will override the object representation."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "3074a61d8c0647ff877ada42fdfe6d4e",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0ccc0eeae18a4448b40f50a5aa7615a3",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "65aa0c3cf0bd401db8a7ac089982f328",
+      "End": "93458e9d102c401fbc81a59c5f80528c",
+      "Id": "f009891a60f74381a59bf6cd141f3c8f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "afc8e0f13804490aa9ae1627fbff191a",
+      "End": "c2c2be48195644cba751fa433c034423",
+      "Id": "391307c6cd6842afadd274b6abb1f096",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "347132d28a2148f6b48724df26b3ccf0",
+      "End": "fbecd8aefd454237b8f3e5af1a0f35e7",
+      "Id": "c81664d0c26e4ae3b4ba2718582e231a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "052f84ec73564d5386f3754a01ff6bf5",
+      "End": "919aa5b0786b473c86e97bbf4bb1c93e",
+      "Id": "ce92509c40ce4c6d843fadfb21af349b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0ccc0eeae18a4448b40f50a5aa7615a3",
+      "End": "bad6970188c547049493c34d0579a7b8",
+      "Id": "0399ab037aab4188a6e33926034944c9",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [
+    "747d5ee1-bd7c-4ae8-adee-863ef266d10a"
+  ],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "List.DragDropReorder.dyf",
+      "ReferenceType": "DYFFile",
+      "Nodes": [
+        "de86e9b1b9044e71a7c4edeeb0cef078"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": true,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.3",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "8.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.0.3277",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "3ff3de76a4344a0a9f94af0626a7491e",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 423.1363584566805,
+        "Y": 390.92283918866946
+      },
+      {
+        "Id": "536cc35718004a79a9a3a8ab6da1d8ce",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1110.5890003534648,
+        "Y": 389.1536769848449
+      },
+      {
+        "Id": "de86e9b1b9044e71a7c4edeeb0cef078",
+        "Name": "List.DragDropReorder",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 800.3745876058856,
+        "Y": 389.254136633901
+      },
+      {
+        "Id": "3074a61d8c0647ff877ada42fdfe6d4e",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 528.9479544254767,
+        "Y": 645.6682893580379
+      }
+    ],
+    "Annotations": [],
+    "X": -138.0858517056218,
+    "Y": -170.98232790321526,
+    "Zoom": 0.9331093018293442
+  }
+}

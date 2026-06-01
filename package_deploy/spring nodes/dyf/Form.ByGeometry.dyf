@@ -1,0 +1,221 @@
+{
+  "Uuid": "268c3e45-41fa-4d94-a91c-1a45a41b45aa",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Create",
+  "Description": "Convert the input geometry to a Revit Form object. Forms can exist only in the family environment. You can convert complicated solids or surfaces directly into forms. A form can act as a void. Provide either one true boolean value to convert a form into a void. The node's lacing is set to longest by default.",
+  "Name": "Form.ByGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\nfrom System.Collections.Generic import *\r\nfrom itertools import repeat\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nfrom Autodesk.Revit.DB import *\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef PadLists(lists):\r\n    len1 = len(lists[0])\r\n    for i in range(1, len(lists)):\r\n        len2 = len(lists[i])\r\n        if len2 == len1: continue\r\n        elif len2 > len1: lists[i] = lists[i][:len1]\r\n        else: lists[i].extend(repeat(lists[i][-1], len1 - len2))\r\n    return lists\r\n\r\ndef NewForm(s1, isVoid1):\r\n    message = None\r\n    temp_path = System.IO.Path.GetTempPath()\r\n    rand_name = System.Guid.NewGuid().ToString()\r\n    sat_path = \"%s%s.sat\" % (temp_path, rand_name)\r\n    try:\r\n        if factor != 1:\r\n            s1 = s1.Scale(factor)\r\n        sat1 = Geometry.ExportToSAT([s1], sat_path)\r\n        satOpt = SATImportOptions()\r\n        satOpt.Placement = ImportPlacement.Origin\r\n        satOpt.Unit = ImportUnit.Foot\r\n        satId = doc.Import(sat1, satOpt, view1)\r\n        opt1 = Options()\r\n        opt1.ComputeReferences = True\r\n        el1 = doc.GetElement(satId)\r\n        geom1 = el1.get_Geometry(opt1)\r\n        enum = geom1.GetEnumerator()\r\n        enum.MoveNext()\r\n        geom2 = enum.Current.GetInstanceGeometry()\r\n        enum2 = geom2.GetEnumerator()\r\n        enum2.MoveNext()\r\n        s1 = enum2.Current\r\n        doc.Delete(List[ElementId]([satId]))\r\n        System.IO.File.Delete(sat_path)\r\n    except:\r\n        message = traceback.format_exc()\r\n\r\n    if message is None:\r\n        try:\r\n            s2 = FreeFormElement.Create(doc, s1)\r\n            if isVoid1:\r\n                void_par = s2.get_Parameter(BuiltInParameter.ELEMENT_IS_CUTTING)\r\n                void_par.Set(1)\r\n            return s2.ToDSType(False)\r\n        except:\r\n            return traceback.format_exc()\r\n    else:\r\n        return message\r\n\r\ntry:\r\n    geom = tolist(IN[0])\r\n    isVoid = tolist(IN[1])\r\n\r\n    acceptable_views = (\"ThreeD\", \"FloorPlan\", \"EngineeringPlan\", \"CeilingPlan\", \"Elevation\", \"Section\")\r\n    view_fec = FilteredElementCollector(doc).OfClass(View)\r\n    view1 = None\r\n    for v in view_fec:\r\n        if str(v.ViewType) in acceptable_views and not v.IsTemplate:\r\n            view1 = v\r\n            break\r\n\r\n    units = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId()\r\n    factor = UnitUtils.ConvertToInternalUnits(1, units)\r\n\r\n    if doc.IsFamilyDocument:\r\n        if len(geom) != len(isVoid):\r\n            padded = PadLists([geom, isVoid])\r\n            isVoid = padded[1]\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        OUT = list(map(NewForm, geom, isVoid))\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n    else:\r\n        OUT = \"Forms can only exist in family documents\"\r\n\r\nexcept Exception as e:\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "5b20d6d5cea041c5bfc569ce2f727abf",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "72028de56d284c1f987d334b6ff58366",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1cf82e76ae854489ae7dfdee8da97ee2",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "814df216a9ac4cc8a80a15303988e9d7",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "geometry",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "eae70b5f06924372ab80d18a7b1f5adb",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "755485d23dbe4b5c97f1c2275e940a1f",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "Form",
+      "Id": "6b741902d5d84efeb621e8d7fb813375",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "78a8e4ff8167497aa7b66dec97f8f60a",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "isVoid",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": "false",
+        "Description": ""
+      },
+      "Id": "f66887452d9a436b8ce68f61c0f2b25f",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b3e97a8e89944541ab931ab6c8c865e7",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "814df216a9ac4cc8a80a15303988e9d7",
+      "End": "78a8e4ff8167497aa7b66dec97f8f60a",
+      "Id": "2ac2245501a04b198d32c82b01325c68",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "755485d23dbe4b5c97f1c2275e940a1f",
+      "End": "72028de56d284c1f987d334b6ff58366",
+      "Id": "6b65a7f23f6845a5b7f46a5259dbfe7f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b3e97a8e89944541ab931ab6c8c865e7",
+      "End": "1cf82e76ae854489ae7dfdee8da97ee2",
+      "Id": "0249af827b934d08b61b0c271149b2ee",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "5b20d6d5cea041c5bfc569ce2f727abf",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 249.717208630228,
+        "Y": 0.7557705298222572
+      },
+      {
+        "Id": "eae70b5f06924372ab80d18a7b1f5adb",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -36.96651674376889,
+        "Y": -71.09378127910342
+      },
+      {
+        "Id": "6b741902d5d84efeb621e8d7fb813375",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 550.861365773326,
+        "Y": -0.5736181773096405
+      },
+      {
+        "Id": "f66887452d9a436b8ce68f61c0f2b25f",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -82.156519114849,
+        "Y": 135.00899765193694
+      }
+    ],
+    "Annotations": [],
+    "X": 626.1714112039994,
+    "Y": 504.805223961844,
+    "Zoom": 1.572990277808595
+  }
+}

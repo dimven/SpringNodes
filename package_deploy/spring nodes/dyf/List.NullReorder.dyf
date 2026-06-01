@@ -1,0 +1,282 @@
+{
+  "Uuid": "c0f559dc-e1b2-4b5e-93b2-90e8b9c33397",
+  "IsCustomNode": true,
+  "Category": "Springs.Actions",
+  "Description": "Simiar to the built-in function with the difference that it can handle null indices. Part of the SmartCopyMonitor workflow.",
+  "Name": "List.NullReorder",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Rectangle": {
+        "Key": "Autodesk.DesignScript.Geometry.Rectangle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Solid": {
+        "Key": "Autodesk.DesignScript.Geometry.Solid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Wall": {
+        "Key": "Revit.Elements.Wall",
+        "Value": "RevitNodes.dll"
+      },
+      "Transaction": {
+        "Key": "Revit.Transaction.Transaction",
+        "Value": "RevitNodes.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Category": {
+        "Key": "Revit.Elements.Category",
+        "Value": "RevitNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3e07fb364c7c4b7abf528677bd84a0ea",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "dacdf3befed9469a9503fa20429d5699",
+          "Name": "l1",
+          "Description": "l1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "205d9d93101642f08d67bd9020f003f6",
+          "Name": "l2",
+          "Description": "l2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d9071a090ae8487c91461c3285510db9",
+          "Name": "l1",
+          "Description": "l1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0c1d030e0bca4824a43a5d6e9bc4fce2",
+          "Name": "l2",
+          "Description": "l2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "edbb754f6be34dd9b52facd321827598",
+          "Name": "l3",
+          "Description": "l3 = [Imperative]\n{\nout1 = [];\nn = 0;\nfor(i in l2)\n{\nif(i != null)\n{\nout1[i] = DesignScript.Builtin.Get.ValueAtIndex(l1, n);\n\n}\nn = (n + 1);\n\n}\nreturn = out1;\n\n}\n",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "l1;\nl2;\nl3 = [Imperative]\n{\nout1 = [];\nn = 0;\nfor (i in l2)\n{\n\tif (i != null)\n\t{\n\t\tout1[i] = l1[n];\n\t}\n\tn = n + 1;\n}\nreturn = out1;\n};"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "list",
+      "Id": "792e082eaaff45aeadfc7aa030a1947c",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "431863c188ed489f83a3f3263b201377",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "list",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "426d8503b04c49df8ed0970259dde698",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1c462d05dc854199ba97ca0d5cd91665",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "indices",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "b5e617bbf8404c2e842dc3a1cc82e721",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1ec0a4bd867e45579325360a573dcea6",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "edbb754f6be34dd9b52facd321827598",
+      "End": "431863c188ed489f83a3f3263b201377",
+      "Id": "956aa54d15784cb0aebefe07af1e9ee8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1c462d05dc854199ba97ca0d5cd91665",
+      "End": "dacdf3befed9469a9503fa20429d5699",
+      "Id": "9869f11759ec409890dfe712771ba565",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1ec0a4bd867e45579325360a573dcea6",
+      "End": "205d9d93101642f08d67bd9020f003f6",
+      "Id": "749cdea1a9b847acb661b607c986b64a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "3e07fb364c7c4b7abf528677bd84a0ea",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 231.141290110873,
+        "Y": -3.14311831485441
+      },
+      {
+        "Id": "792e082eaaff45aeadfc7aa030a1947c",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 616.8844297755913,
+        "Y": 29.62651234929103
+      },
+      {
+        "Id": "426d8503b04c49df8ed0970259dde698",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -57.951392949746904,
+        "Y": -77.57867699263137
+      },
+      {
+        "Id": "b5e617bbf8404c2e842dc3a1cc82e721",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -84.60095449848868,
+        "Y": 103.24850244717442
+      }
+    ],
+    "Annotations": [],
+    "X": 273.87861052910273,
+    "Y": 168.6184082172145,
+    "Zoom": 1.4848619772588307
+  }
+}

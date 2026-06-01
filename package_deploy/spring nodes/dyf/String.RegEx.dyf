@@ -1,0 +1,246 @@
+{
+  "Uuid": "b3c8e4c1-9f7a-4b8c-9c2e-1f6d4f0f3e72",
+  "IsCustomNode": true,
+  "Category": "Springs.Actions",
+  "Description": "Returns true if the expression is met",
+  "Name": "String.RegEx",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "str",
+        "TypeName": "string",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "e9eba31d03644aa6861a8c6b3d6f08b1",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9d0d665ea1d0494a83cbcfdd0dda1386",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "pattern",
+        "TypeName": "string",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "a7a4d224876e4822a97eb65361b0a60a",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "80b04b86f2ba4bd699eeb78958649105",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "boolean",
+      "Id": "6e934860b71942b58da14f8219acfe76",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "0ba89093e0dc4483bf7ba5596394a5bb",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2027, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope----Maintained by Mark Ackerley---------#\r\n\r\n\r\nimport re\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\n\r\ndef check(pattern, text):\r\n    try:\r\n        return bool(re.search(pattern, text))\r\n    except re.error as e:\r\n        return \"Regex error: {}\".format(e)\r\n\r\n\r\ntry:\r\n    texts   = tolist(IN[0])\r\n    pattern = IN[1]\r\n    for t in texts:\r\n        OUT = check(pattern, t)\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )\r\n    \r\n\r\n",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "d3e8cd6c35ac461ebc8c42da2eaeb70b",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "6d349b6cb01e475eb554f9d6cce9f6b4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "424e28733e5e47b9bb28cb9adc03d91e",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "5e52aade14a1406f9058d5878b07c2b9",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "9d0d665ea1d0494a83cbcfdd0dda1386",
+      "End": "6d349b6cb01e475eb554f9d6cce9f6b4",
+      "Id": "b79be15633fc486d99f1f4850d360ef4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "80b04b86f2ba4bd699eeb78958649105",
+      "End": "424e28733e5e47b9bb28cb9adc03d91e",
+      "Id": "00cc4486c0624107bff12bb1fbc98985",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5e52aade14a1406f9058d5878b07c2b9",
+      "End": "0ba89093e0dc4483bf7ba5596394a5bb",
+      "Id": "89980d77e5694e4391a95f8170eda55b",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "e9eba31d03644aa6861a8c6b3d6f08b1",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -59.804162816118435,
+        "Y": -39.246481848077735
+      },
+      {
+        "Id": "a7a4d224876e4822a97eb65361b0a60a",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -118.11322156183405,
+        "Y": 138.0391674367764
+      },
+      {
+        "Id": "6e934860b71942b58da14f8219acfe76",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 486.6733976761055,
+        "Y": -41.418513559112355
+      },
+      {
+        "Id": "d3e8cd6c35ac461ebc8c42da2eaeb70b",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 246.7109100212814,
+        "Y": -43.61931218857387
+      }
+    ],
+    "Annotations": [],
+    "X": 214.57425121658173,
+    "Y": 504.72680650356494,
+    "Zoom": 1.2928910957911344
+  }
+}

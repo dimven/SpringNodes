@@ -1,0 +1,250 @@
+{
+  "Uuid": "55bf1b2d-b0af-44d3-bf94-d73f8a1c0f5c",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Sets the Z coordinate of each vertex of the mesh to the desired value.",
+  "Name": "Mesh.Flatten",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "CoordinateSystem": {
+        "Key": "Autodesk.DesignScript.Geometry.CoordinateSystem",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Color": {
+        "Key": "DSCore.Color",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Category": {
+        "Key": "Revit.Elements.Category",
+        "Value": "RevitNodes.dll"
+      },
+      "Plane.By": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# Copyright(c) 2020, Dimitar Venkov\r\n# @5devene, dimitar.ven@gmail.com\r\n# www.badmonkeys.net\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nimport Autodesk.DesignScript.Geometry as DS\r\n\r\nmeshes, Z = IN\r\n\r\nOUT = []\r\nfor m in meshes:\r\n\tvertices = [DS.Point.ByCoordinates(p.X, p.Y, Z) for p in m.VertexPositions]\r\n\tindices = m.VertexIndicesByTri()\r\n\tOUT.append(m.ByPointsIndices(vertices, indices))",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "719b5bb8dd9647dc8bb11195ad26fb63",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "546b3172a882426c813dd16c8037dfc4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ccf0d09802144d1a9b96064c1740bb85",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "af993f5d1c6e4857ac9cf8e06ebbedaa",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "mesh",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "9a3099336ef24fc0a1d43c78ece51a95",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b644975f90ad4511a70fe3858ade65de",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "newZ",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "0",
+        "Description": ""
+      },
+      "Id": "1acb17b1fca5461485fd177be41c1c45",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4378c110fd42435ba257f3f498f3cab1",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "mesh",
+      "Id": "01f48e5f92334ac689bae729779f866c",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "1c5e9e7eb9294d4d8baca45b8c7ad5db",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "af993f5d1c6e4857ac9cf8e06ebbedaa",
+      "End": "1c5e9e7eb9294d4d8baca45b8c7ad5db",
+      "Id": "df74cc8cbd1b43319a53d508bacf1ddd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b644975f90ad4511a70fe3858ade65de",
+      "End": "546b3172a882426c813dd16c8037dfc4",
+      "Id": "3459250c86f24c0fbe56852909254d18",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4378c110fd42435ba257f3f498f3cab1",
+      "End": "ccf0d09802144d1a9b96064c1740bb85",
+      "Id": "7fe8f4d4d16547b2b4de93edc4d0f6f9",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.1.0.4676",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -11.297866821289062,
+      "EyeY": 606.2621765136719,
+      "EyeZ": 456.0040283203125,
+      "LookX": 235.21681213378906,
+      "LookY": -127.19842529296875,
+      "LookZ": -457.89190673828125,
+      "UpX": 0.1096089631319046,
+      "UpY": 0.9708024263381958,
+      "UpZ": -0.21337443590164185
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "719b5bb8dd9647dc8bb11195ad26fb63",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 223.42924662684413,
+        "Y": -70.24197051144932
+      },
+      {
+        "Id": "9a3099336ef24fc0a1d43c78ece51a95",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -210.72591153434803,
+        "Y": -151.69276610451294
+      },
+      {
+        "Id": "1acb17b1fca5461485fd177be41c1c45",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -282.46239205667933,
+        "Y": 68.74746050056743
+      },
+      {
+        "Id": "01f48e5f92334ac689bae729779f866c",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 584.3534142548233,
+        "Y": 22.4176501632285
+      }
+    ],
+    "Annotations": [],
+    "X": 562.4413625,
+    "Y": 302.70612500000004,
+    "Zoom": 1.33823125
+  }
+}

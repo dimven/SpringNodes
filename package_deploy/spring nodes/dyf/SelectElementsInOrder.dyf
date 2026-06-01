@@ -1,0 +1,170 @@
+{
+  "Uuid": "4af3f490-3741-496b-8452-e65601451ae1",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Selection.Actions",
+  "Description": "Select multiple elements from the Revit document in the desired order. Hit ESC to stop picking. To refresh the node, connect a boolean switch node.",
+  "Name": "SelectElementsInOrder",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n# inspired by Troy Gates\r\n# https://forums.autodesk.com/t5/revit-api/revit-api-selected-element-set-order/td-p/5597203\r\n\r\nimport clr\r\nclr.AddReference(\"RevitAPIUI\")\r\nfrom Autodesk.Revit.UI import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ntry:\r\n    sel1 = uidoc.Selection\r\n    obt1 = Selection.ObjectType.Element\r\n    msg1 = 'Pick elements in the desired order, hit ESC to stop picking.'\r\n\r\n    out1 = []\r\n    TaskDialog.Show(\"Spring Nodes\", msg1)\r\n    flag = True\r\n    while flag:\r\n        try:\r\n            el1 = doc.GetElement(sel1.PickObject(obt1, msg1).ElementId)\r\n            out1.append(el1.ToDSType(True))\r\n        except:\r\n            flag = False\r\n\r\n    OUT = out1[0] if len(out1) == 1 else out1\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "d92bcee5b98a4981a5d22482a43e9bb5",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "014e04036cbc4f6c8fd4b531c289690c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e0cf0061dbca42e59b04d6bfa092abc3",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "elements",
+      "Id": "9656dedf9f184ab095ea32f4161280b3",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "4238f8474f7643cdaf80da389ef19104",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "refresh",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "true",
+        "Description": ""
+      },
+      "Id": "df1ac182aa03434da888e8b8d112db70",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2c05082f4d5848a1ace272dbf88f867c",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e0cf0061dbca42e59b04d6bfa092abc3",
+      "End": "4238f8474f7643cdaf80da389ef19104",
+      "Id": "5b76409c1d7747658d15704336a7914d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2c05082f4d5848a1ace272dbf88f867c",
+      "End": "014e04036cbc4f6c8fd4b531c289690c",
+      "Id": "a9b187e3c81b4ca2abf4bace28628551",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "d92bcee5b98a4981a5d22482a43e9bb5",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 224.14653445702206,
+        "Y": -10.439603371066255
+      },
+      {
+        "Id": "9656dedf9f184ab095ea32f4161280b3",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 478.47572679596476,
+        "Y": -7.67484346987024
+      },
+      {
+        "Id": "df1ac182aa03434da888e8b8d112db70",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -116.00086870305114,
+        "Y": -6.258340216906461
+      }
+    ],
+    "Annotations": [],
+    "X": 607.0996246463347,
+    "Y": 361.65559958321853,
+    "Zoom": 1.2198072017254953
+  }
+}

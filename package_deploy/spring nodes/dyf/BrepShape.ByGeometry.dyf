@@ -1,0 +1,384 @@
+{
+  "Uuid": "43629155-311e-4c61-b15f-5c14be2e02c3",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Create",
+  "Description": "Convert the input geometry to DirectShape element inside the Revit document.  Works only in Revit 2017 and later. Uses the more advanced BrepBuilder. It supports solids or surfaces, however periodic faces like spheres, cylinders and cones are not supported. Each created DS will have a unique type. Make sure that each input geometry has a unique name. You can either feed a single category and material for all geometries or a unique one for each geometry - the node's lacing is set to longest by default. The default category is Generic Model.",
+  "Name": "BrepShape.ByGeometry",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Cuboid": {
+        "Key": "Autodesk.DesignScript.Geometry.Cuboid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "UV": {
+        "Key": "Autodesk.DesignScript.Geometry.UV",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Curve": {
+        "Key": "Autodesk.DesignScript.Geometry.Curve",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Polygon": {
+        "Key": "Autodesk.DesignScript.Geometry.Polygon",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Circle": {
+        "Key": "Autodesk.DesignScript.Geometry.Circle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Sphere": {
+        "Key": "Autodesk.DesignScript.Geometry.Sphere",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.Solid": {
+        "Key": "Autodesk.DesignScript.Geometry.Solid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Solid": {
+        "Key": "Autodesk.DesignScript.Geometry.Solid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Surface.PerimeterCurves": {
+        "Key": "Autodesk.DesignScript.Geometry.Surface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Rectangle": {
+        "Key": "Autodesk.DesignScript.Geometry.Rectangle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Curve.ByParameterLineOnSurface": {
+        "Key": "Autodesk.DesignScript.Geometry.Curve",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Category": {
+        "Key": "Revit.Elements.Category",
+        "Value": "RevitNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2019, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nimport System\r\nfrom itertools import repeat\r\nimport traceback\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitServices\")\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk.Revit.DB as RVT\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ndef PadLists(lists):\r\n    len1 = len(lists[0])\r\n    for i in range(1, len(lists)):\r\n        len2 = len(lists[i])\r\n        if len2 == len1: continue\r\n        elif len2 > len1: lists[i] = lists[i][:len1]\r\n        else: lists[i].extend(repeat(lists[i][-1], len1 - len2))\r\n    return lists\r\n\r\ndef NewDS_R17(geom1, cat1, name1, mat1):\r\n    toDispose = []\r\n    try:\r\n        edg_enum = dict()\r\n        br1 = RVT.BRepBuilder(RVT.BRepType.OpenShell)\r\n        toDispose.append(br1)\r\n        for f in geom1.Faces:\r\n            s1 = f.SurfaceGeometry()\r\n            toDispose.append(s1)\r\n            planarTest = Curve.ByParameterLineOnSurface(s1, UV.ByCoordinates(0.01, 0.0), UV.ByCoordinates(0.99, 1))\r\n            isPlanar = abs(planarTest.StartPoint.DistanceTo(planarTest.EndPoint) - planarTest.Length) <= 0.00001\r\n            toDispose.append(planarTest)\r\n            if isPlanar:\r\n                o1 = s1.PointAtParameter(0.5, 0.5).ToXyz(True)\r\n                v1 = s1.NormalAtParameter(0.5, 0.5).ToXyz(True)\r\n                sf1 = RVT.BRepBuilderSurfaceGeometry.Create(RVT.Plane.CreateByNormalAndOrigin(v1, o1), None)\r\n                isFlipped = False\r\n            else:\r\n                ns1 = s1.ToNurbsSurface()\r\n                toDispose.append(ns1)\r\n                isFlipped = s1.NormalAtParameter(0.5, 0.5).Dot(ns1.NormalAtParameter(0.5, 0.5)) < 0\r\n                pts1 = [j.ToXyz(True) for i in ns1.ControlPoints() for j in i]\r\n                weights = [j for i in ns1.Weights() for j in i]\r\n                sf1 = RVT.BRepBuilderSurfaceGeometry.CreateNURBSSurface(\r\n                    ns1.DegreeU, ns1.DegreeV, ns1.UKnots(), ns1.VKnots(), pts1, weights, False, None)\r\n            toDispose.append(sf1)\r\n            sfId = br1.AddFace(sf1, isFlipped)\r\n            if mat1 is not None:\r\n                br1.SetFaceMaterialId(sfId, mat1.Id)\r\n            for lp in f.Loops:\r\n                lp1 = br1.AddLoop(sfId)\r\n                for ce in lp.CoEdges:\r\n                    edg = ce.Edge\r\n                    c0 = edg.CurveGeometry\r\n                    toDispose.append(c0)\r\n                    mp = c0.PointAtParameter(0.5)\r\n                    toDispose.append(mp)\r\n                    edgHash = (round(mp.X, 5), round(mp.Y, 5), round(mp.Z, 5))\r\n                    eId, isReversed, ceCount = edg_enum.get(edgHash, [None, None, None])\r\n                    if eId is None:\r\n                        try:\r\n                            c1 = c0.ToRevitType(True)\r\n                        except:\r\n                            n = len(c0.ToNurbsCurve().ControlPoints())\r\n                            pts = [c0.PointAtParameter(1.0 / n * j) for j in range(n + 1)]\r\n                            toDispose.extend(pts)\r\n                            c1 = NurbsCurve.ByPoints(pts).ToRevitType(True)\r\n                        toDispose.append(c1)\r\n                        e1 = RVT.BRepBuilderEdgeGeometry.Create(c1)\r\n                        toDispose.append(e1)\r\n                        eId = br1.AddEdge(e1)\r\n                        isReversed = ce.Reversed\r\n                        ceCount = 0\r\n                        edg_enum[edgHash] = [eId, not isReversed, ceCount]\r\n                    if ceCount <= 1:\r\n                        br1.AddCoEdge(lp1, eId, isReversed)\r\n                        edg_enum[edgHash][-1] += 1\r\n                br1.FinishLoop(lp1)\r\n                br1.FinishFace(sfId)\r\n        result = br1.Finish()\r\n        if result == RVT.BRepBuilderOutcome.Success:\r\n            if cat1 is None or not RVT.DirectShape.IsValidCategoryId(cat1.Id, doc):\r\n                cat1Id = RVT.ElementId(RVT.BuiltInCategory.OST_GenericModel)\r\n            else:\r\n                cat1Id = cat1.Id\r\n            if name1 in dst_enum:\r\n                old_type = dst_enum[name1]\r\n                old_type.SetShape(br1)\r\n                fec1 = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShape).WhereElementIsNotElementType()\r\n                insts = [i for i in fec1 if i.GetTypeId().Equals(old_type.Id)]\r\n                if insts:\r\n                    ds1 = insts[0]\r\n                else:\r\n                    dsLib.AddDefinitionType(name1, old_type.Id)\r\n                    ds1 = RVT.DirectShape.CreateElementInstance(doc, old_type.Id, cat1Id, name1, tf1)\r\n                    ds1.SetTypeId(old_type.Id)\r\n            else:\r\n                dsType1 = RVT.DirectShapeType.Create(doc, name1, cat1Id)\r\n                dsType1.SetShape(br1)\r\n                dsLib.AddDefinitionType(name1, dsType1.Id)\r\n                ds1 = RVT.DirectShape.CreateElementInstance(doc, dsType1.Id, cat1Id, name1, tf1)\r\n                ds1.SetTypeId(dsType1.Id)\r\n            return ueWrapper.Invoke(None, (ds1, False))\r\n        else:\r\n            return result\r\n    except:\r\n        return traceback.format_exc()\r\n    finally:\r\n        for i in toDispose: i.Dispose()\r\n\r\ntry:\r\n    solids = tolist(IN[0])\r\n    cat = [UnwrapElement(c) for c in tolist(IN[1])]\r\n    names = tolist(IN[2])\r\n    mat = [UnwrapElement(m) for m in tolist(IN[3])]\r\n\r\n    dsLib = RVT.DirectShapeLibrary.GetDirectShapeLibrary(doc)\r\n    tf1 = RVT.Transform.Identity\r\n\r\n    dst_fec = RVT.FilteredElementCollector(doc).OfClass(RVT.DirectShapeType)\r\n    dst_enum = dict([(RVT.Element.Name.__get__(i), i) for i in dst_fec])\r\n\r\n    ueWrapper = None\r\n    wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\n    for w in wrappers:\r\n        if w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n            ueWrapper = w\r\n            break\r\n\r\n    if len(solids) == len(names):\r\n        if not len(solids) == len(cat) == len(mat):\r\n            padded = PadLists([solids, cat, mat])\r\n            cat, mat = padded[1:]\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        OUT = list(map(NewDS_R17, solids, cat, names, mat))\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n    else:\r\n        OUT = \"Make sure that each geometry\\nobject has a unique type name.\"\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "cec336e2b9024c79922eaf8ed9d955ca",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "c91e6e1f22ae41febd1640745195e85a",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "32b41d359bba418ab753bdfd8d6bcb81",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cc16d5293c3e4fdb83ad04fefd746f34",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c0b5ace99752438db3203bb7be2023a2",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "539b97a5e2ab41aeb882956a943d19c1",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "geometry",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "0543165c297a446faa00426a33395c03",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "02354b23724e418b94c6160a807a490a",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "category",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": "null",
+        "Description": ""
+      },
+      "Id": "f9efbc94b8b24b81be1df3f2528f3178",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3be16fc81fd449cabfbc3d63611f28fd",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "name",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "5cc3b58467034deaaa866d62948ceb48",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "153ff2a44d254ae1ab891ac955c3b1ba",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "DirectShape",
+      "Id": "f27b07651dc644859e97ce7f84370df0",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "0247140eed184ddab82dafd3b9fb4c47",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "material",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": "null",
+        "Description": ""
+      },
+      "Id": "88711c82f5fb43f8bf3f607a9a1603c4",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5f01a847ff18430592255245b5e35f9e",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "539b97a5e2ab41aeb882956a943d19c1",
+      "End": "0247140eed184ddab82dafd3b9fb4c47",
+      "Id": "1696e87dc0734a30ae157d382fd93036",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "02354b23724e418b94c6160a807a490a",
+      "End": "c91e6e1f22ae41febd1640745195e85a",
+      "Id": "5d770fe875764a69a3a953570a385c32",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3be16fc81fd449cabfbc3d63611f28fd",
+      "End": "32b41d359bba418ab753bdfd8d6bcb81",
+      "Id": "c0fddd5c545147bb885f3e44c81903dd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "153ff2a44d254ae1ab891ac955c3b1ba",
+      "End": "cc16d5293c3e4fdb83ad04fefd746f34",
+      "Id": "ca131e0d420b4224bffca373cf147044",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5f01a847ff18430592255245b5e35f9e",
+      "End": "c0b5ace99752438db3203bb7be2023a2",
+      "Id": "6079980cbb2343ea8492e8048e65c157",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "cec336e2b9024c79922eaf8ed9d955ca",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 140.0,
+        "Y": 163.99999999999994
+      },
+      {
+        "Id": "0543165c297a446faa00426a33395c03",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -205.33333333333337,
+        "Y": -64.66666666666663
+      },
+      {
+        "Id": "f9efbc94b8b24b81be1df3f2528f3178",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -263.33333333333337,
+        "Y": 104.66666666666669
+      },
+      {
+        "Id": "5cc3b58467034deaaa866d62948ceb48",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -186.0000000000001,
+        "Y": 235.99999999999994
+      },
+      {
+        "Id": "f27b07651dc644859e97ce7f84370df0",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 401.33333333333326,
+        "Y": 163.33333333333337
+      },
+      {
+        "Id": "88711c82f5fb43f8bf3f607a9a1603c4",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -262.66666666666663,
+        "Y": 374.66666666666663
+      }
+    ],
+    "Annotations": [],
+    "X": 412.6666666666665,
+    "Y": 262.66666666666663,
+    "Zoom": 1.0
+  }
+}

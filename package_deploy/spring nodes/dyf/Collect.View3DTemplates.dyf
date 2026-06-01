@@ -1,0 +1,170 @@
+{
+  "Uuid": "5b93bb97-5c57-4f7f-adfe-194a9168c8fe",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Selection.Actions",
+  "Description": "Gets all 3d view templates and returns them to Dynamo as generic Elements",
+  "Name": "Collect.View3DTemplates",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference('RevitServices')\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\ntry:\r\n    ueWrapper = None\r\n    wrappers = clr.GetClrType(Revit.Elements.ElementWrapper).GetMethods()\r\n    for w in wrappers:\r\n        if w.ToString().startswith(\"Revit.Elements.UnknownElement\"):\r\n            ueWrapper = w\r\n            break\r\n\r\n    fec = DB.FilteredElementCollector(doc).OfClass(DB.View3D)\r\n    OUT = [ueWrapper.Invoke(None, (i, True)) for i in fec if i.IsTemplate]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "798f80c08b2e4ffa8a17861cc973508b",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "a239a01421cf42759f583aac4b0d1ff2",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e57690de8ef44c38b483865e0d1d09e5",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "refresh",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "true",
+        "Description": ""
+      },
+      "Id": "352af7b99cd94abda7bcb9e977d5781f",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "25dd0632e15c4b6f88e170e5ad9c1b1f",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "Templates",
+      "Id": "8e061629093f46f0825144ca65b17208",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "e96d72f29dba483298ccd1adccf623f3",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e57690de8ef44c38b483865e0d1d09e5",
+      "End": "e96d72f29dba483298ccd1adccf623f3",
+      "Id": "9fb4570fda6a4666bae645912990c221",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "25dd0632e15c4b6f88e170e5ad9c1b1f",
+      "End": "a239a01421cf42759f583aac4b0d1ff2",
+      "Id": "30be05ff88da4e139906359062674dde",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "798f80c08b2e4ffa8a17861cc973508b",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 250.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "352af7b99cd94abda7bcb9e977d5781f",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -8.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "8e061629093f46f0825144ca65b17208",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 449.0,
+        "Y": 0.0
+      }
+    ],
+    "Annotations": [],
+    "X": 588.7408333333333,
+    "Y": 291.82583333333343,
+    "Zoom": 1.1575
+  }
+}

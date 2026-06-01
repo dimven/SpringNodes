@@ -1,0 +1,223 @@
+{
+  "Uuid": "c39b8fee-b975-47b3-9511-169cd09443ba",
+  "IsCustomNode": true,
+  "Category": "Springs.Actions",
+  "Description": "Gets the even and odd indices from the list.",
+  "Name": "List.GetEvenOdd",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "list",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "2cc7587c847a4be8b392ebcb69575fbe",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b3b52a21e2cc4d52b80e7d904d69fd62",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "even",
+      "Id": "94599115d5cf440e8dac1573730cb3ea",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "11c0ac6d75724666a82d2ba630b9ec40",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c450a4097ff741609816938a037af897",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "c34b104c71594bc1b35dbf14f34e6aae",
+          "Name": "l1",
+          "Description": "l1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "91b17e7fe44645b2b6825f2fe2c85fde",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1f4aeb048054f58a4868b35e23fac3c",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "DSCore.List.TakeEveryNthItem(l1,2,0);\nDSCore.List.DropEveryNthItem(l1,2,0);"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "odd",
+      "Id": "c22183a042fb4a5197cdeb4e5be3a475",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "ef98bea6c4e24b7bb18df05899904459",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "b3b52a21e2cc4d52b80e7d904d69fd62",
+      "End": "c34b104c71594bc1b35dbf14f34e6aae",
+      "Id": "588435039ccb4eb9a5562a81f42823c5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "91b17e7fe44645b2b6825f2fe2c85fde",
+      "End": "ef98bea6c4e24b7bb18df05899904459",
+      "Id": "91cbfa81ff9e476e80afb8ce35040d96",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b1f4aeb048054f58a4868b35e23fac3c",
+      "End": "11c0ac6d75724666a82d2ba630b9ec40",
+      "Id": "ea28fb78a07f42909dd7a58d288385c5",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 12.854964256286621,
+      "EyeY": 7.072780609130859,
+      "EyeZ": 12.653606414794922,
+      "LookX": -11.571341514587402,
+      "LookY": -5.101696968078613,
+      "LookZ": -12.937047958374023,
+      "UpX": -0.04650449752807617,
+      "UpY": 0.9975640773773193,
+      "UpZ": -0.05199301242828369
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "2cc7587c847a4be8b392ebcb69575fbe",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 171.3760153382862,
+        "Y": -14.439070843589462
+      },
+      {
+        "Id": "94599115d5cf440e8dac1573730cb3ea",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 924.5900491873734,
+        "Y": 99.22863605268404
+      },
+      {
+        "Id": "c450a4097ff741609816938a037af897",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 459.652889798911,
+        "Y": -14.886656756339
+      },
+      {
+        "Id": "c22183a042fb4a5197cdeb4e5be3a475",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 921.8215846232916,
+        "Y": -113.76316800183821
+      }
+    ],
+    "Annotations": [],
+    "X": -123.91566753637102,
+    "Y": 269.564710341835,
+    "Zoom": 1.02988563947099
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "Uuid": "b1b51409-ea2b-4410-a242-b4b8607f7fd7",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Selection.Actions",
+  "Description": "Works with either categories, element types or revit classes and uses multi-filters to get multiple groups with a single query. Can be applied as a function. No ties to the Document.Changed event.",
+  "Name": "Collect.AllTypesOf",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Autodesk.DesignScript.Geometry.Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport System\r\nimport clr\r\nclr.AddReference('RevitAPI')\r\nimport Autodesk.Revit.DB as DB\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nfrom System.Collections.Generic import List\r\n\r\ndef tolist(obj1):\r\n    if isinstance(obj1, str): return [obj1]\r\n    return obj1 if isinstance(obj1, list) else [obj1]\r\n\r\ntry:\r\n    x = UnwrapElement(tolist(IN[0]))\r\n\r\n    fec = DB.FilteredElementCollector(doc).WhereElementIsElementType()\r\n\r\n    if isinstance(x[0], DB.Category):\r\n        catId = List[DB.ElementId](c.Id for c in x)\r\n        filter = DB.ElementMulticategoryFilter(catId)\r\n    elif isinstance(x[0], DB.ElementType):\r\n        types = List[System.Type](t.GetType() for t in x)\r\n        filter = DB.ElementMulticlassFilter(types)\r\n    else:\r\n        types = List[System.Type](x)\r\n        filter = DB.ElementMulticlassFilter(types)\r\n\r\n    fec.WherePasses(filter)\r\n    OUT = [e.ToDSType(True) for e in fec]\r\n\r\n    fec.Dispose()\r\n    filter.Dispose()\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = \"Exception:\\n{0}\\n\\nTraceback:\\n{1}\".format(\r\n        str(e),\r\n        traceback.format_exc()\r\n    )",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "96ae78eda12347529628d9b86a952b84",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "95e0d70908c74005b4e2b448dcc7a4f6",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2ccfb593ecd2474bb9ddd20b7ad86237",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "10eb5599f5ab4aa7815770b252ae82f9",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "CategoryOrClass",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "24e5b173434a491aa9ceeedeec53b9cc",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "add055670c3446bc82d4f3c693d91780",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "refresh",
+        "TypeName": "bool",
+        "TypeRank": 0,
+        "DefaultValue": "true",
+        "Description": ""
+      },
+      "Id": "2cef3e51731f4dcba63b5d89e0ab43aa",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "635482052cc64c4a92dfb2b751943180",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "types",
+      "Id": "8ea9771518484e75b2919e68d35ef7e8",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "7492885611634075b58ec5db55bdf431",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "10eb5599f5ab4aa7815770b252ae82f9",
+      "End": "7492885611634075b58ec5db55bdf431",
+      "Id": "68ef13eb8ff6421380941f0254297a2b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "add055670c3446bc82d4f3c693d91780",
+      "End": "95e0d70908c74005b4e2b448dcc7a4f6",
+      "Id": "4d277ba6e2d84d7fbb24698e7b03de36",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "635482052cc64c4a92dfb2b751943180",
+      "End": "2ccfb593ecd2474bb9ddd20b7ad86237",
+      "Id": "8bd6f8eb80f54f7faeccdca93b011aa3",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -22097.466796875,
+      "EyeY": 28607.990234375,
+      "EyeZ": -2637.763671875,
+      "LookX": 19701.869140625,
+      "LookY": -21681.78515625,
+      "LookZ": -12783.443359375,
+      "UpX": 0.4236624836921692,
+      "UpY": 0.8631019592285156,
+      "UpZ": -0.2748910188674927
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "96ae78eda12347529628d9b86a952b84",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 252.0,
+        "Y": 0.8639308855291574
+      },
+      {
+        "Id": "24e5b173434a491aa9ceeedeec53b9cc",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -78.21238300935923,
+        "Y": -61.339092872570205
+      },
+      {
+        "Id": "2cef3e51731f4dcba63b5d89e0ab43aa",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -40.332613390928685,
+        "Y": 98.23758099352047
+      },
+      {
+        "Id": "8ea9771518484e75b2919e68d35ef7e8",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 467.7185025197983,
+        "Y": 1.7278617710583148
+      }
+    ],
+    "Annotations": [],
+    "X": 223.02583333333337,
+    "Y": 221.41083333333336,
+    "Zoom": 1.1575
+  }
+}

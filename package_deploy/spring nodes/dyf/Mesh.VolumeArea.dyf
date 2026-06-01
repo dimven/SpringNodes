@@ -1,0 +1,262 @@
+{
+  "Uuid": "bacd2eaf-3a62-4cb6-9b57-1535be84c6c9",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry",
+  "Description": "Gets the volume and the area of a mesh. Works with both built in meshes and toolkit meshes. Based on math from geometry3sharp.\r\n\r\nNote that if triangles don't define closed region, volume is probably nonsense.",
+  "Name": "Mesh.VolumeArea",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "b92cb2ccf0204d9ab2ec501acf726687",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "f04588dce88b4c05a147c07cc7309c6a",
+          "Name": "r",
+          "Description": "r",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d8e47abd22d54f97b4dcbf10a1dc05e5",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(r, 0)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "330702736b8a4a0d96c359ba8a069eea",
+          "Name": "function",
+          "Description": "DesignScript.Builtin.Get.ValueAtIndex(r, 1)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "r[0];\nr[1];"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#----------------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2017, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #    \r\n#                                              #\r\n#-----------Updated by Mark Ackerley-----------#\r\n\r\nfrom math import sqrt\r\nfrom itertools import zip_longest\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Vector, Point, Mesh\r\n\r\ndef tolist(obj1):\r\n    if hasattr(obj1, '__iter__') and not isinstance(obj1, str):\r\n        return obj1\r\n    return [obj1]\r\n\r\ndef grouper(iterable, n, fillvalue=None):\r\n    args = [iter(iterable)] * n\r\n    return zip_longest(fillvalue=fillvalue, *args)\r\n\r\ndef meshData(m):\r\n    vol, area = 0, 0\r\n    vp = m.VertexPositions\r\n    for i in m.FaceIndices:\r\n        if i.Count == 4:\r\n            face_tris = [[vp[i.A], vp[i.B], vp[i.C]], \r\n                         [vp[i.A], vp[i.C], vp[i.D]]]\r\n        else:\r\n            face_tris = [[vp[i.A], vp[i.B], vp[i.C]]]\r\n        for pts in face_tris:\r\n            a, b, c = map(Point.AsVector, pts)\r\n            e1 = Vector.Subtract(b, a)\r\n            e2 = Vector.Subtract(c, a)\r\n            N = e1.Cross(e2)\r\n            area += 0.5 * N.Length\r\n            f = a.X + b.X + c.X\r\n            vol += N.X * f\r\n            for j in a, b, c, e1, e2, N:\r\n                j.Dispose()\r\n    return vol / 6.0, area\r\n\r\ntry:\r\n    meshes = tolist(IN[0])\r\n    volumes, areas = [], []\r\n    OUT = volumes, areas\r\n    for m in meshes:\r\n        v, a = meshData(m)\r\n        volumes.append(v)\r\n        areas.append(a)\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = [(\"exception\", str(e)), (\"traceback\", traceback.format_exc())]",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "d88487c6c1ac470da79f44add3fbdecc",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "fe9b2c169d9f46e8b6f89736134b509d",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a9f1929600074eb5a4783c8409c10e89",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "mesh",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "6f628d7422c54bbfb09499bffeb076e7",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ffbcb92023c34643adbba726ad38d9ff",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "volume",
+      "Id": "bae4a8233f6e42e1bc54c3d2dca42f7d",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "90365025a87642669866e07ea53232f9",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "area",
+      "Id": "2d828839b3234915a431aba9c4430f15",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "ac9b89df4fb64af68545e648e30a18c9",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d8e47abd22d54f97b4dcbf10a1dc05e5",
+      "End": "90365025a87642669866e07ea53232f9",
+      "Id": "256677335e1b412ba429bd88f4bb442d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "330702736b8a4a0d96c359ba8a069eea",
+      "End": "ac9b89df4fb64af68545e648e30a18c9",
+      "Id": "2cdd8f97cc914e4b96fb77c786a4b9ba",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a9f1929600074eb5a4783c8409c10e89",
+      "End": "f04588dce88b4c05a147c07cc7309c6a",
+      "Id": "1f75c073e58c42d1a6d3cf91bd2f5a6a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ffbcb92023c34643adbba726ad38d9ff",
+      "End": "fe9b2c169d9f46e8b6f89736134b509d",
+      "Id": "ff14fd1b46404ab4bb178fe0e236c16a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.1.0.4676",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -11.297866821289062,
+      "EyeY": 606.2621765136719,
+      "EyeZ": 456.0040283203125,
+      "LookX": 235.21681213378906,
+      "LookY": -127.19842529296875,
+      "LookZ": -457.89190673828125,
+      "UpX": 0.1096089631319046,
+      "UpY": 0.9708024263381958,
+      "UpZ": -0.21337443590164185
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "b92cb2ccf0204d9ab2ec501acf726687",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 400.37013975687955,
+        "Y": 6.788640225355721
+      },
+      {
+        "Id": "d88487c6c1ac470da79f44add3fbdecc",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 179.3563326734602,
+        "Y": 6.906361111482568
+      },
+      {
+        "Id": "6f628d7422c54bbfb09499bffeb076e7",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -34.200505610467644,
+        "Y": 6.914856325613641
+      },
+      {
+        "Id": "bae4a8233f6e42e1bc54c3d2dca42f7d",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 653.2075038930533,
+        "Y": -85.40782002176906
+      },
+      {
+        "Id": "2d828839b3234915a431aba9c4430f15",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 662.9256803506726,
+        "Y": 156.54108030801288
+      }
+    ],
+    "Annotations": [],
+    "X": 185.57724716209017,
+    "Y": 325.94062349288157,
+    "Zoom": 1.0181140440913174
+  }
+}

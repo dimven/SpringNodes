@@ -1,0 +1,420 @@
+{
+  "Uuid": "0b7f918e-34e3-4f20-b2db-da1f0865e385",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Scales the bounding box in three dimensions according to it's center.",
+  "Name": "BoundingBox.Scale",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Point.ByCoordinates": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Point": {
+        "Key": "Autodesk.DesignScript.Geometry.Point",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "NurbsSurface": {
+        "Key": "Autodesk.DesignScript.Geometry.NurbsSurface",
+        "Value": "ProtoGeometry.dll"
+      },
+      "UV": {
+        "Key": "Autodesk.DesignScript.Geometry.UV",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Voronoi": {
+        "Key": "Tessellation.Voronoi",
+        "Value": "Tessellation.dll"
+      },
+      "Voronoi.Length": {
+        "Key": "Tessellation.Voronoi",
+        "Value": "Tessellation.dll"
+      },
+      "Plane": {
+        "Key": "Autodesk.DesignScript.Geometry.Plane",
+        "Value": "ProtoGeometry.dll"
+      },
+      "BoundingBox": {
+        "Key": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "Value": "ProtoGeometry.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "boundingBox",
+        "TypeName": "Autodesk.DesignScript.Geometry.BoundingBox",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "1ec8d6b33cec4daf8091ede592714a26",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0c14fd5997ca443bbf3f5ab94d49d321",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "boundingBox",
+      "Id": "7f68ec187cb44a13ae585d844cc1b61d",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "72e341c0be794d4ba48f8695e71fe2e1",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "xAmmount",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "1",
+        "Description": ""
+      },
+      "Id": "8869deca4a454b22b2c6a7dd8bdb1ecb",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f6a1fc935ddb4ed49342ad3c2728f38a",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "yAmmount",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "1",
+        "Description": ""
+      },
+      "Id": "877a0fc56d744ed3b2b8f687fce2ee8e",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6827338226f14c6f890004a248f0d373",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "zAmmount",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "1",
+        "Description": ""
+      },
+      "Id": "cf55b9be69114b059fc7727ffe4e5e5a",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f69fecdb60c648a6aef5ca9298907d28",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "61183efd81734df3bf5a0c25b893e8c8",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "7df25814f2e541cab802176bf06235ba",
+          "Name": "bb1",
+          "Description": "bb1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7feb54ea333a480998cbcb83efe89fcc",
+          "Name": "xA",
+          "Description": "xA",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fc32fbde4d5c4838aaf87078409a2f94",
+          "Name": "yA",
+          "Description": "yA",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "51facfb87396478daede011e6d4fc3f9",
+          "Name": "zA",
+          "Description": "zA",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f6a2082b0e07401a876e0fe723afb2a6",
+          "Name": "",
+          "Description": "a",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5343bf1e06384a558900bdc8ab416a0e",
+          "Name": "",
+          "Description": "b",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "aa10800172e54f229831ca23e41e7227",
+          "Name": "",
+          "Description": "mid",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "35da807e2f74473e83ded0323458037d",
+          "Name": "",
+          "Description": "pl1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "41e3ed7c1b494f3aa1296fc5becf74f3",
+          "Name": "",
+          "Description": "a1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d89ddcba3820481bafdfc0acb76d2bb8",
+          "Name": "",
+          "Description": "b1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ee7be93b17be43eea48b6c45e8ec2ff2",
+          "Name": "",
+          "Description": "bb2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "a = bb1.MinPoint;\nb = bb1.MaxPoint;\nmid = Point.ByCoordinates(\n  (a.X + b.X) / 2,\n  (a.Y + b.Y) / 2,\n  (a.Z + b.Z) / 2);\npl1 = Plane.ByOriginNormal(\n  mid, Vector.ZAxis() );\na1 = a.Scale(pl1, xA, yA, zA);\nb1 = b.Scale(pl1, xA, yA, zA);\nbb2 = BoundingBox.ByCorners(a1, b1);"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "0c14fd5997ca443bbf3f5ab94d49d321",
+      "End": "7df25814f2e541cab802176bf06235ba",
+      "Id": "aea156348cc34019a060b8e457da1fb6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f6a1fc935ddb4ed49342ad3c2728f38a",
+      "End": "7feb54ea333a480998cbcb83efe89fcc",
+      "Id": "046fe9eabfe84600bbf80e847503cde9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6827338226f14c6f890004a248f0d373",
+      "End": "fc32fbde4d5c4838aaf87078409a2f94",
+      "Id": "ba7c499cd3e34d9db733c881260333fd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f69fecdb60c648a6aef5ca9298907d28",
+      "End": "51facfb87396478daede011e6d4fc3f9",
+      "Id": "10f81e49081943d7868a1655687ecf4b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ee7be93b17be43eea48b6c45e8ec2ff2",
+      "End": "72e341c0be794d4ba48f8695e71fe2e1",
+      "Id": "0ba334e7578043279ea389f07798cd2c",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "1ec8d6b33cec4daf8091ede592714a26",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -465.1250018642876,
+        "Y": -166.70925388668354
+      },
+      {
+        "Id": "7f68ec187cb44a13ae585d844cc1b61d",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 626.5820038667263,
+        "Y": 148.40508239260402
+      },
+      {
+        "Id": "8869deca4a454b22b2c6a7dd8bdb1ecb",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -198.51024136833323,
+        "Y": -35.49681731393946
+      },
+      {
+        "Id": "877a0fc56d744ed3b2b8f687fce2ee8e",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -202.84056705363258,
+        "Y": 107.65834545404158
+      },
+      {
+        "Id": "cf55b9be69114b059fc7727ffe4e5e5a",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -199.81511684540615,
+        "Y": 257.2902266462596
+      },
+      {
+        "Id": "61183efd81734df3bf5a0c25b893e8c8",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 165.57239909089,
+        "Y": -14.8041693957235
+      }
+    ],
+    "Annotations": [],
+    "X": 622.5178972907407,
+    "Y": 387.31960808526856,
+    "Zoom": 0.9374322966860009
+  }
+}

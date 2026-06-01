@@ -1,0 +1,214 @@
+{
+  "Uuid": "bd31f096-ca49-4e46-97b3-c08815da20b6",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Attempts to simplify an open or a closed curve loop by connecting straight separate line segments into a single line.",
+  "Name": "CurveLoop.Simplify",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "Cuboid": {
+        "Key": "Autodesk.DesignScript.Geometry.Cuboid",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Vector": {
+        "Key": "Autodesk.DesignScript.Geometry.Vector",
+        "Value": "ProtoGeometry.dll"
+      },
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Math": {
+        "Key": "DSCore.Math",
+        "Value": "DSCoreNodes.dll"
+      },
+      "NurbsCurve": {
+        "Key": "Autodesk.DesignScript.Geometry.NurbsCurve",
+        "Value": "ProtoGeometry.dll"
+      },
+      "PolyCurve": {
+        "Key": "Autodesk.DesignScript.Geometry.PolyCurve",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Rectangle": {
+        "Key": "Autodesk.DesignScript.Geometry.Rectangle",
+        "Value": "ProtoGeometry.dll"
+      },
+      "Line": {
+        "Key": "Autodesk.DesignScript.Geometry.Line",
+        "Value": "ProtoGeometry.dll"
+      },
+      "DSCore.List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "08274749e94c4ed186e7d8f1c1939c33",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "a6a897a7bb184dd8b03a36514b8b7796",
+          "Name": "curves",
+          "Description": "curves",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "30ef37366ebe478bab23868140e0fcba",
+          "Name": "",
+          "Description": "Value of expression at line 18",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7a42b0d4933e497c89c264a1f80d638c",
+          "Name": "",
+          "Description": "simplified",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "def _isLine(c){\nreturn = Math.Abs(c.Length - c.StartPoint.\n  DistanceTo(c.EndPoint) ) <= 0.0001;\n};\n\ndef _isParal(a, b){\nv1 = Vector.ByTwoPoints(a.StartPoint,\n  a.EndPoint).Normalized();\nv2 = Vector.ByTwoPoints(b.StartPoint,\n  b.EndPoint).Normalized();\nreturn = Math.Abs(v1.Dot(v2) ) >= 0.9999;\n};\n\ndef _shiftIndices(x:var[], i){\nreturn = DSCore.List.ShiftIndices(x, i);\n};\n\ncurves;\nsimplified = [Imperative]{\ni = 0;\nj = 0;\nlen1 = Count(curves) - 1;\noutp = [];\nisClosed = curves[-1].EndPoint.\n  IsAlmostEqualTo(curves[0].StartPoint);\n\n//find a corner;\nif (isClosed)\n{\n\tshift = 0;\n\tfor (k in GetKeys(curves) )\n\t{\n\t\tif (!_isParal(curves[k-1], curves[k]) )\n\t\t{\n\t\t\tbreak;\n\t\t}\n\t\tshift = shift - 1;\n\t}\n\tcurves = _shiftIndices(curves, shift);\n}\n\n//skip initial non lines\nwhile (!_isLine(curves[i]) && i < len1)\n\t{\n\t\toutp[j] = curves[i];\n\t\tj = j + 1;\n\t\ti = i + 1;\n\t}\n\nwhile (i < len1)\n{\n\tsP = curves[i].StartPoint;\n\teP = null;\n\twhile (_isLine(curves[i+1]) &&\n\t  _isParal(curves[i], curves[i+1]) )\n\t{\n\t\teP = curves[i+1].EndPoint;\n\t\ti = i + 1;\n\t}\n\n\tif (eP == null)\n\t{\n\t\toutp[j] = curves[i];\n\t}\n\telse\n\t{\n\t\toutp[j] = Line.ByStartPointEndPoint(sP, eP);\n\t}\n\ti = i + 1;\n\tj = j + 1;\n}\n\nif (i == len1)\n{\n\toutp[j] = curves[-1];\n}\n\nreturn = outp;\n};"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "curveLoop",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "beb719db5d144552b75eeec94e16e520",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "22c74a5503c24de1883c510dde9a9930",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "curveLoop",
+      "Id": "c47aaf84d7b94287a83f75960964d65a",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "1aa3aea9ce054206b4877a08a9c53e59",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "7a42b0d4933e497c89c264a1f80d638c",
+      "End": "1aa3aea9ce054206b4877a08a9c53e59",
+      "Id": "46c44552f41a4758b4efcd0d7350d682",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "22c74a5503c24de1883c510dde9a9930",
+      "End": "a6a897a7bb184dd8b03a36514b8b7796",
+      "Id": "16d81c3125a0419da15dec30fbadbc69",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "08274749e94c4ed186e7d8f1c1939c33",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 300.127966099044,
+        "Y": 88.7229604717442
+      },
+      {
+        "Id": "beb719db5d144552b75eeec94e16e520",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 54.95761816779887,
+        "Y": 89.44314417541705
+      },
+      {
+        "Id": "c47aaf84d7b94287a83f75960964d65a",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 926.6526389926249,
+        "Y": 383.1989619719687
+      }
+    ],
+    "Annotations": [],
+    "X": 445.55792840555984,
+    "Y": 6.135754703480529,
+    "Zoom": 0.6441000170502137
+  }
+}

@@ -1,0 +1,359 @@
+{
+  "Uuid": "0c404179-2042-4b41-9f21-195035aad395",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Attempts to join lines into a single chain of joined curves. The node returns the new lines as a chain and with the original order. The success outputs returns the success of the execution as a true/false boolean.",
+  "Name": "LineLoop.Merge",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "lines",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "1ee2d2c8feac43d1b712079e281b8237",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "14a81a0d475b46cfb9ff2a89c3ac0746",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "margin",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "100",
+        "Description": ""
+      },
+      "Id": "ec118177813e4f3c927e14759d91abf2",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "259ba216c8ce4dbbba7012418c063875",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "lines",
+      "Id": "3c90cf6e41cd43d1afd41783b2926fb2",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "88f9d2b92ad143ce94b04890837a763e",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "9f5a5c4054f44471a42a84d3afeeacee",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "94bb479f116e47389b88356267a14e26",
+          "Name": "o",
+          "Description": "o",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1b5c93dcf47543cbb5d040f46fb3cfde",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9fc7c29365dd4340868b6b322d0b081e",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "56b74872f631447ab14d9f76f5fe064b",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "o[0];\no[1];\no[2];"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "ordered",
+      "Id": "3745cd79ada64026affc4b5c54613fc0",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "1c620235b7004012b131ab52e8fe88c0",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "success",
+      "Id": "a7bb1583cd054b9fb355dfb731e838cc",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "89044d2d981c48b4b1b534fde4671d4d",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2016, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\ncurves = IN[0]\r\nmargin = IN[1]\r\noriginal = curves[:]\r\n\r\noutput = []  # collect all intermediate values here\r\n\r\ndef endpointsTouch(c1, c2, tol=0.001):\r\n    return bool(c1.Intersect(c2))\r\n\r\n\r\ndef sharedPoint(c1, c2):\r\n    pts = c1.Intersect(c2)\r\n    for pt in pts:\r\n        if hasattr(pt, \"X\") and hasattr(pt, \"Y\") and hasattr(pt, \"Z\"):\r\n            return pt\r\n        elif hasattr(pt, \"PointAtParameter\"):\r\n            return pt.PointAtParameter(0.5)\r\n    return None\r\n\r\ndef switch1(i, j, cl0, cl1):\r\n    cl0[i], cl0[j] = cl0[j], cl0[i]\r\n    cl1[i], cl1[j] = cl1[j], cl1[i]\r\n\r\ndef OrderCurves(cl0, cl1):\r\n    _ln = len(cl1)\r\n    xr1 = range(_ln)\r\n    int_test = [[endpointsTouch(cl1[i], cl1[j]) for j in xr1 if j != i] for i in xr1]\r\n    output.append([\"intersection matrix\", int_test])\r\n    countT = list(map(sum, int_test))\r\n    output.append([\"intersection counts\", countT])\r\n\r\n    if 0 not in countT:\r\n        if 1 in countT and countT[0] != 1:\r\n            switch1(0, countT.index(1), cl0, cl1)\r\n        for i in range(_ln - 1):\r\n            k = i + 1\r\n            if endpointsTouch(cl1[i], cl1[k]):\r\n                continue\r\n            try:\r\n                int_test = [endpointsTouch(cl1[i], cl1[j]) for j in range(k, _ln)]\r\n                switch1(k, k + int_test.index(True), cl0, cl1)\r\n            except Exception as e:\r\n                output.append([\"ordering exception\", str(e)])\r\n    return cl0, cl1\r\n\r\ndef ClosedCase(cl0, cl1):\r\n    pts = []\r\n    for i in range(len(cl1)):\r\n        pt = sharedPoint(cl1[i - 1], cl1[i])\r\n        if pt is None:\r\n            output.append([\"closed case fail\", i])\r\n            raise ValueError(\"No shared point at index {}\".format(i))\r\n        pts.append(pt)\r\n    output.append([\"closed case points\", pts])\r\n    return PolyCurve.ByPoints(pts, True)\r\n\r\ndef OpenCase(cl0, cl1):\r\n    def FarPt(l1, p1):\r\n        pts = (l1.StartPoint, l1.EndPoint)\r\n        return max(pts, key=lambda pt: p1.DistanceTo(pt))\r\n\r\n    pts = []\r\n    for i in range(len(cl1) - 1):\r\n        pt = sharedPoint(cl1[i], cl1[i + 1])\r\n        if pt is None:\r\n            output.append([\"open case fail\", i])\r\n            raise ValueError(\"No shared point at index {}\".format(i))\r\n        pts.append(pt)\r\n\r\n    pts.append(FarPt(cl0[-1], pts[-1]))\r\n    pts.insert(0, FarPt(cl0[0], pts[0]))\r\n    output.append([\"open case points\", pts])\r\n    return PolyCurve.ByPoints(pts)\r\n\r\ndef joinCurves(cl0, th1):\r\n    len1 = len(cl0)\r\n    if len1 < 2:\r\n        return cl0, False\r\n    else:\r\n        cl1 = []\r\n        for c in cl0:\r\n            c1 = c.ExtendStart(th1)\r\n            c2 = c1.ExtendEnd(th1) if c1 else None\r\n            if not c2:\r\n                output.append([\"extension fail\", c])\r\n                raise ValueError(\"Curve extension failed\")\r\n            cl1.append(c2)\r\n\r\n        output.append([\"extended curves\", cl1])\r\n        cl0, cl1 = OrderCurves(cl0, cl1)\r\n        output.append([\"ordered original\", cl0])\r\n        output.append([\"ordered extended\", cl1])\r\n\r\n        isClosed = endpointsTouch(cl1[0], cl1[-1]) and len1 > 2\r\n        output.append([\"isClosed\", isClosed])\r\n        _fn = ClosedCase if isClosed else OpenCase\r\n\r\n        try:\r\n            result = _fn(cl0, cl1)\r\n            return result, True\r\n        except Exception as e:\r\n            output.append([\"join exception\", str(e)])\r\n            return cl0, False\r\n\r\ndef ReorderCurves(orig, new):\r\n    reordered, new = [], list(new)\r\n    app1, pop1, PaP = reordered.append, new.pop, Curve.PointAtParameter\r\n\r\n    for i in range(len(orig)):\r\n        p1 = PaP(orig[i], 0.5)\r\n        p2 = [PaP(new[j], 0.5) for j in range(len(new))]\r\n        ind1 = p2.index(min(p2, key=lambda pt: p1.DistanceTo(pt)))\r\n        app1(pop1(ind1))\r\n    output.append([\"reordered curves\", reordered])\r\n    return reordered\r\n\r\n# Run code\r\nout1 = joinCurves(curves, margin)\r\n\r\ntry:\r\n    joined = out1[0]\r\n    # If joined is a PolyCurve, extract its segments for reordering\r\n    if hasattr(joined, \"Curves\"):\r\n        reordered = ReorderCurves(original, joined.Curves())\r\n    # If joined is already a list of curves, pass through\r\n    elif isinstance(joined, list):\r\n        reordered = ReorderCurves(original, joined)\r\n    # If joined is a single curve, wrap it in a list\r\n    else:\r\n        reordered = ReorderCurves(original, [joined])\r\n\r\n    OUT = [(joined), (reordered), (out1[1]), (\"debug\", output)]\r\n\r\nexcept Exception as e:\r\n    import traceback\r\n    OUT = [(\"exception\", str(e)), (\"traceback\", traceback.format_exc()), (\"debug\", output)]",
+      "Engine": "PythonNet3",
+      "VariableInputPorts": true,
+      "Id": "f8654d051a304239a384e2b4f6b28d23",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b477db4fe3244dfb9e8cbd0f8ca9b737",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2511d80811634873bce647fbbde67c34",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "38eb6f3d48b44e35a9d15d57f8ed60f5",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "14a81a0d475b46cfb9ff2a89c3ac0746",
+      "End": "b477db4fe3244dfb9e8cbd0f8ca9b737",
+      "Id": "cb3d0a2f133d47fdb85123aa01a1b238",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "259ba216c8ce4dbbba7012418c063875",
+      "End": "2511d80811634873bce647fbbde67c34",
+      "Id": "a4c47ef344f14ec7a6b4690aacd72fed",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1b5c93dcf47543cbb5d040f46fb3cfde",
+      "End": "88f9d2b92ad143ce94b04890837a763e",
+      "Id": "196439cb46164e51920f9d421d6baba3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9fc7c29365dd4340868b6b322d0b081e",
+      "End": "1c620235b7004012b131ab52e8fe88c0",
+      "Id": "7bda4f89db96442e9777fcb17552e6eb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "56b74872f631447ab14d9f76f5fe064b",
+      "End": "89044d2d981c48b4b1b534fde4671d4d",
+      "Id": "254db1efb0ea464db8c7586cdd57629e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "38eb6f3d48b44e35a9d15d57f8ed60f5",
+      "End": "94bb479f116e47389b88356267a14e26",
+      "Id": "0a6930d8488a4147a7dd658fc8b894d6",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": 12.854964256286621,
+      "EyeY": 7.072780609130859,
+      "EyeZ": 12.653606414794922,
+      "LookX": -11.571341514587402,
+      "LookY": -5.101696968078613,
+      "LookZ": -12.937047958374023,
+      "UpX": -0.04650449752807617,
+      "UpY": 0.9975640773773193,
+      "UpZ": -0.05199301242828369
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "1ee2d2c8feac43d1b712079e281b8237",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -28.200000000000003,
+        "Y": 61.0
+      },
+      {
+        "Id": "ec118177813e4f3c927e14759d91abf2",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -93.60000000000002,
+        "Y": 284.8
+      },
+      {
+        "Id": "3c90cf6e41cd43d1afd41783b2926fb2",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 823.9962550122178,
+        "Y": 9.83278366779976
+      },
+      {
+        "Id": "9f5a5c4054f44471a42a84d3afeeacee",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 497.99625501221783,
+        "Y": 162.83278366779976
+      },
+      {
+        "Id": "3745cd79ada64026affc4b5c54613fc0",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 839.5962550122179,
+        "Y": 180.03278366779978
+      },
+      {
+        "Id": "a7bb1583cd054b9fb355dfb731e838cc",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 849.9962550122178,
+        "Y": 382.8327836677998
+      },
+      {
+        "Id": "f8654d051a304239a384e2b4f6b28d23",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 253.00475754681304,
+        "Y": 162.61951550005068
+      }
+    ],
+    "Annotations": [],
+    "X": 108.48938718766726,
+    "Y": 125.34377189822783,
+    "Zoom": 1.1047642563030275
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "Uuid": "0cf5e509-573d-429d-815c-02876bc9a0cd",
+  "IsCustomNode": true,
+  "Category": "Springs.Revit.Actions",
+  "Description": "Converts a Dynamo colour its Revit equivalent  decimal value.",
+  "Name": "Color.ToDecimal",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      },
+      "Color": {
+        "Key": "DSCore.Color",
+        "Value": "DSCoreNodes.dll"
+      },
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "144ee9e7d5f24ca58292df654c7bbd76",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "d6ce2a8d5dab46a984cced30d9216976",
+          "Name": "c",
+          "Description": "c",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3599b9b8050a40d2a331868b90310fe7",
+          "Name": "r",
+          "Description": "r = c.Red",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bb16fe09d8a64a4394e6a97d8ea87570",
+          "Name": "g",
+          "Description": "g = c.Green",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fd8509c313584875930f1c11ab251a73",
+          "Name": "b",
+          "Description": "b = c.Blue",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d8402a187c8241b58ea9e6189dee5682",
+          "Name": "d",
+          "Description": "d = (((b * 256) * 256) + (g * 256)) + r",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "r = c.Red;\ng = c.Green;\nb = c.Blue;\nd = b*256*256 + g*256 + r;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "color",
+        "TypeName": "DSCore.Color",
+        "TypeRank": 0,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "63972bdf686a41f6ae4301d678e65413",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "09ab1d49d00f46da845604bc3c249d6d",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "decimal",
+      "Id": "db508fbaa6ab4f8db2e730cd305056b0",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "d687da8c2d53424794df6abb10481480",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "d8402a187c8241b58ea9e6189dee5682",
+      "End": "d687da8c2d53424794df6abb10481480",
+      "Id": "4b80a9c9e21d434f81aece6f20745ff5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "09ab1d49d00f46da845604bc3c249d6d",
+      "End": "d6ce2a8d5dab46a984cced30d9216976",
+      "Id": "f0f383cf03bd421c8e42d68ae974eb1a",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.0.2.3852",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "144ee9e7d5f24ca58292df654c7bbd76",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 255.230785038086,
+        "Y": 8.21980505985047
+      },
+      {
+        "Id": "63972bdf686a41f6ae4301d678e65413",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -59.49652621998226,
+        "Y": 10.076391129992896
+      },
+      {
+        "Id": "db508fbaa6ab4f8db2e730cd305056b0",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 645.963862392518,
+        "Y": 56.069411471005246
+      }
+    ],
+    "Annotations": [],
+    "X": 200.10305883454902,
+    "Y": 222.01221181599288,
+    "Zoom": 1.4097287639800098
+  }
+}

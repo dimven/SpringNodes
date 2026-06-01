@@ -1,0 +1,226 @@
+{
+  "Uuid": "31f2a383-fdc6-402b-9511-32ff8dd77add",
+  "IsCustomNode": true,
+  "Category": "Springs.Geometry.Actions",
+  "Description": "Splits the list of geometry elements into groups if the distance between them is less than the provided margin.",
+  "Name": "Geometry.GroupByDistance",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "DSCore.List",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "#-Reope----------------------------------------#\r\n#                                              #\r\n#      Copyright(c) 2020, Dimitar Venkov       #\r\n#                                              #\r\n# https://github.com/dimven/SpringNodes/issues #\r\n# https://www.reope.com/                       #\r\n#                                              #\r\n#    ____    _____   _____   ____    _____     #\r\n#   |  _ \\ *|  ___|*|  _  |*|  _ \\ *|  ___|    #\r\n#   | |_) |*| |___ *| | | |*| |_) |*| |___     #\r\n#   |  _ < *|  ___|*| | | |*|  __/ *|  ___|    #\r\n#   | | | |*| |___ *| |_| |*| |    *| |___     #\r\n#   |_| \\_|*|_____|*|_____|*|_|    *|_____|    #\r\n#                                              #\r\n#                                              #\r\n#-Reope-----Updated by Mark Ackerley-----------#\r\n\r\n#Inspired from the \"Group Curves\" node by Konrad Sobon\r\n# @arch_laboratory, http://archi-lab.net\r\n\r\nimport clr\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Geometry\r\n\r\npts = IN[0]\r\nmargin = IN[1]\r\ndist1 = Geometry.DistanceTo\r\n\r\nGroups, Queue = [], []\r\nwhile pts:\r\n\tgroup = []\r\n\tQueue.append(pts.pop() )\r\n\twhile Queue:\r\n\t\tp1 = Queue.pop()\r\n\t\tgroup.append(p1)\r\n\t\tfor i in range(len(pts)-1,-1,-1):\r\n\t\t\tif dist1(p1, pts[i]) <= margin:\r\n\t\t\t\tQueue.append(pts.pop(i) )\r\n\tGroups.append(group)\r\n\r\nOUT = Groups",
+      "Engine": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "65599f3ad4434e38a973b53a7d6a0d2a",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "bb2bd3c2ad804ecfbed92855e396dfca",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "06d8b3e1f7b0408e9a32c6b21c90a02e",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ade41c98c71949a08df19eaab9c16cf6",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "geometry",
+        "TypeName": "var",
+        "TypeRank": 1,
+        "DefaultValue": null,
+        "Description": ""
+      },
+      "Id": "f1e52fbbfd8e42839182c13505a7bd70",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6b4368a5f7004dd2b216e5aa9a505a1e",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "Parameter": {
+        "Name": "margin",
+        "TypeName": "double",
+        "TypeRank": 0,
+        "DefaultValue": "1",
+        "Description": ""
+      },
+      "Id": "1a220ca1e5e747b9942fab7a76ec1905",
+      "NodeType": "InputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0469d30c0f13453fa74b139a1f845452",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Output, DynamoCore",
+      "ElementResolver": null,
+      "Symbol": "geometry[][]",
+      "Id": "8f4928f0859a43c083ad83f81548ce56",
+      "NodeType": "OutputNode",
+      "Inputs": [
+        {
+          "Id": "f261c1a79d5a4453b286d4869ab9474f",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [],
+      "Replication": "Disabled",
+      "Description": "A function output, use with custom nodes"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ade41c98c71949a08df19eaab9c16cf6",
+      "End": "f261c1a79d5a4453b286d4869ab9474f",
+      "Id": "09688d765d694c0798711ad93ca1f946",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "6b4368a5f7004dd2b216e5aa9a505a1e",
+      "End": "bb2bd3c2ad804ecfbed92855e396dfca",
+      "Id": "3954fd1b789f4f1289818993a67fee73",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0469d30c0f13453fa74b139a1f845452",
+      "End": "06d8b3e1f7b0408e9a32c6b21c90a02e",
+      "Id": "6e0a267ff2294648914d6e8b71bccdf7",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Author": "None provided",
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "65599f3ad4434e38a973b53a7d6a0d2a",
+        "Name": "Python Script",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 190.974267230302,
+        "Y": 0.5088425238766945
+      },
+      {
+        "Id": "f1e52fbbfd8e42839182c13505a7bd70",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -97.29714314756598,
+        "Y": -115.19087062298036
+      },
+      {
+        "Id": "1a220ca1e5e747b9942fab7a76ec1905",
+        "Name": "Input",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -125.08649133076483,
+        "Y": 157.27706855073066
+      },
+      {
+        "Id": "8f4928f0859a43c083ad83f81548ce56",
+        "Name": "Output",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 477.5608278474641,
+        "Y": -0.10067291945998136
+      }
+    ],
+    "Annotations": [],
+    "X": 197.08322307189803,
+    "Y": 377.9128532077871,
+    "Zoom": 1.23432823230355
+  }
+}

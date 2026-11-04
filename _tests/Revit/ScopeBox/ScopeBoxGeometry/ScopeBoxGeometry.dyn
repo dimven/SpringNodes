@@ -53,7 +53,7 @@
       "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
       "NodeType": "ExtensionNode",
       "InstanceId": [
-        "3609393c-bd24-4f03-bc82-811c7512372a-0004fa10"
+        "fd8780a6-4826-452e-9719-b18746f5012e-0005160b"
       ],
       "Id": "10b2b50ab00347ab86953bb608372efd",
       "Inputs": [],
@@ -196,8 +196,8 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": true,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "4.0.2.3852",
-      "RunType": "Automatic",
+      "Version": "4.2.1.5887",
+      "RunType": "Manual",
       "RunPeriod": "1000"
     },
     "Camera": {
@@ -256,8 +256,8 @@
       }
     ],
     "Annotations": [],
-    "X": -201.84999160302937,
-    "Y": 85.97904623484305,
-    "Zoom": 1.1247123199785862
+    "X": -91.71986385322737,
+    "Y": 119.27487026804698,
+    "Zoom": 0.8281326167064087
   }
 }

@@ -45,7 +45,7 @@
       "NodeType": "CodeBlockNode",
       "Inputs": [
         {
-          "Id": "88ac6e9bdf07408cb652d4a1821db049",
+          "Id": "fb004cc6026f4a75842104fb197f6e10",
           "Name": "s",
           "Description": "s",
           "UsingDefaultValue": false,
@@ -56,7 +56,7 @@
       ],
       "Outputs": [
         {
-          "Id": "ceec84be378e400f88e5617ae79d61ce",
+          "Id": "7b5ff697813e4539b70bcefb9ab2103d",
           "Name": "c1",
           "Description": "c1 = s.Geometry()",
           "UsingDefaultValue": false,
@@ -65,7 +65,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "d64b875955934e818e13243bf31916fe",
+          "Id": "18529dc67dd1476b9d101a69576ca986",
           "Name": "msk",
           "Description": "msk = (Autodesk.DesignScript.Geometry.Vector.ZAxis().Dot(c1.Direction)) == 0",
           "UsingDefaultValue": false,
@@ -74,7 +74,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "00847d57becb4e0bac5b94d5d52be04d",
+          "Id": "a76377d229e24a00ae0071a4c1bb320e",
           "Name": "c2",
           "Description": "c2 = DesignScript.Builtin.Get.ValueAtIndex(DSCore.List.FilterByBoolMask(c1, msk), \"in\")",
           "UsingDefaultValue": false,
@@ -83,7 +83,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "04d7c74162364811ae69e43a6cfed218",
+          "Id": "8f6040315d424f0f9777879bb4386cbf",
           "Name": "c3",
           "Description": "c3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z)",
           "UsingDefaultValue": false,
@@ -92,7 +92,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "68768f7f8c2b4f3ca35e6790a25e75fc",
+          "Id": "abfeaa0e810a4575a5053b0da8dd3a10",
           "Name": "c4",
           "Description": "c4 = DesignScript.Builtin.Get.ValueAtIndex(c3, \"sorted list\")",
           "UsingDefaultValue": false,
@@ -101,7 +101,7 @@
           "KeepListStructure": false
         },
         {
-          "Id": "685ffefbbe434491919906ca58f19a6b",
+          "Id": "fe9be9007dc7452381ae9e98edcf7071",
           "Name": "c5",
           "Description": "c5 = ((c4 == null ? DesignScript.Builtin.Get.ValueAtIndex(c3, \"sortedList\") : c4))",
           "UsingDefaultValue": false,
@@ -110,16 +110,16 @@
           "KeepListStructure": false
         },
         {
-          "Id": "4d0819a0266e4375babd98a3a3cb5029",
+          "Id": "bfe34ef7b3104dc28412f67122020a75",
           "Name": "pc1",
-          "Description": "pc1 = PolyCurve.ByJoinedCurves(DesignScript.Builtin.Get.ValueAtIndex(c5, 0..3))",
+          "Description": "pc1 = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(DesignScript.Builtin.Get.ValueAtIndex(c5, 0..3))",
           "UsingDefaultValue": false,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         },
         {
-          "Id": "642f11ccb51a4704a3cfcb04675961c4",
+          "Id": "18f2c2fe141a424992d7a6142192eddb",
           "Name": "s1",
           "Description": "s1 = pc1.ExtrudeAsSolid((DesignScript.Builtin.Get.ValueAtIndex(c5, 4).EndPoint.Z) - (DesignScript.Builtin.Get.ValueAtIndex(c5, 0).EndPoint.Z))",
           "UsingDefaultValue": false,
@@ -130,7 +130,7 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly",
-      "Code": "c1 = s.Geometry();\nmsk = Vector.ZAxis().Dot(c1.Direction) == 0;\nc2 = DSCore.List.FilterByBoolMask(c1, msk)[\"in\"];\nc3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z);\nc4 = c3[\"sorted list\"];\nc5 = c4 == null ? c3[\"sortedList\"] : c4;\npc1 = PolyCurve.ByJoinedCurves(c5[0..3]);\ns1 = pc1.ExtrudeAsSolid(c5[4].EndPoint.Z - c5[0].EndPoint.Z);"
+      "Code": "c1 = s.Geometry();\nmsk = Vector.ZAxis().Dot(c1.Direction) == 0;\nc2 = DSCore.List.FilterByBoolMask(c1, msk)[\"in\"];\nc3 = DSCore.List.SortByKey(c2, c2.EndPoint.Z);\nc4 = c3[\"sorted list\"];\nc5 = c4 == null ? c3[\"sortedList\"] : c4;\npc1 = Autodesk.DesignScript.Geometry.PolyCurve.ByJoinedCurves(c5[0..3]);\ns1 = pc1.ExtrudeAsSolid(c5[4].EndPoint.Z - c5[0].EndPoint.Z);"
     },
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
@@ -203,21 +203,21 @@
   ],
   "Connectors": [
     {
-      "Start": "4d0819a0266e4375babd98a3a3cb5029",
+      "Start": "bfe34ef7b3104dc28412f67122020a75",
       "End": "72a309b0717744768b347058e846d071",
-      "Id": "b4d68e9910464fb18e6dee0bbaf1de67",
+      "Id": "9ed9d7b5787b48ada368df38422283e7",
       "IsHidden": "False"
     },
     {
-      "Start": "642f11ccb51a4704a3cfcb04675961c4",
+      "Start": "18f2c2fe141a424992d7a6142192eddb",
       "End": "262f0f28ee8042cd91d84705bb2e5a89",
-      "Id": "130ebd81d4634d459dac4fa04d71729d",
+      "Id": "3746ff85062849fd90f3d70f578f8bf8",
       "IsHidden": "False"
     },
     {
       "Start": "5b4997705a764342aa0d2db1ff9856c7",
-      "End": "88ac6e9bdf07408cb652d4a1821db049",
-      "Id": "f4601d711fec44099e1edf20702bea22",
+      "End": "fb004cc6026f4a75842104fb197f6e10",
+      "Id": "6fd6231d5c30439ca400a5977fcee9ac",
       "IsHidden": "False"
     }
   ],
@@ -230,7 +230,7 @@
       "ScaleFactor": 1.0,
       "HasRunWithoutCrash": false,
       "IsVisibleInDynamoLibrary": true,
-      "Version": "4.0.2.3852",
+      "Version": "4.2.1.5887",
       "RunType": "Manual",
       "RunPeriod": "1000"
     },
@@ -290,8 +290,8 @@
       }
     ],
     "Annotations": [],
-    "X": 545.9510385668851,
-    "Y": 393.5293780510566,
-    "Zoom": 1.2852827688530004
+    "X": 222.40047481543854,
+    "Y": 307.70560372491684,
+    "Zoom": 0.9430846702936299
   }
 }
